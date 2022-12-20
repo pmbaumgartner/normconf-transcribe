@@ -1,0 +1,235 @@
+This is about how to represent the intermediate thing because Vicky said she wanted talks
+about the day-to-day work of machine learning.
+I spend so much of my time sitting, staring at a couple of functions that I have maybe
+stubbed out going, okay, but like, should I use a dictionary?
+Should I use a custom class?
+And this talk is my attempt to articulate some of the thought patterns that I use for
+figuring that out.
+So data structures are often really clear at the beginning and end of whatever it is
+that you're doing.
+So in my case, I work on our platform.
+And so this is often API boundaries.
+I know what's coming in and I know what's going out.
+Partly because I have had a lot of design discussions about it.
+It's been ironed out.
+We've thought it through very carefully.
+Here's an example of an endpoint that I wrote where I have a bunch of data about a game.
+My company makes an interactive narrative game that you can play with your friends.
+So we have a bunch of data about the game and what's going on.
+I need to return a ranked list of the best words for the situation with some metadata
+about those words and why they're ranked that way.
+Okay, cool.
+That's very well defined.
+But then at the next step, I feel like everything kind of drops off and it's easy to expect
+that how to structure things in between should be obvious.
+But it's not, actually.
+Or if it is, please tell me.
+Because I missed that memo.
+If it is obvious, it might not even be the best thing.
+For example, you might be following patterns that are used everywhere else in the codebase.
+Which is good for consistency, but it doesn't mean it's the right thing to use there.
+Or maybe you are in a very strong habit of always, I don't know, making a list and appending
+to the end of the list and that's all you ever do.
+Also the problems don't usually perfectly match basic Python data structures.
+So if you go Google, as I did once upon a time as a baby software engineer, because
+I was a data scientist and I wanted to get better at software engineering, how do I pick
+a Python data object?
+What you wind up with is like, okay, pick a list, if it's okay being mutable and you
+want to sort it, pick a tuple.
+I hate saying words out loud that people disagree on pronunciation.
+I'm going to say tuple.
+Pick a tuple if it needs to be immutable.
+Write a custom class if you need to define methods and stuff.
+But it never matches up that well.
+I so rarely have a machine learning engineering problem where, oh, the thing I need to do
+is have a chunk of things that are all the same type and are immutable and that solves
+my problem.
+Great.
+So it gets complicated and often bane of my existence.
+Multiple ways will usually work.
+So it's kind of about picking the best one and the one that works for what you're trying
+to do.
+So getting it wrong, at least in my world, is not really the end of the world.
+It's annoying.
+It causes friction.
+It will waste time.
+And I don't like doing that.
+So I would rather figure out how to do it right off the bat.
+Ultimately this isn't a coding problem.
+This is a decision making problem.
+It's about how you access and associate information.
+Because at least for now, it's still mostly human brains that are reading and writing
+the code.
+There's Copilot.
+But, like, you still have to be able to understand what's going on and you or some unfortunate
+colleague is going to have to debug what's going on.
+So it makes sense to start with how you are associating the information you're working
+with.
+So start with what you know.
+Write down all of your needs and constraints.
+By which I mean literally physically write it down.
+There are things you have in your head and things you have in front of you in the physical
+world.
+Those are very different things.
+And the ones in your head are a lot more fuzzy than you might think they are until you try
+to write them down.
+So no matter how silly it feels, if you are looking at this kind of problem, get everything
+in your head out of your head as messily as you need to.
+My researcher and designer friend tells me this is called an affinity map, if you would
+like something interesting to Google.
+Basically just get everything you know onto the page, move it around, figure out explicitly
+how you make those connections.
+And that's a really good starting point for finding a common thread that runs through
+it.
+Especially if you're trying to do a fairly complicated set of things that are kind of
+hard to hold in your head at once.
+So for example, that endpoint that I showed earlier, I need to go get a bunch of words,
+score them for a variety of metrics, and then sum all that up into a weighted sum and sort
+the list and return it.
+That's not too many steps, but you wind up needing to access it in several different
+ways.
+I just got a visit from my dog.
+This is Fury.
+Come say hi.
+Come on.
+This is Fury, everyone.
+The next thing that I prefer to think about is how sure are you?
+This is my accidental argument for cowboy code.
+But consider it cowboy code.
+Because when you are committing to more structured and more rigid data types, so in this case,
+I'm talking about, like, defining a custom class instead of using a dictionary, you get
+certain benefits from that.
+You get more certainty and predictability in how things will break.
+You can access things a little easier sometimes.
+But you need to be more sure because it's going to be more of a pain in the butt to
+make a change.
+I have shot myself in the foot with this several times, trying to get too precise too soon
+and then having to go rewrite it.
+And it's annoying.
+So just go with the least committed you can get away with.
+I do want to caveat that this is I work for a startup.
+I'm not writing financial software.
+My goal is to write good code efficiently and not spend more time than it needs to have.
+So staying a little bit flexible in the first layer of implementation can actually be really
+helpful.
+And harder to make a change, not as in literally you can't do it.
+It just takes time and refactoring.
+Once you know how sure you are, my best piece of advice is to make the code match your brain.
+Humans index things by name pretty intuitively, which is why I love Python dictionaries.
+It is so much easier to say, you know, give me words.genrescore than words at the whatever-eth
+element of the tuple or list that you've stuck on there.
+Honestly this whole talk could have just been titled dictionaries are the best.
+Probably use those if you're in doubt.
+They offer a really nice balance of ease of access.
+You have some methods that let you be a little more careful and defensive.
+You can use get for carefully checking to see if something exists in the dictionary.
+You can use a default dictionary if you do want to accumulate things as you go.
+I am a dictionary fan.
+And again, there are usually several ways to do this.
+I find that pair programming is really great for not going down the rabbit holes of I could
+do it this way or I could do it this way.
+But this is why that step where you write everything down is very helpful because you
+can start to extract patterns for how you're thinking about it.
+The next point I have is on the next slide.
+Which is that you should blend data structures if you need to.
+And that's part of making that code match your brain.
+So the example I was just thinking of is when I'm thinking about words, specifically the
+words that I'm talking about in the example problem that I gave with the API spec, I tend
+to think about them in terms of the word string itself and the part of speech.
+That's just like the easiest unique way of identifying the words.
+Often I need to access the whole word object, which has other metadata in it, in order to
+do stuff.
+There's no reason you can't make a dictionary where the key is that tuple of word string
+and part of speech and the value is the entire word object.
+Because that's how I think about the problem.
+That's how I think about solving the various intermediate steps I need to do, making the
+calculations I need to make.
+And so if I make the data structure match that, the whole thing flows and I'm much more
+likely to catch if I have missed some detail about how I needed to organize it.
+Again, you can tell I'm working for a little startup.
+Care about performance later.
+Seriously.
+You need to care about performance.
+Going down too many rabbit holes at once makes you code in circles.
+You will get halfway down figuring out the correct data structure for the problem at
+hand and then you'll start going, okay, wait, but like is that going to parallelize well?
+Will I be able to submit this to some other thing?
+Like don't.
+Just get it all the way ironed out.
+Because then you have a first draft to optimize against.
+It is so much easier to evaluate the pros and cons of a structure you have chosen and
+written down than halfway thinking through three or four different ones.
+I would just like to point out that nobody has this solved or it would be automated as
+a refactoring tool in PyCharm and also Copilot would provide it for you.
+Part of my grand goal for this talk was to write a flowchart and I could be famous on
+the internet forever.
+I could sell it like flashcards.
+It would just have a series of questions and you would go all the way to the end and it
+would tell you what data structure to use.
+Maybe someday.
+But it turns out that what you actually need is to think about how your brain thinks about
+your particular data and you'll start to see patterns.
+Like I said, a lot of the stuff I do lately has to do with associating words with other
+things.
+Dictionaries lend themselves really nicely to that.
+So when in doubt, I just use a dictionary.
+You will probably also eventually wind up with shorthands for your flavor of data.
+But if you do have it automated, let me know.
+And this is a fractally repeated process.
+So what do you have?
+What do you need?
+And how are you going to access what you need out of the data and the objects to get there?
+This applies at the API interface level.
+What's going in, what's coming out.
+This applies with any major function that's happening behind that endpoint.
+And it applies to each smaller function within there.
+So to take the word score ranking examples and apologies for not having any outlined
+code examples on the slide.
+Like I said, the internet ate them.
+For each of those words, I need to get scores for a handful of different metrics.
+I want to normalize those scores within a metric.
+Which means that I need to have all of those scores at once.
+So that might influence okay, I probably don't want to accumulate it only by word and then
+make it hard to get out again all of the scores for a particular metric.
+So like all of the genre scores.
+I'm going to need those all at once.
+And if you do this at each layer, it usually becomes pretty clear how to structure the
+things that you're starting with.
+Okay.
+I would like to end with some of my heuristics.
+I just told you it's not a solved problem and I am absolutely going to throw some hot
+takes out here.
+Use a dictionary if you're a human with a human brain.
+This is always my starting point.
+Default dicks, as I mentioned, are really nice if you want to smoothly add things as
+you go.
+I actually used this for those word scores because I didn't want to set in stone what
+the scoring metrics were going to be.
+We might add some others and some words might not have all of them.
+I didn't want it to blow up if I needed to add a new score.
+Classes are great if you have put more thought into what you're doing.
+If you're more sure about it, go ahead.
+Use a class.
+I love Pydantic because I am a massive typing fangirl.
+I convinced my entire data science team to adopt type annotations in my first real job.
+It was great.
+But classes kind of lock you in a little bit more.
+Lists are great for if you have stuff, you might want to sort it.
+You don't care if it's mutable.
+Everyone has been bitten by the mutable lists bug that they accidentally wrote into their
+code and if you haven't, your time will come.
+Tuples are great if they need to be immutable.
+They're not going to change.
+I only use them if I only have a few things because you can't really access them intuitively.
+You're accessing them by index unless you use a named tuple.
+So I don't think those are great for collecting long sets of things.
+I will be honest, every time I think I'm going to use a named tuple, I wind up using a dictionary
+or a lightweight custom class.
+I go in one direction or the other.
+I guess in that situation, if your data really need to be immutable, it might work.
+But I would love to hear from people who actually use these on a regular basis because I always
+want to and I always wind up not doing it.
+So these are my heuristics.
+I would love to hear everyone else's.
+Help your own, you'll get a feel for the kinds of data you work with.
+Thank you.

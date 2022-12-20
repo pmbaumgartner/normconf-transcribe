@@ -1,0 +1,616 @@
+1
+00:00:00,000 --> 00:00:05,360
+My name is Jeremy Jordan, and I'm a machine learning engineer at Duo Security,
+
+2
+00:00:05,360 --> 00:00:09,120
+and as been mentioned, also one of the organizers of the conference.
+
+3
+00:00:09,120 --> 00:00:14,080
+So thank you all, everyone for coming out. Thank you all to the speakers that have given
+
+4
+00:00:14,080 --> 00:00:19,200
+some wonderful talks today. It's really, really exciting to see everything coming together.
+
+5
+00:00:19,760 --> 00:00:25,920
+So today I will be talking about machine learning and rules engines and how they can work together.
+
+6
+00:00:25,920 --> 00:00:34,000
+So let's start by walking through the life cycle of a typical machine learning project.
+
+7
+00:00:34,000 --> 00:00:38,720
+Let's pretend that we work at an email company and a product manager comes to us and says,
+
+8
+00:00:38,720 --> 00:00:43,840
+hey, users are complaining about spam. Can you filter out those messages?
+
+9
+00:00:43,840 --> 00:00:50,880
+And so we say, yeah, sure thing. And we get to it. So where do we start? The kind of like the
+
+10
+00:00:50,880 --> 00:00:55,680
+standard advice is to start with a rule-based approach and deploy that into your product.
+
+11
+00:00:55,680 --> 00:01:02,080
+This is literally rule number one on Google's great guide to machine learning. And there's a
+
+12
+00:01:02,080 --> 00:01:07,440
+good reason for that. And that's that machine learning requires ideally labeled data. We don't
+
+13
+00:01:07,440 --> 00:01:13,040
+necessarily have the luxury of having that at this stage. So instead, we spend some time to get
+
+14
+00:01:13,040 --> 00:01:19,280
+familiar with the problem and build up some domain expertise that we can encode into machine learning.
+
+15
+00:01:19,280 --> 00:01:30,480
+We can start off by writing a simple rule that looks for spammy keywords in the email body and
+
+16
+00:01:30,480 --> 00:01:37,760
+then deploy that into our product. And now that we've rolled out a spam folder into our product
+
+17
+00:01:37,760 --> 00:01:42,160
+and are using that heuristic that we just wrote to decide which content should be placed in that
+
+18
+00:01:42,160 --> 00:01:48,560
+folder, we can start to observe user behavior. So we can see when users move emails into the spam
+
+19
+00:01:48,560 --> 00:01:54,640
+folder. And we can also see when users move emails out of the spam folder back into the inbox.
+
+20
+00:01:56,160 --> 00:02:01,920
+And just like that, now we have a labeled data set to work with. So now we're cooking.
+
+21
+00:02:02,720 --> 00:02:06,080
+We have labeled data, a better understanding of the problem we're trying to solve,
+
+22
+00:02:06,640 --> 00:02:11,440
+and we can go ahead and replace that simple heuristic with a smarter machine learning model
+
+23
+00:02:11,440 --> 00:02:19,360
+to identify spam. So we'll take that data that we observed from user interactions in our product,
+
+24
+00:02:19,360 --> 00:02:24,720
+instantiate a model, fit it to our data. Great. Now we have a model that we can use to replace
+
+25
+00:02:24,720 --> 00:02:29,680
+that heuristic that we deployed in the first iteration to now improve our product.
+
+26
+00:02:32,400 --> 00:02:40,160
+However, I've learned that it doesn't always work this way. And specifically, I've been working in
+
+27
+00:02:40,160 --> 00:02:45,120
+the field of cybersecurity for the past five or so years. And working as a machine learning
+
+28
+00:02:45,120 --> 00:02:50,000
+engineer, just for some context in cybersecurity, I've mainly been focused on threat detection tasks.
+
+29
+00:02:50,000 --> 00:02:54,640
+So this is things like detecting phishing URLs or malware attachments and emails,
+
+30
+00:02:55,200 --> 00:02:59,440
+and trying to identify when bad actors might be trying to log into your accounts.
+
+31
+00:03:01,520 --> 00:03:09,360
+And threat detection exists in an adversarial environment. As we get better about detecting
+
+32
+00:03:09,360 --> 00:03:16,320
+and blocking malicious content, threat actors find new vulnerabilities to exploit. This means
+
+33
+00:03:16,320 --> 00:03:21,120
+that the threat landscape is constantly changing, and we need to be able to keep up with those
+
+34
+00:03:21,120 --> 00:03:27,760
+evolving threats. And spoiler alert, this is typically done using both tools and machine
+
+35
+00:03:27,760 --> 00:03:32,640
+learning, since they each have their own unique advantages, which I want to touch on.
+
+36
+00:03:32,640 --> 00:03:42,240
+So, let's talk a little bit about rules. Rules are honestly pretty great. They allow us to
+
+37
+00:03:42,240 --> 00:03:49,280
+directly encode our domain knowledge about threats and the threat landscape in the rules that we
+
+38
+00:03:49,280 --> 00:03:57,440
+write. We can also easily update those rules to fix false positives quickly when, you know,
+
+39
+00:03:57,440 --> 00:04:01,680
+like a customer complains about something getting blocked. Hopefully, you haven't experienced this
+
+40
+00:04:01,680 --> 00:04:07,600
+personally, but blocking benign content can be very disruptive, and we definitely want to be able
+
+41
+00:04:07,600 --> 00:04:12,720
+to make sure that we can remediate those false positives quickly after we learn about them.
+
+42
+00:04:15,840 --> 00:04:20,800
+Rules also allow us to react quickly to new threats. We may learn about a new threat through
+
+43
+00:04:20,800 --> 00:04:26,480
+a research briefing and want to provide protection against that threat before we actually see that
+
+44
+00:04:26,480 --> 00:04:32,000
+threat in our product data. And if you're curious, like, how that might work, a lot of research
+
+45
+00:04:32,000 --> 00:04:36,960
+briefings will include useful information. They call it indicators of compromise, think
+
+46
+00:04:37,520 --> 00:04:43,680
+hashes of known bad files, for example, that we could use to quickly write a rule. So, you know,
+
+47
+00:04:43,680 --> 00:04:48,640
+just to give you an example, here's a recent threat research report on some new malware variant,
+
+48
+00:04:48,640 --> 00:04:57,200
+along with some of the file hashes that we could use to detect known samples. And then, finally,
+
+49
+00:04:57,200 --> 00:05:02,720
+rules have interpretable logic, which makes it easier to understand and fine tune the rule,
+
+50
+00:05:03,840 --> 00:05:08,160
+and we can look at a given rule and kind of reason about why it classified a piece of content
+
+51
+00:05:08,160 --> 00:05:17,120
+a certain way. But machine learning is also pretty great. It's much better at generalizing
+
+52
+00:05:17,120 --> 00:05:22,640
+to unseen data. And this is useful in a variety of settings. I've built threat hunting tools that
+
+53
+00:05:22,640 --> 00:05:28,000
+leverage machine learning and semantic search that let a threat researcher say something like,
+
+54
+00:05:28,560 --> 00:05:33,280
+here's some malicious content that I'm interested in. Can you show me similar examples? Or maybe,
+
+55
+00:05:33,280 --> 00:05:39,600
+can you show me examples that have this particular aspect in common? And this can be very useful for
+
+56
+00:05:39,600 --> 00:05:45,680
+tracking the evolution of malware, for example, over time, as, you know, those files evolve and
+
+57
+00:05:45,680 --> 00:05:52,560
+are changed to try to evade detections. These models can also be useful for, you know, kind of
+
+58
+00:05:52,560 --> 00:05:58,720
+just like being able to learn more nuanced, complex decision boundaries than rules might be able to,
+
+59
+00:05:58,720 --> 00:06:04,400
+and allow us to discover new threats when we're using them for, you know, classifying malicious
+
+60
+00:06:04,400 --> 00:06:11,120
+content. And part of that's because, you know, as I mentioned, we're often very sensitive to false
+
+61
+00:06:11,120 --> 00:06:14,720
+positives. So we have to write, when we're crafting rules, we have to make sure that they're
+
+62
+00:06:14,720 --> 00:06:20,640
+very high precision. So those rules can usually end up carving out like very narrow areas in
+
+63
+00:06:20,640 --> 00:06:26,080
+feature space. So sometimes, like kind of like my mental model is like a model can help fill in some
+
+64
+00:06:26,080 --> 00:06:33,120
+of those gaps. And another nice thing about machine learning is we can automate the process of
+
+65
+00:06:33,120 --> 00:06:38,240
+figuring out the proper detection logic. So this is simplifying things a bit. But like, you know,
+
+66
+00:06:38,240 --> 00:06:43,680
+as long as you have a labeled data set, you can kind of let computers figure out the rest as far
+
+67
+00:06:43,680 --> 00:06:52,320
+as like classifying that malicious content goes. And then that aspect becomes very powerful as we
+
+68
+00:06:52,320 --> 00:06:57,840
+continue to collect data from product usage, as it enables us to easily retrain our models
+
+69
+00:06:58,480 --> 00:07:03,600
+and improve them over time as we collect more data. And that's one thing that you can't really
+
+70
+00:07:03,600 --> 00:07:08,640
+do with rules. You can't necessarily take recent product data and call fit on a rule to make it
+
+71
+00:07:08,640 --> 00:07:18,000
+better. And then finally, I'd argue that the maintenance costs scale better than rules.
+
+72
+00:07:18,000 --> 00:07:22,960
+The maintenance costs for machine learning scales better than rules. I think rules can be great for
+
+73
+00:07:23,520 --> 00:07:29,440
+simple logic and capturing low hanging fruit. But you can reach a certain complexity where
+
+74
+00:07:29,440 --> 00:07:36,800
+it starts making a lot of sense to leverage machine learning. And so from another perspective,
+
+75
+00:07:36,800 --> 00:07:42,000
+just to kind of like help visualize this, if we were to look at a precision recall curve,
+
+76
+00:07:42,880 --> 00:07:46,960
+one of the ways I think about this is kind of rules helps us capture some of the low hanging fruit
+
+77
+00:07:46,960 --> 00:07:54,800
+and capture threats that are easy to express in a rule. But adding in machine learning to the mix,
+
+78
+00:07:54,800 --> 00:07:59,840
+we're able to kind of push out that Pareto frontier and detect more malicious content.
+
+79
+00:08:00,800 --> 00:08:05,840
+And again, when we're making locking decisions based on threats, we have to make sure that we're,
+
+80
+00:08:05,840 --> 00:08:12,160
+you know, we have extremely high precision. So in practice, adding machine learning models to
+
+81
+00:08:12,160 --> 00:08:17,600
+complement the rules really helps us kind of like push out our recall and stop more threats from
+
+82
+00:08:17,600 --> 00:08:25,920
+causing users harm. But ultimately, these two systems are strongest when they're used together.
+
+83
+00:08:25,920 --> 00:08:31,520
+And I think that's the really important point that I want to emphasize here is that each of
+
+84
+00:08:31,520 --> 00:08:37,280
+these two systems have different perspectives on the data. And combining those perspectives gives
+
+85
+00:08:37,280 --> 00:08:43,520
+us a unique vantage point. We're able to look at subsets of the data where the model and rules agree
+
+86
+00:08:43,520 --> 00:08:49,120
+as well as highlighting subsets of the data where the two systems disagree. And those disagreements
+
+87
+00:08:49,120 --> 00:08:54,880
+or discrepancies are really useful tool for triaging human review of data, where we can
+
+88
+00:08:54,880 --> 00:09:01,840
+investigate and, you know, go in and attach like a ground truth label to that example. So, for
+
+89
+00:09:01,840 --> 00:09:08,160
+example, we can look at a mocked up discrepancy feed here, which compares the outputs of a rules
+
+90
+00:09:08,160 --> 00:09:14,160
+engine and a model prediction. And we're able to surface data where the two systems are disagreeing.
+
+91
+00:09:14,800 --> 00:09:19,440
+Humans can then come in and review this discrepancy feed and attach an ultimate
+
+92
+00:09:19,440 --> 00:09:25,760
+ground truth label to resolve the disagreements and improve the individual detection systems.
+
+93
+00:09:25,760 --> 00:09:30,400
+So, for example, we have a row here where the rule classified the data as malicious,
+
+94
+00:09:30,400 --> 00:09:36,160
+but the model said it was benign. And after human review, we concluded that it was in fact benign.
+
+95
+00:09:36,960 --> 00:09:43,360
+In this case, we now know that we need to go fix that rule to reduce its false positive rate.
+
+96
+00:09:43,360 --> 00:09:48,480
+And then in this case, we have a rule also classifying a piece of content as malicious,
+
+97
+00:09:48,480 --> 00:09:54,320
+where the model says it's benign. And after human review, we concluded that it is in fact
+
+98
+00:09:54,320 --> 00:09:59,760
+a malicious piece of content. And so, we'd want to take that example and maybe some other similar
+
+99
+00:09:59,760 --> 00:10:05,120
+examples, make sure they're all labeled, and then include that in some of our training sets,
+
+100
+00:10:05,120 --> 00:10:08,320
+so we can retrain that model and improve that model's performance.
+
+101
+00:10:08,320 --> 00:10:14,080
+Ultimately, to build kind of an effective threat detection system, we need to have a layer defense.
+
+102
+00:10:14,640 --> 00:10:19,600
+And this includes some manual effort, kind of exploring the data and hunting for threats,
+
+103
+00:10:19,600 --> 00:10:23,120
+developing rules to encode our domain knowledge of the threats that exist,
+
+104
+00:10:23,120 --> 00:10:26,480
+and training models to help scale our detection of malicious content.
+
+105
+00:10:28,080 --> 00:10:33,280
+We can leverage discrepancy feeds to help improve our rules and machine learning models.
+
+106
+00:10:33,280 --> 00:10:38,720
+And ideally, we can also capture user data and feedback and incorporate that data in our model
+
+107
+00:10:38,720 --> 00:10:46,000
+training as well. So, hopefully, you can start to gain an appreciation for the values of both
+
+108
+00:10:46,000 --> 00:10:51,360
+rules and machine learning in a threat detection system. And one topic that I've been thinking
+
+109
+00:10:51,360 --> 00:10:56,800
+about a lot lately is how we can make this all work well together. So, I'll talk through a couple
+
+110
+00:10:56,800 --> 00:11:01,920
+things that I've been thinking about in the past. One is the idea of a single-use model.
+
+111
+00:11:01,920 --> 00:11:04,400
+So, I'll talk through a couple things that I've been thinking about here.
+
+112
+00:11:06,480 --> 00:11:10,560
+The first is being able to package rules and machine learning models such that they
+
+113
+00:11:11,280 --> 00:11:18,400
+look similar at inference time. And this allows us to easily start with a rule and deploy that
+
+114
+00:11:18,400 --> 00:11:22,960
+out for a given threat, but just as easily introduce machine learning models kind of in
+
+115
+00:11:22,960 --> 00:11:30,720
+parallel as we've collected more labeled data into our detection stack. And there's a really
+
+116
+00:11:30,720 --> 00:11:37,760
+cool library by one of our Norm Comp speakers today, Vincent, called Human Learn, which basically
+
+117
+00:11:37,760 --> 00:11:44,800
+lets you craft rules and wrap that into a scikit-learn interface. So, if you're at all
+
+118
+00:11:44,800 --> 00:11:50,000
+interested, I highly recommend you check it out. Vincent has some great examples and documentation
+
+119
+00:11:50,000 --> 00:11:57,120
+to get started on that. And I think it's a very interesting kind of like library and approach to
+
+120
+00:11:57,120 --> 00:12:04,160
+making inference look the same. I also think it's incredibly valuable to be able to track
+
+121
+00:12:05,040 --> 00:12:10,080
+and evaluate these models and heuristics using common infrastructure. So, after writing a rule,
+
+122
+00:12:10,080 --> 00:12:14,640
+you should be able to run it through an evaluation set and capture important metrics for that model
+
+123
+00:12:14,640 --> 00:12:18,800
+at the time that you authored that rule. And then after training a machine learning model,
+
+124
+00:12:19,440 --> 00:12:24,400
+we can run it through that same evaluation set, capture those same important metrics that we care
+
+125
+00:12:24,400 --> 00:12:31,520
+about, and all of our experimentation data and context can easily be stored and discovered in
+
+126
+00:12:31,520 --> 00:12:38,640
+a single tool. And then this can also carry over into something like a model registry,
+
+127
+00:12:38,640 --> 00:12:45,200
+or I guess in this case, a model plus rules registry, where we can link artifacts back to
+
+128
+00:12:45,200 --> 00:12:49,440
+all the data that we have in our experiment tracking system, as well as have a kind of
+
+129
+00:12:49,440 --> 00:12:54,960
+centralized control plane for rolling out new artifact versions to production. And this can
+
+130
+00:12:54,960 --> 00:13:00,480
+be really useful in quickly answering questions like what models are deployed right now? Did we
+
+131
+00:13:00,480 --> 00:13:05,920
+make updates to that one heuristic? And this detection rule seems to be firing a lot. How
+
+132
+00:13:05,920 --> 00:13:14,640
+often did it fire in our evaluation set? And then finally, when we have multiple systems
+
+133
+00:13:14,640 --> 00:13:19,680
+making judgments about a certain piece of content, we need to be able to combine those outputs into
+
+134
+00:13:19,680 --> 00:13:26,720
+a single decision. So this concept of a policy layer, which is kind of responsible for defining
+
+135
+00:13:26,720 --> 00:13:34,320
+how those outputs should be combined, becomes important. And in some cases, the policy might be
+
+136
+00:13:34,320 --> 00:13:41,200
+super simple, like just a logical or a statement. So if any subsystem classifies a piece of content
+
+137
+00:13:41,200 --> 00:13:48,000
+as malicious, then we'll go ahead and block it. Or in other cases, you might have some more complex
+
+138
+00:13:48,000 --> 00:13:52,240
+logic here, such as scenarios where you may not trust the machine learning model's output.
+
+139
+00:13:52,960 --> 00:13:58,480
+Like maybe that machine learning model has low certainty on a specific piece of data,
+
+140
+00:13:58,480 --> 00:14:03,520
+and you want to be able to fall back on the rule system's output. Or let's say the machine
+
+141
+00:14:03,520 --> 00:14:08,480
+learning model has a false positive that a customer reported, and you want to be able to
+
+142
+00:14:08,480 --> 00:14:13,200
+very quickly remediate that. You might want to be able to override the model's prediction
+
+143
+00:14:14,400 --> 00:14:17,440
+for that specific scenario in the policy layer.
+
+144
+00:14:20,800 --> 00:14:25,360
+And ultimately, I think as we take a step back to kind of look at the big picture,
+
+145
+00:14:26,480 --> 00:14:31,360
+machine learning exists as a part of an overall threat detection system. So if you were just
+
+146
+00:14:31,360 --> 00:14:35,680
+listening in to Peter's talk, I thought it was a really great point about kind of like, you know,
+
+147
+00:14:35,680 --> 00:14:41,120
+machine learning is the carbon fiber material. And you wouldn't build an entire bridge out of
+
+148
+00:14:41,120 --> 00:14:48,640
+carbon fiber, but it's a very useful material that you can use. So in my experience, I haven't
+
+149
+00:14:48,640 --> 00:14:54,000
+actually seen the scenario where we replace some initial rule-based logic with the machine learning
+
+150
+00:14:54,000 --> 00:15:00,640
+model. Instead, the two systems, at least for threat detection scenarios, the two systems kind
+
+151
+00:15:00,640 --> 00:15:08,080
+of work together in a symbiotic fashion. All right, that's all I've got for today. I hope
+
+152
+00:15:08,080 --> 00:15:13,280
+you found it interesting to kind of learn a little bit more about the world of threat detection and
+
+153
+00:15:13,280 --> 00:15:18,480
+how rules and machine learning models can work together to improve the overall threat detection
+
+154
+00:15:18,480 --> 00:15:31,040
+system.
+

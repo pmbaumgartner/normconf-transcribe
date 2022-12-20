@@ -1,0 +1,549 @@
+What I'm here to talk about is a group by statements
+that will save the day,
+which I thought was going to be an interesting topic.
+So what I would like to do is explain
+what this talk is about,
+but I also want to explain who the talk is for,
+because in my mind,
+there are people like Alice and Bob and Factorella
+that are interested in maybe getting started
+in this field of stuff with data.
+It's a very attractive field.
+And maybe Alice and Bob are recent graduates.
+Maybe they're just interested in a career transition,
+but it's been a while since I was a beginner.
+So I was thinking, you know,
+what is it like to maybe start out now?
+And then you give it a Google
+and then you read stuff like,
+hey, data drives everything
+and you need to get the skills you need
+for the future of work.
+And there are these listicles of like 10 essential skills
+for data scientists.
+And if you really try hard, I mean,
+you will even find like the best data science
+certificate programs from a bootcamp
+that I will not name here,
+but people are very eager to take your money
+so they can give you a certificate.
+And, you know,
+and that kind of brings me to the topic of this talk
+because what I want to talk about in this talk
+is two stories of two datasets.
+These two datasets are properly beautiful
+because they both tell a story,
+but the reason why they're beautiful
+is also because it's a story that I think
+Alice and Bob and Vectorella really need to hear.
+It is a story to help remind everyone
+of the human aspect of this data work that we're doing.
+And hopefully it's also a story
+that might help remove some anxiety
+against this whole must-have skills phenomenon
+that I'm becoming increasingly frustrated with
+on the internet.
+So with that out of the way,
+let's talk about a beautiful dataset.
+The first dataset I want to talk about
+is called ChickWaite.
+ChickWaite comes with the language R.
+So if you install R,
+you can call this variable ChickWaite
+and you actually get this dataset.
+It comes with the language.
+It's a neat feature.
+And this dataset has a couple of columns.
+So one column is chick,
+the other one's time,
+the other one's weight.
+And the idea here is that the chicken number one
+at time step zero had a certain weight.
+And as time moves on,
+the weight also increases.
+But this chicken also had a diet.
+This chicken got a specific kind of food.
+And different chickens might have different kinds of food,
+but you can imagine that there's kind of a use case here
+where it's kind of like an A-B test.
+We're trying to figure out which diet is best
+for the chickens to get them to grow.
+And if you're the good data science person
+that you're supposed to be,
+you do some exploratory work.
+So you make a chart and you kind of get this.
+On the X-axis, you've got time.
+On the Y-axis here, you've got weight.
+And you can see that there's this general pattern
+in the middle over here.
+You can definitely see the average is going up,
+but you can also see that there's a bit of variance.
+There's actually quite a bit of spread here.
+And that is something that you can totally see.
+But then you can do sort of the clever group by.
+And what you then notice is that when you group by the time
+as well as the diet,
+you can kind of make a summary line for each diet.
+And you can also see that some of these diets
+perform better than others.
+It's like something that you can conclude.
+Ah, but now come the data machine learning people.
+And they say, we have these tools for the future of work.
+These are tools that you really want to use and apply.
+So I can imagine the pressure, right?
+Like you're doing analysis here,
+but you need to wiggle a tool in here
+that's supposedly the future of work.
+And these are good tools by the way,
+but like I can imagine that there's this pressure.
+So then immediately your mind kind of goes like,
+maybe I need to do something predictive here.
+And you can actually come up
+with a reasonable use case for that.
+You can actually say, well, given a diet and the time,
+maybe we can predict the growth trajectory
+for these chickens.
+And it's actually kind of a reasonable thing you could do.
+But you can also just wonder,
+well, is that the thing we should do?
+Like, should we immediately think about the modeling thing
+we want to predict here?
+Because maybe that's a distraction.
+And I'm about to give you like a very good hint.
+Like if you're in data science,
+there's one thing people don't do enough of.
+And that is that when they make a visualization like this,
+you need to take five minutes
+and just stare at the thing for a while.
+And you need to look for stuff that might surprise you.
+Hadley Wickham has this really great quote,
+a machine learning scales very well,
+but it doesn't surprise you.
+Visualizations don't scale super well,
+but they do have the ability to surprise you.
+And in this case, if you just squint your eyes a bit,
+something fishy is happening here.
+Notice here, like a time step zero, right?
+It seems that there's a chicken
+that's actually losing weight.
+Because if I look at the height,
+there's definitely like a chicken here
+that seems to be losing weight.
+I don't know which one of these chickens, right?
+But that's a bit off.
+And it's not just happening here.
+It's also happening, well, here.
+And that's a hint.
+So, okay, something weird seems to be happening there.
+Maybe we shouldn't model just yet.
+Maybe we need to think a little bit about that.
+Maybe we need to do another group by.
+And what I'm going to do now
+is I'm going to make the same visualization,
+but I'm just going to group by the chicken.
+Like I'm going to ignore the diet for now.
+Just group by the chicken.
+And when you do that,
+you get a growth line for each of these chickens.
+Let's just go back there.
+You get a growth line for each of these chickens.
+And you can kind of see the trajectory for each of them.
+And when you then zoom in again
+and you squint your eyes again,
+you will notice that a chicken stops here.
+And another chicken stops there.
+Another chicken stops there.
+And if we now zoom out again
+and we just assign a color to the chickens
+that stopped prematurely.
+Okay, it seems that some chickens die prematurely.
+I don't know for sure,
+but that's a hint that I'm getting.
+And now if I take a step back and I ask myself,
+which of these two charts is more important, right?
+Like even if I'm using the most fancy machine learning tools
+and I'm like displaying all the metrics
+that try to convince you
+of how good the predictive power is,
+we have to be very critical here
+because suppose that you have a TensorFlow model
+that's very good at predicting
+like the average diet weight over here.
+Are we actually sure that it's taking into account
+that some of the chickens might've died?
+Unless you are aware that that's the thing
+you got a model for,
+the model's not gonna know about it.
+And this, I would argue,
+is a really nice example of a group by statement
+that can really save the day.
+If you didn't know this upfront,
+you might be pushing a model to production
+that predicts dead chickens.
+And that will be bad, I think.
+So maybe we don't need TensorFlow to save the day.
+Maybe we need a certificate for asking the right question
+because that's something we maybe need more of.
+It's like a very simple conclusion
+that I have with this dataset.
+So, okay, that's just one dataset.
+Let's move on to the next one.
+Now, this other dataset
+deserves a slightly different introduction
+because I have to talk about this kind of,
+I will say, unclear task first
+that's increasingly popular.
+So what you can do is you can go to this website
+called HuggingFace.
+And HuggingFace has a couple of interesting features.
+They host datasets, they host a bunch of models,
+but you can also search for these models.
+And one way of searching allows you to say,
+well, I'm interested in the task of text classification.
+That means text goes in and some sort of class comes out.
+And you can predict just about anything
+like topic of a newspaper article and whatnot.
+But apparently in the top five,
+like most downloaded models on text classification,
+four or five are about sentiment,
+which is basically saying text goes in
+and out goes positive or negative.
+But then you start wondering,
+like how do I interpret positive and negative?
+Because that's a pretty big bucket of stuff.
+Like I can be in love and I can be laughing,
+but those are two quite distinct emotions
+that I don't think we should really pretend
+like they are the same.
+That feels a bit strange
+and maybe the same thing for fear and anger.
+Like I get that sentiment is like a simple concept,
+but it might be too simple as well,
+depending on what we're interested in doing with text.
+So imagine my delight when around the same time last year,
+like about a year ago, a bit longer,
+I learned about this dataset called Google Emotions.
+They took the effort of actually writing a paper
+and the Google name is attached.
+And this is a dataset where we're not doing just sentiment.
+No, we're actually doing emotions.
+So they took data off of Reddit
+and you've got texts like this, like, oh my God, yep.
+That's the final answer.
+Thank you so much.
+And like, you can attach labels to it.
+This is not classification, it's more like tagging.
+So you can have more than one class attached to this.
+Let's move a bit of a detail,
+but I think it's interesting because it also makes sense.
+You can have texts where more than one emotion applies.
+So that feels appropriate.
+And what you can do here is that
+they also did a bit of annotation.
+So each example was annotated by at least three people.
+Sometimes even five people had to look at it.
+And you can read the paper
+and read all sorts of interesting details.
+So there's about 60, like almost 60,000 text examples,
+over 200,000 annotations, 82 people were annotating here.
+There were 27 emotion tags attached from amusement to joy,
+to relief, to nervousness and grief.
+I mean, it's a huge pallet of emotions that was covered.
+They also made this correlation chart that was interesting.
+So you can see that like some emotions co-occur together
+and some don't, some just don't appear together at all.
+That's something that the paper did mentioned.
+There's also like a lot of effort
+that went into pre-processing
+that was pretty interesting to read.
+So they removed a couple of subreddits
+just because they were too vulgar, makes sense, Reddit.
+But they also masked the name of people
+as well as references to religion.
+Seems like a good thing.
+They made sure that each test had at least three tokens
+and no more than 30.
+All the annotators were English natives.
+So, you know, a bunch of interesting things
+that went into this, bunch of thought.
+And then the paper also goes into like benchmark models.
+So the deep learning thing
+where they all show the confusion matrix.
+And it makes sense that certain emotions
+are confused with each other.
+And oh, there's also these awesome like F1 charts
+for transfer learning.
+And here's where we need to stop again.
+Because we can get excited about these charts like before.
+Like we can really get the blood pumping.
+But what if there are dead chickens in this dataset too?
+And that's a question I've been asking myself
+more and more recently.
+So usually when you're looking for dead chickens
+in the dataset, it's like a really good exercise to do.
+But if you're looking for a good hint,
+try to think about how the dataset got created.
+Because let me give you a hint.
+If you can't use visualization,
+how a dataset got created usually gives a good hint too.
+So this dataset got created
+because a bunch of people on the internet were annotating.
+And if I recall correctly,
+I believe the paper mentioned Mechanical Turk.
+So it's not just the fact that we have
+many people annotating.
+We also have people annotating that aren't in the same room.
+You can actually assume that these people
+don't necessarily talk to each other.
+And you can kind of wonder,
+well, maybe these people occasionally disagree.
+That's definitely possible.
+Especially when it's emotion,
+which is culturally like a thing.
+It's not necessarily universal.
+It's language, that's also a thing.
+Oh, and by the way, it's also Reddit data.
+And that brings in an interesting phenomenon.
+So on Reddit, you can have texts like,
+oh my God, those tiny shoes desire to,
+should be boob snoot,
+a desire to boob snoot intensifies.
+Like that's a perfectly normal sentence on Reddit.
+But I can imagine that if you're like the 25 year old
+or 50 year old trying to parse
+what's actually being communicated here.
+Like, can we really assume that everyone
+has the same opinion on whether or not
+this is about excitement?
+And by the way, this is an actual example from the dataset.
+I'm not making this up.
+This stuff just naturally appears.
+But no, okay, maybe this is grouped by time.
+Maybe this is one of those things I just need to check
+before I do any sort of modeling on this thing.
+Let's just see if I can come up with a nice little number.
+So I group by text and I just check
+whether or not all annotators agree.
+On all 27 emotions, by the way, at the same time.
+That's the number that I'm calculating here.
+And there you go.
+Out of the 58,000 text examples,
+less than 8,000 of them have every annotation
+agree on every emotion.
+So it's like 13% of all the examples
+have everyone actually agree on the emotions that are there.
+That's not a huge number.
+But I do want to caveat just a little bit.
+So when there are 27 emotions,
+if only one of the annotators disagrees
+with one of the emotions,
+that also means that there's no agreement
+between all of them, right?
+So it's not like I expected this number to be high.
+But I would also expect that if I'm going to do
+machine learning on this,
+I do expect this number to be just slightly higher, maybe.
+And what's more, you can also do some other
+really interesting group buys here.
+So what you can also do is you can say,
+let's just look at the top three annotators.
+Usually these data sets, by the way,
+they come with like a huge skew,
+like the top N% has like way more than N% of the annotations.
+So in this case, the top three annotators
+annotate about 14% of all the data.
+Together, they annotated almost 7,000 examples
+and not even half of them agree with each other.
+So this whole disagreement thing,
+you didn't need 82 people to discover this.
+If you just take three people,
+it seems that they immediately disagree
+on a lot of this stuff.
+And again, I would argue,
+this is another example of a group buy statement
+that could really save the day.
+Imagine running this,
+imagine not running this statistical check up front.
+Imagine training a huge group of people
+to do a group buy statement.
+Imagine training a huge model on it.
+Right?
+And again, it's the same thing,
+like which is more important.
+And I hopefully don't have to convince too many people.
+There's a risk that you're gonna model too early
+if you focus too much on the modeling tools
+that are out there.
+And just to like really drive this point home,
+like the standard data science pipeline, right?
+You start with your data,
+you pre-process the thing,
+you model the thing,
+outcomes on metrics.
+And if we like the metrics,
+we do the prediction thing.
+Well, if your data is not too great,
+your predictions are not gonna be too great,
+but your metrics can still be super shiny.
+Like if people have bad labels, for example,
+your accuracy numbers are not gonna prevent you
+from putting bad predictions out there.
+And I don't necessarily wanna dunk on people,
+but I also had a look on the same Hugging Face website.
+And it turns out that a whole bunch of people
+trained models on Google Emotions
+and they put them out there.
+And some of these models got downloaded
+like 260,000 times.
+And you gotta wonder,
+like, did they run the group by?
+Maybe not.
+And I also don't wanna blame them, right?
+If you see a dataset from Google,
+you know, that's like had all of this effort being taken in
+and had all the charts,
+I could definitely imagine that all of that distracts you
+from thinking about running
+this one little group by statement.
+Like, I do think it's a shame
+because people forget how these datasets came to be,
+but this whole annotation process that happens before it
+is really, really important.
+And I do worry that maybe if we're convincing ourselves
+that let's say TensorFlow or Scikit-learn,
+if those are the must-have tools,
+that maybe we forget about the step back
+that we gotta do once in a while.
+And, you know, with that in mind, looking back,
+I do gotta admit,
+Google Emotions is actually kind of a beautiful dataset
+if you think about it.
+Like, sure, there's annotated disagreement,
+but I also don't wanna dunk on Google Emotions here
+because a part of me actually fell in love with it.
+Like, for a moment here, right?
+How many datasets that are used for public benchmarking
+actually contain the annotator information?
+I can't think of a lot of them.
+And it's a great case study, actually,
+if you think about it.
+And what's more, there are actually
+some really interesting papers being written about this.
+There's one paper that I do recommend giving a read.
+The title is,
+Are We Modeling the Task or the Annotator?
+This is about annotator bias.
+Turns out if there's like one person
+who has like too many of the annotations
+under the his or her belt,
+that's gonna totally bias like the aggregate label
+that might come out.
+It's a really good read.
+But also, Google Emotions definitely had like
+an almost career-altering effect on me.
+Before, I would say, oh my God, super cool, new dataset,
+let's try stuff.
+But now I like to think I'm a bit more critical.
+Before actually putting this in production,
+I really start to wonder,
+well, maybe there's something wrong with it.
+At least I should check like some basics.
+And it also led me to write a library.
+There's a library called Doubt Lab.
+It is a relatively simple tool
+with some scikit-learn-based tricks
+to try and find some bad labels in your dataset.
+And they're just simple tricks.
+They're not necessarily state-of-the-art,
+but there's stuff in there that generally is worth a try.
+And if you find that there are like some weird labels
+in your dataset,
+that's an excellent time to maybe pull the plug
+and say, let's first check our annotator process.
+Maybe there's something up with that.
+That's gonna prevent a whole lot of harm in production.
+If you're interested in that, by the way,
+like how those tricks work,
+the Explosion YouTube channel,
+which is again, my employer,
+I was able to make some content for that.
+So if you're interested in like the techniques
+on how to find these bad labels,
+definitely check that out.
+But then if I sort of pivot back
+to like the topic of the talk,
+like if we're gonna be talking about like,
+what are the must-have skills here, really?
+I mean, I get that you're not gonna be able
+to buy a certificate in common sense.
+And I also understand that it's gonna be kind of hard
+to find a bootcamp in critical thinking.
+I also don't wanna suggest that these tools are useless.
+They're not.
+Tools can be super useful,
+but maybe at this point in time,
+there's too much emphasis on learning these technical tools.
+And maybe it will be better
+if we can come up with more content
+that puts emphasis on this human part.
+Maybe we just need more anecdotes to share around
+and maybe that's gonna prevent more harm.
+So looking back, I hope people look at this and they say,
+well, this was indeed a talk about two datasets.
+And I also hope that we all agree
+that both of these datasets are actually super beautiful
+because they tell a very beautiful story.
+But most of all,
+I hope that the story here helps give Alice and Bob
+and Vectorella a sense of calm
+because maybe even if we're Googling,
+we should worry less about these must-have
+and essential skills
+because maybe we should just admit tools are just tools.
+It's very good to learn some,
+but maybe it's more important to just stay aware
+of what you're doing and to be the human in the loop.
+And when you do that,
+you might just have group by statements that save the day.
+And that, if anything else,
+is what we need more of in our field.
+And I also want to mention this
+because I do get this question a lot.
+It's this frustration with educational content
+that actually led me to make CalmCode.
+I get this question a bit,
+so I figured I might just mention it.
+It's honestly the fact that
+mainly what we maybe should be doing
+is just focusing on making educational content
+that are more about tools and thoughts
+that make your professional life just more enjoyable.
+And maybe we should be less braggy
+about the tools that we use
+because they're not necessarily super state-of-the-art.
+They're all just tricks to help us get through the day.
+And I'm mentioning this explicitly
+because a couple of you, dear listeners,
+are also content makers yourself.
+You do a bit of education.
+Try to keep the calm in mind is the only thing I would ask
+because I do think our profession
+will be a whole lot better
+if we stop bragging about the tools
+and we just start sharing anecdotes a bit more.
+I do think the field could maybe use a bit more of that.
+So having said that, thanks for listening.
+I hope this was super interesting.
+And if I can give one small plug,
+so I work for this company called Explosion.
+And we have a bunch of cool tools like Spacey.
+You might've heard of that.
+And I can't announce anything just yet,
+but I can say there's a bunch of really cool stuff
+in the pipeline.
+So like, give us a follow.
+Like there's cool stuff coming.
+Just wanna mention that.
+Thanks for listening.
+Ask me anything in Slack
+and I'll be around for the conference today.

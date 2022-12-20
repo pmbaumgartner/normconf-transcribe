@@ -1,0 +1,1592 @@
+1
+00:00:00,000 --> 00:00:09,160
+Before I get started on this talk about data ethics, I want to give you a little bit more
+
+2
+00:00:09,160 --> 00:00:18,200
+info on my background and how I came to be giving this talk today.
+
+3
+00:00:18,200 --> 00:00:19,200
+I'm Roy.
+
+4
+00:00:19,200 --> 00:00:26,040
+I guess that was made clear, not sort of a cheeseburger only part-time.
+
+5
+00:00:26,040 --> 00:00:30,960
+Let's start with what I was doing before I got into the world of data science and machine
+
+6
+00:00:30,960 --> 00:00:34,440
+learning so that this all fits together.
+
+7
+00:00:34,440 --> 00:00:38,240
+By training, I'm a computational physicist.
+
+8
+00:00:38,240 --> 00:00:46,280
+I did research which centered on simulating the interaction of radiation with humans for
+
+9
+00:00:46,280 --> 00:00:47,760
+the purposes of cancer treatment.
+
+10
+00:00:47,760 --> 00:00:53,920
+I also worked on some actual experiments that were investigating the use of exotic particle
+
+11
+00:00:53,920 --> 00:00:58,200
+beams also for cancer treatment.
+
+12
+00:00:58,200 --> 00:01:04,080
+After grad school, I went to work in a cancer clinic doing what's called medical physics.
+
+13
+00:01:04,080 --> 00:01:09,440
+I worked in radiation therapy with big expensive radiation machines.
+
+14
+00:01:09,440 --> 00:01:17,240
+But then I switched to data science after about a year and a half working in the cancer
+
+15
+00:01:17,240 --> 00:01:19,600
+clinic.
+
+16
+00:01:19,600 --> 00:01:23,740
+I went over to the sexiest job of the 21st century, of course.
+
+17
+00:01:23,740 --> 00:01:26,720
+This was in the early days when it was still pretty much the Wild West.
+
+18
+00:01:26,720 --> 00:01:30,080
+Maybe you could say we're still in the early days, still the Wild West.
+
+19
+00:01:30,080 --> 00:01:31,080
+That's a different talk.
+
+20
+00:01:31,080 --> 00:01:37,040
+Over the past decade, I've worked at several startups that you've probably never heard
+
+21
+00:01:37,040 --> 00:01:38,040
+of.
+
+22
+00:01:38,040 --> 00:01:39,040
+That's fine.
+
+23
+00:01:39,040 --> 00:01:44,640
+I've also done a lot of independent consulting and also mostly with startups that you've
+
+24
+00:01:44,640 --> 00:01:45,640
+never heard of.
+
+25
+00:01:45,640 --> 00:01:50,200
+Mostly, I tend to work with very small startups when I do my consulting.
+
+26
+00:01:50,200 --> 00:01:54,800
+In that time, I've probably spent about half of it as a pure independent contractor and
+
+27
+00:01:54,800 --> 00:01:59,160
+about half of that time leading teams.
+
+28
+00:01:59,160 --> 00:02:05,720
+If you remember the pandemic, I decided to write a book during the pandemic.
+
+29
+00:02:05,720 --> 00:02:07,680
+That ended up being a couple books.
+
+30
+00:02:07,680 --> 00:02:13,320
+The first book I wrote was about hiring data people based on a lot of my experience.
+
+31
+00:02:13,320 --> 00:02:16,280
+Chris Albarn is one of the people interviewed in the book.
+
+32
+00:02:16,280 --> 00:02:18,040
+You can put that in the plus or minus column.
+
+33
+00:02:18,040 --> 00:02:19,360
+I'll leave it up to you.
+
+34
+00:02:19,360 --> 00:02:24,000
+The book's called Hiring Data Scientists and Machine Learning Engineers, a Practical Guide.
+
+35
+00:02:24,000 --> 00:02:28,440
+It is a practical guide to hiring data scientists and machine learning engineers.
+
+36
+00:02:28,440 --> 00:02:31,720
+I will not be taking questions.
+
+37
+00:02:31,720 --> 00:02:36,880
+The second book I wrote is a little pocket-sized overview of the main concepts in deep learning.
+
+38
+00:02:36,880 --> 00:02:39,040
+It's called Zeph's Guide to Deep Learning.
+
+39
+00:02:39,040 --> 00:02:43,480
+Theoretically, this is the first book in a series of small books about deep learning
+
+40
+00:02:43,480 --> 00:02:48,000
+and other data science and machine learning topics.
+
+41
+00:02:48,000 --> 00:02:49,680
+Let's see, what else?
+
+42
+00:02:49,680 --> 00:02:56,240
+Somehow, I ended up becoming co-organizer of VikiConf, which this is what we're here
+
+43
+00:02:56,240 --> 00:02:57,240
+for.
+
+44
+00:02:57,240 --> 00:03:04,080
+Of course, Viki forced us to change the name for some reason.
+
+45
+00:03:04,080 --> 00:03:05,080
+Now it's NormConf.
+
+46
+00:03:05,080 --> 00:03:09,960
+I still really don't know who Norm is, but whatever.
+
+47
+00:03:09,960 --> 00:03:11,560
+Let's get to this talk.
+
+48
+00:03:11,560 --> 00:03:16,800
+This talk is about ethics.
+
+49
+00:03:16,800 --> 00:03:20,920
+Before I get to the ethics stuff I'm going to talk about, first I want to talk about
+
+50
+00:03:20,920 --> 00:03:28,080
+the stuff I'm not going to talk about, whatever that means.
+
+51
+00:03:28,080 --> 00:03:36,240
+There is, I would say, a whole world of data ethics topics.
+
+52
+00:03:36,240 --> 00:03:39,400
+There's a lot of names for this stuff.
+
+53
+00:03:39,400 --> 00:03:43,840
+There's AI ethics, ML ethics, robot ethics, but for this talk, mostly I'm just going to
+
+54
+00:03:43,840 --> 00:03:47,520
+call everything data ethics.
+
+55
+00:03:47,520 --> 00:03:50,080
+There are lots of different areas in data ethics.
+
+56
+00:03:50,080 --> 00:03:51,840
+Some of them are pretty well known.
+
+57
+00:03:51,840 --> 00:03:56,360
+If you're on social media or follow the news, you've probably heard of several of these
+
+58
+00:03:56,360 --> 00:04:00,040
+areas and that's what's on this map.
+
+59
+00:04:00,040 --> 00:04:04,560
+There's a fair amount of overlap and the boundaries are pretty fuzzy.
+
+60
+00:04:04,560 --> 00:04:16,480
+I didn't attempt to do any Venn diagrams or anything, but it is what it is.
+
+61
+00:04:16,480 --> 00:04:18,920
+These are the sexy parts of data ethics.
+
+62
+00:04:18,920 --> 00:04:24,440
+They're the ones that get people's attention as well as funding and resources.
+
+63
+00:04:24,440 --> 00:04:26,520
+Usually that's for good reason.
+
+64
+00:04:26,520 --> 00:04:31,960
+But of these, I would say there are probably three that are the main sexiest areas at the
+
+65
+00:04:31,960 --> 00:04:36,040
+moment.
+
+66
+00:04:36,040 --> 00:04:39,000
+I think I went too far with this.
+
+67
+00:04:39,000 --> 00:04:42,160
+The first area I'll call social justice data ethics.
+
+68
+00:04:42,160 --> 00:04:46,720
+This area is concerned with the effects that current and emerging data and algorithmic
+
+69
+00:04:46,720 --> 00:04:52,480
+technologies are having on society, especially with regards to how these technologies further
+
+70
+00:04:52,480 --> 00:04:58,800
+or exacerbate issues of social justice, such as racism, sexism, gender bias, and other
+
+71
+00:04:58,800 --> 00:05:02,520
+issues, maybe broadly social fairness.
+
+72
+00:05:02,520 --> 00:05:08,000
+You'll often hear terms like algorithmic bias, transparency, accountability, fairness in
+
+73
+00:05:08,000 --> 00:05:09,000
+this area.
+
+74
+00:05:09,000 --> 00:05:15,320
+This area is also concerned with things like whether people who provided the training data,
+
+75
+00:05:15,320 --> 00:05:19,360
+they were the source of the training data, whether they were for different kinds of models,
+
+76
+00:05:19,360 --> 00:05:27,240
+whether they actually gave consent to do that, or whether they were fairly compensated for
+
+77
+00:05:27,240 --> 00:05:29,600
+providing that data.
+
+78
+00:05:29,600 --> 00:05:34,760
+This is also an area where there's a lot of attention from big tech companies, some lawmakers,
+
+79
+00:05:34,760 --> 00:05:41,360
+and there's nonprofit organizations and universities that focus on this as well.
+
+80
+00:05:41,360 --> 00:05:47,040
+The next area is existential AI risk ethics.
+
+81
+00:05:47,040 --> 00:05:50,000
+Just add ethics to everything and it becomes an area.
+
+82
+00:05:50,000 --> 00:05:54,240
+This is an area that's concerned with the potential threats posed by human or super
+
+83
+00:05:54,240 --> 00:05:55,480
+human level AI.
+
+84
+00:05:55,480 --> 00:06:00,200
+So usually when you talk about this, you talk about like the Terminator scenario, the robots
+
+85
+00:06:00,200 --> 00:06:03,280
+rising up.
+
+86
+00:06:03,280 --> 00:06:08,920
+That's broadly like if humans could produce AI that could outcompete us in most ways,
+
+87
+00:06:08,920 --> 00:06:15,640
+but is not actually aligned with human interests, will that AI decide to just wipe us all out?
+
+88
+00:06:15,640 --> 00:06:21,120
+This is also an area with there's nonprofit organizations, think tanks, universities that
+
+89
+00:06:21,120 --> 00:06:27,040
+are working in this and trying to understand what these risks actually are and how you
+
+90
+00:06:27,040 --> 00:06:31,600
+might mitigate these risks.
+
+91
+00:06:31,600 --> 00:06:36,600
+The last of the big three is probably the one that's been getting the most press in
+
+92
+00:06:36,600 --> 00:06:39,160
+recent weeks and months.
+
+93
+00:06:39,160 --> 00:06:42,880
+These are the generative model ethics.
+
+94
+00:06:42,880 --> 00:06:49,240
+So get your norm conf bingo cards ready because this is about stable diffusion and chat GPT.
+
+95
+00:06:49,240 --> 00:06:53,240
+I don't know if you remember stable diffusion, that's probably faded from memory at this
+
+96
+00:06:53,240 --> 00:06:54,560
+point.
+
+97
+00:06:54,560 --> 00:06:59,480
+These are the models that are trained on massive data sets of images and text, and they're
+
+98
+00:06:59,480 --> 00:07:05,160
+subsequently able to produce human or near human level image and text as a result of
+
+99
+00:07:05,160 --> 00:07:06,640
+that.
+
+100
+00:07:06,640 --> 00:07:10,840
+And while that's very amazing, I think if you took someone from 10 years ago and showed
+
+101
+00:07:10,840 --> 00:07:13,400
+them this stuff, they just wouldn't believe you.
+
+102
+00:07:13,400 --> 00:07:17,200
+But it also raises a lot of questions and some of those questions have been brought
+
+103
+00:07:17,200 --> 00:07:23,800
+up today in some of the talks, but is training on this data, much of which is copyrighted,
+
+104
+00:07:23,800 --> 00:07:24,960
+even legal?
+
+105
+00:07:24,960 --> 00:07:28,600
+Will this put artists and writers and coders out of work?
+
+106
+00:07:28,600 --> 00:07:30,480
+What about the bias that's in that training data?
+
+107
+00:07:30,480 --> 00:07:35,160
+Will this clog the internet with tons of spam and other crap?
+
+108
+00:07:35,160 --> 00:07:36,160
+Who is responsible?
+
+109
+00:07:36,160 --> 00:07:42,040
+Who is responsible for what when you use these models?
+
+110
+00:07:42,040 --> 00:07:47,360
+Now those are the ones I consider kind of the big three, and I guess I should say, by
+
+111
+00:07:47,360 --> 00:07:51,160
+the way, the first two groups, they seem to really dislike each other.
+
+112
+00:07:51,160 --> 00:07:56,240
+If Twitter feuds are to be believed, their basic argument seems to be you over there,
+
+113
+00:07:56,240 --> 00:08:00,000
+you're focusing on things that don't really matter.
+
+114
+00:08:00,000 --> 00:08:06,720
+But there's also several other relatively well-known areas of data ethics, which I'm,
+
+115
+00:08:06,720 --> 00:08:09,040
+let's see, trying to get there.
+
+116
+00:08:09,040 --> 00:08:11,760
+Okay, here we go.
+
+117
+00:08:11,760 --> 00:08:13,640
+Lethal autonomous weapon ethics.
+
+118
+00:08:13,640 --> 00:08:15,440
+So this is an interesting area.
+
+119
+00:08:15,440 --> 00:08:19,600
+Lethal autonomous weapons, those are basically drones and robots that can pick a human target
+
+120
+00:08:19,600 --> 00:08:24,280
+and injure or kill that person without another human being having to make the decision to
+
+121
+00:08:24,280 --> 00:08:26,500
+actually pull the trigger.
+
+122
+00:08:26,500 --> 00:08:31,960
+People working in this area are mostly focused on trying to get international treaties to
+
+123
+00:08:31,960 --> 00:08:37,760
+ban these types of weapons in the same way that chemical and biological weapons are banned,
+
+124
+00:08:37,760 --> 00:08:43,640
+which might sound very hard, but if you think about it, pretty much any government with
+
+125
+00:08:43,640 --> 00:08:46,560
+their resources could make chemical or biological weapons.
+
+126
+00:08:46,560 --> 00:08:50,080
+But for the most part, they understand the consequences of actually using those in the
+
+127
+00:08:50,080 --> 00:08:52,760
+international stage, so they don't do that.
+
+128
+00:08:52,760 --> 00:08:59,400
+And that's one of the, I'd say the main focus of lethal autonomous weapons ethics.
+
+129
+00:08:59,400 --> 00:09:02,520
+Maybe related to that, I guess, depending on how you look at things, is self-driving
+
+130
+00:09:02,520 --> 00:09:04,800
+vehicle ethics.
+
+131
+00:09:04,800 --> 00:09:10,240
+This is about cars and other vehicles that can operate without a human driver.
+
+132
+00:09:10,240 --> 00:09:16,880
+The main probably ethical questions related to that are, for example, if a self-driving
+
+133
+00:09:16,880 --> 00:09:21,840
+car kills a human, who is actually liable or responsible?
+
+134
+00:09:21,840 --> 00:09:28,520
+And also, when is a self-driving vehicle safe enough to allow in public without a human
+
+135
+00:09:28,520 --> 00:09:30,720
+somewhere behind the wheel?
+
+136
+00:09:30,720 --> 00:09:37,360
+So as you can imagine, this one's pretty tightly related to regulatory efforts.
+
+137
+00:09:37,360 --> 00:09:38,360
+Privacy ethics.
+
+138
+00:09:38,360 --> 00:09:41,320
+Privacy ethics is concerned with privacy.
+
+139
+00:09:41,320 --> 00:09:46,640
+If you're building something, how much information should you realistically collect or do you
+
+140
+00:09:46,640 --> 00:09:48,640
+need to collect?
+
+141
+00:09:48,640 --> 00:09:53,320
+If you're building a flashlight app for a phone, do you really need to know someone's
+
+142
+00:09:53,320 --> 00:09:56,440
+detailed location or their demographic info?
+
+143
+00:09:56,440 --> 00:10:01,320
+What kinds of information should actually be not disallowed from being collected at
+
+144
+00:10:01,320 --> 00:10:02,320
+all?
+
+145
+00:10:02,320 --> 00:10:06,520
+And obviously, this is an area where there's a lot of regulatory action and effort that's
+
+146
+00:10:06,520 --> 00:10:11,320
+going around that.
+
+147
+00:10:11,320 --> 00:10:17,160
+There's also this more general thing of job displacement ethics, not just with the generative
+
+148
+00:10:17,160 --> 00:10:19,720
+models we were talking about a second ago.
+
+149
+00:10:19,720 --> 00:10:25,800
+And this is a discussion that's been going on since the Industrial Revolution, if not
+
+150
+00:10:25,800 --> 00:10:29,200
+before, so at least 100 plus years.
+
+151
+00:10:29,200 --> 00:10:34,320
+Part of the question now is with the AI revolution as we know it, is this time different?
+
+152
+00:10:34,320 --> 00:10:38,720
+Are we going to suddenly put out way more people, displace them from their jobs?
+
+153
+00:10:38,720 --> 00:10:43,440
+Some of the common proposals related to this are things like guaranteed universal basic
+
+154
+00:10:43,440 --> 00:10:47,720
+income or even outlying certain kinds of technologies.
+
+155
+00:10:47,720 --> 00:10:53,320
+And like I said, this is arguments that have been going on for decades, if not centuries,
+
+156
+00:10:53,320 --> 00:10:54,320
+this point.
+
+157
+00:10:54,320 --> 00:11:01,960
+Now, while there are a lot of areas of ethics all over this map, these are the areas that
+
+158
+00:11:01,960 --> 00:11:04,000
+this talk is not really about.
+
+159
+00:11:04,000 --> 00:11:08,160
+In fact, I'm of the opinion that the data ethics world is actually much larger than
+
+160
+00:11:08,160 --> 00:11:09,160
+this.
+
+161
+00:11:09,160 --> 00:11:16,080
+And most of what most data people encounter is not really this, even though it's what
+
+162
+00:11:16,080 --> 00:11:18,040
+they're most likely to hear about.
+
+163
+00:11:18,040 --> 00:11:26,120
+Now, if we zoom out, we see that the part we were just looking at, that's the sexy part
+
+164
+00:11:26,120 --> 00:11:27,520
+of the world of data ethics.
+
+165
+00:11:27,520 --> 00:11:29,720
+And it's actually pretty small.
+
+166
+00:11:29,720 --> 00:11:33,120
+On this map, all the sexy stuff is up in Northern Canada and Greenland.
+
+167
+00:11:33,120 --> 00:11:36,400
+So you can interpret that however you wish.
+
+168
+00:11:36,400 --> 00:11:42,200
+But instead, most of the world data ethics is the non-sexy, more mundane, everyday, ethically
+
+169
+00:11:42,200 --> 00:11:43,200
+challenging situations.
+
+170
+00:11:43,200 --> 00:11:48,440
+Hopefully, you don't run into that every day, but every day in the sense of every day.
+
+171
+00:11:48,440 --> 00:11:55,640
+But let me digress quickly about why, kind of what led me to think about this in particular.
+
+172
+00:11:55,640 --> 00:12:00,360
+Back when I was in the cancer clinic, our main focus was on safety.
+
+173
+00:12:00,360 --> 00:12:05,920
+We were using something very, very dangerous, which is intense levels of radiation to try
+
+174
+00:12:05,920 --> 00:12:06,920
+to do good.
+
+175
+00:12:06,920 --> 00:12:10,080
+But if things went bad, people could die.
+
+176
+00:12:10,080 --> 00:12:16,120
+So there's a lot, lot, lot of effort around safety, a lot of discussion, a lot of professional
+
+177
+00:12:16,120 --> 00:12:18,640
+discussion, just a lot of what you're doing is towards that.
+
+178
+00:12:18,640 --> 00:12:25,520
+Now, my next job, I fast forward a little bit, as a full-time data scientist was essentially
+
+179
+00:12:25,520 --> 00:12:27,720
+delivering pizza.
+
+180
+00:12:27,720 --> 00:12:32,120
+And well, technically, I was working on the data science stuff to support pizza delivery,
+
+181
+00:12:32,120 --> 00:12:35,360
+even though I did do some pizza delivery to understand how this all worked.
+
+182
+00:12:35,360 --> 00:12:43,320
+Now, while that's a much nicer moral burden, instead of people potentially dying if things
+
+183
+00:12:43,320 --> 00:12:46,280
+went wrong, cold pizza is probably about the worst you could get to.
+
+184
+00:12:46,280 --> 00:12:51,800
+But on the other hand, I still saw scenarios where there were potential ethical or whatever
+
+185
+00:12:51,800 --> 00:12:55,040
+kind of problems you want to imagine.
+
+186
+00:12:55,040 --> 00:13:00,520
+Now, being on social media and whatever, I see a lot of the sexy stuff that ends up in
+
+187
+00:13:00,520 --> 00:13:02,200
+the headlines.
+
+188
+00:13:02,200 --> 00:13:05,760
+And I do think that it's important and good that researchers are going towards a lot of
+
+189
+00:13:05,760 --> 00:13:06,760
+those questions.
+
+190
+00:13:06,760 --> 00:13:09,680
+But, you know, that's not the kind of stuff I was seeing.
+
+191
+00:13:09,680 --> 00:13:12,960
+So there was sort of this disconnect between what I was hearing about and what I was seeing,
+
+192
+00:13:12,960 --> 00:13:17,720
+which was very different from my sort of previous career.
+
+193
+00:13:17,720 --> 00:13:21,480
+And I think that it's not really what most data people see in their daily work.
+
+194
+00:13:21,480 --> 00:13:25,800
+Most people are not working at the scale that's affecting millions of users.
+
+195
+00:13:25,800 --> 00:13:27,280
+Obviously, some people are.
+
+196
+00:13:27,280 --> 00:13:33,320
+But and also, most people are not advancing the cutting edge of AI where their next thing
+
+197
+00:13:33,320 --> 00:13:37,600
+might be the key that brings about the robot apocalypse.
+
+198
+00:13:37,600 --> 00:13:41,960
+Obviously, some people are, too, I guess, if that's going to happen.
+
+199
+00:13:41,960 --> 00:13:46,360
+Instead, most people are likely to run into more mundane issues that they don't talk about
+
+200
+00:13:46,360 --> 00:13:51,040
+in the headlines, but that doesn't mean they're not important.
+
+201
+00:13:51,040 --> 00:13:53,040
+So this is really the meat of the talk.
+
+202
+00:13:53,040 --> 00:13:55,400
+A bunch of lead up to it.
+
+203
+00:13:55,400 --> 00:14:00,280
+So we're going to look at some examples of scenarios of the non-sexy data ethics.
+
+204
+00:14:00,280 --> 00:14:05,160
+Some of these are situations that I was in or I witnessed, but most of them are stories
+
+205
+00:14:05,160 --> 00:14:12,180
+I've heard from professional peers and names are omitted and details are changed, of course.
+
+206
+00:14:12,180 --> 00:14:17,560
+So we're going to zoom in and look at a few of these in different parts of the data world.
+
+207
+00:14:17,560 --> 00:14:20,960
+So this I'm calling the exec abuses your analysis.
+
+208
+00:14:20,960 --> 00:14:23,000
+Caveats be damned.
+
+209
+00:14:23,000 --> 00:14:27,340
+So imagine you've been tasked with doing an analysis to find areas that the company should
+
+210
+00:14:27,340 --> 00:14:29,960
+focus on to improve its operations.
+
+211
+00:14:29,960 --> 00:14:34,280
+You sort through the dirty data, you do your analysis, produce a report or a dashboard
+
+212
+00:14:34,280 --> 00:14:36,400
+showing how different parts of the company are doing.
+
+213
+00:14:36,400 --> 00:14:38,000
+You're rightfully proud of this.
+
+214
+00:14:38,000 --> 00:14:41,400
+You did a lot of good work and you present this in a meeting with a bunch of executives
+
+215
+00:14:41,400 --> 00:14:42,480
+and stuff.
+
+216
+00:14:42,480 --> 00:14:47,760
+One of those execs hones in on the plot showing the error rate of some operational employees
+
+217
+00:14:47,760 --> 00:14:52,360
+and immediately declares that the people on this end of the distribution are the ones
+
+218
+00:14:52,360 --> 00:14:55,440
+that are going to get fired first.
+
+219
+00:14:55,440 --> 00:14:59,080
+Now you realize you suddenly have several issues.
+
+220
+00:14:59,080 --> 00:15:02,520
+This was not the premise of the analysis you did.
+
+221
+00:15:02,520 --> 00:15:05,360
+You know, that wasn't supposed to be about that.
+
+222
+00:15:05,360 --> 00:15:11,160
+But also, you know, you know that the anomalous performance is really actually an artifact
+
+223
+00:15:11,160 --> 00:15:14,120
+of the data and was not the focus of your analysis.
+
+224
+00:15:14,120 --> 00:15:19,420
+You know that like you can't someone can't just take that data at face value and use
+
+225
+00:15:19,420 --> 00:15:21,120
+it to make these decisions.
+
+226
+00:15:21,120 --> 00:15:24,320
+So the question is, what do you do?
+
+227
+00:15:24,320 --> 00:15:27,240
+Lot of scenarios going to sound like that.
+
+228
+00:15:27,240 --> 00:15:29,960
+Why did we split this data up again?
+
+229
+00:15:29,960 --> 00:15:34,840
+A large international company that you have heard of, I'm sure, hires a team of consultants
+
+230
+00:15:34,840 --> 00:15:38,880
+also from a large international company that you've probably heard of.
+
+231
+00:15:38,880 --> 00:15:45,640
+The department that hired these consultants didn't actually have ML experience in-house.
+
+232
+00:15:45,640 --> 00:15:49,720
+But one of the team members thought something was a little off and asked someone they knew,
+
+233
+00:15:49,720 --> 00:15:53,760
+a data scientist from another department to come just take a look.
+
+234
+00:15:53,760 --> 00:15:58,360
+The data scientists begin asking questions to the consultants and about how they achieved
+
+235
+00:15:58,360 --> 00:16:00,840
+high performance with their model.
+
+236
+00:16:00,840 --> 00:16:06,640
+And it turned out that the great model performance was because the consultants had been knowingly
+
+237
+00:16:06,640 --> 00:16:09,480
+testing on the training set.
+
+238
+00:16:09,480 --> 00:16:13,000
+So which of course we all know that's a no-no.
+
+239
+00:16:13,000 --> 00:16:15,520
+But they were doing that because it looked good.
+
+240
+00:16:15,520 --> 00:16:19,640
+ETAs, what if we just fudge them?
+
+241
+00:16:19,640 --> 00:16:23,000
+So imagine you work in food delivery.
+
+242
+00:16:23,000 --> 00:16:24,480
+Some of us have been there.
+
+243
+00:16:24,480 --> 00:16:28,120
+And you've been tasked with investigating the quality of delivery time estimates and
+
+244
+00:16:28,120 --> 00:16:31,160
+how the quality affects revenue.
+
+245
+00:16:31,160 --> 00:16:35,640
+While analyzing the data, you realize that if your company were to bias the ETAs lower
+
+246
+00:16:35,640 --> 00:16:40,200
+by just a few minutes, it could result in a tangible increase in revenue.
+
+247
+00:16:40,200 --> 00:16:44,920
+So if you just lie a little bit, a lot more people are going to place their orders and
+
+248
+00:16:44,920 --> 00:16:46,360
+bring your company more money.
+
+249
+00:16:46,360 --> 00:16:49,200
+Well, what do you do in that scenario?
+
+250
+00:16:49,200 --> 00:16:53,760
+In the real scenario, that data scientist decided to just sort of keep this to themselves
+
+251
+00:16:53,760 --> 00:16:56,600
+because they didn't think it would be a good thing to be known within the company.
+
+252
+00:16:56,600 --> 00:16:58,320
+It's too tempting.
+
+253
+00:16:58,320 --> 00:17:01,680
+And I'll just note that this was not a company I worked at, not me, even though I was in
+
+254
+00:17:01,680 --> 00:17:04,960
+food delivery.
+
+255
+00:17:04,960 --> 00:17:07,760
+This is what the boss wants.
+
+256
+00:17:07,760 --> 00:17:12,480
+A high-up exec wants a dump of data with lots of personal or private customer info.
+
+257
+00:17:12,480 --> 00:17:17,700
+And your manager asks you to get that data and email it to the exec.
+
+258
+00:17:17,700 --> 00:17:22,520
+You know that this is sketchy if it's not probably against some internal policy and
+
+259
+00:17:22,520 --> 00:17:26,480
+maybe even against some regulatory stuff or legal stuff.
+
+260
+00:17:26,480 --> 00:17:29,600
+But your manager insists you can't make those execs unhappy.
+
+261
+00:17:29,600 --> 00:17:31,520
+So what do you do in that situation?
+
+262
+00:17:31,520 --> 00:17:33,520
+How do you handle it?
+
+263
+00:17:33,520 --> 00:17:38,400
+Let's go now to big data that wasn't so big.
+
+264
+00:17:38,400 --> 00:17:44,120
+Your team is tasked with building models to predict the outcome of certain events.
+
+265
+00:17:44,120 --> 00:17:46,320
+This is a marquee project of your company.
+
+266
+00:17:46,320 --> 00:17:52,240
+It got that headline, digital transformation, AI effort, whatever it is.
+
+267
+00:17:52,240 --> 00:17:56,760
+You simply don't have enough data to produce anything reasonable.
+
+268
+00:17:56,760 --> 00:18:00,760
+And you can't feasibly collect more data for this specific project.
+
+269
+00:18:00,760 --> 00:18:05,880
+Now of course, your manager and the higher-ups insist that this project needs to work regardless
+
+270
+00:18:05,880 --> 00:18:08,720
+of whatever your complaints are as these data people.
+
+271
+00:18:08,720 --> 00:18:12,480
+So what do you do in this situation?
+
+272
+00:18:12,480 --> 00:18:14,960
+Next we get to the sudden promotion.
+
+273
+00:18:14,960 --> 00:18:19,480
+You're asked to attend a meeting with potential customers or investors and your manager says,
+
+274
+00:18:19,480 --> 00:18:23,480
+when I tell them that you're the principal AI scientist, you just nod.
+
+275
+00:18:23,480 --> 00:18:28,800
+Of course, in reality, you're more like a junior data analyst and nothing like that.
+
+276
+00:18:28,800 --> 00:18:34,160
+But so you know that this is that something is not right somehow.
+
+277
+00:18:34,160 --> 00:18:39,160
+What do you do in that situation?
+
+278
+00:18:39,160 --> 00:18:43,640
+Choose any color as long as it's black and made by us too.
+
+279
+00:18:43,640 --> 00:18:48,280
+So you're asked to create a model that offers unbiased recommendations for customers.
+
+280
+00:18:48,280 --> 00:18:52,440
+Maybe those recommendations are for your company's products or maybe they're for your competitors'
+
+281
+00:18:52,440 --> 00:18:53,440
+products.
+
+282
+00:18:53,440 --> 00:18:58,240
+Of course, this is a public unbiased thing, but unofficially you're told to adjust the
+
+283
+00:18:58,240 --> 00:19:02,480
+bias in favor of your company's products to help the bottom line.
+
+284
+00:19:02,480 --> 00:19:10,600
+How do you deal with a situation like this where publicly it's supposed to be fair, but
+
+285
+00:19:10,600 --> 00:19:12,760
+you know that it is not?
+
+286
+00:19:12,760 --> 00:19:16,840
+Also related to that is the key value proposition.
+
+287
+00:19:16,840 --> 00:19:21,120
+You discover that the central model based product of your startup is actually not able
+
+288
+00:19:21,120 --> 00:19:25,240
+to do what the marketing material claims it can do.
+
+289
+00:19:25,240 --> 00:19:28,280
+Your company is raising money based on this claim.
+
+290
+00:19:28,280 --> 00:19:32,200
+You've actually seem to be the only person who's really looked into this.
+
+291
+00:19:32,200 --> 00:19:37,800
+And you know that if it's actually used in a real world scenario, that it will fail spectacularly.
+
+292
+00:19:37,800 --> 00:19:41,080
+No one's listening to your warnings that the sky is falling.
+
+293
+00:19:41,080 --> 00:19:44,680
+What do you do in this kind of situation?
+
+294
+00:19:44,680 --> 00:19:47,120
+And there's a lot more.
+
+295
+00:19:47,120 --> 00:19:53,000
+For example, you discover that the great improvement claimed by another team isn't actually an
+
+296
+00:19:53,000 --> 00:19:54,000
+improvement at all.
+
+297
+00:19:54,000 --> 00:19:57,340
+No one actually bothered to measure anything, but they of course made this big announcement
+
+298
+00:19:57,340 --> 00:20:00,320
+or maybe they purposely didn't release the numbers.
+
+299
+00:20:00,320 --> 00:20:04,480
+You discover that your company or your team is using a piece of software and its core
+
+300
+00:20:04,480 --> 00:20:07,160
+product that has an incompatible license.
+
+301
+00:20:07,160 --> 00:20:11,440
+You know, maybe it's not actually open source or it has a license that says you need to
+
+302
+00:20:11,440 --> 00:20:14,600
+release the changes into the public.
+
+303
+00:20:14,600 --> 00:20:19,080
+Or you just play fast and loose with user data like GDP, CCPA.
+
+304
+00:20:19,080 --> 00:20:20,560
+I've never even heard of that, right?
+
+305
+00:20:20,560 --> 00:20:28,720
+Or it's just so tempting when it's much easier to ignore those kinds of regulations.
+
+306
+00:20:28,720 --> 00:20:34,640
+So I'm thinking about all these kinds of examples and trying to think about what are the common
+
+307
+00:20:34,640 --> 00:20:38,760
+themes in these kinds of scenarios.
+
+308
+00:20:38,760 --> 00:20:40,720
+And there's a few that jumped out at me.
+
+309
+00:20:40,720 --> 00:20:45,040
+So people fudging their numbers is one of the big scenarios.
+
+310
+00:20:45,040 --> 00:20:51,360
+It's just so tempting in many scenarios, especially when there are not others around you who could
+
+311
+00:20:51,360 --> 00:20:53,400
+reasonably tell the difference.
+
+312
+00:20:53,400 --> 00:20:58,280
+Either they don't have the technical understanding or they don't have the time to dig into it
+
+313
+00:20:58,280 --> 00:21:03,760
+to really be able to tell the difference between your numbers and not your numbers.
+
+314
+00:21:03,760 --> 00:21:10,040
+Or generally, this is something called lying, but it happens a lot.
+
+315
+00:21:10,040 --> 00:21:15,080
+Then there's the situation where someone else is trying to get you to fudge the numbers.
+
+316
+00:21:15,080 --> 00:21:21,080
+So this is probably often due to typical unethical behavior, but also when the, I'd say the cold
+
+317
+00:21:21,080 --> 00:21:27,960
+hard truth of how difficult data related projects are often hits the people who are the stakeholders.
+
+318
+00:21:27,960 --> 00:21:33,300
+And you know, they were hoping you were going to go do that data magic for them.
+
+319
+00:21:33,300 --> 00:21:38,080
+But then when reality strikes, you know, they're just tempted to say, okay, let's kind of fudge
+
+320
+00:21:38,080 --> 00:21:39,080
+this.
+
+321
+00:21:39,080 --> 00:21:44,960
+Also, often the people just want you to provide them with whatever data is going to support
+
+322
+00:21:44,960 --> 00:21:46,680
+their already established opinion.
+
+323
+00:21:46,680 --> 00:21:51,920
+You know, oh, just kind of cherry pick the things that I already believe anyway.
+
+324
+00:21:51,920 --> 00:21:56,160
+And more generally, this is often a case of power imbalances in the workplace.
+
+325
+00:21:56,160 --> 00:22:01,440
+You know, when the big boss tells you to do something and you know, how do you deal with
+
+326
+00:22:01,440 --> 00:22:05,120
+that, especially when they're doing something unethical.
+
+327
+00:22:05,120 --> 00:22:08,040
+And then finally, there's your numbers take on a life of their own.
+
+328
+00:22:08,040 --> 00:22:12,160
+This is, I would say, this is often about nuance.
+
+329
+00:22:12,160 --> 00:22:18,040
+This is related to some of the stuff that, that some of that Katie Bauer talked about.
+
+330
+00:22:18,040 --> 00:22:20,040
+This is kind of the flip side of that.
+
+331
+00:22:20,040 --> 00:22:24,980
+And some of the other stuff people have presented about clearly communicating what's going on.
+
+332
+00:22:24,980 --> 00:22:28,400
+But I think it's a very hard one because, you know, you want to balance presenting the
+
+333
+00:22:28,400 --> 00:22:34,880
+detailed technically correct information with, you know, sort of some distilled actionable
+
+334
+00:22:34,880 --> 00:22:37,120
+insight or info or whatever that is.
+
+335
+00:22:37,120 --> 00:22:41,680
+And it's easy to, to land too far to one side.
+
+336
+00:22:41,680 --> 00:22:45,240
+And in this case, I'd say it's usually when you land on the side where you're presenting
+
+337
+00:22:45,240 --> 00:22:52,200
+things too simply and or people may willingfully ignore details to, you know, confirm their
+
+338
+00:22:52,200 --> 00:22:53,980
+preconceived notions.
+
+339
+00:22:53,980 --> 00:22:59,480
+But others will see things in the data or your numbers that, that are not really there
+
+340
+00:22:59,480 --> 00:23:01,680
+or just whatever they want to believe.
+
+341
+00:23:01,680 --> 00:23:06,480
+So you have to consider the possible misuses or misunderstandings and think about what
+
+342
+00:23:06,480 --> 00:23:10,840
+your obligations are and explaining things, you know, what, how could this go wrong?
+
+343
+00:23:10,840 --> 00:23:12,920
+There was some talk about that earlier.
+
+344
+00:23:12,920 --> 00:23:16,800
+And even though people don't want to hear about all those technical details, like what
+
+345
+00:23:16,800 --> 00:23:21,320
+is your obligation to prevent people from running with this in and doing bad stuff?
+
+346
+00:23:21,320 --> 00:23:24,680
+Of course, this is much, much easier said than done.
+
+347
+00:23:24,680 --> 00:23:26,200
+All right.
+
+348
+00:23:26,200 --> 00:23:29,120
+So what do we, what do we do about all this?
+
+349
+00:23:29,120 --> 00:23:32,560
+This isn't a TED talk, so I'm not going to offer any nice clean answer.
+
+350
+00:23:32,560 --> 00:23:36,320
+This is NormConf, Vicki NormConf.
+
+351
+00:23:36,320 --> 00:23:40,120
+And, but there are a few suggestions that typically come up.
+
+352
+00:23:40,120 --> 00:23:42,760
+One is around ethics training.
+
+353
+00:23:42,760 --> 00:23:48,180
+My impression is that there are mixed conclusions on how effective ethics training is for helping
+
+354
+00:23:48,180 --> 00:23:54,040
+people make real world ethical decisions or reducing incidents of like criminal or unethical
+
+355
+00:23:54,040 --> 00:23:57,000
+behavior.
+
+356
+00:23:57,000 --> 00:24:02,800
+And as data people, you know, it's probably easy to imagine the difficulties in measuring
+
+357
+00:24:02,800 --> 00:24:04,960
+how well these kinds of things work.
+
+358
+00:24:04,960 --> 00:24:08,240
+So I don't know if that's really so clear.
+
+359
+00:24:08,240 --> 00:24:10,200
+Another one is like culture.
+
+360
+00:24:10,200 --> 00:24:11,920
+How does culture affect things?
+
+361
+00:24:11,920 --> 00:24:15,400
+My opinion is that for this stuff, that the culture is set probably by two main things
+
+362
+00:24:15,400 --> 00:24:16,580
+within an organization.
+
+363
+00:24:16,580 --> 00:24:19,640
+One is leaders modeling desired behaviors.
+
+364
+00:24:19,640 --> 00:24:25,560
+You know, you want your leaders to be the model of ethical stuff and in a way that you
+
+365
+00:24:25,560 --> 00:24:27,080
+can relate to.
+
+366
+00:24:27,080 --> 00:24:31,920
+The second one is incentivizing desired behaviors and de-incentivizing non-desired behaviors.
+
+367
+00:24:31,920 --> 00:24:36,580
+I'm assuming that those, you're desiring ethical behavior in this.
+
+368
+00:24:36,580 --> 00:24:39,500
+How well does that actually affect things?
+
+369
+00:24:39,500 --> 00:24:44,480
+That's also another open question, but I think this is probably an area to focus on.
+
+370
+00:24:44,480 --> 00:24:50,760
+Regulation, of course, you know, there are certain scenarios that are currently subject
+
+371
+00:24:50,760 --> 00:24:54,400
+to regulatory scrutiny and probably a lot that will be soon.
+
+372
+00:24:54,400 --> 00:24:58,160
+On the other hand, I'd say that those are mostly probably more falling on the sexy part
+
+373
+00:24:58,160 --> 00:25:03,840
+of the map because there are things that, you know, end up in the news or whatever.
+
+374
+00:25:03,840 --> 00:25:06,400
+And a lot of these issues probably don't fall under that.
+
+375
+00:25:06,400 --> 00:25:10,000
+So what are my actual conclusions?
+
+376
+00:25:10,000 --> 00:25:12,840
+I think the world of ethics is big.
+
+377
+00:25:12,840 --> 00:25:17,700
+It's bigger than what you hear about in the news or on Twitter, if you remember Twitter.
+
+378
+00:25:17,700 --> 00:25:21,200
+You need to be aware of the rest of the world of data ethics.
+
+379
+00:25:21,200 --> 00:25:25,980
+A lot of it is sort of normal job ethics, you could argue, but with the additional sort
+
+380
+00:25:25,980 --> 00:25:30,600
+of how to lie with statistics part thrown in, I think you should think about how you
+
+381
+00:25:30,600 --> 00:25:33,240
+would deal with these types of scenarios.
+
+382
+00:25:33,240 --> 00:25:37,880
+Often the real world is very vague and frogs are slowly getting boiled.
+
+383
+00:25:37,880 --> 00:25:42,320
+You know, often don't realize that you're in an ethics situation until you're already
+
+384
+00:25:42,320 --> 00:25:44,000
+in it and it's too late.
+
+385
+00:25:44,000 --> 00:25:49,480
+So I think you need to ask yourself how, when you're in the situation, if you're going to
+
+386
+00:25:49,480 --> 00:25:52,920
+look back on what you did, you know, how would you judge yourself about that?
+
+387
+00:25:52,920 --> 00:25:56,780
+But I think it's also particularly important for early career people that may not have
+
+388
+00:25:56,780 --> 00:26:01,600
+encountered this stuff before, and they may not have really heard anyone talk about it.
+
+389
+00:26:01,600 --> 00:26:07,000
+So you know, you senior level people, it's a good thing to bring up to those earlier
+
+390
+00:26:07,000 --> 00:26:08,800
+people.
+
+391
+00:26:08,800 --> 00:26:09,800
+That's it.
+
+392
+00:26:09,800 --> 00:26:10,800
+That's the end of the talk.
+
+393
+00:26:10,800 --> 00:26:17,360
+I want to thank all the NormCom organizers, volunteers, sponsors, and donors.
+
+394
+00:26:17,360 --> 00:26:20,120
+You can find me on Twitter and Mastodon.
+
+395
+00:26:20,120 --> 00:26:21,560
+I have a bunch of websites.
+
+396
+00:26:21,560 --> 00:26:25,700
+I'm doing a promo of my new book in the Zeph's Guides booth channel.
+
+397
+00:26:25,700 --> 00:26:31,040
+So stop by if you want a chance to win a book or some schwag.
+
+398
+00:26:31,040 --> 00:26:43,320
+And now I will stop sharing.
+

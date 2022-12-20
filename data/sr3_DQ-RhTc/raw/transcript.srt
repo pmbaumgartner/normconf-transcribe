@@ -1,0 +1,1128 @@
+1
+00:00:00,000 --> 00:00:07,440
+My name is Shreya. I am a PhD student at the UC Berkeley Epic Club and I work on
+
+2
+00:00:07,440 --> 00:00:12,000
+data management for machine learning. So like very much continuing with the theme
+
+3
+00:00:12,000 --> 00:00:16,760
+of what we've been doing today. In previous lives I've been a machine
+
+4
+00:00:16,760 --> 00:00:22,040
+learning engineer and the reason that I kind of went to do a PhD is it's like a
+
+5
+00:00:22,040 --> 00:00:27,480
+fully funded experience to sit back and fundamentally rethink the way that we do
+
+6
+00:00:27,480 --> 00:00:31,520
+things. So that's why I'm here and I'm super excited to share with you what I'm
+
+7
+00:00:31,520 --> 00:00:37,360
+thinking about in the last couple of weeks. And this talk is brought to you by
+
+8
+00:00:37,360 --> 00:00:42,880
+hundreds of hours of databases, at least studying about databases, machine
+
+9
+00:00:42,880 --> 00:00:50,700
+learning debugging, and stable diffusion. So it's no surprise that machine
+
+10
+00:00:50,700 --> 00:00:56,120
+learning is kind of taking the world by storm in the way that we develop
+
+11
+00:00:56,120 --> 00:01:02,040
+applications across industries, across different sizes of companies, but it's
+
+12
+00:01:02,040 --> 00:01:07,760
+not very pretty in practice. I mean we have a whole conference track
+
+13
+00:01:07,760 --> 00:01:12,260
+dedicated to this, but there are a bunch of bugs that happen when you have
+
+14
+00:01:12,260 --> 00:01:17,840
+machine learning in production. I'll talk about two of some of my favorite. One is
+
+15
+00:01:17,840 --> 00:01:22,520
+you have this ML model that takes in a feature that relies on a different part
+
+16
+00:01:22,520 --> 00:01:26,800
+of the code base and if an engineer makes a change to that code base that
+
+17
+00:01:26,800 --> 00:01:31,840
+causes this kind of get status to fail, how would you know that really? And maybe
+
+18
+00:01:31,840 --> 00:01:36,160
+it's failing and it's failing quietly, it's returning like a negative value for
+
+19
+00:01:36,160 --> 00:01:41,720
+example, something that kind of doesn't put an error out there and it really
+
+20
+00:01:41,720 --> 00:01:45,100
+begs the question, at least the authors of this paper ask, do you know when
+
+21
+00:01:45,100 --> 00:01:51,400
+your data gets messed up? Are you able to do that? Who knows? And another kind of
+
+22
+00:01:51,400 --> 00:02:00,520
+bug was when a healthcare and company is kind of monitoring patient outcomes and
+
+23
+00:02:00,520 --> 00:02:06,360
+they take a lot of vitals through a mobile app logging device and one of
+
+24
+00:02:06,360 --> 00:02:09,960
+their patients kind of was just their battery on their phone was dying over
+
+25
+00:02:09,960 --> 00:02:14,640
+time and they stopped sending data in. So this is kind of complete opposite, it's
+
+26
+00:02:14,640 --> 00:02:18,640
+not that the data is changing, it's that the data is staying the same when you're
+
+27
+00:02:18,640 --> 00:02:23,400
+pulling the latest data, you know when you stop getting data. This seems like a
+
+28
+00:02:23,400 --> 00:02:29,360
+nightmare to kind of catch all these different bugs out there and I feel like
+
+29
+00:02:29,360 --> 00:02:35,720
+we've had this sentiment really in building and debugging ML pipelines
+
+30
+00:02:35,720 --> 00:02:40,840
+where it's like when we train an ML model and it works well and we feel
+
+31
+00:02:40,840 --> 00:02:46,180
+satisfied that it actually accomplishes something that we want, unfortunately we
+
+32
+00:02:46,180 --> 00:02:50,080
+kind of throw the model over the wall, if you've heard that sentiment before, and
+
+33
+00:02:50,080 --> 00:02:54,080
+it becomes some sort of ops problem. And what does it mean to have an ops problem
+
+34
+00:02:54,080 --> 00:02:59,640
+now? It means you have an engineer out there just sitting there collecting
+
+35
+00:02:59,640 --> 00:03:05,800
+bugs, getting super overwhelmed, and most of these ML failures really have nothing
+
+36
+00:03:05,800 --> 00:03:08,960
+to do with machine learning. They have something to do with some data
+
+37
+00:03:08,960 --> 00:03:12,640
+corruption in the pipeline, some engineering bug as I mentioned earlier,
+
+38
+00:03:12,640 --> 00:03:17,320
+but still someone is tasked of identifying that and then
+
+39
+00:03:17,320 --> 00:03:21,680
+trying to fix that as quickly as possible. And kind of as Jeremy mentioned
+
+40
+00:03:21,680 --> 00:03:25,160
+in the previous talk, when you try to fix things very quickly you tend to use
+
+41
+00:03:25,160 --> 00:03:29,440
+rules, you tend to use other things off the shelf, you don't want to go and try
+
+42
+00:03:29,440 --> 00:03:34,360
+to retrain a model for every bug that you get, and you end up stitching
+
+43
+00:03:34,360 --> 00:03:38,720
+together all sorts of tools, all sorts of different rules, all sorts of different
+
+44
+00:03:38,720 --> 00:03:44,480
+filters, and it creates something called a pipeline jungle. I
+
+45
+00:03:44,480 --> 00:03:49,120
+really really love this term because it's a jungle really not just of tools,
+
+46
+00:03:49,120 --> 00:03:53,640
+it's also a jungle of people. You know this diagram gives me anxiety, I think it
+
+47
+00:03:53,640 --> 00:03:57,320
+also gives Vicky anxiety, I'm not even gonna go through it, I'm just gonna put
+
+48
+00:03:57,320 --> 00:04:02,960
+it out there. And this diagram also gives me anxiety, it's a jungle of tools. And
+
+49
+00:04:02,960 --> 00:04:09,040
+when you have all of these tools, one thing very very terrible about it but
+
+50
+00:04:09,040 --> 00:04:13,600
+natural, is you feel like you're getting sold snake oil. At least I felt like I've
+
+51
+00:04:13,600 --> 00:04:18,240
+been getting sold snake oil. Last year I went to some networking event and
+
+52
+00:04:18,240 --> 00:04:21,760
+someone was telling me they had this new tool where all you had to
+
+53
+00:04:21,760 --> 00:04:26,520
+do is add decorators to your functions and then set their dependencies and set
+
+54
+00:04:26,520 --> 00:04:30,120
+your schedule, and it's just a few lines of code, but you can get
+
+55
+00:04:30,120 --> 00:04:34,000
+some production ML pipeline. And I'm sitting here thinking like okay I don't
+
+56
+00:04:34,000 --> 00:04:37,080
+even know if I want to productionize anything but it's a Jupyter Notebook
+
+57
+00:04:37,080 --> 00:04:41,440
+that I want to productionize. Another networking event that I went to is
+
+58
+00:04:41,440 --> 00:04:45,440
+someone's trying to tell them sell me feature stores and while they might be
+
+59
+00:04:45,440 --> 00:04:52,320
+useful for a lot of cases, I was very skeptical, I was very happy with my table
+
+60
+00:04:52,320 --> 00:04:56,800
+of features that I was just adding to on a schedule. I didn't really know why I
+
+61
+00:04:56,800 --> 00:05:01,400
+needed feature stores but I felt like I was being sold this a lot. And maybe that
+
+62
+00:05:01,400 --> 00:05:06,120
+was just me at a startup but I'm sure a lot of people have kind of similar
+
+63
+00:05:06,120 --> 00:05:10,880
+experiences here. But it's not just this kind of feeling of getting sold snake
+
+64
+00:05:10,880 --> 00:05:16,680
+oil that's a bad thing about pipeline jungles. Lots and lots of reasons why
+
+65
+00:05:16,680 --> 00:05:22,320
+pipeline jungles suck, you know, onboarding sucks. There are tons and
+
+66
+00:05:22,320 --> 00:05:29,920
+tons of bugs that come up out there. It takes forever to go and diagnose a bug
+
+67
+00:05:29,920 --> 00:05:34,680
+where you don't even know where it is. And at least this is my opinion, I
+
+68
+00:05:34,680 --> 00:05:39,200
+really think it requires some sort of PhD or equivalent of experience. You know
+
+69
+00:05:39,200 --> 00:05:43,320
+you work for so many years and collect all this expertise just to be able to
+
+70
+00:05:43,320 --> 00:05:48,120
+maintain or have hope of maintaining these pipelines in production. I can
+
+71
+00:05:48,120 --> 00:05:52,560
+think of, you can think of many many more. But the goal of this talk really is to
+
+72
+00:05:52,560 --> 00:05:58,200
+give you a data practitioner or software engineer without like a PhD in machine
+
+73
+00:05:58,200 --> 00:06:02,040
+learning, someone who's not training machine learning models but you're
+
+74
+00:06:02,040 --> 00:06:07,360
+working on ML-powered software. I want to give you maybe a new different
+
+75
+00:06:07,360 --> 00:06:13,280
+framework for interpreting ML bugs. And kind of spoiler alert, it has to do with
+
+76
+00:06:13,280 --> 00:06:20,400
+materialized views. So before we get into it, at least before we get into the new
+
+77
+00:06:20,400 --> 00:06:25,800
+view of ML bugs, I want to talk about how we kind of get to pipeline jungles in
+
+78
+00:06:25,800 --> 00:06:30,120
+the first place. I have this section called Jupiter notebook, from Jupiter
+
+79
+00:06:30,120 --> 00:06:35,280
+notebook to pipeline jungle. And I took this example from a paper that I wrote
+
+80
+00:06:35,280 --> 00:06:41,240
+earlier this year. But the first kind of step in ML is just to identify, you know,
+
+81
+00:06:41,240 --> 00:06:45,480
+is ML even the correct pop or ML even the correct tool for you to solve this
+
+82
+00:06:45,480 --> 00:06:49,800
+problem? Can you actually train a model that gets good performance on some set
+
+83
+00:06:49,800 --> 00:06:54,880
+of data? So maybe we open up a notebook, we experiment, you know, we do EDA,
+
+84
+00:06:54,880 --> 00:07:00,080
+exploratory data analysis. And this is, this example is also just taken from the
+
+85
+00:07:00,080 --> 00:07:05,280
+internet, scraped from GitHub. And we create this notebook and maybe we do
+
+86
+00:07:05,280 --> 00:07:12,000
+decide that, you know, this model outputs something reasonable, and we want to go
+
+87
+00:07:12,000 --> 00:07:16,840
+ahead and productionize it. And we have different kind of components in this
+
+88
+00:07:16,840 --> 00:07:22,600
+notebook workflow. And what does it mean to really productionize something like
+
+89
+00:07:22,600 --> 00:07:29,400
+this? So one mode of production ML, I call single use production ML. And that
+
+90
+00:07:29,400 --> 00:07:34,640
+is I want to take the results from this workflow and present them to someone
+
+91
+00:07:34,640 --> 00:07:39,560
+else or have that kind of implicitly inform business decisions. So maybe I
+
+92
+00:07:39,560 --> 00:07:45,440
+clean it up, get rid of my EDA, and I only include the relevant code. And then
+
+93
+00:07:45,440 --> 00:07:50,120
+I submit these results and I am happy I call it a day. And that's great. There's
+
+94
+00:07:50,120 --> 00:07:55,080
+also a different, another mode of production ML, which I'll call multiple
+
+95
+00:07:55,080 --> 00:07:59,520
+use production ML, which is I want to run this on a regular basis when the
+
+96
+00:07:59,520 --> 00:08:05,000
+underlying data is training, or sorry, underlying data is changing. I want to
+
+97
+00:08:05,000 --> 00:08:08,240
+run this regularly, I want it to continually provide value, and I want to
+
+98
+00:08:08,240 --> 00:08:13,800
+do it with some form of low latency. So I want to take the same thing. And I kind
+
+99
+00:08:13,800 --> 00:08:20,240
+of want to construct some directed acyclic graph, a DAG out of these
+
+100
+00:08:20,880 --> 00:08:25,200
+different nodes. And I don't have the tags here, but the same like data loading
+
+101
+00:08:25,200 --> 00:08:31,600
+tag and the same fitting the model tag. But there are also in multiple use
+
+102
+00:08:31,600 --> 00:08:36,160
+production ML, there are also different stages that we need to do, especially if
+
+103
+00:08:36,160 --> 00:08:40,000
+we're getting continually changing data, right, we need to do data cleaning or
+
+104
+00:08:40,000 --> 00:08:46,440
+some sort of validation. Maybe we have an inference node, quote unquote, serves a
+
+105
+00:08:46,440 --> 00:08:53,040
+model. And very, very quickly, you go from something like this to something
+
+106
+00:08:53,040 --> 00:08:57,040
+like this. And this is taken from a blog post from Uber a while back that was
+
+107
+00:08:57,040 --> 00:09:03,720
+motivating feature stores. And the idea here is you have this DAG of dependent
+
+108
+00:09:03,720 --> 00:09:08,080
+or you have this DAG of nodes that need to run in order to be able to serve real
+
+109
+00:09:08,080 --> 00:09:12,880
+time, or even like low latency predictions, you have your model, you
+
+110
+00:09:12,880 --> 00:09:19,040
+have your data preparation, and you have your inference. And maybe you start out
+
+111
+00:09:19,040 --> 00:09:25,080
+with something like this just to meet your like online requirements. But as
+
+112
+00:09:25,120 --> 00:09:30,600
+kind of ML engineers observe new bugs that come in over time, they need to
+
+113
+00:09:30,600 --> 00:09:36,440
+react quickly, right? So they how do you patch this whole pipeline up to prevent
+
+114
+00:09:36,440 --> 00:09:40,320
+against failure modes in the future. And an interview study that I did quite
+
+115
+00:09:40,320 --> 00:09:47,120
+recently, I love this quote. But whenever they deployed their model, it was a
+
+116
+00:09:47,120 --> 00:09:51,720
+chatbot like customer service kind of model. And someone would ask the model
+
+117
+00:09:51,720 --> 00:09:55,520
+the language model, like what time is the business open, the model will
+
+118
+00:09:55,520 --> 00:10:00,000
+hallucinate sometime 9am, something that like kind of looks right on the surface.
+
+119
+00:10:00,000 --> 00:10:04,760
+But if you look at kind of the website of that business, it's not going to be
+
+120
+00:10:04,760 --> 00:10:10,080
+it's making up times. So the ML engineer responsible for this, you know, if they
+
+121
+00:10:10,520 --> 00:10:13,600
+they filtered the output, if they detected time, they filtered the reply,
+
+122
+00:10:13,600 --> 00:10:18,320
+they referred them to the website, rather than try to fine tune the model on every
+
+123
+00:10:18,320 --> 00:10:24,480
+single customer or every single business's web page. So what ends up
+
+124
+00:10:24,480 --> 00:10:30,040
+happening in the pipeline is you end up adding filters. And after the inference,
+
+125
+00:10:30,040 --> 00:10:33,680
+sometimes you add filters even like before the model, if you can kind of
+
+126
+00:10:33,680 --> 00:10:40,400
+detect that the data asked for something like time. So you can see how these kinds
+
+127
+00:10:40,400 --> 00:10:46,960
+of pipelines will get to something that is this like amalgamation of ML models
+
+128
+00:10:47,480 --> 00:10:54,440
+and filters. So now now argue that this kind of DAG is not really great. It
+
+129
+00:10:54,480 --> 00:10:59,240
+gives us a headache, gives us meaning ML engineers, for a lot of reasons.
+
+130
+00:10:59,960 --> 00:11:05,480
+Current ML pipeline DAG suck, because they for one, require low level
+
+131
+00:11:05,480 --> 00:11:11,000
+scheduling. So for every task in that diagram before, I need to set a schedule,
+
+132
+00:11:11,000 --> 00:11:16,200
+like maybe I use airflow, I use some cron thing, I need to make sure that we
+
+133
+00:11:16,200 --> 00:11:23,240
+materialize each single one, each single tasks outputs on the schedule. Then most
+
+134
+00:11:23,240 --> 00:11:27,960
+of these tasks run on different schedules. And that's not like it makes
+
+135
+00:11:27,960 --> 00:11:31,360
+sense that it does run on different schedule, like data ingestion, for
+
+136
+00:11:31,360 --> 00:11:36,720
+example, runs maybe every day, but model retraining might run like every week.
+
+137
+00:11:37,120 --> 00:11:41,000
+Maybe the model retraining step even take several weeks. And so maybe it's run
+
+138
+00:11:41,000 --> 00:11:46,360
+every month. So given like compute requirements, just like organizational
+
+139
+00:11:46,360 --> 00:11:51,440
+requirements, also, these tasks end up running on different schedules. And then
+
+140
+00:11:51,440 --> 00:11:55,680
+when you have these kind of low level DAG requirements, people now have to
+
+141
+00:11:55,680 --> 00:12:00,520
+handle consistency on their own, right? What do you do when a task fails? What
+
+142
+00:12:00,520 --> 00:12:05,840
+do you do when someone changes the code? Do you go and backfill old outputs? All
+
+143
+00:12:05,840 --> 00:12:09,560
+of these questions now come up, and especially when you have rotating ML
+
+144
+00:12:09,560 --> 00:12:12,480
+engineers, right? Like that's an incredible amount of knowledge that you
+
+145
+00:12:12,480 --> 00:12:16,440
+need to share just to make sure that this works. It requires constant
+
+146
+00:12:16,480 --> 00:12:22,800
+constant babysitting and monitoring, which absolutely no one wants to do. And
+
+147
+00:12:22,800 --> 00:12:27,120
+now I'll argue that these DAGs kind of are the way they are because they're
+
+148
+00:12:27,120 --> 00:12:32,160
+quite training centric. What is training centric mean? It means that your
+
+149
+00:12:32,160 --> 00:12:38,360
+workflow starts with, you know, the goal of the workflow in the beginning is to
+
+150
+00:12:38,720 --> 00:12:43,760
+understand whether a model can achieve good performance. So everything is about
+
+151
+00:12:43,760 --> 00:12:48,120
+the model, be it data centric, model centric, whatever. It's about getting
+
+152
+00:12:48,120 --> 00:12:53,120
+good model that gets good validation set performance. And in this training
+
+153
+00:12:53,120 --> 00:12:56,560
+centric approach, right, recall like the Jupyter Notebook that I showed you
+
+154
+00:12:56,560 --> 00:13:02,000
+earlier, you do some sort of data preparation, you run experiments. And
+
+155
+00:13:02,000 --> 00:13:06,320
+this part is like really where you spend most of your initial time, right? Like
+
+156
+00:13:06,320 --> 00:13:11,720
+can you even get a bottle that will work? Is ML a good use here? And then
+
+157
+00:13:11,720 --> 00:13:15,400
+once you're satisfied with that, you can get the best model artifact and then
+
+158
+00:13:15,400 --> 00:13:21,040
+throw it over the wall, hand off this artifact for deployment. What does this
+
+159
+00:13:21,040 --> 00:13:27,360
+look like in the pipeline setting? It means your model or your kind of
+
+160
+00:13:27,440 --> 00:13:33,880
+training job, your retraining job is really written first. Your predict job
+
+161
+00:13:33,920 --> 00:13:39,360
+is written second, your data preparation and cleaning is written third. And then
+
+162
+00:13:39,360 --> 00:13:45,040
+finally, all the online stuff, like the queries in itself, are an afterthought.
+
+163
+00:13:46,280 --> 00:13:50,320
+This is not great. So maybe I'll maybe I'll present to you an alternative view
+
+164
+00:13:50,320 --> 00:13:54,880
+the idealistic view of how we would want to do machine learning, the query
+
+165
+00:13:54,880 --> 00:14:00,400
+centric approach. So what does this look like? It means so that this is
+
+166
+00:14:00,400 --> 00:14:04,360
+actually a way to forget kind of how you've been taught ML in the past,
+
+167
+00:14:04,360 --> 00:14:09,360
+this forget that training centric approach. Completely different way of
+
+168
+00:14:09,360 --> 00:14:15,240
+thinking about using machine learning in software systems is to think from the
+
+169
+00:14:15,240 --> 00:14:20,680
+perspective on the query. When a new example, when a new query arrives, what
+
+170
+00:14:20,680 --> 00:14:25,920
+we want to do is retrieve the historical examples that were similar to that or
+
+171
+00:14:25,960 --> 00:14:31,280
+retrieve the historical examples of the same schema per se, fit a model to
+
+172
+00:14:31,280 --> 00:14:37,600
+these historical examples, maybe all of them, and then use this model on the
+
+173
+00:14:37,600 --> 00:14:41,840
+new example to surface the prediction and return that prediction to the end
+
+174
+00:14:41,840 --> 00:14:49,160
+user. So I'll keep this diagram here for a little bit. The idea here is we
+
+175
+00:14:49,160 --> 00:14:54,560
+want to, I know it sounds crazy, the idea of training a different model for
+
+176
+00:14:54,560 --> 00:14:59,160
+every query, but conceptually, like this is how we want to think about machine
+
+177
+00:14:59,160 --> 00:15:03,640
+learning, right? It's when you get a new data point and fit a model to your
+
+178
+00:15:03,640 --> 00:15:07,800
+existing data points, and then return a prediction. We can't do that. We're not
+
+179
+00:15:07,800 --> 00:15:12,760
+even close to this yet, right? Obviously, this is the highest latency policy you
+
+180
+00:15:12,760 --> 00:15:19,160
+could ever imagine. There's a huge gap between these training centric and query
+
+181
+00:15:19,160 --> 00:15:23,320
+centric worlds. I'm not going to argue that you should be doing this. That's
+
+182
+00:15:23,320 --> 00:15:26,360
+like the goal of research really is to figure out how we can move closer to
+
+183
+00:15:26,360 --> 00:15:31,240
+this world. But what is the gap between the training centric and query centric
+
+184
+00:15:32,160 --> 00:15:37,600
+worlds? In the training centric world, fitting the initial bottle is really
+
+185
+00:15:37,600 --> 00:15:41,640
+an experimental process. Like, can we even get a good model? What is the best
+
+186
+00:15:41,640 --> 00:15:44,960
+model even look like? What are the best minimal, like, what is a good set of
+
+187
+00:15:44,960 --> 00:15:50,840
+features? All sorts of things, right? In the training centric world, the model in
+
+188
+00:15:50,840 --> 00:15:55,440
+itself is really an artifact. Whereas in the query centric world, the kind of
+
+189
+00:15:55,440 --> 00:16:01,960
+training set, the store of all examples, that is mainly the artifact that we want
+
+190
+00:16:01,960 --> 00:16:07,600
+to manage in production over time. In training centric worlds, your tasks are
+
+191
+00:16:07,600 --> 00:16:12,960
+recomputed inconsistently, right? Data preparation is run differently than model
+
+192
+00:16:12,960 --> 00:16:18,360
+retraining. So those maybe run batch offline, different schedules. But in the
+
+193
+00:16:18,360 --> 00:16:22,440
+query centric world, right, once you get a new query, kind of everything, all of
+
+194
+00:16:22,440 --> 00:16:27,440
+your data is as fresh as possible. It's clean, it's whatever. We have those kind
+
+195
+00:16:27,440 --> 00:16:34,840
+of guarantees. And you've seen this word consistency, consistent data all over my
+
+196
+00:16:34,840 --> 00:16:39,760
+slides. So this smells a lot like a data management problem, right? What does it
+
+197
+00:16:39,760 --> 00:16:47,360
+mean to have consistency in DAX? So now I will kind of pitch ML engineering to you
+
+198
+00:16:47,720 --> 00:16:52,560
+as materialized view maintenance. And don't worry too much if you don't
+
+199
+00:16:52,560 --> 00:16:55,800
+remember what views are, materialized views are. I'll do a very brief
+
+200
+00:16:55,800 --> 00:17:02,960
+refresher. So suppose you have a table, something like this. So tables, like you
+
+201
+00:17:03,000 --> 00:17:07,400
+are all familiar with this data structure of rows and columns stored in your
+
+202
+00:17:07,400 --> 00:17:14,920
+database. So a view is kind of a virtual manipulation of this data. So it's kind of
+
+203
+00:17:14,920 --> 00:17:22,040
+formed as a result of a query, but it's not stored separately. You can query this
+
+204
+00:17:22,040 --> 00:17:27,200
+view as you would query a table. And when you do query the view, then the outputs of
+
+205
+00:17:27,240 --> 00:17:33,120
+this view is then materialized or created when it's queried. So then the question
+
+206
+00:17:33,120 --> 00:17:40,000
+becomes, okay, like what is materialized views even mean? What is, how do we do
+
+207
+00:17:40,000 --> 00:17:48,000
+that? So materialized views are stored in the database. And they're computed when
+
+208
+00:17:48,000 --> 00:17:53,920
+you initially define that view and on base updates to the table. So every time I
+
+209
+00:17:53,920 --> 00:18:00,360
+add a row to the new table, then I recompute my view. There's a ton of open
+
+210
+00:18:00,360 --> 00:18:05,600
+problems or open questions in materialized view maintenance. So you're
+
+211
+00:18:05,600 --> 00:18:11,120
+wondering, well, how does this apply to ML pipeline land? Materialized views in
+
+212
+00:18:11,120 --> 00:18:16,920
+the literature really are just some form of derived data. So same thing with ML
+
+213
+00:18:16,920 --> 00:18:21,360
+pipelines, right? When I issue a query to an ML pipeline, that prediction is some
+
+214
+00:18:21,360 --> 00:18:28,160
+result of transformations of the data. So in the ML pipeline world, we can think
+
+215
+00:18:28,160 --> 00:18:36,240
+of views as kind of the training sets and the models that we are creating. And
+
+216
+00:18:36,240 --> 00:18:42,040
+the idea of view maintenance, which maintain these views, is this crazy DAG
+
+217
+00:18:42,040 --> 00:18:46,320
+that we're building to update the training sets in models as we get new
+
+218
+00:18:46,320 --> 00:18:52,240
+data points. And views can be kind of maintained, updated, all sorts of
+
+219
+00:18:52,240 --> 00:18:57,560
+different ways. You can do it immediately. You can do it in batch, like deferred
+
+220
+00:18:57,560 --> 00:19:05,000
+view maintenance. So retraining is almost always done in a batch setting. You can,
+
+221
+00:19:05,000 --> 00:19:09,560
+every time you need to recompute your view, materialize it on every update to a
+
+222
+00:19:09,560 --> 00:19:12,920
+base table. You can materialize a whole thing from scratch. So retrain the whole
+
+223
+00:19:12,920 --> 00:19:18,000
+model from scratch, for example. Or you can kind of write custom operators to
+
+224
+00:19:18,000 --> 00:19:22,640
+incrementally materialize them. So try to, this is super, super tedious, right?
+
+225
+00:19:22,640 --> 00:19:26,120
+Because you have to maintain some state. You have to maintain what you will do on
+
+226
+00:19:26,120 --> 00:19:30,840
+update. That's different from the initial, that requires custom logic. So, you know,
+
+227
+00:19:30,840 --> 00:19:35,600
+food for thought, what is low latency, right? If you do things in batch, that's
+
+228
+00:19:35,600 --> 00:19:41,520
+low latency. If you redo things from scratch the whole time,
+
+229
+00:19:41,520 --> 00:19:46,600
+that's easy to code up. So you can think about that later. But whole crux of my
+
+230
+00:19:46,600 --> 00:19:51,800
+argument now is that in these kind of ML DAGs, you have these inconsistent
+
+231
+00:19:51,800 --> 00:19:55,560
+materialized view maintenance policies. So when you're training models in
+
+232
+00:19:55,560 --> 00:20:00,880
+development, you're working off of like immediately materialized features,
+
+233
+00:20:00,880 --> 00:20:04,760
+right? Like things that can make you iterate as quickly as possible. But when
+
+234
+00:20:04,760 --> 00:20:10,000
+we're training a production, since we're retraining on a cadence oftentimes, we
+
+235
+00:20:10,000 --> 00:20:13,040
+have this like, it's deferred view maintenance. Like this cadence kind of
+
+236
+00:20:13,040 --> 00:20:17,560
+comes out of thin air. And, you know, when we're issuing online queries,
+
+237
+00:20:17,560 --> 00:20:21,120
+we can't really, it's not the same assumption as this immediate maintenance
+
+238
+00:20:21,120 --> 00:20:25,680
+in development. And then when you're serving in prod, maybe some of your
+
+239
+00:20:25,680 --> 00:20:29,720
+features are immediately materialized, right? They're done online. Maybe you're
+
+240
+00:20:29,720 --> 00:20:34,360
+querying your batched features or joining with some batch features. So you have this
+
+241
+00:20:34,360 --> 00:20:41,800
+like hodgepodge of immediate and deferred policies. And we're using some
+
+242
+00:20:41,800 --> 00:20:47,080
+retrained model. So you have all these like crazy mismatch in policies, and
+
+243
+00:20:47,080 --> 00:20:52,840
+it's really no wonder that we get so many bugs. At least if you get anything
+
+244
+00:20:52,840 --> 00:20:56,640
+from this talk, that should be, this should be it. Like no wonder we get so
+
+245
+00:20:56,640 --> 00:21:01,880
+many bugs. It makes a lot of sense. So now, I know I have only a few minutes
+
+246
+00:21:01,880 --> 00:21:06,440
+left. So I'll finish in two minutes, I promise. But if you think about
+
+247
+00:21:06,440 --> 00:21:11,920
+recasting kind of ML bugs as view maintenance challenges, you can think
+
+248
+00:21:11,920 --> 00:21:16,080
+about them, some of them as view saleness problems, right? When you're doing,
+
+249
+00:21:16,080 --> 00:21:21,080
+you're materializing outputs offline in batch, you might get trained
+
+250
+00:21:21,080 --> 00:21:25,400
+serves queue, right? You need to make sure that your model is retrained as kind of
+
+251
+00:21:25,400 --> 00:21:30,520
+frequently as possible. In the interview study that I did, I love one of these
+
+252
+00:21:30,520 --> 00:21:35,000
+quotes, the retraining cadence was just like finger to the wind. I almost never
+
+253
+00:21:35,000 --> 00:21:39,720
+see like a very principled way of figuring out what the retraining cadence
+
+254
+00:21:39,720 --> 00:21:47,960
+is. And you get kind of these feedback delays also. So if labels are done, if
+
+255
+00:21:47,960 --> 00:21:52,120
+humans are in the loop, like labeling data, and labels only come in every
+
+256
+00:21:52,120 --> 00:21:57,760
+couple of weeks or so, right? This will make your training sets stale. Your
+
+257
+00:21:57,760 --> 00:22:03,320
+models will be stale, even in offline, right? So how do we kind of think about
+
+258
+00:22:03,320 --> 00:22:08,120
+that or reason about that? Then we also have view correctness problems, right? If
+
+259
+00:22:08,120 --> 00:22:13,880
+I run inference on bad quality data, if I retrain a model on bad quality data,
+
+260
+00:22:13,880 --> 00:22:18,040
+right? Like all ensuing predictions from that model are also going to be bad.
+
+261
+00:22:18,040 --> 00:22:23,080
+I have a paper on that coming up soon. And data errors really compound, right,
+
+262
+00:22:23,080 --> 00:22:28,120
+over time. If you have a data, if you have error ingestion, right, like the error
+
+263
+00:22:28,120 --> 00:22:34,320
+just grows as you move throughout the pipeline. So are you really, you got to
+
+264
+00:22:34,320 --> 00:22:39,880
+implement data validation and monitoring at every stage in your pipeline. And
+
+265
+00:22:39,880 --> 00:22:45,920
+then finally, kind of bugs that arise from the dev-prod gap. This is stuff
+
+266
+00:22:45,920 --> 00:22:50,720
+that I never thought about when I was an ML engineer. But it was my validation and
+
+267
+00:22:50,720 --> 00:22:54,840
+development time equivalent to kind of how I served at prod. So for this
+
+268
+00:22:54,840 --> 00:23:01,320
+retraining cadence, did my validation set have the same number of examples that I
+
+269
+00:23:01,320 --> 00:23:06,280
+would serve in production, the same representation, like same subpopulations,
+
+270
+00:23:06,280 --> 00:23:12,680
+etc. Was my validation set in development time sampled like a contiguous sample of
+
+271
+00:23:12,680 --> 00:23:17,200
+production queries? This was almost never the case at the company that I
+
+272
+00:23:17,200 --> 00:23:23,200
+previously worked out. I almost always saw random train test splits. This is not
+
+273
+00:23:23,200 --> 00:23:27,360
+the same way that you would kind of monitor performance and production. And
+
+274
+00:23:27,360 --> 00:23:33,000
+finally, are you verifying this when you're promoting from development to
+
+275
+00:23:33,000 --> 00:23:38,680
+production, like in your CI? I'll skip through this almost, but this is really
+
+276
+00:23:38,680 --> 00:23:42,960
+just kind of tips and tricks for if you're an ML infrastructure engineer.
+
+277
+00:23:42,960 --> 00:23:48,480
+Validate everywhere, as I mentioned before, version data, training sets, and
+
+278
+00:23:48,480 --> 00:23:53,200
+code together. Make it super easy to check out old versions. If I time
+
+279
+00:23:53,200 --> 00:23:57,080
+traveled back to last week, can I get a view of the pipeline? Everything in the
+
+280
+00:23:57,080 --> 00:24:01,760
+pipeline of that week. This is super hard to do, but very important to kind of
+
+281
+00:24:01,760 --> 00:24:07,640
+get debugging in provenance as first class citizens. And with that, thanks so
+
+282
+00:24:07,640 --> 00:24:14,000
+much.
+

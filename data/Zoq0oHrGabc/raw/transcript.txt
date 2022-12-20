@@ -1,0 +1,268 @@
+I'm James Kirk. I was one of your MCs this morning, if any of you are still awake after
+the early start today. But I'm back and I wanted to tell you a bit about a subject that
+I really, really love. And I've gotten to work on a bunch, which is recommender systems,
+and particularly a lot of the ways that building recommender systems can get really thorny
+and challenging and also a lot of fun. And my favorite way to rationalize recommender
+systems is as a desire path. If you're familiar with these, the desire path is what happens
+when a whole bunch of people all decide to walk through a field in the same way to get
+from point A to point B. And eventually the grass dies and you get a bit of a trail. And
+sometimes people will come along after and say, all right, well, if people always wanted
+to get from point A to point B there, then maybe we should pave it, pave it. Maybe that's
+where the path should always have been. I think this is kind of a neat metaphor for
+recommenders themselves for kind of an obvious reason, right? Like people like to get from
+A to B, it's your job, the recommender systems job to get them from A to B. But I also think
+when you go a little one level, a little more abstract when you're building systems like
+recommender systems or ML systems in general, this is kind of how you should think about
+your process of building them from scratch, developing them, iterating on them, getting
+them out into production and making something that you actually can leave behind to continue
+to iterate on for your peers going forward. So a bit about me. My name is James Kirk.
+That's what I looked like when I had longer hair and was therefore a bit cooler. I'm the
+co-founder of Meru. We're building some new ways to recommend with humans, particularly
+content creators in the loop to make recommendations to people who follow them. Previously, I worked
+at Spotify, bulk of my career at Spotify, working on recommenders there and also at
+a couple of other companies around Boston and also a stint at Amazon. But today, you're
+not really here to learn about me. I want to tell you a story about you. This might
+be a bit familiar to some of you if you've built recommender systems before, because
+you're an engineer, you're a data scientist at your company. You've been there a while.
+You've been working on a couple of different projects. You've gotten familiar with the
+tech stack, the data. You've put some ML models in prod. And then one day this word comes
+from above and somebody opened up TikTok and discovered something really cool and wanted
+to know why they can't build that or can we build that or why haven't we already built
+that and how do we get there? How do we get recommendations like some of these products,
+especially consumer products that tons and tons of people are engaging with? This can
+probably make the hair on the back of your neck stand up the first time you hear it.
+But I think it's also a really great opportunity because this can be a really fun space to
+dig into if you've never built recommender systems before, as long as you know some of
+the pitfalls that you're going to want to avoid. The first and most salient one is probably
+very simply from the origin here that most recommender projects from the get go are poorly
+framed. By poorly framed, I mean that the idea hasn't really been fleshed out to a
+degree that gives you, the engineer or data scientist, enough clarity to develop something
+that will be healthy either in the short or the long term. Now, when this comes from above,
+this isn't necessarily leadership's fault because they might absolutely have the right
+idea that the business has data that could be used in such a way to really delight your
+users and it's strategically valuable to build recommender systems and improve your product
+with them. But maybe there's a lot of really loose concepts or inspirations flying around
+about how that recommender might really work. And when that's really amorphous, it can be
+really challenging to actually build those systems and get them out into the real world.
+Just as often, these poor framings come from the bottom up. Sometimes somebody reads the
+new paper from the Rexis conference and it's super cool and flashy and they want to stick
+the transformers into the loop of their data somewhere. And then what does that look like?
+Maybe it's recommenders, et cetera, et cetera. It becomes technology or a solution in search
+of a problem. That's just as thorny and it's also your job if you're working around them
+to figure out how to take that idea, which might be perfectly aligned in the long term
+to something really wonderful and valuable and form it into a project that will actually
+be healthy. So you're in the jungle now. Pitfalls abound.
+You have just crossed the first one because you, or at least you see the first one coming,
+which is around the problem framing. And if your company has never built recommenders
+before, there probably really are no desire paths for you here. There's not an organizational
+necessarily competency around what these projects look like, how to develop them, how to iterate
+on them, how to maintain them long-term. And it's your job on this team to just get it
+right the first time. Get it right the first time, not perfectly, not a perfectly well-paved
+highway for the team to be sending a thousand models and experiments down or anything, but
+start to carve that path in a way that other people would actually be able to follow in
+the future. When you're framing this and you want to make
+sure it's a healthy project, I think there are really four things that you got to look
+for. And these are often missing when the idea to build recommender systems first come
+up. The first and most salient in my mind is a clearly defined user. Does this matter
+to your customer, to the user, to the person who's going to be receiving recommendations?
+And on top of that, do you have any specificity about what their needs really are? Is this
+somebody who will actually respond to recommendations, wants recommendations in their product and
+will get value out of them? A big misalignment that often happens is that there will be a
+different group of users that maybe one party like leadership sees as the recipient of recommenders
+versus maybe product management might see things differently. Maybe executives, they're
+looking at the strategy and they're saying, all right, it's got to be for 1824s in the
+US that are casual users and we want to make sure they're experienced perfect. And then
+product is saying, oh, it's going to be perfect for everybody. Our algorithms need to understand
+every single user, cold starts need to be perfect, et cetera. You need to help get people
+aligned on who exactly this clearly defined user is going to be. Otherwise the waters
+are already choppy. Next up is a measurable definition of success. When you build this
+system, this product, and you put it in users' hands, how will you know if it's any good?
+In plain English, how will you know if it's any good? How will you know that people's
+experience is delightful? And also quantitatively, do you have metrics that will tell you that
+users are responding well to recommendations? And if not, how can you develop those metrics?
+The burden is often on you as engineering or data science to help define this metric
+of success, both in plain language, as well as quantitatively. And you need to make sure
+that all these stakeholders are also aligned about what that definition is. Next up is
+that you need somebody to be able to tell you in clear language, why that matters. Why
+does it matter to your business, to your organization, that that recommendation is successful? There
+are a lot of projects that create really great recommendations. They're really delightful
+for people, but are unable to actually drive value for the business, and they languish.
+And sometimes this is how these passion projects die. They never get in front of enough people
+that they could have if they also had a clear relationship to what makes the business successful.
+So seek that out and make sure that especially leadership of a recommender project understand
+that relationship. Last, and this is squarely your domain as data and engineering, is make
+sure that the data and tech stack that the company have are ready to build some kind
+of recommendation systems. Nobody wants to get into a project where you have to tell
+them, okay, well, we need six months of explicit feedback data collection to even dream of
+starting a recommender here. Make sure that what these concepts look like, look like something
+you can deliver with the data and tech stack your company has. So this, I consider kind
+of the first shortcut is just crisping up the requirements, which doesn't really feel
+like a shortcut. It feels like more work, right? But the reason it's a shortcut is because
+it keeps you from going in circles here. There are projects that can go on and on and on
+just trying to crisp up what the actual real world definition of success is, or they can
+go on and on and on trying to eventually get to the right data to implement recommendations.
+And if you make sure that everybody's crisp and aligned on what those last four points
+were before you start the engineering, you're in a much better situation to just drive through
+and start building things that will drive value for local users.
+As you're crisping up these requirements, you're going to also start to figure out that
+there's a lot of different flavors of recommendation and ways that it could work. One of them is
+your classic flat recommendation. This is not personalization or anything fancy like
+infinite fees. This is just you are here, you're looking at, if you're me, you're looking
+at my monthly batch of beard butter, and you're getting recommendations of things that I might
+also want to buy. To be able to make these recommendations, Amazon doesn't need any information
+about me. There's no database table saying James has a beard or anything about James,
+but just the context, just by being on this page, they know something about me that then
+is useful for making these recommendations. So knowing that you don't need to know much
+about these or to make these recommendations tells you a lot about what you need to build
+to satisfy them.
+The next layer deep is when you start to go into real personalization. These tend to be
+products that they're reflecting the user based off of the interactions that they've
+had in the past. This means that we need to engineer for the interaction data and for
+user data to be accounted for in the recommender system. One of the ways that you kind of know
+personalization systems are what's on the horizon for you is when it's not just about
+the algorithms, but it's about the copy. What are you saying about the recommendations?
+Are you saying it's for you? Is Spotify with the Discover Weekly, they're saying it's your
+weekly mixtape. The UUU is telling you a lot about what the user expectations will be.
+And so if design, copy, product are all telling you that top picks for James and your weekly
+mixtape are critical components, you know, you're talking personalization, which means
+you know, you're talking user data and interaction data.
+And another flavor of this is called omakase recommendation. Omakase is a Japanese word
+meaning I think chefs or you choose something like that. And often used in sushi. It's,
+you know, chef's choice. You take it away. You see this a lot in these infinite feed
+style recommendations where there's not really like a framing or copy or anything. You just
+dive in and you get some content and it just keeps flowing. It just keeps going. You also
+see this a lot when you're working with voice assistants. When you see something like, hey,
+I'm not going to say it because otherwise I'll probably trigger a couple hundred of
+them. Hey, blank play music. That kind of thing is very, you know, it's a very loosely
+formed request for recommendations, but the system underneath it needs to be able to satisfy
+that satisfy usually a very long session of that at consistent quality. And that's a very
+high bar for the recommender systems and data underneath.
+So get crisp about which one of these you're actually building. Make sure that you in engineering,
+make sure that product user research, design leadership are all aligned about which one
+of these you're building. Make sure that you have a really strong hypothesis that this
+is what the customer really wants, especially when you're starting from scratch. Has user
+research indicated this is something that would delight them? Have prototypes or mockups
+been shown to users that give you some feedback about how it will be received? And most importantly,
+when you've launched this, how will you actually know that you've succeeded? How will you know
+that this is delightful for the users that are receiving it?
+So now that it's starting to solidify, you might start feeling like this, this recommender
+system that's crystallizing in front of you, starting to feel a lot like search. Search
+is a very, very similar field to recommender systems. There are a lot of things that overlap
+between the two, but a very, very important thing to keep in mind here, especially for
+somebody who has experience in search, just that they're not quite the same. And those
+not quite bits are where all the lift really is going to come from. When you're able to
+take things that come off the shelf from search and apply them, knowing the ways that recommender
+problems and products are different, that can be really, really powerful.
+But keep in mind that they're not quite the same. There's good news though. I mean, they
+are pretty close and that's a really great shortcut because search is quite mature. Lots
+of organizations do have a competency in search. They have search technology. There's off the
+shelf search tools that you can apply to recommender problems if you know how to apply them and
+put them together in a way that builds a healthy recommender system.
+The most similar thing between search and recommendations is generally that you're retrieving
+from a large set of candidates. Search is looking through millions of documents. Recommendations
+are searching through millions of items and you're trying to come up with a couple of
+the right things to show to somebody. But often that's about as deep as the similarities
+go. That's where they start to diverge a bit. On the search side, users are generating a
+query. They're telling you something that they want and it's your job to satisfy that.
+On the recommendation side, it's a little fuzzier. The user, the context they're in,
+their history, all kinds of things kind of become the query, but you kind of have to
+squint to look at it to call it a query. You end up constructing things that look a lot
+like queries and can then run through search style systems like queries. But keep in mind
+again, this isn't explicit somebody asking for something and that can often lead you
+into trouble if these queries are poorly constructed.
+And search, you tend to be optimizing for the first couple of things that you're retrieving
+for the user. You want to get those first few results right because the person came
+in looking for something and you need to get it for them. Recommendations, that applies.
+You still want the first couple of recommendations to be good pretty much all the time. You get
+a lot of other factors that start to really impact recommendations. You get slate diversity.
+How broad are my recommendations that I'm seeing on this shelf? You get novelty. Am
+I seeing the same things every time I interact with these recommendations? You get interactivity.
+If somebody is giving you a thumbs up or a thumbs down on something that they liked or
+didn't like, are you responding to that in a way that makes sense to the user? These
+things that you're optimizing for are where recommendations in search tend to really,
+really diverge. So if you're somebody who is experienced building search systems, you
+probably are starting to feel like, oh, okay, I kind of recognize how recommender systems
+work. All I have to do is take what I know, break it down into its constituent bits, and
+put them all back together again to make something new. This means that you're pretty well positioned
+to be effective at building recommender systems. You have a lot of these bits of knowledge
+and competencies. The biggest risk is kind of staying in your own way at keeping RECs
+thinking about them just as search problems. I would recommend that you just consistently
+re-anchor yourself. Remember that recommendations are a different kind of user experience. Think
+about how your user is receiving them and why that's not quite search. And then I think
+you are going to blow people away with the things that you're able to apply from the
+search domain to recommendations. Use these Legos, but make sure you remember that you're
+putting together something totally different than what you've done before. A colleague
+of mine named Carl said this recently. He tutored it over on Mastodon, that Rexis, it
+is quite similar to search, to information retrieval, except there's a lot of nuance
+that goes into building that quote-unquote query about the user. This is a lot of the,
+for lack of a better word, artistry of building recommender systems, and it's where a lot
+of people get lost when they're coming from search over to recommendations. The second
+place that people sometimes get really tangled up in recommendations is simply that the offline
+metrics for recommender systems tend to just be kind of bad. They're a little misleading.
+They don't tell us really what we think they're telling us, and a lot of them are borrowed
+from adjacent fields like search or other areas of information retrieval, but they don't
+quite apply squarely to recommenders. If you've worked in search or recommenders, you might
+be familiar with NDCG. By the way, I promise this is the one equation the whole slide is
+showing. NDCG is a very commonly used metric. It's effectively saying how good are the top
+few recommendations and how high have we packed the really good stuff in that recommendation
+set. It works really nicely in a lot of problems. You know it's fancy because it's got Greek
+letters in it. I know that sigma is not one of the fancy, fancy Greek letters, but we'll
+still give it some credit. It's often applied to recommender systems because it's very commonly
+used in the search systems, and there are a lot of tools available for it. You've probably
+trained up a recommender system offline. You have a bunch of data about historical user
+reactions. You can calculate NDCG, and it gives you a number that tells you something
+that looks like my algorithm is good or my algorithm is bad. Then you're going to start
+to run some of these algorithms online. You're going to start to collect online feedback
+data about which of these algorithms are good and bad. What I am advocating for you to do
+is to plot it. Just plot it. Just take the offline scores that these metrics, especially
+the borrowed ones, are telling you, and for every algorithm, plot on the scatter where
+that offline metric told you that that algorithm performed and where an online metric, something
+that really is about user satisfaction with the recommender system, what that tells you
+about how good those recommendations were. You probably expect it to look something like
+this. Your algorithm is, you start with something truly random, that pink dot. It's not very
+good for offline metrics, and it's not very good online because it's just a bunch of random
+ranked stuff, but your better offline metrics, they start to get better and better online.
+Maybe there's some diminishing returns there, but generally, you have some responsiveness.
+More often than not, when you first start a project, you will find that your offline
+metric gives you no response whatsoever in your online metric. There are big, big changes
+in the offline performance that might not have any appreciable impact in the online
+performance of your recommender, and there are dozens of causes. It could be the product
+itself. It might not be sensitive to these changes. It might just be that users aren't
+really responding to these changes. Maybe the product just is poorly framing the recommendations,
+so how good the algorithm is doesn't matter, but don't be surprised if you see a chart
+like this. Also, don't be surprised if you see a chart like this. Sometimes what you'll
+find is your random treatment, when you're truly just picking random stuff, it's not
+good, but all of your recommenders are much better online, but the sensitivity within
+that is very, very poor. What that's kind of telling you is that there's not much headroom
+to be gained online from just squeezing more and more and more NDCG out of your algorithms
+offline. This probably tells you that NDCG is the wrong metric for your problem, and
+you're going to want to find some new way offline to measure how good your recommendations
+are, and you should experiment to find those right metrics. So there's another shortcut
+for you. Just design those first experiments, not for the best algorithm to go out online,
+although you'll maybe have some serendipity there, but design them to validate your experimental
+methodology itself. Make sure that your metrics matter, and make sure that you're going to
+be able to actually cut through this hedge maze, or you could get lost in it forever,
+squeezing more NDCG out in a way that just truly never matters.
+Just real quick one for you is just does it scale, and does it need to? In a lot of cases,
+especially when you're prototyping recommender systems, you actually don't have the kinds
+of scale problems that you would expect if you were going to production or full scale,
+and often a lot of very simple solutions will give you everything you need to experiment.
+A little story here, we built Spotify's first podcast recommender. This was like five years
+ago. This model's long dead. And when I built it, there were only 10 million podcast listeners
+on all of Spotify, and only 10,000 podcasts. Spotify had very mature systems for running
+recommenders, but we just kept it simple. We ran one Python script on one big box, dumped
+10 recommendations per user to Bigtable, and serve them on the homepage. And this scaled
+for about half a year as both of those numbers doubled. So just keep in mind that often scale
+can lead you to thinking that you need to go with a lot of technologies that aren't
+really improving your speed of iteration, and the simple stuff lets you iterate very
+quickly. So just keep serving the simple stuff for as long as you can.
+So those are my four shortcuts for you, and my one last thought to leave you with is simply
+to remember, and check a couple of this off your norm conf bingo, that recommender systems
+are about people. They're about their behavior, what they want, what they need, what they
+care. They're by people, you and the things that you think about content, about your users,
+are all getting baked into your system, and that can be good or bad, but they're for people.
+You want to make people happy with the recommendations you're giving them. You want it to be delightful,
+and that is what matters most. So thank you so much. If you disagree with anything, we
+live in a beautiful age where you can yell at me on more platforms than ever. You can
+find me at any of those, and I'd love to hear from you. And yeah, let me know if you have
+any questions.

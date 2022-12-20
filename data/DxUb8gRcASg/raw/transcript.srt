@@ -1,0 +1,1816 @@
+1
+00:00:00,000 --> 00:00:02,240
+My name is Genia Izquierdo.
+
+2
+00:00:02,240 --> 00:00:04,480
+I am a field engineering manager at Databricks,
+
+3
+00:00:04,480 --> 00:00:05,780
+managing the SSA team.
+
+4
+00:00:06,680 --> 00:00:09,000
+I was trained as a software engineer,
+
+5
+00:00:09,000 --> 00:00:12,240
+but I turned to data engineering and I've really loved it.
+
+6
+00:00:12,240 --> 00:00:14,440
+My framework of choice has been Spark
+
+7
+00:00:14,440 --> 00:00:15,980
+for the past seven years.
+
+8
+00:00:15,980 --> 00:00:17,420
+So here we are today.
+
+9
+00:00:18,560 --> 00:00:22,040
+So today I want to talk about things I've seen people do
+
+10
+00:00:22,040 --> 00:00:24,600
+using the Spark framework to develop
+
+11
+00:00:24,600 --> 00:00:28,120
+their data applications, which have horrified me.
+
+12
+00:00:28,120 --> 00:00:31,720
+And I hope to scare you enough to prevent the world
+
+13
+00:00:31,720 --> 00:00:34,140
+from committing these Spark crimes again.
+
+14
+00:00:35,040 --> 00:00:37,920
+So I will show you how I would have done this differently
+
+15
+00:00:37,920 --> 00:00:41,200
+and what from my very opinionated way,
+
+16
+00:00:42,080 --> 00:00:43,640
+view is the right way.
+
+17
+00:00:43,640 --> 00:00:46,800
+So I've grouped these stories into testing,
+
+18
+00:00:46,800 --> 00:00:49,420
+performance and monitoring groups.
+
+19
+00:00:49,420 --> 00:00:51,040
+So let's dig in.
+
+20
+00:00:52,360 --> 00:00:54,340
+Okay, testing stories first.
+
+21
+00:00:54,340 --> 00:00:58,220
+A while ago, I opened a very important repo
+
+22
+00:00:58,220 --> 00:01:00,900
+to make some changes needed to the utils functions
+
+23
+00:01:00,900 --> 00:01:03,420
+of a very important projects I had just been assigned to.
+
+24
+00:01:03,420 --> 00:01:08,420
+And to my horror, there was no arrow next
+
+25
+00:01:08,620 --> 00:01:11,160
+to the Scala folder under the test folder,
+
+26
+00:01:11,160 --> 00:01:14,740
+which means no tests.
+
+27
+00:01:14,740 --> 00:01:17,900
+So I decided to open the utils file
+
+28
+00:01:17,900 --> 00:01:19,580
+and I see many functions in there.
+
+29
+00:01:19,580 --> 00:01:22,180
+And all of them, of course, were untested.
+
+30
+00:01:22,180 --> 00:01:24,380
+Needless to say, I flipped the table.
+
+31
+00:01:25,620 --> 00:01:27,240
+But then in a different occasion,
+
+32
+00:01:27,240 --> 00:01:29,600
+I encountered myself in a similar project.
+
+33
+00:01:29,600 --> 00:01:33,800
+But this time when I opened the repo, there were tests.
+
+34
+00:01:33,800 --> 00:01:37,100
+So I happily opened the file to see what the test coverage
+
+35
+00:01:37,100 --> 00:01:40,840
+looks like and I find this.
+
+36
+00:01:42,900 --> 00:01:44,180
+What is this?
+
+37
+00:01:44,180 --> 00:01:47,240
+This is only testing that Spark can read data in.
+
+38
+00:01:48,740 --> 00:01:49,860
+Come on, we can do better.
+
+39
+00:01:49,860 --> 00:01:53,020
+There really isn't a need to test the Spark internals.
+
+40
+00:01:53,020 --> 00:01:56,460
+You can be assured that that code has been tested thoroughly.
+
+41
+00:01:56,460 --> 00:01:59,360
+So it is very hard to change production code
+
+42
+00:01:59,360 --> 00:02:01,880
+without knowing the implications of the changes
+
+43
+00:02:01,880 --> 00:02:03,740
+to the already existing code.
+
+44
+00:02:03,740 --> 00:02:06,320
+So how do we make our code less spooky,
+
+45
+00:02:06,320 --> 00:02:09,020
+our future lives easier and our products better?
+
+46
+00:02:09,980 --> 00:02:13,000
+Well, step one, the first step heading
+
+47
+00:02:13,000 --> 00:02:15,900
+in the right direction is modularize your code
+
+48
+00:02:15,900 --> 00:02:18,340
+with particular emphasis around reusable code,
+
+49
+00:02:18,340 --> 00:02:21,560
+non-trivial transformations, UDFs and utility functions.
+
+50
+00:02:22,460 --> 00:02:25,740
+Step two, we write the actual tests.
+
+51
+00:02:25,740 --> 00:02:27,060
+At a minimum, you should write
+
+52
+00:02:27,060 --> 00:02:29,220
+a happy path test per function.
+
+53
+00:02:29,220 --> 00:02:31,340
+Then if you want to go further,
+
+54
+00:02:31,340 --> 00:02:33,740
+focus on what's important for each function
+
+55
+00:02:33,740 --> 00:02:35,200
+you want to test.
+
+56
+00:02:35,200 --> 00:02:37,780
+You can start with covering common corner cases
+
+57
+00:02:37,780 --> 00:02:41,340
+and then checking to see where there are complex arithmetics
+
+58
+00:02:41,340 --> 00:02:43,260
+that could be prone to error.
+
+59
+00:02:43,260 --> 00:02:44,580
+Are there any possibilities of getting
+
+60
+00:02:44,580 --> 00:02:46,680
+into a null pointer error?
+
+61
+00:02:46,680 --> 00:02:48,060
+If one of the conditions is not met
+
+62
+00:02:48,060 --> 00:02:51,140
+and you want to ensure the function returns gracefully,
+
+63
+00:02:51,140 --> 00:02:54,460
+or if you require the output to be of a specific format
+
+64
+00:02:54,460 --> 00:02:55,700
+or schema, et cetera.
+
+65
+00:02:55,700 --> 00:02:59,000
+So there are many things to consider in testing.
+
+66
+00:03:00,260 --> 00:03:03,060
+So when you decide to dive in,
+
+67
+00:03:03,060 --> 00:03:05,460
+and I encourage you to read more about it
+
+68
+00:03:05,460 --> 00:03:08,780
+and actually do dive in, there's a lot of docs online.
+
+69
+00:03:08,780 --> 00:03:11,600
+There's a lot of information online that you can check out,
+
+70
+00:03:11,600 --> 00:03:13,380
+but at the very least,
+
+71
+00:03:13,380 --> 00:03:15,940
+please write those happy path tests.
+
+72
+00:03:15,940 --> 00:03:17,940
+Okay.
+
+73
+00:03:17,940 --> 00:03:21,260
+So next up for my second group of stories,
+
+74
+00:03:21,260 --> 00:03:25,020
+I want to tell you some performance impacting horror stories.
+
+75
+00:03:25,020 --> 00:03:27,860
+For these, I decided to tell you about
+
+76
+00:03:27,860 --> 00:03:32,340
+things I see every day that are just low hanging fruit,
+
+77
+00:03:32,340 --> 00:03:35,380
+very normie, that can have an immediate impact
+
+78
+00:03:35,380 --> 00:03:37,800
+on the performance of your jobs.
+
+79
+00:03:37,800 --> 00:03:41,180
+So keep in mind that these are all simplifications
+
+80
+00:03:41,180 --> 00:03:42,860
+of examples I've seen in production,
+
+81
+00:03:42,860 --> 00:03:45,340
+and also that my recommendations can be applied
+
+82
+00:03:45,340 --> 00:03:47,460
+to exploratory work and analysis,
+
+83
+00:03:47,460 --> 00:03:50,900
+but I'm more interested in helping you put this into action
+
+84
+00:03:50,900 --> 00:03:52,100
+on your production code.
+
+85
+00:03:53,460 --> 00:03:55,040
+Okay, with that said,
+
+86
+00:03:56,580 --> 00:03:59,540
+in order for you to see the horror in the next few examples,
+
+87
+00:03:59,540 --> 00:04:03,320
+let's do a quick refresh of what Spark is and how it works.
+
+88
+00:04:04,900 --> 00:04:08,900
+So under the hood of a Spark driver, we have a driver.
+
+89
+00:04:08,900 --> 00:04:11,860
+The driver is the machine in which the application runs.
+
+90
+00:04:11,860 --> 00:04:13,980
+It is responsible for three main things,
+
+91
+00:04:13,980 --> 00:04:16,420
+maintaining information about the Spark application,
+
+92
+00:04:16,420 --> 00:04:18,700
+responding to the user's program,
+
+93
+00:04:18,700 --> 00:04:20,100
+analyzing, distributing,
+
+94
+00:04:20,100 --> 00:04:23,140
+and scheduling work across the executors.
+
+95
+00:04:23,140 --> 00:04:26,980
+And then we have the worker nodes.
+
+96
+00:04:26,980 --> 00:04:30,060
+The worker node hosts the executor process.
+
+97
+00:04:30,060 --> 00:04:31,740
+It has a fixed number of executors
+
+98
+00:04:31,740 --> 00:04:33,900
+allocated at any point in time.
+
+99
+00:04:33,900 --> 00:04:37,500
+Each executor holds a chunk of data to be processed.
+
+100
+00:04:37,500 --> 00:04:40,500
+This chunk is called a Spark partition.
+
+101
+00:04:40,500 --> 00:04:41,700
+It is a collection of rows
+
+102
+00:04:41,700 --> 00:04:44,820
+that sits on one physical machine in the cluster.
+
+103
+00:04:44,820 --> 00:04:47,380
+Executors are responsible for carrying out the work
+
+104
+00:04:47,380 --> 00:04:51,420
+assigned to the driver, assigned by the driver, sorry.
+
+105
+00:04:51,420 --> 00:04:54,820
+And each executor is responsible for two things.
+
+106
+00:04:54,820 --> 00:04:56,540
+One, execute your code,
+
+107
+00:04:57,660 --> 00:05:00,220
+execute the code that has been assigned by the driver.
+
+108
+00:05:00,220 --> 00:05:02,620
+And second, report the state of the computation
+
+109
+00:05:02,620 --> 00:05:03,700
+back to the driver.
+
+110
+00:05:04,820 --> 00:05:08,820
+In each executor, we have a number of cores,
+
+111
+00:05:08,820 --> 00:05:13,820
+which you can also think of as slots or threads.
+
+112
+00:05:15,220 --> 00:05:17,660
+And Spark parallelizes at two levels.
+
+113
+00:05:17,660 --> 00:05:20,700
+One is splitting the work among the executors.
+
+114
+00:05:20,700 --> 00:05:23,820
+And the other one is the slots in each of them.
+
+115
+00:05:23,820 --> 00:05:26,180
+So each executor has a number of slots
+
+116
+00:05:26,180 --> 00:05:28,460
+and each slot can be assigned a task.
+
+117
+00:05:28,460 --> 00:05:30,140
+In this diagram, for example,
+
+118
+00:05:30,140 --> 00:05:31,860
+some slots have been filled by a task
+
+119
+00:05:31,860 --> 00:05:33,060
+and some slots are open.
+
+120
+00:05:34,700 --> 00:05:37,780
+Now let's look at how Spark executes your program.
+
+121
+00:05:37,780 --> 00:05:39,900
+So using one of these clusters that I just mentioned,
+
+122
+00:05:39,900 --> 00:05:42,740
+Spark processes your data by breaking up a large task
+
+123
+00:05:42,740 --> 00:05:44,620
+into smaller ones and distributing the work
+
+124
+00:05:44,620 --> 00:05:47,500
+among several machines, which are called workers.
+
+125
+00:05:47,500 --> 00:05:49,620
+At the core of every Spark application
+
+126
+00:05:49,620 --> 00:05:51,260
+is the Spark driver program.
+
+127
+00:05:52,620 --> 00:05:56,020
+The secret to Spark's performance is parallelism.
+
+128
+00:05:56,020 --> 00:05:58,780
+Each parallelized action is referred to as a job.
+
+129
+00:05:58,780 --> 00:06:01,540
+The driver converts your Spark application
+
+130
+00:06:01,540 --> 00:06:03,820
+into one or more Spark jobs.
+
+131
+00:06:03,820 --> 00:06:06,220
+And each job is broken down into stages.
+
+132
+00:06:06,220 --> 00:06:10,500
+Stages are created based on what operations
+
+133
+00:06:10,500 --> 00:06:13,620
+can be performed serially or in parallel.
+
+134
+00:06:13,620 --> 00:06:16,740
+And not all Spark operations can happen in a single stage.
+
+135
+00:06:16,740 --> 00:06:19,140
+So they may be divided into multiple stages.
+
+136
+00:06:20,420 --> 00:06:24,060
+So each stage then is broken down into Spark tasks,
+
+137
+00:06:24,060 --> 00:06:27,460
+which are then federated across each Spark executor.
+
+138
+00:06:27,460 --> 00:06:29,900
+And each task maps to a single core
+
+139
+00:06:29,900 --> 00:06:32,220
+and works on a single partition of data.
+
+140
+00:06:32,220 --> 00:06:36,780
+For example, an executor with 16 cores can have 16 tasks
+
+141
+00:06:36,780 --> 00:06:39,140
+running in parallel at any given point.
+
+142
+00:06:39,140 --> 00:06:41,180
+So with that background in mind,
+
+143
+00:06:41,180 --> 00:06:43,340
+that one was for you, Jesse,
+
+144
+00:06:43,340 --> 00:06:45,540
+let's go back to the stories.
+
+145
+00:06:45,540 --> 00:06:48,700
+So one day someone brings to my attention
+
+146
+00:06:48,700 --> 00:06:50,980
+that their job, they just deployed to production,
+
+147
+00:06:50,980 --> 00:06:52,660
+is really slow.
+
+148
+00:06:52,660 --> 00:06:56,060
+So I go in, look at the code, within three seconds,
+
+149
+00:06:56,060 --> 00:06:57,660
+I tell them how to fix it, they do it,
+
+150
+00:06:57,660 --> 00:07:00,740
+their job runs smoothly and they happily move along.
+
+151
+00:07:00,740 --> 00:07:02,620
+So what did I see?
+
+152
+00:07:02,620 --> 00:07:05,500
+So I saw what I've seen so many times now
+
+153
+00:07:05,500 --> 00:07:07,460
+that I just tell people to look for it
+
+154
+00:07:07,460 --> 00:07:09,260
+without even looking at their code.
+
+155
+00:07:09,260 --> 00:07:12,100
+So there's a few things going on in this particular version
+
+156
+00:07:12,100 --> 00:07:13,540
+that I created here for you.
+
+157
+00:07:13,540 --> 00:07:18,540
+So in rows one and two, we load the data.
+
+158
+00:07:18,540 --> 00:07:20,620
+In row five, we filtered the data
+
+159
+00:07:20,620 --> 00:07:22,820
+so that we only look at today's date, good.
+
+160
+00:07:22,820 --> 00:07:24,340
+In row six, we perform a join,
+
+161
+00:07:24,340 --> 00:07:26,220
+in row seven and eight, we group the data
+
+162
+00:07:26,220 --> 00:07:28,860
+and perform an aggregation, fine.
+
+163
+00:07:28,860 --> 00:07:31,700
+In row 10, we print a count of the resulting data frame
+
+164
+00:07:31,700 --> 00:07:34,460
+and whoa, let's go back.
+
+165
+00:07:34,460 --> 00:07:38,540
+We print a count of the resulting data frame
+
+166
+00:07:38,540 --> 00:07:40,540
+and we print that in a production job.
+
+167
+00:07:42,140 --> 00:07:45,340
+So that's really bad, we shouldn't do that.
+
+168
+00:07:45,340 --> 00:07:46,700
+And now why is that bad?
+
+169
+00:07:47,620 --> 00:07:49,700
+Let's unpack Spark a little bit more.
+
+170
+00:07:49,700 --> 00:07:52,060
+In Spark, there are two types of operations.
+
+171
+00:07:52,060 --> 00:07:54,700
+There's transformations and there's actions.
+
+172
+00:07:54,700 --> 00:07:56,820
+Transformations are lazily evaluated,
+
+173
+00:07:56,820 --> 00:07:59,220
+which means that the evaluation of your code is delayed
+
+174
+00:07:59,220 --> 00:08:01,380
+until that result is needed.
+
+175
+00:08:01,380 --> 00:08:03,100
+There are two types of transformations.
+
+176
+00:08:03,100 --> 00:08:05,100
+There's narrow transformations and wide.
+
+177
+00:08:06,100 --> 00:08:10,980
+Narrow transformations are those that you can compute
+
+178
+00:08:10,980 --> 00:08:13,220
+using a single input partition.
+
+179
+00:08:13,220 --> 00:08:15,940
+For example, think of a filter.
+
+180
+00:08:15,940 --> 00:08:19,220
+Wide transformations usually require data to be shuffled
+
+181
+00:08:19,220 --> 00:08:21,500
+or moved between your worker nodes
+
+182
+00:08:21,500 --> 00:08:24,740
+because the operation involves partitions.
+
+183
+00:08:24,740 --> 00:08:26,860
+For example, think of a group by.
+
+184
+00:08:27,940 --> 00:08:30,620
+Your key might be in any of the input partitions.
+
+185
+00:08:30,620 --> 00:08:33,860
+So then the second type of operations are actions.
+
+186
+00:08:33,860 --> 00:08:36,500
+And these are the ones who trigger the physical evaluation
+
+187
+00:08:36,500 --> 00:08:38,180
+of the code written before,
+
+188
+00:08:38,180 --> 00:08:40,300
+which is usually a set of transformations.
+
+189
+00:08:41,220 --> 00:08:43,900
+Here at the bottom, we have some examples
+
+190
+00:08:43,900 --> 00:08:45,940
+of what narrow and wide transformations are
+
+191
+00:08:45,940 --> 00:08:46,900
+as well as actions.
+
+192
+00:08:46,900 --> 00:08:48,380
+And there's a lot more
+
+193
+00:08:48,380 --> 00:08:50,820
+and you can see those in the Spark documentation.
+
+194
+00:08:50,820 --> 00:08:55,420
+So with that, let's take a look at our code again.
+
+195
+00:08:55,420 --> 00:08:58,100
+So we see that we have a single narrow transformation,
+
+196
+00:08:58,100 --> 00:08:59,460
+which is the filter.
+
+197
+00:08:59,460 --> 00:09:01,220
+And then we have two wide transformations,
+
+198
+00:09:01,220 --> 00:09:03,300
+the join and the group by.
+
+199
+00:09:03,300 --> 00:09:06,020
+So, and then we have two actions.
+
+200
+00:09:06,020 --> 00:09:08,580
+We have the count, sorry,
+
+201
+00:09:08,580 --> 00:09:11,580
+we have just single one action, which is the count.
+
+202
+00:09:11,580 --> 00:09:16,060
+When we decide to print a count on line 10,
+
+203
+00:09:16,060 --> 00:09:17,940
+Spark will actually create the execution plan
+
+204
+00:09:17,940 --> 00:09:20,060
+and your code will be run on your input data,
+
+205
+00:09:20,060 --> 00:09:22,380
+which means that data that needs to shuffle for the join
+
+206
+00:09:22,380 --> 00:09:24,380
+and the group by will do so now.
+
+207
+00:09:24,380 --> 00:09:27,500
+This might seem insignificant with a small amount of data
+
+208
+00:09:27,500 --> 00:09:29,100
+or during one of analysis.
+
+209
+00:09:29,100 --> 00:09:32,020
+But when you deploy this code to production,
+
+210
+00:09:32,020 --> 00:09:34,460
+you are adding unnecessary overhead to your job.
+
+211
+00:09:34,460 --> 00:09:36,580
+Some scenarios where this can be particularly bad
+
+212
+00:09:36,580 --> 00:09:40,340
+are if you have really large data sets, of course,
+
+213
+00:09:40,340 --> 00:09:42,100
+or if you are streaming
+
+214
+00:09:42,100 --> 00:09:44,540
+and doing some sort of unnecessary action
+
+215
+00:09:44,540 --> 00:09:46,060
+on every micro-batch,
+
+216
+00:09:46,060 --> 00:09:48,020
+then that adds latency to your stream.
+
+217
+00:09:48,020 --> 00:09:49,940
+So remember, when you go to prod,
+
+218
+00:09:49,940 --> 00:09:51,420
+remove all unnecessary displays
+
+219
+00:09:51,420 --> 00:09:53,100
+and prints that trigger an action.
+
+220
+00:09:54,580 --> 00:09:58,980
+So now the next are two different horror stories,
+
+221
+00:09:58,980 --> 00:10:00,460
+but I've put them together
+
+222
+00:10:00,460 --> 00:10:02,540
+because the resulting anti-pattern is the same.
+
+223
+00:10:02,540 --> 00:10:04,380
+So in the first horror story,
+
+224
+00:10:04,380 --> 00:10:06,860
+someone was wondering why their job seemed to be stuck
+
+225
+00:10:06,860 --> 00:10:08,340
+in a very simple operation.
+
+226
+00:10:08,340 --> 00:10:10,140
+And when I took a look,
+
+227
+00:10:10,140 --> 00:10:12,340
+they were converting their data frame to pandas
+
+228
+00:10:12,340 --> 00:10:14,340
+in order to iterate over the data frame.
+
+229
+00:10:15,740 --> 00:10:17,180
+This is always a red flag.
+
+230
+00:10:17,180 --> 00:10:18,260
+This is always a red flag
+
+231
+00:10:18,260 --> 00:10:21,340
+because you rarely ever need to iterate over a data frame.
+
+232
+00:10:22,420 --> 00:10:24,140
+For the second story,
+
+233
+00:10:24,140 --> 00:10:27,060
+someone thought their job was taking a really long time
+
+234
+00:10:27,060 --> 00:10:29,700
+and it wasn't even supposed to be operating
+
+235
+00:10:29,700 --> 00:10:30,580
+on too much data.
+
+236
+00:10:31,780 --> 00:10:34,140
+Okay, so why are these bad?
+
+237
+00:10:34,140 --> 00:10:35,540
+In both of these cases,
+
+238
+00:10:35,540 --> 00:10:38,180
+all records in the data frame are sent to the driver,
+
+239
+00:10:38,180 --> 00:10:41,140
+which defeats the purpose of having a distributed system
+
+240
+00:10:41,140 --> 00:10:42,820
+since you're no longer executing your code
+
+241
+00:10:42,820 --> 00:10:45,140
+in parallel on multiple cores and machines.
+
+242
+00:10:45,140 --> 00:10:46,860
+So when you're writing your code,
+
+243
+00:10:46,860 --> 00:10:48,100
+make sure you ask yourself
+
+244
+00:10:48,100 --> 00:10:51,220
+whether you need to use either of these approaches
+
+245
+00:10:51,220 --> 00:10:55,220
+or if you can find a Spark idiomatic way
+
+246
+00:10:55,220 --> 00:10:57,020
+of doing what you're trying to do.
+
+247
+00:10:57,020 --> 00:11:01,660
+For example, one option for the first story
+
+248
+00:11:01,660 --> 00:11:04,420
+could be to rewrite your pandas code into Spark
+
+249
+00:11:04,420 --> 00:11:06,900
+to take full advantage of parallelization
+
+250
+00:11:06,900 --> 00:11:08,140
+and remove the iteration.
+
+251
+00:11:09,940 --> 00:11:11,980
+But I understand that you don't always have the option
+
+252
+00:11:11,980 --> 00:11:13,540
+of moving away from pandas.
+
+253
+00:11:13,540 --> 00:11:16,140
+I live in this world too.
+
+254
+00:11:16,140 --> 00:11:17,700
+So if that's the case,
+
+255
+00:11:17,700 --> 00:11:20,980
+I recommend you use the distributed version of pandas
+
+256
+00:11:20,980 --> 00:11:23,220
+available on Spark 3.2 and above.
+
+257
+00:11:23,220 --> 00:11:25,740
+This will allow you to keep your code as is,
+
+258
+00:11:25,740 --> 00:11:27,940
+but take advantage of more parallelization.
+
+259
+00:11:29,300 --> 00:11:31,620
+I wanted to show you a small example
+
+260
+00:11:31,620 --> 00:11:34,060
+of the impact of all three options.
+
+261
+00:11:34,060 --> 00:11:37,380
+So I've run a simple count on this dataset
+
+262
+00:11:37,380 --> 00:11:39,980
+that has over 7 million rows.
+
+263
+00:11:39,980 --> 00:11:42,260
+So when you're running on pandas,
+
+264
+00:11:42,260 --> 00:11:46,300
+it runs in a little bit over 40 seconds.
+
+265
+00:11:46,300 --> 00:11:49,020
+When you use distributed pandas,
+
+266
+00:11:49,020 --> 00:11:52,420
+it runs in 0.59 seconds.
+
+267
+00:11:52,420 --> 00:11:56,060
+And that's pretty good since we barely had any code change.
+
+268
+00:11:57,220 --> 00:12:00,660
+And then if you do the refactoring
+
+269
+00:12:00,660 --> 00:12:02,300
+and you write it in Spark,
+
+270
+00:12:02,300 --> 00:12:05,300
+it returns in 0.12 seconds,
+
+271
+00:12:05,300 --> 00:12:06,900
+which is much better again,
+
+272
+00:12:06,900 --> 00:12:09,380
+but it would require some refactoring.
+
+273
+00:12:09,380 --> 00:12:12,540
+So I'll let those numbers stay on the screen
+
+274
+00:12:12,540 --> 00:12:13,860
+for a second here,
+
+275
+00:12:13,860 --> 00:12:16,460
+and I'll let you draw your own conclusions.
+
+276
+00:12:19,460 --> 00:12:22,380
+Okay, so for the next one,
+
+277
+00:12:22,380 --> 00:12:24,540
+I wanted to talk about collect a little bit more.
+
+278
+00:12:24,540 --> 00:12:29,500
+Let's spot the differences between these two code snippets.
+
+279
+00:12:29,500 --> 00:12:33,540
+So on the left, we first collect the data,
+
+280
+00:12:33,540 --> 00:12:34,700
+and then we aggregate.
+
+281
+00:12:34,700 --> 00:12:38,380
+On the second, we aggregate first, then we collect.
+
+282
+00:12:38,380 --> 00:12:41,940
+So how big is the runtime difference, do you think?
+
+283
+00:12:41,940 --> 00:12:43,900
+Keeping in mind that we are still processing
+
+284
+00:12:43,900 --> 00:12:47,340
+the same data frame that contains over 7 million rows.
+
+285
+00:12:47,340 --> 00:12:52,340
+Well, the first one took 3.72 minutes.
+
+286
+00:12:52,780 --> 00:12:57,180
+The second one took 15.87 seconds.
+
+287
+00:12:58,060 --> 00:12:59,100
+And it makes sense.
+
+288
+00:12:59,100 --> 00:12:59,980
+In the first one,
+
+289
+00:12:59,980 --> 00:13:03,060
+we brought all 7 million rows into the driver,
+
+290
+00:13:03,060 --> 00:13:05,980
+and then we did all the computation in a single machine.
+
+291
+00:13:05,980 --> 00:13:07,140
+Whereas in the second one,
+
+292
+00:13:07,140 --> 00:13:08,780
+we took advantage of all those cores
+
+293
+00:13:08,780 --> 00:13:10,100
+available in the cluster.
+
+294
+00:13:10,100 --> 00:13:12,500
+Then we brought the very small aggregated dataset
+
+295
+00:13:12,500 --> 00:13:13,420
+into the driver.
+
+296
+00:13:14,980 --> 00:13:18,740
+So, sorry, I wrapped that one really quick.
+
+297
+00:13:18,740 --> 00:13:21,820
+So I just wanted to let that sit for a second too,
+
+298
+00:13:21,820 --> 00:13:23,820
+and then move on to the next story.
+
+299
+00:13:23,820 --> 00:13:26,180
+So for this one, it's a story about UDFs.
+
+300
+00:13:26,180 --> 00:13:30,460
+And what makes it extra sad, but horrific for me,
+
+301
+00:13:30,460 --> 00:13:33,980
+is that I was the one who wrote it a long time ago
+
+302
+00:13:33,980 --> 00:13:37,180
+when I was learning Spark and thinking I was a Scala ninja.
+
+303
+00:13:39,260 --> 00:13:41,740
+It made for a very good, bad example
+
+304
+00:13:41,740 --> 00:13:44,100
+of what I was trying to illustrate today.
+
+305
+00:13:44,100 --> 00:13:47,580
+So I decided to let you roast me at a code conference,
+
+306
+00:13:47,580 --> 00:13:52,580
+because where else, if not at a NormConf slide,
+
+307
+00:13:52,660 --> 00:13:53,860
+would I be able to do this?
+
+308
+00:13:53,860 --> 00:13:55,780
+So here we go.
+
+309
+00:13:55,780 --> 00:13:56,940
+Let's not look at the code yet.
+
+310
+00:13:56,940 --> 00:13:58,540
+Don't get hung up on that.
+
+311
+00:13:58,540 --> 00:14:00,060
+First, let's talk about the requirements.
+
+312
+00:14:00,060 --> 00:14:03,180
+The requirements I received was that given a date
+
+313
+00:14:03,180 --> 00:14:04,740
+and an arbitrary day of the week,
+
+314
+00:14:04,740 --> 00:14:06,140
+that denotes the start of the week,
+
+315
+00:14:06,140 --> 00:14:08,580
+not necessarily Sunday or Monday.
+
+316
+00:14:08,580 --> 00:14:11,740
+In this case, it was mostly Wednesdays.
+
+317
+00:14:11,740 --> 00:14:14,580
+We needed to determine what week starting date
+
+318
+00:14:14,580 --> 00:14:17,140
+corresponded to the given date.
+
+319
+00:14:18,980 --> 00:14:22,060
+And why is my code so bad?
+
+320
+00:14:22,060 --> 00:14:26,940
+Well, for starters, the absolutely unnecessary complexity.
+
+321
+00:14:26,940 --> 00:14:28,860
+It makes it harder to maintain,
+
+322
+00:14:28,860 --> 00:14:31,620
+and it makes it harder for anyone onboarding to the code,
+
+323
+00:14:31,620 --> 00:14:34,980
+given that we can write this in a much simpler way.
+
+324
+00:14:34,980 --> 00:14:39,060
+But no, the worst part of it is that we're using a UDF,
+
+325
+00:14:39,060 --> 00:14:41,500
+when Spark native functions would do the work.
+
+326
+00:14:42,900 --> 00:14:45,780
+So how can we rewrite all of this?
+
+327
+00:14:45,780 --> 00:14:46,740
+Well, like that.
+
+328
+00:14:48,100 --> 00:14:49,460
+Let's look at that again.
+
+329
+00:14:49,460 --> 00:14:54,460
+So all of that into this.
+
+330
+00:14:54,460 --> 00:14:56,220
+Okay, so what just happened?
+
+331
+00:14:56,220 --> 00:15:00,180
+We used two Spark functions, dateTub and nextDay.
+
+332
+00:15:00,180 --> 00:15:03,500
+And by doing so, we simplified the code and optimized it,
+
+333
+00:15:03,500 --> 00:15:06,020
+because we removed the UDF.
+
+334
+00:15:06,020 --> 00:15:08,860
+So why should you avoid UDFs when possible?
+
+335
+00:15:08,860 --> 00:15:12,100
+So Spark SQL and DataFrame instructions are compact
+
+336
+00:15:12,100 --> 00:15:14,340
+and optimized for distributing those instructions
+
+337
+00:15:14,340 --> 00:15:16,500
+from the driver to each executor.
+
+338
+00:15:16,500 --> 00:15:19,340
+When we use code, we obfuscate all of that,
+
+339
+00:15:19,340 --> 00:15:21,580
+and that code has to be serialized,
+
+340
+00:15:21,580 --> 00:15:22,660
+sent to the executors,
+
+341
+00:15:22,660 --> 00:15:25,620
+and then deserialized before it can be executed.
+
+342
+00:15:25,620 --> 00:15:28,580
+So it's a black box to Spark optimizers.
+
+343
+00:15:28,580 --> 00:15:31,140
+A friend of mine always says
+
+344
+00:15:31,140 --> 00:15:33,540
+that you should strive to master your tools.
+
+345
+00:15:33,540 --> 00:15:36,380
+And if you work with Spark often,
+
+346
+00:15:38,100 --> 00:15:42,620
+it really pays off to dive into this native functionality.
+
+347
+00:15:42,620 --> 00:15:46,180
+It can make your code much more performant and maintainable,
+
+348
+00:15:46,180 --> 00:15:49,220
+and ensures you don't get roasted in a future conference,
+
+349
+00:15:49,220 --> 00:15:51,060
+at least not for your Spark code.
+
+350
+00:15:53,100 --> 00:15:55,940
+Last, I wanna tell you about a monitoring story.
+
+351
+00:15:55,940 --> 00:15:59,780
+Well, this one happened to me again,
+
+352
+00:15:59,780 --> 00:16:02,340
+that once I deployed a job to production,
+
+353
+00:16:02,340 --> 00:16:04,860
+and used the default cluster configuration,
+
+354
+00:16:04,860 --> 00:16:07,460
+my team had settled upon for production jobs.
+
+355
+00:16:07,460 --> 00:16:09,140
+The job didn't have any issues,
+
+356
+00:16:09,140 --> 00:16:13,940
+but a year after having this job run flawlessly,
+
+357
+00:16:13,940 --> 00:16:17,300
+our infrastructure team was performing an audit,
+
+358
+00:16:17,300 --> 00:16:19,100
+and asked us to review our pipelines
+
+359
+00:16:19,100 --> 00:16:21,540
+to make sure we were using resources effectively.
+
+360
+00:16:22,660 --> 00:16:23,740
+Well, let me tell you,
+
+361
+00:16:23,740 --> 00:16:27,780
+this particular job was not, and I felt really bad
+
+362
+00:16:27,780 --> 00:16:30,900
+for all that year long waste.
+
+363
+00:16:30,900 --> 00:16:32,060
+So to be honest,
+
+364
+00:16:32,060 --> 00:16:34,340
+this is something that happens quite often.
+
+365
+00:16:34,340 --> 00:16:36,380
+We deploy an application to production,
+
+366
+00:16:36,380 --> 00:16:38,300
+and we monitor for instability,
+
+367
+00:16:38,300 --> 00:16:41,140
+we get emails if it fails, we have health checks,
+
+368
+00:16:41,140 --> 00:16:44,420
+that check that the output data looks all right, et cetera.
+
+369
+00:16:44,420 --> 00:16:47,500
+But if the SLAs are met, health checks pass,
+
+370
+00:16:47,500 --> 00:16:49,020
+and no crashes happen,
+
+371
+00:16:49,020 --> 00:16:51,820
+usually we don't review production applications.
+
+372
+00:16:51,820 --> 00:16:55,060
+So today I want to show you a quick monitoring option
+
+373
+00:16:55,060 --> 00:16:56,260
+that is available on Spark,
+
+374
+00:16:56,260 --> 00:16:58,220
+and it's my go-to when I deploy,
+
+375
+00:16:58,220 --> 00:17:01,380
+ever since that time when I deploy a new job,
+
+376
+00:17:01,380 --> 00:17:03,860
+and want to make sure that it's configured correctly.
+
+377
+00:17:03,860 --> 00:17:06,460
+So adjust your eyes,
+
+378
+00:17:06,460 --> 00:17:08,380
+because the name of the tool is Ganglia.
+
+379
+00:17:08,380 --> 00:17:11,540
+Ganglia looks like it's straight out of the 80s,
+
+380
+00:17:11,540 --> 00:17:13,340
+but it does a great job
+
+381
+00:17:13,340 --> 00:17:15,820
+at giving you a first glance utilization overview
+
+382
+00:17:15,820 --> 00:17:17,100
+of your cluster.
+
+383
+00:17:17,100 --> 00:17:19,860
+If you are using Databricks to deploy your Spark jobs,
+
+384
+00:17:19,860 --> 00:17:21,100
+the recommended best practice
+
+385
+00:17:21,100 --> 00:17:24,260
+is that you put each job into its own job cluster.
+
+386
+00:17:24,260 --> 00:17:27,460
+This allows for the cluster to only be up
+
+387
+00:17:27,460 --> 00:17:29,180
+for the time needed for the job to complete,
+
+388
+00:17:29,180 --> 00:17:30,620
+then shut off afterwards.
+
+389
+00:17:30,620 --> 00:17:32,060
+If you're using a shared cluster,
+
+390
+00:17:32,060 --> 00:17:34,860
+either on Databricks or using open source Spark,
+
+391
+00:17:34,860 --> 00:17:36,620
+you will still be able to use Ganglia,
+
+392
+00:17:36,620 --> 00:17:38,580
+only that you won't be able to infer
+
+393
+00:17:38,580 --> 00:17:41,740
+the resource utilization for that particular job.
+
+394
+00:17:41,740 --> 00:17:44,140
+But you would still be able to use Ganglia
+
+395
+00:17:44,140 --> 00:17:46,660
+and determine whether the overall cluster
+
+396
+00:17:46,660 --> 00:17:48,100
+has been provisioned correctly,
+
+397
+00:17:48,100 --> 00:17:49,740
+and then talk to your infra team
+
+398
+00:17:49,740 --> 00:17:52,740
+using some of the tips I'm about to give you.
+
+399
+00:17:52,740 --> 00:17:55,660
+So there are three main parts on this beautiful screen
+
+400
+00:17:55,660 --> 00:17:56,780
+that I wanna focus on.
+
+401
+00:17:57,820 --> 00:17:59,820
+The first one is at the top right,
+
+402
+00:17:59,820 --> 00:18:01,580
+and it's the memory utilization.
+
+403
+00:18:01,580 --> 00:18:03,260
+So let's zoom in.
+
+404
+00:18:03,260 --> 00:18:05,460
+So here, the red line that you see
+
+405
+00:18:05,460 --> 00:18:07,380
+is the total available memory for the cluster
+
+406
+00:18:07,380 --> 00:18:08,660
+at any given time.
+
+407
+00:18:08,660 --> 00:18:11,780
+As you can see, this cluster auto-scaled up and down
+
+408
+00:18:11,780 --> 00:18:14,460
+a few times according to the usage of the cluster.
+
+409
+00:18:14,460 --> 00:18:17,460
+That's why the red line goes up and down.
+
+410
+00:18:17,460 --> 00:18:21,700
+The purple area is the memory actually being used.
+
+411
+00:18:21,700 --> 00:18:23,780
+The green is the data that you have cached,
+
+412
+00:18:23,780 --> 00:18:26,140
+and yellow is available memory.
+
+413
+00:18:26,140 --> 00:18:28,420
+Just looking at this metric alone,
+
+414
+00:18:28,420 --> 00:18:29,620
+if this was my cluster,
+
+415
+00:18:29,620 --> 00:18:31,700
+this cluster seems to be doing all right.
+
+416
+00:18:33,340 --> 00:18:37,020
+Next, we want to look at the CPU utilization
+
+417
+00:18:37,020 --> 00:18:38,700
+at the bottom left.
+
+418
+00:18:38,700 --> 00:18:40,300
+So let's zoom in.
+
+419
+00:18:40,300 --> 00:18:42,500
+Here we see that the percentage,
+
+420
+00:18:42,500 --> 00:18:45,460
+sorry, in this graph, we see the percentage,
+
+421
+00:18:45,460 --> 00:18:48,180
+what percentage of the total available CPU
+
+422
+00:18:48,180 --> 00:18:50,420
+was in use at any given time.
+
+423
+00:18:50,420 --> 00:18:53,460
+As you can see, the most this cluster was used
+
+424
+00:18:53,460 --> 00:18:57,980
+was around Wednesday at 1 a.m.
+
+425
+00:18:57,980 --> 00:19:00,260
+That was probably me running the code to present today.
+
+426
+00:19:00,260 --> 00:19:04,020
+And the CPU utilization was around 70%.
+
+427
+00:19:04,020 --> 00:19:07,700
+So now I wouldn't change the configuration right away.
+
+428
+00:19:07,700 --> 00:19:10,180
+I would probably give it a few other days
+
+429
+00:19:10,180 --> 00:19:12,820
+or a few other runs to collect more data
+
+430
+00:19:12,820 --> 00:19:16,580
+and then decide how much I can downsize this cluster by,
+
+431
+00:19:16,580 --> 00:19:18,940
+at least CPU wise, because as you can see,
+
+432
+00:19:18,940 --> 00:19:21,180
+there are short bursts of utilization,
+
+433
+00:19:21,180 --> 00:19:25,420
+but overall the cluster CPUs is fairly underutilized.
+
+434
+00:19:26,740 --> 00:19:28,220
+So last but not least,
+
+435
+00:19:28,220 --> 00:19:31,380
+we want to look at the cluster network performance.
+
+436
+00:19:31,380 --> 00:19:32,580
+This is a pretty simple one.
+
+437
+00:19:32,580 --> 00:19:35,780
+It just tells us how much data we're bringing to the cluster
+
+438
+00:19:35,780 --> 00:19:37,740
+and how much data we're writing out
+
+439
+00:19:37,740 --> 00:19:40,020
+and how long those operations are taking.
+
+440
+00:19:40,020 --> 00:19:43,900
+So the green line is how much data we've read into the cluster.
+
+441
+00:19:43,900 --> 00:19:47,620
+The blue line is how much data we've written out
+
+442
+00:19:47,620 --> 00:19:52,620
+and the horizontal length, I'm going to call it.
+
+443
+00:19:54,580 --> 00:19:56,060
+For example, if you saw a green line
+
+444
+00:19:56,060 --> 00:19:59,700
+or blue line stretch horizontally for a particular point,
+
+445
+00:19:59,700 --> 00:20:02,780
+that's how long it took to move the data in or out.
+
+446
+00:20:02,780 --> 00:20:05,780
+So this is pretty much it with this one.
+
+447
+00:20:05,780 --> 00:20:10,780
+The main thing to watch out for are those sustained peaks,
+
+448
+00:20:10,780 --> 00:20:14,700
+which will indicate you need to provision a cluster
+
+449
+00:20:14,700 --> 00:20:16,700
+with more network bandwidth,
+
+450
+00:20:16,700 --> 00:20:19,780
+which you or your infrastructure team can do
+
+451
+00:20:19,780 --> 00:20:22,300
+by choosing a different VM type.
+
+452
+00:20:22,300 --> 00:20:25,500
+So that is all I have for today.
+
+453
+00:20:27,380 --> 00:20:29,220
+Thank you all for checking out my talk
+
+454
+00:20:29,220 --> 00:20:42,220
+and enjoy the rest of the conference.
+

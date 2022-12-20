@@ -1,0 +1,1204 @@
+1
+00:00:00,000 --> 00:00:07,520
+My name is Zachary Blackwood, and I am a senior data engineer at Snowflake, part of the Streamlet
+
+2
+00:00:07,520 --> 00:00:10,080
+team and acquisition.
+
+3
+00:00:10,080 --> 00:00:14,280
+And I want to talk to you today about what it says on the screen, how to hack your way
+
+4
+00:00:14,280 --> 00:00:16,280
+to a better API.
+
+5
+00:00:16,280 --> 00:00:24,160
+Hopefully not to get hacked, but that could be a risk that you face along the way.
+
+6
+00:00:24,160 --> 00:00:32,120
+So I suspect many of you have interesting stories for how you got into data.
+
+7
+00:00:32,120 --> 00:00:36,840
+I don't know how many of the people listening and watching are at what stage in their career
+
+8
+00:00:36,840 --> 00:00:41,520
+and how many people kind of had this vision that I want to be a data person, I want to
+
+9
+00:00:41,520 --> 00:00:46,200
+do things with, I want to do machine learning and modeling, or at least I want to do computer
+
+10
+00:00:46,200 --> 00:00:47,200
+science.
+
+11
+00:00:47,200 --> 00:00:49,720
+That was not at all my original plan.
+
+12
+00:00:49,720 --> 00:00:56,680
+I actually began as a teacher, taught high school, various things.
+
+13
+00:00:56,680 --> 00:01:01,480
+And eventually couldn't afford to do that anymore, sadly.
+
+14
+00:01:01,480 --> 00:01:04,280
+And so I went to software.
+
+15
+00:01:04,280 --> 00:01:13,320
+And one of the themes that I've noticed throughout my career as I've grown and as I've transitioned
+
+16
+00:01:13,320 --> 00:01:18,080
+is thinking, realizing this doesn't seem like it's working great.
+
+17
+00:01:18,080 --> 00:01:19,600
+There's got to be a better way.
+
+18
+00:01:19,600 --> 00:01:24,080
+Even when I started teaching physics, I realized I went in not understanding a lot of fundamental
+
+19
+00:01:24,080 --> 00:01:25,720
+things even with a physics degree.
+
+20
+00:01:25,720 --> 00:01:31,160
+And so I wanted to do better for my students than I had experienced.
+
+21
+00:01:31,160 --> 00:01:37,500
+And so a lot of that shifted into last few years, I want to build better tools for data
+
+22
+00:01:37,500 --> 00:01:39,240
+related stuff.
+
+23
+00:01:39,240 --> 00:01:45,800
+And in particular lately, I want to help build better data apps with working with Streamlet
+
+24
+00:01:45,800 --> 00:01:48,760
+and being at Snowflake helping to do that.
+
+25
+00:01:48,760 --> 00:01:54,680
+So I do some amount of data engineering on the pipelines and dbt models and things like
+
+26
+00:01:54,680 --> 00:01:55,680
+that.
+
+27
+00:01:55,680 --> 00:01:59,040
+But I get to spend a lot of my time just playing around with Streamlet apps and trying to make
+
+28
+00:01:59,040 --> 00:02:05,520
+things work better, which is a lot of fun and has led me to this topic.
+
+29
+00:02:05,520 --> 00:02:12,840
+I remember very distinctly beginning my very first software job, I was in a small startup
+
+30
+00:02:12,840 --> 00:02:18,480
+sitting in a room with a bunch of smart people having done zero professional programming
+
+31
+00:02:18,480 --> 00:02:19,920
+before.
+
+32
+00:02:19,920 --> 00:02:24,920
+And basically, I would spend a few minutes, get stuck on something and turn around and
+
+33
+00:02:24,920 --> 00:02:27,200
+ask ask the guy sitting behind me.
+
+34
+00:02:27,200 --> 00:02:30,920
+And there was very smart and very patient and kind people sitting around me.
+
+35
+00:02:30,920 --> 00:02:33,040
+And so I'm sure they got annoyed.
+
+36
+00:02:33,040 --> 00:02:34,380
+But they did answer my questions.
+
+37
+00:02:34,380 --> 00:02:39,920
+And slowly I got to learn more and more things about about what we were doing, ask fewer
+
+38
+00:02:39,920 --> 00:02:42,720
+questions or better questions.
+
+39
+00:02:42,720 --> 00:02:47,120
+Eventually I learned there was this there was a way to ask those questions on the internet.
+
+40
+00:02:47,120 --> 00:02:51,160
+And I got slightly better, you know, look for what is the specific error message or
+
+41
+00:02:51,160 --> 00:02:52,680
+error numbers and things like that.
+
+42
+00:02:52,680 --> 00:02:55,600
+What is the specific software that I'm using?
+
+43
+00:02:55,600 --> 00:02:57,920
+Can I figure out what's actually causing the problem?
+
+44
+00:02:57,920 --> 00:03:02,300
+And I got pretty good at googling things to find the solution.
+
+45
+00:03:02,300 --> 00:03:05,320
+And for a long time, that was sufficient.
+
+46
+00:03:05,320 --> 00:03:10,140
+But at a certain a few years in, we a new co worker came in and he just seemed to know
+
+47
+00:03:10,140 --> 00:03:14,360
+so many things about the software that we were using.
+
+48
+00:03:14,360 --> 00:03:17,920
+And you know, and I've been working with it for a while and you how did how did you find
+
+49
+00:03:17,920 --> 00:03:18,920
+that out?
+
+50
+00:03:18,920 --> 00:03:19,920
+Oh, well, I read it here.
+
+51
+00:03:19,920 --> 00:03:20,920
+Well, how did you find that out?
+
+52
+00:03:20,920 --> 00:03:21,920
+I read it here.
+
+53
+00:03:21,920 --> 00:03:25,680
+And this is a guy who would actually read, he would read the peps for the new Python
+
+54
+00:03:25,680 --> 00:03:26,960
+features coming out.
+
+55
+00:03:26,960 --> 00:03:30,880
+And he would just read the documentation for the tools we were using.
+
+56
+00:03:30,880 --> 00:03:36,320
+And I finally finally after, you know, going to him again and again realized, oh, I should
+
+57
+00:03:36,320 --> 00:03:37,320
+start doing that.
+
+58
+00:03:37,320 --> 00:03:44,080
+So that that became kind of the next the next stage of my journey as a developer that was
+
+59
+00:03:44,080 --> 00:03:48,240
+slowly moving into the data world somewhat.
+
+60
+00:03:48,240 --> 00:03:52,280
+But the kind of the last stage, which is really the thing I want to talk about today, and
+
+61
+00:03:52,280 --> 00:03:56,840
+maybe 90% of you are here, but I hope there's a few of you who maybe are still at stage
+
+62
+00:03:56,840 --> 00:04:03,120
+two or three here is I actually realized as as someone who's working with software, I
+
+63
+00:04:03,120 --> 00:04:07,480
+can actually dig into the internals of the software that I'm using of the third party
+
+64
+00:04:07,480 --> 00:04:13,320
+tools that I'm using and get and actually can get a lot of value by doing that.
+
+65
+00:04:13,320 --> 00:04:18,840
+So I want to convince you today that the internals of the software that you're using may be more
+
+66
+00:04:18,840 --> 00:04:20,760
+accessible than you think.
+
+67
+00:04:20,760 --> 00:04:26,880
+And that sometimes messing around with those internals is a good idea.
+
+68
+00:04:26,880 --> 00:04:32,600
+So I want to talk about two particular kinds of messing around with internals that have
+
+69
+00:04:32,600 --> 00:04:36,640
+that have been very interesting and useful to me, particularly in the last few years.
+
+70
+00:04:36,640 --> 00:04:40,400
+And the first one is monkey patching.
+
+71
+00:04:40,400 --> 00:04:47,160
+So monkey patching, besides being a great, an excellent term, is is a broadly applicable
+
+72
+00:04:47,160 --> 00:04:53,960
+idea and various dynamic languages where you actually can replace some of the some of the
+
+73
+00:04:53,960 --> 00:04:58,400
+code as as your code runs, you can actually replace some piece of code with another piece
+
+74
+00:04:58,400 --> 00:05:02,000
+of code, which turns out to be a pretty handy thing.
+
+75
+00:05:02,000 --> 00:05:07,520
+I think I first was exposed to this idea with with writing, writing tests, and oh, well,
+
+76
+00:05:07,520 --> 00:05:11,040
+we need to we need to pretend that API works this way.
+
+77
+00:05:11,040 --> 00:05:15,200
+And so just for the context of this test, we're going to swap out a little bit of code
+
+78
+00:05:15,200 --> 00:05:20,760
+to make it do something different, you know, not not hit a server and things like that.
+
+79
+00:05:20,760 --> 00:05:23,680
+So this is a this was a very surprising idea to me.
+
+80
+00:05:23,680 --> 00:05:29,320
+I had no no intuition that if I, you know, said x dot something equals something else,
+
+81
+00:05:29,320 --> 00:05:30,640
+that it would actually work.
+
+82
+00:05:30,640 --> 00:05:36,400
+But it turns out it did, which is a very interesting thing and opens up a lot of doors.
+
+83
+00:05:36,400 --> 00:05:42,920
+Oftentimes, I and maybe you have the same question of, okay, why is this package broken?
+
+84
+00:05:42,920 --> 00:05:47,400
+Or maybe more often, why doesn't it do the thing that I want it to do?
+
+85
+00:05:47,400 --> 00:05:49,960
+Why doesn't it work the way I want it to work?
+
+86
+00:05:49,960 --> 00:05:56,040
+And I need it to work for this particular this particular instance.
+
+87
+00:05:56,040 --> 00:06:02,680
+And before we get into too far into the internals, the wonderful thing if you have a either a
+
+88
+00:06:02,680 --> 00:06:08,840
+modern, modern IDE or an ancient IDE with some modern plugins, it's very, you can very
+
+89
+00:06:08,840 --> 00:06:15,160
+quickly get access to things like here's the doc string for this method, you can find it
+
+90
+00:06:15,160 --> 00:06:16,160
+all sorts of things.
+
+91
+00:06:16,160 --> 00:06:17,960
+No, this is very basic kind of thing.
+
+92
+00:06:17,960 --> 00:06:19,800
+But this is where often it all starts.
+
+93
+00:06:19,800 --> 00:06:24,200
+And sometimes it all ends like, oh, now I understand why it does what it does.
+
+94
+00:06:24,200 --> 00:06:26,360
+I understand I was using it in the wrong way.
+
+95
+00:06:26,360 --> 00:06:28,120
+Or, oh, it actually does support it.
+
+96
+00:06:28,120 --> 00:06:32,040
+It just has this extra argument that I didn't realize.
+
+97
+00:06:32,040 --> 00:06:33,680
+And so sometimes that's enough.
+
+98
+00:06:33,680 --> 00:06:35,180
+But not always.
+
+99
+00:06:35,180 --> 00:06:40,320
+Sometimes you really need to get start digging in a little deeper.
+
+100
+00:06:40,320 --> 00:06:46,680
+So one of the one of the very handy things about many editors is you can actually go
+
+101
+00:06:46,680 --> 00:06:54,080
+from your reference to a particular method in this case to the actual method itself.
+
+102
+00:06:54,080 --> 00:06:59,160
+So the couple of command clicks in my case, here is the actual code behind that.
+
+103
+00:06:59,160 --> 00:07:06,240
+And the interesting thing to me that is that not is this some abstract representation of
+
+104
+00:07:06,240 --> 00:07:09,640
+the source code as it exists somewhere.
+
+105
+00:07:09,640 --> 00:07:13,920
+This is the actual code that is in my virtual environment that is being run whenever I call
+
+106
+00:07:13,920 --> 00:07:15,600
+this method.
+
+107
+00:07:15,600 --> 00:07:19,920
+Which means, of course, that I could just change the code.
+
+108
+00:07:19,920 --> 00:07:24,000
+You know, I could literally go into this file and say I would like it to work this way.
+
+109
+00:07:24,000 --> 00:07:29,440
+I'm going to edit this file with my editor and then my code will work.
+
+110
+00:07:29,440 --> 00:07:34,600
+This is sort of this is not monkey patching, but this is sort of the, you know, the mad
+
+111
+00:07:34,600 --> 00:07:38,120
+man version one of it.
+
+112
+00:07:38,120 --> 00:07:39,720
+This code doesn't work the way I want it to.
+
+113
+00:07:39,720 --> 00:07:41,640
+I'm just going to change the code.
+
+114
+00:07:41,640 --> 00:07:46,280
+Of course, maybe this is very obvious to you.
+
+115
+00:07:46,280 --> 00:07:48,480
+It was not obvious until I tried it once.
+
+116
+00:07:48,480 --> 00:07:56,120
+Oh, that's not a good idea, because number one, I now have no documentation about what
+
+117
+00:07:56,120 --> 00:07:59,320
+I changed and I'm probably going to forget what I did and never going to be able to find
+
+118
+00:07:59,320 --> 00:08:00,320
+it again.
+
+119
+00:08:00,320 --> 00:08:05,280
+And two, the next time I update that package, my beautiful function code is gone.
+
+120
+00:08:05,280 --> 00:08:09,600
+So not a good plan, but a pretty cool thing that you can do.
+
+121
+00:08:09,600 --> 00:08:13,080
+And at least digging around and actually looking through the actual source code is a pretty
+
+122
+00:08:13,080 --> 00:08:14,760
+handy thing to do.
+
+123
+00:08:14,760 --> 00:08:20,360
+But if you want to do the slightly saner thing, which is, okay, I have this code, I want it
+
+124
+00:08:20,360 --> 00:08:23,440
+to behave differently, here's an example of what you can do.
+
+125
+00:08:23,440 --> 00:08:29,660
+So if I'm building a Streamlet app, it has this markdown function that I think is nice,
+
+126
+00:08:29,660 --> 00:08:31,840
+but it really could be a little more exciting.
+
+127
+00:08:31,840 --> 00:08:35,280
+It really could be, you know, I just want to have a little more emphasis, a little more
+
+128
+00:08:35,280 --> 00:08:40,100
+oomph, whatever I'm writing, adding some markdown to my app.
+
+129
+00:08:40,100 --> 00:08:46,040
+So I've taken I've imported my original code, and I've written this new function, which
+
+130
+00:08:46,040 --> 00:08:52,000
+takes the same arguments as the old one, and manipulates the Streamlet I've just said a
+
+131
+00:08:52,000 --> 00:08:56,840
+little bit and some other boring stuff that I don't care too much about and I just copied
+
+132
+00:08:56,840 --> 00:08:59,520
+from the source code of the old one.
+
+133
+00:08:59,520 --> 00:09:02,480
+The main thing is this line here.
+
+134
+00:09:02,480 --> 00:09:09,600
+And now I can actually replace the old function with my new one by just declaring it to be.
+
+135
+00:09:09,600 --> 00:09:12,720
+This is now going to be this.
+
+136
+00:09:12,720 --> 00:09:18,440
+And like magic, it just changes, and everything is fine.
+
+137
+00:09:18,440 --> 00:09:22,760
+And now I can use it, and it works the way it should work, which is every time I write
+
+138
+00:09:22,760 --> 00:09:30,160
+something, it yells it out in title in H1 with lots of exclamations.
+
+139
+00:09:30,160 --> 00:09:36,800
+So this is obviously an incredibly useful example, but you can even do more things with
+
+140
+00:09:36,800 --> 00:09:44,160
+monkey patching, and I'll give you another example later.
+
+141
+00:09:44,160 --> 00:09:52,200
+Another wonderful thing that is more open than it seems at first glance is pretty much
+
+142
+00:09:52,200 --> 00:09:54,860
+any website that you use.
+
+143
+00:09:54,860 --> 00:10:00,360
+So if you're not yet familiar with developer tools, find out how to open developer tools
+
+144
+00:10:00,360 --> 00:10:06,340
+in your favorite browser and just start poking around.
+
+145
+00:10:06,340 --> 00:10:10,960
+And it turns out that there's all kinds of information that you get just from opening
+
+146
+00:10:10,960 --> 00:10:13,880
+that up and reloading the page and seeing what happens.
+
+147
+00:10:13,880 --> 00:10:17,800
+You can look in details about all the different elements on the page and what makes those
+
+148
+00:10:17,800 --> 00:10:18,800
+happen.
+
+149
+00:10:18,800 --> 00:10:22,520
+You can see the underlying source code, what's the JavaScript, what's the CSS behind the
+
+150
+00:10:22,520 --> 00:10:23,520
+scenes.
+
+151
+00:10:23,520 --> 00:10:25,200
+You can see what the network traffic is happening.
+
+152
+00:10:25,200 --> 00:10:31,360
+All kinds of exciting things that are exposed to you, even just as a casual user of the
+
+153
+00:10:31,360 --> 00:10:32,360
+website.
+
+154
+00:10:32,360 --> 00:10:36,320
+So that's pretty neat.
+
+155
+00:10:36,320 --> 00:10:41,200
+But even more fun is it's not just websites anymore.
+
+156
+00:10:41,200 --> 00:10:44,920
+Your favorite editor may in fact be a website in disguise.
+
+157
+00:10:44,920 --> 00:10:50,040
+So here is VS Code, and you see that's the same code I was previously editing.
+
+158
+00:10:50,040 --> 00:10:57,440
+On the right I have developer tools open, which you could just open up in VS Code, because
+
+159
+00:10:57,440 --> 00:10:59,240
+it's all electron apps these days.
+
+160
+00:10:59,240 --> 00:11:06,760
+So I can actually see here the network requests that are being made to populate things, to
+
+161
+00:11:06,760 --> 00:11:11,080
+load plugins, and various things like that.
+
+162
+00:11:11,080 --> 00:11:14,200
+And while we're at it, it's not just editors.
+
+163
+00:11:14,200 --> 00:11:21,520
+Your instant messaging program may well also be a website under the covers.
+
+164
+00:11:21,520 --> 00:11:24,400
+So in this case, you don't get it for free.
+
+165
+00:11:24,400 --> 00:11:27,560
+You have to pass an extra environment variable.
+
+166
+00:11:27,560 --> 00:11:31,080
+Once you've passed that environment variable, once you've set that environment variable,
+
+167
+00:11:31,080 --> 00:11:36,400
+now we can explore Slack as a website, which is of course exactly what it is.
+
+168
+00:11:36,400 --> 00:11:37,960
+It's just a JavaScript app.
+
+169
+00:11:37,960 --> 00:11:40,440
+HTML, CSS, JavaScript.
+
+170
+00:11:40,440 --> 00:11:43,760
+Just like I guess everything is these days.
+
+171
+00:11:43,760 --> 00:11:48,560
+So here is the general channel from a couple weeks ago.
+
+172
+00:11:48,560 --> 00:11:51,000
+And here are the network calls that are being made.
+
+173
+00:11:51,000 --> 00:11:54,800
+And there's quite a lot of them.
+
+174
+00:11:54,800 --> 00:12:02,000
+So all right, so what you actually do with that as the most obvious thing that you can
+
+175
+00:12:02,000 --> 00:12:06,920
+do, which my students were very thrilled whenever I showed them that they could do this, was
+
+176
+00:12:06,920 --> 00:12:10,000
+oh, I can change any website to look any way that I want.
+
+177
+00:12:10,000 --> 00:12:13,560
+They thought it was really cool that they could go to the school website that showed
+
+178
+00:12:13,560 --> 00:12:18,320
+their grades and show it to their parents after they had handily edited it.
+
+179
+00:12:18,320 --> 00:12:19,520
+So of course you can do that.
+
+180
+00:12:19,520 --> 00:12:20,520
+You can play around.
+
+181
+00:12:20,520 --> 00:12:25,280
+It's very helpful for tweaking designs and things like that if you're actually building
+
+182
+00:12:25,280 --> 00:12:27,360
+a website.
+
+183
+00:12:27,360 --> 00:12:33,200
+But more interesting to me and more practical for a lot of my work is the network tab.
+
+184
+00:12:33,200 --> 00:12:39,800
+So this is a particular request from the normcomp Slack.
+
+185
+00:12:39,800 --> 00:12:41,080
+This is one particular request.
+
+186
+00:12:41,080 --> 00:12:46,080
+I hope I chopped off enough of the token so that you can't impersonate me.
+
+187
+00:12:46,080 --> 00:12:48,280
+But oh, well.
+
+188
+00:12:48,280 --> 00:12:56,200
+So this is a request to get and I particularly like the everyone and not bots and not apps.
+
+189
+00:12:56,200 --> 00:13:01,520
+So apparently this is to populate the list of who is in this channel.
+
+190
+00:13:01,520 --> 00:13:05,000
+And I think this is the general channel.
+
+191
+00:13:05,000 --> 00:13:11,840
+And I now not only see that this request was made and have the ability to see, okay, here's
+
+192
+00:13:11,840 --> 00:13:13,800
+the parameters that were passed.
+
+193
+00:13:13,800 --> 00:13:17,800
+But developer tools gives me this very wonderful thing, which is I can copy it.
+
+194
+00:13:17,800 --> 00:13:23,640
+I can copy it not just like copy the URL, but copy all of the details behind it so that
+
+195
+00:13:23,640 --> 00:13:25,120
+I could replay that.
+
+196
+00:13:25,120 --> 00:13:33,320
+And in my terminal I can run a curl command to rerun that exact query with all of the
+
+197
+00:13:33,320 --> 00:13:38,160
+cookies and everything set so that I can it just works until my token expires and things
+
+198
+00:13:38,160 --> 00:13:39,200
+like that.
+
+199
+00:13:39,200 --> 00:13:46,120
+But for now I could rerun that and get that data out as a curl command.
+
+200
+00:13:46,120 --> 00:13:49,480
+Maybe you love Unix kind of tools like curl.
+
+201
+00:13:49,480 --> 00:13:56,120
+I personally don't have a I love that they work and they're simple, but I often prefer
+
+202
+00:13:56,120 --> 00:13:59,640
+to bring them into something I'm a little more familiar with.
+
+203
+00:13:59,640 --> 00:14:03,840
+So there's probably several tools like this, but one that I like is curl converter, which
+
+204
+00:14:03,840 --> 00:14:08,360
+allows you to take a curl command and convert it into the language of your choice.
+
+205
+00:14:08,360 --> 00:14:13,640
+So here's that specific request turned into Python with a little bit of details stripped
+
+206
+00:14:13,640 --> 00:14:14,640
+out.
+
+207
+00:14:14,640 --> 00:14:18,680
+And then this is now a functioning Python script that will return a response object
+
+208
+00:14:18,680 --> 00:14:22,960
+that I can then get as JSON or whatever I want.
+
+209
+00:14:22,960 --> 00:14:24,100
+And it just works.
+
+210
+00:14:24,100 --> 00:14:28,240
+And now I can do programmatic things like maybe I really do want to see bots.
+
+211
+00:14:28,240 --> 00:14:29,280
+Maybe whatever.
+
+212
+00:14:29,280 --> 00:14:31,440
+Maybe I want to see what apps are loaded in this channel.
+
+213
+00:14:31,440 --> 00:14:38,600
+Or I just want to make a cool contact list of all the cool people who are in the general
+
+214
+00:14:38,600 --> 00:14:42,600
+channel in norm conf.
+
+215
+00:14:42,600 --> 00:14:49,800
+So turns out this is oftentimes a good way to work with a website or an app disguised
+
+216
+00:14:49,800 --> 00:14:50,800
+as a website.
+
+217
+00:14:50,800 --> 00:14:58,640
+I had a friend in another Slack group ask about, hey, is there anybody know any good
+
+218
+00:14:58,640 --> 00:15:02,480
+packages for scraping the Jenkins API?
+
+219
+00:15:02,480 --> 00:15:05,640
+And I responded very cheekily with requests.
+
+220
+00:15:05,640 --> 00:15:09,960
+And it turned out it actually was a pretty good option.
+
+221
+00:15:09,960 --> 00:15:18,160
+So oftentimes just a simple ability to make arbitrary requests and take an actual network
+
+222
+00:15:18,160 --> 00:15:25,560
+request that are being made and turn them into code turns out to be really useful.
+
+223
+00:15:25,560 --> 00:15:33,640
+So I want to talk about two real world ways that I've used this kind of digging into internals.
+
+224
+00:15:33,640 --> 00:15:37,140
+One particular one happened a few months ago.
+
+225
+00:15:37,140 --> 00:15:40,560
+And we had this situation where we had all this data that was being collected in a data
+
+226
+00:15:40,560 --> 00:15:44,360
+dog and it was really useful for alerting engineers when something happened.
+
+227
+00:15:44,360 --> 00:15:46,520
+But we wanted to store it in a more long term place.
+
+228
+00:15:46,520 --> 00:15:51,600
+We wanted to put it in our warehouse so we could have it for queries later and see how
+
+229
+00:15:51,600 --> 00:15:54,440
+things were happening over time.
+
+230
+00:15:54,440 --> 00:15:57,960
+And there wasn't a real straightforward obvious way that I could find to do this.
+
+231
+00:15:57,960 --> 00:16:02,280
+So a colleague and I worked on a way to do this.
+
+232
+00:16:02,280 --> 00:16:10,240
+And one of the first things that he actually found was data dog has this wonderful UI and
+
+233
+00:16:10,240 --> 00:16:14,440
+their website for building these queries and building up these monitors.
+
+234
+00:16:14,440 --> 00:16:21,000
+And then they even give you a export as cURL, which is just a really wonderful thing.
+
+235
+00:16:21,000 --> 00:16:26,840
+It really encourages this kind of use this other places reusability.
+
+236
+00:16:26,840 --> 00:16:28,240
+It's a very nice feature.
+
+237
+00:16:28,240 --> 00:16:32,360
+And so that immediately gave us what we wanted.
+
+238
+00:16:32,360 --> 00:16:33,360
+Almost.
+
+239
+00:16:33,360 --> 00:16:38,400
+We really wanted it to be a little more programmatic than just the raw cURL request.
+
+240
+00:16:38,400 --> 00:16:45,480
+It turns out they also have a nice Python API to wrap around those cURL commands.
+
+241
+00:16:45,480 --> 00:16:52,800
+And you can basically take the query part of it and slap it into this Python library
+
+242
+00:16:52,800 --> 00:16:54,480
+and you get out something that yeah.
+
+243
+00:16:54,480 --> 00:17:00,960
+And you have type hints and all that niceness because the library knows when it returns.
+
+244
+00:17:00,960 --> 00:17:03,520
+But used it.
+
+245
+00:17:03,520 --> 00:17:04,520
+Sometimes it worked.
+
+246
+00:17:04,520 --> 00:17:07,080
+But I found a case where it didn't work.
+
+247
+00:17:07,080 --> 00:17:12,880
+It was complaining that it was expecting a string and it was throwing a validation error
+
+248
+00:17:12,880 --> 00:17:15,040
+because it was receiving a Boolean.
+
+249
+00:17:15,040 --> 00:17:20,400
+I was very sure as far as I could tell things were set up right on the data dog side.
+
+250
+00:17:20,400 --> 00:17:22,360
+It really was supposed to be a Boolean.
+
+251
+00:17:22,360 --> 00:17:24,560
+I think I was using the wrapper right.
+
+252
+00:17:24,560 --> 00:17:25,560
+Very possibly I wasn't.
+
+253
+00:17:25,560 --> 00:17:27,840
+But as far as I could tell, I was.
+
+254
+00:17:27,840 --> 00:17:29,880
+And I need to get around this error.
+
+255
+00:17:29,880 --> 00:17:31,840
+So what did I do?
+
+256
+00:17:31,840 --> 00:17:33,440
+Monkey patch it.
+
+257
+00:17:33,440 --> 00:17:41,440
+And it turned out to be as simple as here's the old version of the method.
+
+258
+00:17:41,440 --> 00:17:45,680
+Here's my new version of the method which has the same arguments and it returns the
+
+259
+00:17:45,680 --> 00:17:47,960
+old version except in this case.
+
+260
+00:17:47,960 --> 00:17:50,200
+And it just skips the validation.
+
+261
+00:17:50,200 --> 00:17:51,560
+Is that a great idea?
+
+262
+00:17:51,560 --> 00:17:53,160
+It worked and it solved my problem.
+
+263
+00:17:53,160 --> 00:17:56,960
+And I knew for sure I was smarter than this validator.
+
+264
+00:17:56,960 --> 00:17:58,840
+This really was supposed to be Boolean.
+
+265
+00:17:58,840 --> 00:18:00,880
+So it worked out okay.
+
+266
+00:18:00,880 --> 00:18:03,800
+And then I just slapped that in and ta da!
+
+267
+00:18:03,800 --> 00:18:04,800
+Everything worked great.
+
+268
+00:18:04,800 --> 00:18:08,360
+Other than that, no issues.
+
+269
+00:18:08,360 --> 00:18:12,660
+One other issue that's very one other example of this is very near and dear to my heart.
+
+270
+00:18:12,660 --> 00:18:16,040
+So I'm on the part of the Streamlet data team.
+
+271
+00:18:16,040 --> 00:18:18,800
+I don't work on the Streamlet core, but we use Streamlet a lot.
+
+272
+00:18:18,800 --> 00:18:24,160
+So we build a lot of apps for seeing how things are how are things going in the ecosystem
+
+273
+00:18:24,160 --> 00:18:28,200
+or people using it or people using the new features.
+
+274
+00:18:28,200 --> 00:18:31,960
+And we tend to, you know, get the bleeding edge of the latest and greatest features and
+
+275
+00:18:31,960 --> 00:18:33,320
+get real excited.
+
+276
+00:18:33,320 --> 00:18:36,800
+And we were so excited when the multi page app, the native multi page app feature, you
+
+277
+00:18:36,800 --> 00:18:39,000
+get this nice sidebar with all the different pages.
+
+278
+00:18:39,000 --> 00:18:40,000
+It changes your URL.
+
+279
+00:18:40,000 --> 00:18:45,360
+We could throw out the old radio button based one.
+
+280
+00:18:45,360 --> 00:18:52,640
+But as soon as I started using it, I realized, oh, you get this boring file icon.
+
+281
+00:18:52,640 --> 00:18:56,880
+But you can put emojis in, just like we did in our radio button version.
+
+282
+00:18:56,880 --> 00:18:59,680
+But you have to put emojis in the file name.
+
+283
+00:18:59,680 --> 00:19:05,760
+And trust me, it's like my stomach putting emojis in my file name.
+
+284
+00:19:05,760 --> 00:19:10,200
+It hurt my soul too deeply to allow this to be the way.
+
+285
+00:19:10,200 --> 00:19:12,360
+And so I had to find a hat.
+
+286
+00:19:12,360 --> 00:19:19,080
+So looked around in the Python source code and found this method that's being called
+
+287
+00:19:19,080 --> 00:19:23,280
+to generate that sidebar, which is called get pages.
+
+288
+00:19:23,280 --> 00:19:29,520
+And lo and behold, it returns this dictionary that is a global variable that is cached.
+
+289
+00:19:29,520 --> 00:19:38,260
+Which means that if I make a new method that takes that calls that get pages method, empties
+
+290
+00:19:38,260 --> 00:19:42,780
+out the dictionary and replaces it item by item with what I want it to be, with whatever
+
+291
+00:19:42,780 --> 00:19:46,880
+icon and whatever path and whatever name I'd like to get those pages and then call this
+
+292
+00:19:46,880 --> 00:19:49,840
+internal method, it just works.
+
+293
+00:19:49,840 --> 00:19:55,540
+And so I could very nicely have my sidebar, have my cake and eat it too with just a little
+
+294
+00:19:55,540 --> 00:19:56,540
+extra method.
+
+295
+00:19:56,540 --> 00:19:58,720
+This is technically a monkey patch.
+
+296
+00:19:58,720 --> 00:20:03,000
+I'm not actually replacing the code, but in the sense that I'm digging into the internals
+
+297
+00:20:03,000 --> 00:20:06,560
+using things that may not be advisable to use.
+
+298
+00:20:06,560 --> 00:20:10,120
+All right, this is my goal with this.
+
+299
+00:20:10,120 --> 00:20:15,280
+You've learned over the years to use Google, to read the docs, use chat GPT.
+
+300
+00:20:15,280 --> 00:20:21,600
+And I hope I've convinced you that sometimes it's a good idea to dig into the internals
+
+301
+00:20:21,600 --> 00:20:38,600
+and make your own API.
+

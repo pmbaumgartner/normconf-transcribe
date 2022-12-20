@@ -1,0 +1,283 @@
+So my name is Matthijs.
+I work at Accelerator where I give trainings.
+I give a lot of trainings on data and DevOps related things in my work time.
+In my spare time, I really like to dig into things and see how they work and what makes
+them tick.
+Docker is definitely one of them.
+What I'll do today is I'll share a story with you that's based on some experience from like
+seven, eight years ago when I was doing my first ML project that actually had to go to
+production.
+We recently started using Docker for some Django services, some Flask services.
+We had them running on VMs and Docker seemed like a good bet to get this machine learning
+project in production as well.
+So I got some help from some people and I whipped up the first Docker file.
+And the simplest Docker file that you could probably build to do this looked something
+like this.
+I mean, for go to version numbers, they're a bit more recent than seven years ago, of
+course.
+So we just grab a decent base image, Python three, eight.
+We copy in some requirements files, we install them, we copy the rest of our source code
+and like maybe we run some tests or we start an application when we actually are starting
+up.
+Because this was a data science problem, this was a container that trained a model or dependencies
+look something like this.
+We had, you know, second learn and pandas to do the actual ML part and the data wrangling
+parts of course use NumPy as well and SciPy in the background.
+Thing produced some plots so we needed not plotlib to make sure that we could actually
+get some nice statistics out of this thing as well.
+So you know, I, this together with the code of the actual model made a nice commit out
+of this, submitted it, asked for a review.
+And this is the answer that I got.
+This container is massive.
+There's all this stuff in there that you don't need.
+We can't actually run this thing as it is now.
+Yeah, whoops, that kind of makes sense.
+And at this point you also maybe understand why Docker chose like a massive mammal as
+their logo because this thing is 1.7 gigabytes for just a simple Python container.
+It's insane.
+And if we go back to the Docker phone, we think about that thing again and it's kind
+of obvious also why it's so big.
+There was this line in there that said copy dot dot and it just grabs our entire project
+folder and yanks it into the container without really deciding whether that's needed or not.
+And you know, I don't know about you, but a typical project folder for me looks something
+like this.
+There's a git folder that stores my git repository.
+There's an IDE folder which has like my settings for my development environment.
+Maybe there's some local data, some locally trained models, some notebooks that I'm using.
+There's a virtual env in there that I'm using to test things and install things.
+And all this stuff got copied into my container.
+And a lot of this is actually not needed.
+So what should we do here?
+Well, we're not going to sort of one by one type out everything that we do need to add.
+But what we do is we add like a Docker ignore file to our repo as well.
+This thing works the same as a git ignore.
+Essentially it tells Docker in this case, don't copy all these files when you're copying
+into your container image.
+I typically also use essentially the same thing that I use for my git ignore, except
+that I also add the git folder to the Docker ignore because there's no need for git history
+in there as well.
+And when I rebuilt this container, it already started to make a bit more sense, but it was
+still massive.
+You know, 1.3 gigabytes, it's not as bad.
+So I committed this, asked for another review.
+And that's also the feedback that I got.
+You know, it's much better, but still a bit on the big side.
+So let's try to shave off a bit more.
+Let's use a smaller base image.
+Because if you look at the Docker history of this container that we just built, essentially
+almost a gigabyte of this size came from this Python 3.8 base image.
+So step two in this journey was using a different base image.
+And that was very, very straightforward because there's a slim version of Python, Python 3.8
+slim or 3.9 slim, which is based on a different Debian image, Debian buster slim, which doesn't
+install manual pages and other useful packages that you use on like a normal Debian operating
+system install, but not in a non-interactive environment like a container.
+So I rebuilt this thing and at this point I kind of started enjoying myself.
+This dropped down to 490 megabytes.
+That's quite a big, big difference.
+That's pretty cool.
+So I went back to our operations and said, you know, this is fun.
+This is triggering something in me.
+This number going down is brilliant.
+So what should I do next?
+How can I figure out, what can I still do?
+And they said, you know, there's this tool called Dive.
+Dive is pretty cool.
+It allows you to look at your container image that you've built and sort of see what's in
+there.
+So now at this point I thought, this sounds fun.
+This is a couple of evenings of just digging around and trying things.
+Let's dive in.
+So this is what Dive looks like.
+It's a terminal user interface.
+You run Dive with an image name and then you get this after some analysis time.
+And what we see here on the top left, sort of this area is essentially all the layers
+that our Docker image contains.
+You can scroll through them.
+And then on the right side, you see the files that are the state of the file system at that
+point in time for that layer.
+Everything in orange is adjusted.
+Everything in green is new.
+So we can sort of see what this layer added.
+And one of the first things that I noticed was that there is an 80 megabytes cache folder.
+That seems kind of weird.
+Also in Matplotlib, there's some tests.
+All these tests have baseline images.
+There's also a couple of megabytes.
+Then if you dig further, you'll see there's markdown files and there's txt files and there's
+like pyx files.
+All of those things are useful in the context of interactive development, but kind of useless
+for this production container image setting.
+So I thought, let's just try to get rid of them.
+So I adjusted my Docker file slightly again, and I added a couple of statements near the
+end to say, well, get rid of this pip cache.
+Look in this site packages folder and find everything that ends with like JPEG or JavaScript
+maps or uncompiled C source code.
+Just get rid of it.
+That should save at least the 80 megabytes of our pip cache, but probably even more.
+Now when I actually tried to build this, I kind of got surprised because in contrast
+to what I believe, this actually made our image bigger rather than smaller.
+It added like 14 megabytes for some reason.
+I tried to look around for a bit, but I didn't really understand why this was happening.
+So back to our operations person again, what's actually going on here?
+Do you understand this?
+And he pointed me in the right direction and said, you should read up on how these layers
+of container images work.
+Okay, all right, that sounds doable.
+How do they work?
+Essentially when you build a container image, every run statement in your Docker file becomes
+a new layer.
+And a layer is the difference in file system content of what happened after the layer versus
+what was there before.
+So if you have a layer that adds a requirements.txt, essentially that layer will have a zipped
+tar file that has that requirements.txt there in that right location.
+Requirements.txt is not that big, it's like 85 bytes, just that is that layer that's part
+of our image.
+Same thing will happen when we go pip install, this pip install will run, Docker will check
+what is the difference after running pip install versus before.
+Let's take that difference, put it in a tar, that's our new layer as well.
+Now the thing that becomes interesting when we start to remove things, because a layer
+can't go back to previous layers and change things in them.
+So the only thing that we can do in that layer where we say, delete the cache pip folder
+is essentially make a tombstone.
+Say that there was a file here, but it's not anymore.
+From this point on, you should consider it as if it doesn't exist.
+It's essentially a zero bytes layer that says this file that was previously there, treated
+as if it's not there anymore.
+And the same thing happens of course for this find thing.
+This is also why there is no actual size decrease when we structure our container image like
+we did.
+So after giving this some thought, the answer was kind of obvious.
+We need to make sure that we add files and delete files in the same layer.
+And we can simply do that by chaining some bash commands together.
+So when I do a pip install, also on the same line, but part of the same run statement,
+run this find command with the delete and instruct pip.
+Pip has an option that says no cache there, so it can actually not even make that pip
+cache in the first place.
+And essentially squashing these layers together, that did work.
+That was quite a big step.
+One side note, we can do this manually like this, so just combining this adding and deletion
+in the same run statement.
+There is also a squash command when you do a Docker build that kind of does this for
+you, but it just does this for all the layers.
+Which makes it slightly smaller and slightly less work to do, but has some disadvantages
+with layer caching.
+Yeah, slightly less optimal now.
+So at this point, we shaved more than a gigabyte of our initial image and almost a gigabyte
+off the image with the Docker ignore.
+So it was going in the right direction.
+And I started Googling a bit and I got some hints that said, well, maybe you should try
+looking at Alpine.
+Python free Alpine is an even smaller base image than the Python free 8 slim version
+that you're using.
+That's true, it's only six megabytes or less than six megabytes.
+So that's what I did.
+I once again changed my Docker file that's built from this other base image instead.
+Tried to build it, but unfortunately that errored out.
+Command error with X, it said this one Python set of the pyeg info, check the logs.
+So I started comparing the log of these two Docker builds.
+And the first line that looked different was this downloading matplotlib line.
+On the top, we have the line from the Python free 8 base image and the bottom we have it
+from the Python free 8 Alpine image.
+And the main thing that we see different is that in the top here, we see a wheel being
+downloaded where in the bottom here, we see a title GC download.
+And that seems to be the main difference.
+And sort of the conclusion here is that PyPI wheels are not compatible with Alpine for
+some reason.
+So what is a wheel and why aren't they compatible?
+A wheel is essentially the reason why most Python packaging just works nowadays.
+When you do a pip install pandas or scikit-learn, it will just download something and there's
+not a lot of dependencies that you need to have pre-installed on your PC.
+And that's because wheels are a binary distribution format in which all external C code is already
+built for you.
+Rather than a so-called source distribution, which is the title GC thing, in which the
+C code is not pre-built and actually needs to be compiled on your PC when you install
+the package.
+You can see, for example, for pandas, the difference between a source disk build and
+a wheel disk on the right.
+In the source disk build, we see algos.c and algos.pxd and algos.pyx, which are the C-Python
+and original C codes.
+Whereas on the right, we see this C-Python, FreeCyphon and Darwin.so, the shared object,
+which is essentially the compiled C code in the wheel distribution for us already.
+Again, on Alpine, it essentially downloads the left side, whereas on our previous one,
+it downloaded on Python 3.8, it downloaded the right side's distribution.
+So why are those two things incompatible?
+That turns out because Alpine wants to be so small, they use a slightly different set
+of base packages than, for example, Debian does.
+This whole wheel thing is brilliant, but there's a lot of work in the background that needed
+to happen to make this possible.
+And essentially, all Linux distributions are slightly different from each other.
+So what the original PEP writers thought of when they came up with the wheel PEP was to
+make a standard subset of kernel plus user space APIs.
+They could assume to work on many different types of Linux installations, and they called
+this standard manyLinux.
+Part of this standard is that things need to be built against glibc standard library,
+whereas Alpine doesn't use glibc as the C library implementation, but uses Muzl.
+So all normal manyLinux wheels that work on Debian and Ubuntu and what have you don't
+work on Alpine.
+So we kind of have to compile the code on our Alpine distribution to make them work.
+That means adding a lot of dependencies, build-based, free type dev, libpng dev for Matplotlib,
+open blast dev for NumPy and SciPy and stuff.
+So let's add all of those to our Dockerfile, install again, do a build, takes about an
+hour and it results in a bigger image.
+That's a bit of a shame.
+Makes sense though.
+We needed all these build dependencies that we didn't have in our previous Python 3.8
+image.
+So we should probably try to get rid of them.
+Now we already saw why this doesn't work, why we can't run this APK delete of our build
+deps somewhere later on, because that's not how the Docker layering works.
+But we also don't want to squash all these layers together, because with these kinds
+of build times, like these hour-long build times, we really like to use this Docker layer
+caching and make the most use out of it so that our iteration speed is at least somewhat
+decent.
+What we can do instead is use this thing called multistage builds.
+Multistage builds essentially allow you to have multiple from statements in a single
+Dockerfile and you can copy stuff from an earlier Docker container build in the same
+file to a later Docker image.
+So we make a builder stage here in the top, we make a runner stage here in the bottom.
+And essentially what we do in the runner stage is we download from the builder all the installed
+packages and all the therefore compiled code as well.
+We still need open blast and freetype because those are runtime dependencies.
+So we add those to the runner image as well.
+That saves a good chunk of size.
+But then the last question is kind of, okay, why did we still need open blast and freetype?
+Because our wheel has the precompiled code that runs in the runner image, so why is that
+still necessary?
+And open blast and freetype, by the way, add like 200 plus megabytes to this image.
+So what makes the wheels that we downloaded from PyPI different than the wheels that we
+just build ourself in the builder image?
+That has to do with that they're still linked against available dependencies on the operating
+systems dynamically, that those dependencies aren't part of the wheel yet.
+And we can check this using a tool called audit wheel.
+So audit wheel is a tool that can check whether wheels are built correctly, whether they're
+self-contained, but they can also nicely fix wheels and make sure that they don't need
+any external dependencies.
+So this is, for example, a wheel that I built myself for NumPy.
+I ran audit wheel against it and it says, sure, this looks good, but there's still external
+shared libraries required by the wheel.
+If we would do this from Appleclip, we would see open blast and freetype in there.
+But as I said, we can also use audit wheel to repair wheels.
+So if I ask audit wheel to repair the NumPy wheel, it will essentially look in the operating
+system and see, okay, which dependencies, external dependencies did we rely on?
+And let's copy those into the wheel instead.
+If we add that to, so if we add audit wheel and all those dependencies to our Docker file,
+install the, or fix the wheels, then copy the fixed wheels to our runner image and run
+our tests.
+We see that we got this container image down to 288 megabytes.
+At this point, most of the size comes from our site packages folder.
+That's good.
+197 megabytes out of the total, 230 something, 280 something.
+But considering we can probably do even better because we're compiling all the source code
+anyway, we can ask the C compiler, well, get rid of all kinds of debug information and
+optimize for disk space for site by that saves about 10 megabytes.
+We can add these compiler flags to our pip wheel statements that saves about 50 megabytes.
+Then there's one last thing, which we can link some of the system dependencies, these
+is all files together using sim links.
+And that saves another 50 megabytes.
+We really shouldn't do this though.
+This is not norm core anymore.
+This is not part for a norm conf conference anymore.
+We should probably just stick with Python 3.8 slim and do the decent thing and get Docker
+images that install in five minutes rather than an hour.
+That's it.
+Thanks for watching.

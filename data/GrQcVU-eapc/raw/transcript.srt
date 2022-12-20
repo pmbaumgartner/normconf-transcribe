@@ -1,0 +1,920 @@
+1
+00:00:00,000 --> 00:00:06,800
+Thank you, everyone, for watching my talk. Data is the new coffee. I am Peter Baumgartner,
+
+2
+00:00:06,800 --> 00:00:13,300
+and I am just going to dive right into it. So I'm a machine learning engineer at Explosion.
+
+3
+00:00:13,300 --> 00:00:19,320
+We created the spacey natural language processing library and the prodigy annotation tool. I
+
+4
+00:00:19,320 --> 00:00:24,240
+also lead our consulting services, so I work on various applied natural language processing
+
+5
+00:00:24,240 --> 00:00:30,000
+problems. And often those problems involve the process of annotating data, which is also
+
+6
+00:00:30,000 --> 00:00:36,020
+called labeling or coding data. For those of you not familiar, there's an example here
+
+7
+00:00:36,020 --> 00:00:40,480
+on this page. In this image, we have a common natural language processing task called named
+
+8
+00:00:40,480 --> 00:00:45,680
+entity recognition, where we're looking to identify entities and their types within a
+
+9
+00:00:45,680 --> 00:00:51,560
+piece of text. So right now we have models that can do a pretty good job at this task.
+
+10
+00:00:51,560 --> 00:00:56,600
+But the reason we have those powerful models that can make predictions about entities is
+
+11
+00:00:56,600 --> 00:01:00,720
+because people have done the work to annotate thousands of documents with named entities
+
+12
+00:01:00,720 --> 00:01:06,320
+like this one. So one part of my talk is going to be talking about this process and exploring
+
+13
+00:01:06,320 --> 00:01:11,000
+this question of where does our data for machine learning come from? Specifically, what's this
+
+14
+00:01:11,000 --> 00:01:17,260
+process that transforms unlabeled raw data by adding annotations or labels for supervised
+
+15
+00:01:17,260 --> 00:01:23,560
+learning tasks? But we're going to get a little weird. We're going to take a winding road
+
+16
+00:01:23,560 --> 00:01:28,960
+to answer that question, because first we have to talk about coffee. So I love drinking
+
+17
+00:01:28,960 --> 00:01:33,960
+and learning about coffee. The idea for this talk came from this book on the right here.
+
+18
+00:01:33,960 --> 00:01:42,400
+It's a sort of manuscript, a very long exploration into the world of professional coffee tasting.
+
+19
+00:01:42,400 --> 00:01:46,320
+And as I was reading, I noticed there were just a lot of similarities between the world
+
+20
+00:01:46,320 --> 00:01:51,640
+of professional coffee tasting and what we do when we annotate data. It raised a lot
+
+21
+00:01:51,640 --> 00:01:55,840
+of interesting questions about coffee for me. It's like how does a bean travel thousands
+
+22
+00:01:55,840 --> 00:02:01,120
+of miles to end up in our cup without having defects? When we're at the store, how do we
+
+23
+00:02:01,120 --> 00:02:05,760
+actually know what kind of coffee we're buying? How does a coffee taster convert these raw
+
+24
+00:02:05,760 --> 00:02:10,160
+taste perceptions into a quantitative and qualitative assessment of that coffee that
+
+25
+00:02:10,160 --> 00:02:14,920
+can be shared? Who came up with the descriptions that we see on coffee bags and menus and how
+
+26
+00:02:14,920 --> 00:02:21,440
+did they do that? So my twist on the norm comp theme here is illustrating that I think
+
+27
+00:02:21,440 --> 00:02:26,920
+there's a lot we can learn from these mundane, habitual, very normy tasks like drinking coffee.
+
+28
+00:02:26,920 --> 00:02:31,040
+And so we'll start getting some answers to these questions about coffee by exploring
+
+29
+00:02:31,040 --> 00:02:40,220
+the world of professional coffee tasting and then see what we can adopt for data annotation.
+
+30
+00:02:40,220 --> 00:02:45,280
+So a typical coffee tasting consists of sampling several coffees. Depending on the purpose
+
+31
+00:02:45,280 --> 00:02:50,240
+of the tasting, this can result in a description of their flavors, assigning numeric values
+
+32
+00:02:50,240 --> 00:02:55,440
+to the qualities of the coffee like bitterness or acidity, and tasting for any defects in
+
+33
+00:02:55,440 --> 00:03:01,280
+the coffee. We'll see an example of this in a bit. This is a screen cap on the slide from
+
+34
+00:03:01,280 --> 00:03:05,740
+a video that was the world's largest coffee tasting, which was a virtual event put on
+
+35
+00:03:05,740 --> 00:03:10,200
+by YouTuber James Hoffman, who I'd strongly recommend if you're at all interested in coffee.
+
+36
+00:03:10,200 --> 00:03:15,240
+In this video, he's doing part of this virtual tasting and he's tasting five different coffees
+
+37
+00:03:15,240 --> 00:03:19,600
+that have been prepared in the same way with a process that's formally called cupping,
+
+38
+00:03:19,600 --> 00:03:23,240
+which is different than how you typically brew coffee for consumption. You know, one
+
+39
+00:03:23,240 --> 00:03:28,120
+difference being that you actually are going to slurp the coffee from a spoon like he's
+
+40
+00:03:28,120 --> 00:03:33,200
+doing here. So on the right hand side of the frame here, there's a sheet for taking notes
+
+41
+00:03:33,200 --> 00:03:39,000
+and scoring the coffee. And this is where the magic happens as tasters annotate their
+
+42
+00:03:39,000 --> 00:03:47,560
+experience and convert it into structured data. Often tasters will use a structured
+
+43
+00:03:47,560 --> 00:03:52,240
+form or a protocol like this one from the Specialty Coffee Association. There's a lot
+
+44
+00:03:52,240 --> 00:03:57,280
+going on here. So I'm just going to split up this form into four different parts. So
+
+45
+00:03:57,280 --> 00:04:01,080
+one thing that's happening is they're doing a numeric assessment of flavor characteristics.
+
+46
+00:04:01,080 --> 00:04:08,800
+So we've got fragrance, aroma, flavor, aftertaste, acidity, body. There's some descriptive notes
+
+47
+00:04:08,800 --> 00:04:14,800
+of the flavors. So this one is very floral, silky body, beautiful aftertaste, extremely
+
+48
+00:04:14,800 --> 00:04:22,040
+balanced. There are checkboxes for any defects that are noted in the coffee. And then there's
+
+49
+00:04:22,040 --> 00:04:28,440
+a final score that's basically the sum of all the points minus some points for any defects.
+
+50
+00:04:28,440 --> 00:04:33,920
+So coffee tasters completing this form and doing a tasting is similar to annotating data.
+
+51
+00:04:33,920 --> 00:04:38,120
+And the benefit for us is that they've been doing it for a long time and have these established
+
+52
+00:04:38,120 --> 00:04:44,080
+methodologies that appear to be working. So now I'd like to transition into talking about
+
+53
+00:04:44,080 --> 00:04:48,600
+practices in professional coffee tasting that I believe can be of service to those of us
+
+54
+00:04:48,600 --> 00:04:54,940
+who rely on annotated data for data science. I'm going to talk about five different practices
+
+55
+00:04:54,940 --> 00:05:02,520
+that exist within the world of coffee tasting and draw some analogies to annotation. All
+
+56
+00:05:02,520 --> 00:05:10,160
+right. So first up is this idea of calibration and agreement. So professional coffee tasting
+
+57
+00:05:10,160 --> 00:05:15,920
+sessions usually begin with a day of what's called calibration. What happens here is before
+
+58
+00:05:15,920 --> 00:05:20,400
+evaluations and descriptions are formally recorded, tasters work together to come to
+
+59
+00:05:20,400 --> 00:05:25,400
+a sense of agreement on what various descriptors and scale values mean. This is important because
+
+60
+00:05:25,400 --> 00:05:29,080
+everyone has different backgrounds and tasting abilities and experiences that are going to
+
+61
+00:05:29,080 --> 00:05:35,360
+merit the need for calibration. If everyone is proposing their own idea of what an 8.5
+
+62
+00:05:35,360 --> 00:05:40,080
+for flavor means, a large value of the, a large part of the value of tasting is going
+
+63
+00:05:40,080 --> 00:05:46,280
+to be lost due to that inconsistency. There was an interesting example of this in the
+
+64
+00:05:46,280 --> 00:05:52,840
+book that I mentioned. So typically when the descriptor orange is used in North America
+
+65
+00:05:52,840 --> 00:06:00,560
+by coffee tasters, it refers sort of straightforwardly to the flavor of the orange fruit. However,
+
+66
+00:06:00,560 --> 00:06:06,360
+tasters from India typically use the descriptor orange as an iconic descriptor where it essentially
+
+67
+00:06:06,360 --> 00:06:12,040
+serves as a substitute for the idea of good flavor. So this is just one of many examples
+
+68
+00:06:12,040 --> 00:06:17,500
+of how interpretation and judgment being in can be influenced by sort of local characteristics
+
+69
+00:06:17,500 --> 00:06:23,760
+of a tasting. So luckily with annotated data and with digital information, we have a way
+
+70
+00:06:23,760 --> 00:06:30,520
+to measure how much people agree on the annotations and the labels. This is the idea that is called
+
+71
+00:06:30,520 --> 00:06:36,000
+inner annotator agreement or inter-rater reliability. And these are measures that you can calculate
+
+72
+00:06:36,000 --> 00:06:40,600
+when you have multiple annotators labeling the same set of examples. When you're starting
+
+73
+00:06:40,600 --> 00:06:45,400
+a new project and you don't know how difficult your annotation task is, agreement metrics
+
+74
+00:06:45,400 --> 00:06:50,360
+can provide extremely valuable information. If two humans can't agree on how something
+
+75
+00:06:50,360 --> 00:06:54,840
+should be labeled, your model isn't going to output consistent results and you and your
+
+76
+00:06:54,840 --> 00:06:59,560
+users want consistent results. Additionally, you're going to bias your training dataset
+
+77
+00:06:59,560 --> 00:07:04,320
+based off the individual whims of your annotators. So like imagine if we had a magical machine
+
+78
+00:07:04,320 --> 00:07:08,700
+learning model to predict whether coffee had orange flavor or not. If half the data sets
+
+79
+00:07:08,700 --> 00:07:14,760
+annotated with North American tasters and half with tasters from India, what is it exactly
+
+80
+00:07:14,760 --> 00:07:21,560
+that we'd expect that model to produce? So starting a project with multiple annotators,
+
+81
+00:07:21,560 --> 00:07:25,640
+calculating agreement metrics and revising your project based on agreement, to me, seems
+
+82
+00:07:25,640 --> 00:07:30,960
+like a cheat code for successful machine learning projects. As an example of this, here's a
+
+83
+00:07:30,960 --> 00:07:36,200
+chart displaying an agreement metric called Cohen's kappa and the F1 scores for that model
+
+84
+00:07:36,200 --> 00:07:41,400
+for a model trained on Google's Go Emotions dataset. Vincent covered this dataset a little
+
+85
+00:07:41,400 --> 00:07:47,280
+bit in his talk. I think this dataset is sort of like a mini dumpster fire, but one of the
+
+86
+00:07:47,280 --> 00:07:53,300
+good things that they did do was have multiple annotators and calculated agreement measures
+
+87
+00:07:53,300 --> 00:07:59,400
+on their annotations. So the goal of this task, just as a refresher, they're classifying
+
+88
+00:07:59,400 --> 00:08:05,920
+Reddit comments into one of 27 emotion categories. So each dot here is the agreement score for
+
+89
+00:08:05,920 --> 00:08:10,640
+a single emotion category on the horizontal axis and then the F1 score from that model
+
+90
+00:08:10,640 --> 00:08:15,920
+on the vertical axis. So there's super high correlation here. So hopefully it's clear
+
+91
+00:08:15,920 --> 00:08:20,400
+that having multiple annotators and calculating these agreement metrics can tell you kind
+
+92
+00:08:20,400 --> 00:08:28,080
+of early if your model's going to be trash. So if you agree with me that agreement metrics
+
+93
+00:08:28,080 --> 00:08:33,760
+are awesome and you're using them on a project and find out you have a sort of poorly performing
+
+94
+00:08:33,760 --> 00:08:39,680
+task with low agreement, what is it exactly that you would be fixing? So we'll talk about
+
+95
+00:08:39,680 --> 00:08:44,520
+that as it relates to structure and process. So we saw that in coffee tasting, they have
+
+96
+00:08:44,520 --> 00:08:50,560
+this form, this protocol. The form guides tasters towards what aspects of the coffee
+
+97
+00:08:50,560 --> 00:08:55,600
+to pay attention to and how to pay attention to them. Coffee tasters also go through years
+
+98
+00:08:55,600 --> 00:09:00,360
+of training and refining their perceptions and descriptions of taste. Essentially, there's
+
+99
+00:09:00,360 --> 00:09:05,200
+just a deliberate effort to document and scale this task of tasting coffees and making sure
+
+100
+00:09:05,200 --> 00:09:14,840
+this process is as shareable and consistent as possible. So here's another example of
+
+101
+00:09:14,840 --> 00:09:18,680
+a tool that provides some structure. This is a flavor wheel. I know it's too small for
+
+102
+00:09:18,680 --> 00:09:22,760
+you to read anything. Don't care about the details or go Google flavor wheel when you
+
+103
+00:09:22,760 --> 00:09:27,840
+have more time. This one's from counterculture coffee and what it does is just lists out
+
+104
+00:09:27,840 --> 00:09:31,980
+common descriptors or flavors in coffee in a hierarchical manner. So it's just a nice
+
+105
+00:09:31,980 --> 00:09:38,760
+tool that coffee tasters can use. So for projects needing data annotation, the equivalent tool
+
+106
+00:09:38,760 --> 00:09:44,920
+to the cupping form or something like a tasting wheel are called annotation guidelines. So
+
+107
+00:09:44,920 --> 00:09:50,880
+annotation guidelines serve as your reference for how data should be annotated or labeled.
+
+108
+00:09:50,880 --> 00:09:56,000
+Here's an example of one from I just Googled annotation guidelines. There's this time ML
+
+109
+00:09:56,000 --> 00:10:01,520
+project. And essentially, this is just a specification for marking up temporal events within text.
+
+110
+00:10:01,520 --> 00:10:06,920
+So, their annotation guidelines include detailed descriptions of all their tags, instructions
+
+111
+00:10:06,920 --> 00:10:13,520
+on how to annotate with them, and most importantly, numerous examples of annotated texts. So,
+
+112
+00:10:13,520 --> 00:10:17,880
+without guidelines, it's difficult to know exactly what you're evaluating when you do
+
+113
+00:10:17,880 --> 00:10:22,800
+something like a model evaluation. Your model could be performing poorly because of inconsistencies
+
+114
+00:10:22,800 --> 00:10:29,320
+in your annotations on your training or your evaluation data sets. Now, this isn't a document
+
+115
+00:10:29,320 --> 00:10:33,240
+that you need to have perfectly defined when you start a project. Your annotation guidelines
+
+116
+00:10:33,240 --> 00:10:39,080
+can be developed iteratively over the course of the project and then solidify over time.
+
+117
+00:10:39,080 --> 00:10:42,160
+You really want them to be finalized, though, by the time you're annotating what we usually
+
+118
+00:10:42,160 --> 00:10:47,000
+call like your gold or your test data set. And you also want to be sure that you're reapplying
+
+119
+00:10:47,000 --> 00:10:55,400
+those finalized guidelines to your training data for consistency. So, speaking of iteration,
+
+120
+00:10:55,400 --> 00:11:04,120
+let's talk a little bit about that. So, this one, I'm going straight to the example. Here's
+
+121
+00:11:04,120 --> 00:11:09,000
+a bag of coffee I had a few months ago. I've highlighted the profile of this coffee on
+
+122
+00:11:09,000 --> 00:11:16,880
+the bag. And it says it is apple, toffee, and milk chocolate with a medium juicy body.
+
+123
+00:11:16,880 --> 00:11:24,040
+So, a natural question here is, you know, is the flavor of apple actually in this coffee
+
+124
+00:11:24,040 --> 00:11:30,120
+once I brew it and taste it? Is it my job to extract this inherent taste sensation from
+
+125
+00:11:30,120 --> 00:11:34,880
+my experience while drinking the coffee? And that's certainly one way to think of drinking
+
+126
+00:11:34,880 --> 00:11:40,560
+coffee as a task. But tasting notes in this profile here can also serve as a jumping off
+
+127
+00:11:40,560 --> 00:11:46,000
+point for additional discoveries. So, rather than being a specific experience I'm trying
+
+128
+00:11:46,000 --> 00:11:51,520
+to extract, this apple flavor can be used as a jumping off point for additional discoveries.
+
+129
+00:11:51,520 --> 00:11:55,920
+I might think of the flavor of apple, have a sip and try to locate that flavor and fail
+
+130
+00:11:55,920 --> 00:12:00,440
+to do that. But that experience can lead me towards another flavor that I can experience
+
+131
+00:12:00,440 --> 00:12:06,000
+more clearly. So, I could use that experience the next time I take a sip and see if there's
+
+132
+00:12:06,000 --> 00:12:10,240
+something more clear that comes through. This is the idea of operating reflexively. It's
+
+133
+00:12:10,240 --> 00:12:15,240
+like bootstrapping your experience by adopting an initial task and then, like, revising it
+
+134
+00:12:15,240 --> 00:12:22,600
+in a cyclical process. So, we can adopt this same reflexivity in
+
+135
+00:12:22,600 --> 00:12:29,320
+annotation and labeling data. If you have a new dataset and a new task and the concept
+
+136
+00:12:29,320 --> 00:12:34,080
+or idea in which you're annotating is still sort of not well defined, you don't have to
+
+137
+00:12:34,080 --> 00:12:38,960
+have your annotation scheme finalized or a production ready model in order to use those
+
+138
+00:12:38,960 --> 00:12:43,320
+tools to help you explore the problem space. You can just make up an annotation task for
+
+139
+00:12:43,320 --> 00:12:47,520
+yourself that will give you exposure to the data and experience with translating this
+
+140
+00:12:47,520 --> 00:12:54,240
+raw sort of data information into a structured task. It's fine to start with something simple
+
+141
+00:12:54,240 --> 00:12:57,700
+and discover your task as actually something else along the way as you start to encounter
+
+142
+00:12:57,700 --> 00:13:04,580
+more and more data. Your goal here is to understand the data through this process.
+
+143
+00:13:04,580 --> 00:13:08,880
+Another place this reflexivity shows up is with model in the loop workflows. In this
+
+144
+00:13:08,880 --> 00:13:13,400
+case, you will have trained an existing model that's making predictions on the data that
+
+145
+00:13:13,400 --> 00:13:19,120
+you're annotating. Here, the reflexivity stems from using these models, the model's predictions,
+
+146
+00:13:19,120 --> 00:13:23,920
+to better understand what type of data you might additionally collect or annotate. In
+
+147
+00:13:23,920 --> 00:13:28,640
+short, you can perform a simplified task or intermediate version of your final task as
+
+148
+00:13:28,640 --> 00:13:32,360
+a stepping stone to your final solution. You know, don't expect to get it right the first
+
+149
+00:13:32,360 --> 00:13:42,520
+time. So this very formal protocol-based testing
+
+150
+00:13:42,520 --> 00:13:49,640
+isn't the only kind of tasting around. There are actually three different sort of categories
+
+151
+00:13:49,640 --> 00:13:56,480
+of tasting. I've covered descriptive tasting, which is this long process with the form.
+
+152
+00:13:56,480 --> 00:14:02,440
+There's also discriminatory tasting, which is like tasting for defects. And there's also
+
+153
+00:14:02,440 --> 00:14:07,720
+hedonic tasting, which is just discovering whether a taster personally likes or dislikes
+
+154
+00:14:07,720 --> 00:14:13,460
+a coffee. So these different tasting tasks get employed strategically, and we should
+
+155
+00:14:13,460 --> 00:14:19,440
+be thankful for that. As lay tasters, we don't want to complete an entire form to determine
+
+156
+00:14:19,440 --> 00:14:25,480
+if we enjoy a cup of coffee that we brewed in the morning.
+
+157
+00:14:25,480 --> 00:14:30,120
+Flexibility is important because it helps you not waste time solving the wrong problem.
+
+158
+00:14:30,120 --> 00:14:34,840
+On the left here are examples of two types of defects in coffee beans, insect damage
+
+159
+00:14:34,840 --> 00:14:40,920
+and fully black beans, which usually result from environmental issues like frost. Fortunately,
+
+160
+00:14:40,920 --> 00:14:45,440
+these can be visually inspected for issues before the coffee is tasted. But if the process
+
+161
+00:14:45,440 --> 00:14:49,840
+didn't include that task of checking for defects, you know, these beans could get all the way
+
+162
+00:14:49,840 --> 00:14:54,640
+to an actual tasting, and we'd have people wasting their time with the wrong task, which
+
+163
+00:14:54,640 --> 00:14:59,960
+is tasting coffee when there are known defects. In the same way, you have to think about the
+
+164
+00:14:59,960 --> 00:15:05,760
+suitability of your annotation task relative to sort of like the use case for your model
+
+165
+00:15:05,760 --> 00:15:11,560
+and the limitations of your data. So my favorite task to pick on, of course, is sentiment analysis.
+
+166
+00:15:11,560 --> 00:15:16,400
+So let's say we wanted to know whether a movie review was positive or negative. I've got
+
+167
+00:15:16,400 --> 00:15:21,160
+a real life example here from the movie Birdman, which I love. So this is just a paragraph
+
+168
+00:15:21,160 --> 00:15:28,120
+from that review. Now, most sentiment models would just classify this text as negative.
+
+169
+00:15:28,120 --> 00:15:32,440
+And we can work with this coarse sense of sentiment if it's valuable for our product
+
+170
+00:15:32,440 --> 00:15:37,360
+to know generally how much people enjoy a movie. But if we're interested in a more nuanced
+
+171
+00:15:37,360 --> 00:15:43,080
+characteristics of the movie, like the quality of the musical score or the cinematography
+
+172
+00:15:43,080 --> 00:15:47,480
+or the strength of the weakness of the acting, you know, a broad sense of sentiment isn't
+
+173
+00:15:47,480 --> 00:15:51,940
+going to help us answer those questions. So here's an example of a paragraph later on
+
+174
+00:15:51,940 --> 00:15:57,080
+in that same review that actually was overall positive talking about the cinematography
+
+175
+00:15:57,080 --> 00:16:03,200
+of the movie. So you have to align your raw data, your annotations and your use case and
+
+176
+00:16:03,200 --> 00:16:08,700
+make sure all these things sort of line up and that you're solving a suitable task. Another
+
+177
+00:16:08,700 --> 00:16:12,040
+point here is that that other people have mentioned is that you should always be assessing
+
+178
+00:16:12,040 --> 00:16:17,200
+whether machine learning and supervised learning specifically is the right approach for your
+
+179
+00:16:17,200 --> 00:16:22,360
+system. You should be thinking about machine learning as one component of a larger system,
+
+180
+00:16:22,360 --> 00:16:26,500
+not your whole system in itself. In the same way, you know, it's not the job of coffee
+
+181
+00:16:26,500 --> 00:16:32,800
+tasters to determine the tasting notes that appear on a bag of coffee or the description
+
+182
+00:16:32,800 --> 00:16:37,680
+you might see in a coffee shop or how a blend might be successfully marketed. Instead, they're
+
+183
+00:16:37,680 --> 00:16:42,400
+focused on trying to describe the coffee as objectively as possible and in a standardized
+
+184
+00:16:42,400 --> 00:16:51,560
+way. All right. My last point is this idea of
+
+185
+00:16:51,560 --> 00:16:57,760
+full stack collaboration. I apologize if this sounds like a weird management consultant
+
+186
+00:16:57,760 --> 00:17:03,200
+buzzword, but it was the best thing I could come up with. So hear me out. So coffee farmers
+
+187
+00:17:03,200 --> 00:17:07,960
+don't often taste their own coffees, actually. Typically, they're just trying to achieve
+
+188
+00:17:07,960 --> 00:17:13,800
+the highest yield, which just means the lowest number of defects. So generally, there's not
+
+189
+00:17:13,800 --> 00:17:18,880
+a lot of interest in positive taste characteristics. So farmers don't know exactly what they're
+
+190
+00:17:18,880 --> 00:17:23,560
+selling a lot of times. This is one of the areas that people in the coffee industry are
+
+191
+00:17:23,560 --> 00:17:27,600
+actually trying to change so that farmers can better understand what it is they're selling
+
+192
+00:17:27,600 --> 00:17:34,400
+and improve their crops. And in the same way, I think machine learning
+
+193
+00:17:34,400 --> 00:17:39,200
+projects kind of have some sort of communication and collaboration risk if this whole sort
+
+194
+00:17:39,200 --> 00:17:45,320
+of team pipeline isn't working correctly and not everyone understands what the other one
+
+195
+00:17:45,320 --> 00:17:50,760
+is doing. So the risk here is having a project that's sort of too heavily focused on one
+
+196
+00:17:50,760 --> 00:17:56,920
+team in this diagram. So focusing on the left, I sort of have this thought that a lot of
+
+197
+00:17:56,920 --> 00:18:01,680
+when you look at a lot of organizations attempting to do machine learning or some research projects,
+
+198
+00:18:01,680 --> 00:18:05,600
+they think the real problem is trying to find a cost effective annotation team and getting
+
+199
+00:18:05,600 --> 00:18:11,720
+data labeled for as cheaply as possible. And on the other end of the spectrum, you have
+
+200
+00:18:11,720 --> 00:18:16,920
+spaces like Kaggle competitions that are framed in this sort of like, sterile product management
+
+201
+00:18:16,920 --> 00:18:21,020
+business problem perspective, like you just get a problem and they want you to bring the
+
+202
+00:18:21,020 --> 00:18:25,680
+data science and you can't ask that company to annotate more data or provide additional
+
+203
+00:18:25,680 --> 00:18:29,920
+context. And then finally, you know, data scientists
+
+204
+00:18:29,920 --> 00:18:34,840
+and machine learning engineers or whatever you are, my green screen is tipping over now
+
+205
+00:18:34,840 --> 00:18:40,520
+because I'm stepping on it. Whether you're a machine learning engineer or data scientist,
+
+206
+00:18:40,520 --> 00:18:43,720
+we're also just as guilty as this, too. I know numerous times, like, I just want to
+
+207
+00:18:43,720 --> 00:18:49,520
+get to coding. I'll just download a pre-trained model, get the data set and just go to town.
+
+208
+00:18:49,520 --> 00:18:54,240
+And that is to my own detriment later, I've found numerous times. So, you know, there's
+
+209
+00:18:54,240 --> 00:18:59,200
+downsides of focusing too much on one of these groups. If data science doesn't have insight
+
+210
+00:18:59,200 --> 00:19:03,500
+into the annotation task, you can waste a lot of time on a task that might make logical
+
+211
+00:19:03,500 --> 00:19:07,920
+sense and have good annotation guidelines, but be poorly executed or result in a data
+
+212
+00:19:07,920 --> 00:19:12,640
+set that's just not workable with machine learning. The data science team also needs
+
+213
+00:19:12,640 --> 00:19:17,320
+to help incorporate model in the loop workflows to perform error analysis and perform error
+
+214
+00:19:17,320 --> 00:19:25,680
+analysis on early iterations of the model so the task can be refined. Data science also
+
+215
+00:19:25,680 --> 00:19:29,160
+needs to communicate with the product team. It's unlikely that the things that machine
+
+216
+00:19:29,160 --> 00:19:33,200
+learning can do out of the box with a pre-trained model or framework is going to be a direct
+
+217
+00:19:33,200 --> 00:19:39,240
+solution to your business problem. And it's important to have product involved in the
+
+218
+00:19:39,240 --> 00:19:43,360
+annotation task because the things that you annotate are going to be the outputs of the
+
+219
+00:19:43,360 --> 00:19:46,880
+system. You need to be sure that those outputs are relevant and meaningful to the product
+
+220
+00:19:46,880 --> 00:19:51,840
+that you're developing. I would say it's not out of the question for everyone on any of
+
+221
+00:19:51,840 --> 00:19:55,720
+these teams to annotate data at some point in a project life cycle. I think the best
+
+222
+00:19:55,720 --> 00:20:00,240
+way to understand the details of the data and the annotations relative to each team's
+
+223
+00:20:00,240 --> 00:20:09,120
+goals is to actually do that process. So by neglecting to think about where our coffee
+
+224
+00:20:09,120 --> 00:20:15,440
+comes from and sort of this process of coffee tasting, I think we're missing out on, you
+
+225
+00:20:15,440 --> 00:20:20,000
+know, delightful coffee experiences and aspects of our coffee that we weren't aware that we
+
+226
+00:20:20,000 --> 00:20:24,600
+could enjoy. And in the same way, I think we're missing out on a lot when we ignore
+
+227
+00:20:24,600 --> 00:20:30,240
+where our data comes from and fail to implement processes that make it better. It's not enough
+
+228
+00:20:30,240 --> 00:20:35,720
+to accept your data as a given of a project and move on. If we care a little bit more
+
+229
+00:20:35,720 --> 00:20:40,560
+about where our data comes from and how our data gets annotated, I think we can also have
+
+230
+00:20:40,560 --> 00:20:55,640
+more successful and more delightful data science projects. Thank you.
+

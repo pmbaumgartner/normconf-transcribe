@@ -1,0 +1,398 @@
+Before I get started on this talk about data ethics, I want to give you a little bit more
+info on my background and how I came to be giving this talk today.
+I'm Roy.
+I guess that was made clear, not sort of a cheeseburger only part-time.
+Let's start with what I was doing before I got into the world of data science and machine
+learning so that this all fits together.
+By training, I'm a computational physicist.
+I did research which centered on simulating the interaction of radiation with humans for
+the purposes of cancer treatment.
+I also worked on some actual experiments that were investigating the use of exotic particle
+beams also for cancer treatment.
+After grad school, I went to work in a cancer clinic doing what's called medical physics.
+I worked in radiation therapy with big expensive radiation machines.
+But then I switched to data science after about a year and a half working in the cancer
+clinic.
+I went over to the sexiest job of the 21st century, of course.
+This was in the early days when it was still pretty much the Wild West.
+Maybe you could say we're still in the early days, still the Wild West.
+That's a different talk.
+Over the past decade, I've worked at several startups that you've probably never heard
+of.
+That's fine.
+I've also done a lot of independent consulting and also mostly with startups that you've
+never heard of.
+Mostly, I tend to work with very small startups when I do my consulting.
+In that time, I've probably spent about half of it as a pure independent contractor and
+about half of that time leading teams.
+If you remember the pandemic, I decided to write a book during the pandemic.
+That ended up being a couple books.
+The first book I wrote was about hiring data people based on a lot of my experience.
+Chris Albarn is one of the people interviewed in the book.
+You can put that in the plus or minus column.
+I'll leave it up to you.
+The book's called Hiring Data Scientists and Machine Learning Engineers, a Practical Guide.
+It is a practical guide to hiring data scientists and machine learning engineers.
+I will not be taking questions.
+The second book I wrote is a little pocket-sized overview of the main concepts in deep learning.
+It's called Zeph's Guide to Deep Learning.
+Theoretically, this is the first book in a series of small books about deep learning
+and other data science and machine learning topics.
+Let's see, what else?
+Somehow, I ended up becoming co-organizer of VikiConf, which this is what we're here
+for.
+Of course, Viki forced us to change the name for some reason.
+Now it's NormConf.
+I still really don't know who Norm is, but whatever.
+Let's get to this talk.
+This talk is about ethics.
+Before I get to the ethics stuff I'm going to talk about, first I want to talk about
+the stuff I'm not going to talk about, whatever that means.
+There is, I would say, a whole world of data ethics topics.
+There's a lot of names for this stuff.
+There's AI ethics, ML ethics, robot ethics, but for this talk, mostly I'm just going to
+call everything data ethics.
+There are lots of different areas in data ethics.
+Some of them are pretty well known.
+If you're on social media or follow the news, you've probably heard of several of these
+areas and that's what's on this map.
+There's a fair amount of overlap and the boundaries are pretty fuzzy.
+I didn't attempt to do any Venn diagrams or anything, but it is what it is.
+These are the sexy parts of data ethics.
+They're the ones that get people's attention as well as funding and resources.
+Usually that's for good reason.
+But of these, I would say there are probably three that are the main sexiest areas at the
+moment.
+I think I went too far with this.
+The first area I'll call social justice data ethics.
+This area is concerned with the effects that current and emerging data and algorithmic
+technologies are having on society, especially with regards to how these technologies further
+or exacerbate issues of social justice, such as racism, sexism, gender bias, and other
+issues, maybe broadly social fairness.
+You'll often hear terms like algorithmic bias, transparency, accountability, fairness in
+this area.
+This area is also concerned with things like whether people who provided the training data,
+they were the source of the training data, whether they were for different kinds of models,
+whether they actually gave consent to do that, or whether they were fairly compensated for
+providing that data.
+This is also an area where there's a lot of attention from big tech companies, some lawmakers,
+and there's nonprofit organizations and universities that focus on this as well.
+The next area is existential AI risk ethics.
+Just add ethics to everything and it becomes an area.
+This is an area that's concerned with the potential threats posed by human or super
+human level AI.
+So usually when you talk about this, you talk about like the Terminator scenario, the robots
+rising up.
+That's broadly like if humans could produce AI that could outcompete us in most ways,
+but is not actually aligned with human interests, will that AI decide to just wipe us all out?
+This is also an area with there's nonprofit organizations, think tanks, universities that
+are working in this and trying to understand what these risks actually are and how you
+might mitigate these risks.
+The last of the big three is probably the one that's been getting the most press in
+recent weeks and months.
+These are the generative model ethics.
+So get your norm conf bingo cards ready because this is about stable diffusion and chat GPT.
+I don't know if you remember stable diffusion, that's probably faded from memory at this
+point.
+These are the models that are trained on massive data sets of images and text, and they're
+subsequently able to produce human or near human level image and text as a result of
+that.
+And while that's very amazing, I think if you took someone from 10 years ago and showed
+them this stuff, they just wouldn't believe you.
+But it also raises a lot of questions and some of those questions have been brought
+up today in some of the talks, but is training on this data, much of which is copyrighted,
+even legal?
+Will this put artists and writers and coders out of work?
+What about the bias that's in that training data?
+Will this clog the internet with tons of spam and other crap?
+Who is responsible?
+Who is responsible for what when you use these models?
+Now those are the ones I consider kind of the big three, and I guess I should say, by
+the way, the first two groups, they seem to really dislike each other.
+If Twitter feuds are to be believed, their basic argument seems to be you over there,
+you're focusing on things that don't really matter.
+But there's also several other relatively well-known areas of data ethics, which I'm,
+let's see, trying to get there.
+Okay, here we go.
+Lethal autonomous weapon ethics.
+So this is an interesting area.
+Lethal autonomous weapons, those are basically drones and robots that can pick a human target
+and injure or kill that person without another human being having to make the decision to
+actually pull the trigger.
+People working in this area are mostly focused on trying to get international treaties to
+ban these types of weapons in the same way that chemical and biological weapons are banned,
+which might sound very hard, but if you think about it, pretty much any government with
+their resources could make chemical or biological weapons.
+But for the most part, they understand the consequences of actually using those in the
+international stage, so they don't do that.
+And that's one of the, I'd say the main focus of lethal autonomous weapons ethics.
+Maybe related to that, I guess, depending on how you look at things, is self-driving
+vehicle ethics.
+This is about cars and other vehicles that can operate without a human driver.
+The main probably ethical questions related to that are, for example, if a self-driving
+car kills a human, who is actually liable or responsible?
+And also, when is a self-driving vehicle safe enough to allow in public without a human
+somewhere behind the wheel?
+So as you can imagine, this one's pretty tightly related to regulatory efforts.
+Privacy ethics.
+Privacy ethics is concerned with privacy.
+If you're building something, how much information should you realistically collect or do you
+need to collect?
+If you're building a flashlight app for a phone, do you really need to know someone's
+detailed location or their demographic info?
+What kinds of information should actually be not disallowed from being collected at
+all?
+And obviously, this is an area where there's a lot of regulatory action and effort that's
+going around that.
+There's also this more general thing of job displacement ethics, not just with the generative
+models we were talking about a second ago.
+And this is a discussion that's been going on since the Industrial Revolution, if not
+before, so at least 100 plus years.
+Part of the question now is with the AI revolution as we know it, is this time different?
+Are we going to suddenly put out way more people, displace them from their jobs?
+Some of the common proposals related to this are things like guaranteed universal basic
+income or even outlying certain kinds of technologies.
+And like I said, this is arguments that have been going on for decades, if not centuries,
+this point.
+Now, while there are a lot of areas of ethics all over this map, these are the areas that
+this talk is not really about.
+In fact, I'm of the opinion that the data ethics world is actually much larger than
+this.
+And most of what most data people encounter is not really this, even though it's what
+they're most likely to hear about.
+Now, if we zoom out, we see that the part we were just looking at, that's the sexy part
+of the world of data ethics.
+And it's actually pretty small.
+On this map, all the sexy stuff is up in Northern Canada and Greenland.
+So you can interpret that however you wish.
+But instead, most of the world data ethics is the non-sexy, more mundane, everyday, ethically
+challenging situations.
+Hopefully, you don't run into that every day, but every day in the sense of every day.
+But let me digress quickly about why, kind of what led me to think about this in particular.
+Back when I was in the cancer clinic, our main focus was on safety.
+We were using something very, very dangerous, which is intense levels of radiation to try
+to do good.
+But if things went bad, people could die.
+So there's a lot, lot, lot of effort around safety, a lot of discussion, a lot of professional
+discussion, just a lot of what you're doing is towards that.
+Now, my next job, I fast forward a little bit, as a full-time data scientist was essentially
+delivering pizza.
+And well, technically, I was working on the data science stuff to support pizza delivery,
+even though I did do some pizza delivery to understand how this all worked.
+Now, while that's a much nicer moral burden, instead of people potentially dying if things
+went wrong, cold pizza is probably about the worst you could get to.
+But on the other hand, I still saw scenarios where there were potential ethical or whatever
+kind of problems you want to imagine.
+Now, being on social media and whatever, I see a lot of the sexy stuff that ends up in
+the headlines.
+And I do think that it's important and good that researchers are going towards a lot of
+those questions.
+But, you know, that's not the kind of stuff I was seeing.
+So there was sort of this disconnect between what I was hearing about and what I was seeing,
+which was very different from my sort of previous career.
+And I think that it's not really what most data people see in their daily work.
+Most people are not working at the scale that's affecting millions of users.
+Obviously, some people are.
+But and also, most people are not advancing the cutting edge of AI where their next thing
+might be the key that brings about the robot apocalypse.
+Obviously, some people are, too, I guess, if that's going to happen.
+Instead, most people are likely to run into more mundane issues that they don't talk about
+in the headlines, but that doesn't mean they're not important.
+So this is really the meat of the talk.
+A bunch of lead up to it.
+So we're going to look at some examples of scenarios of the non-sexy data ethics.
+Some of these are situations that I was in or I witnessed, but most of them are stories
+I've heard from professional peers and names are omitted and details are changed, of course.
+So we're going to zoom in and look at a few of these in different parts of the data world.
+So this I'm calling the exec abuses your analysis.
+Caveats be damned.
+So imagine you've been tasked with doing an analysis to find areas that the company should
+focus on to improve its operations.
+You sort through the dirty data, you do your analysis, produce a report or a dashboard
+showing how different parts of the company are doing.
+You're rightfully proud of this.
+You did a lot of good work and you present this in a meeting with a bunch of executives
+and stuff.
+One of those execs hones in on the plot showing the error rate of some operational employees
+and immediately declares that the people on this end of the distribution are the ones
+that are going to get fired first.
+Now you realize you suddenly have several issues.
+This was not the premise of the analysis you did.
+You know, that wasn't supposed to be about that.
+But also, you know, you know that the anomalous performance is really actually an artifact
+of the data and was not the focus of your analysis.
+You know that like you can't someone can't just take that data at face value and use
+it to make these decisions.
+So the question is, what do you do?
+Lot of scenarios going to sound like that.
+Why did we split this data up again?
+A large international company that you have heard of, I'm sure, hires a team of consultants
+also from a large international company that you've probably heard of.
+The department that hired these consultants didn't actually have ML experience in-house.
+But one of the team members thought something was a little off and asked someone they knew,
+a data scientist from another department to come just take a look.
+The data scientists begin asking questions to the consultants and about how they achieved
+high performance with their model.
+And it turned out that the great model performance was because the consultants had been knowingly
+testing on the training set.
+So which of course we all know that's a no-no.
+But they were doing that because it looked good.
+ETAs, what if we just fudge them?
+So imagine you work in food delivery.
+Some of us have been there.
+And you've been tasked with investigating the quality of delivery time estimates and
+how the quality affects revenue.
+While analyzing the data, you realize that if your company were to bias the ETAs lower
+by just a few minutes, it could result in a tangible increase in revenue.
+So if you just lie a little bit, a lot more people are going to place their orders and
+bring your company more money.
+Well, what do you do in that scenario?
+In the real scenario, that data scientist decided to just sort of keep this to themselves
+because they didn't think it would be a good thing to be known within the company.
+It's too tempting.
+And I'll just note that this was not a company I worked at, not me, even though I was in
+food delivery.
+This is what the boss wants.
+A high-up exec wants a dump of data with lots of personal or private customer info.
+And your manager asks you to get that data and email it to the exec.
+You know that this is sketchy if it's not probably against some internal policy and
+maybe even against some regulatory stuff or legal stuff.
+But your manager insists you can't make those execs unhappy.
+So what do you do in that situation?
+How do you handle it?
+Let's go now to big data that wasn't so big.
+Your team is tasked with building models to predict the outcome of certain events.
+This is a marquee project of your company.
+It got that headline, digital transformation, AI effort, whatever it is.
+You simply don't have enough data to produce anything reasonable.
+And you can't feasibly collect more data for this specific project.
+Now of course, your manager and the higher-ups insist that this project needs to work regardless
+of whatever your complaints are as these data people.
+So what do you do in this situation?
+Next we get to the sudden promotion.
+You're asked to attend a meeting with potential customers or investors and your manager says,
+when I tell them that you're the principal AI scientist, you just nod.
+Of course, in reality, you're more like a junior data analyst and nothing like that.
+But so you know that this is that something is not right somehow.
+What do you do in that situation?
+Choose any color as long as it's black and made by us too.
+So you're asked to create a model that offers unbiased recommendations for customers.
+Maybe those recommendations are for your company's products or maybe they're for your competitors'
+products.
+Of course, this is a public unbiased thing, but unofficially you're told to adjust the
+bias in favor of your company's products to help the bottom line.
+How do you deal with a situation like this where publicly it's supposed to be fair, but
+you know that it is not?
+Also related to that is the key value proposition.
+You discover that the central model based product of your startup is actually not able
+to do what the marketing material claims it can do.
+Your company is raising money based on this claim.
+You've actually seem to be the only person who's really looked into this.
+And you know that if it's actually used in a real world scenario, that it will fail spectacularly.
+No one's listening to your warnings that the sky is falling.
+What do you do in this kind of situation?
+And there's a lot more.
+For example, you discover that the great improvement claimed by another team isn't actually an
+improvement at all.
+No one actually bothered to measure anything, but they of course made this big announcement
+or maybe they purposely didn't release the numbers.
+You discover that your company or your team is using a piece of software and its core
+product that has an incompatible license.
+You know, maybe it's not actually open source or it has a license that says you need to
+release the changes into the public.
+Or you just play fast and loose with user data like GDP, CCPA.
+I've never even heard of that, right?
+Or it's just so tempting when it's much easier to ignore those kinds of regulations.
+So I'm thinking about all these kinds of examples and trying to think about what are the common
+themes in these kinds of scenarios.
+And there's a few that jumped out at me.
+So people fudging their numbers is one of the big scenarios.
+It's just so tempting in many scenarios, especially when there are not others around you who could
+reasonably tell the difference.
+Either they don't have the technical understanding or they don't have the time to dig into it
+to really be able to tell the difference between your numbers and not your numbers.
+Or generally, this is something called lying, but it happens a lot.
+Then there's the situation where someone else is trying to get you to fudge the numbers.
+So this is probably often due to typical unethical behavior, but also when the, I'd say the cold
+hard truth of how difficult data related projects are often hits the people who are the stakeholders.
+And you know, they were hoping you were going to go do that data magic for them.
+But then when reality strikes, you know, they're just tempted to say, okay, let's kind of fudge
+this.
+Also, often the people just want you to provide them with whatever data is going to support
+their already established opinion.
+You know, oh, just kind of cherry pick the things that I already believe anyway.
+And more generally, this is often a case of power imbalances in the workplace.
+You know, when the big boss tells you to do something and you know, how do you deal with
+that, especially when they're doing something unethical.
+And then finally, there's your numbers take on a life of their own.
+This is, I would say, this is often about nuance.
+This is related to some of the stuff that, that some of that Katie Bauer talked about.
+This is kind of the flip side of that.
+And some of the other stuff people have presented about clearly communicating what's going on.
+But I think it's a very hard one because, you know, you want to balance presenting the
+detailed technically correct information with, you know, sort of some distilled actionable
+insight or info or whatever that is.
+And it's easy to, to land too far to one side.
+And in this case, I'd say it's usually when you land on the side where you're presenting
+things too simply and or people may willingfully ignore details to, you know, confirm their
+preconceived notions.
+But others will see things in the data or your numbers that, that are not really there
+or just whatever they want to believe.
+So you have to consider the possible misuses or misunderstandings and think about what
+your obligations are and explaining things, you know, what, how could this go wrong?
+There was some talk about that earlier.
+And even though people don't want to hear about all those technical details, like what
+is your obligation to prevent people from running with this in and doing bad stuff?
+Of course, this is much, much easier said than done.
+All right.
+So what do we, what do we do about all this?
+This isn't a TED talk, so I'm not going to offer any nice clean answer.
+This is NormConf, Vicki NormConf.
+And, but there are a few suggestions that typically come up.
+One is around ethics training.
+My impression is that there are mixed conclusions on how effective ethics training is for helping
+people make real world ethical decisions or reducing incidents of like criminal or unethical
+behavior.
+And as data people, you know, it's probably easy to imagine the difficulties in measuring
+how well these kinds of things work.
+So I don't know if that's really so clear.
+Another one is like culture.
+How does culture affect things?
+My opinion is that for this stuff, that the culture is set probably by two main things
+within an organization.
+One is leaders modeling desired behaviors.
+You know, you want your leaders to be the model of ethical stuff and in a way that you
+can relate to.
+The second one is incentivizing desired behaviors and de-incentivizing non-desired behaviors.
+I'm assuming that those, you're desiring ethical behavior in this.
+How well does that actually affect things?
+That's also another open question, but I think this is probably an area to focus on.
+Regulation, of course, you know, there are certain scenarios that are currently subject
+to regulatory scrutiny and probably a lot that will be soon.
+On the other hand, I'd say that those are mostly probably more falling on the sexy part
+of the map because there are things that, you know, end up in the news or whatever.
+And a lot of these issues probably don't fall under that.
+So what are my actual conclusions?
+I think the world of ethics is big.
+It's bigger than what you hear about in the news or on Twitter, if you remember Twitter.
+You need to be aware of the rest of the world of data ethics.
+A lot of it is sort of normal job ethics, you could argue, but with the additional sort
+of how to lie with statistics part thrown in, I think you should think about how you
+would deal with these types of scenarios.
+Often the real world is very vague and frogs are slowly getting boiled.
+You know, often don't realize that you're in an ethics situation until you're already
+in it and it's too late.
+So I think you need to ask yourself how, when you're in the situation, if you're going to
+look back on what you did, you know, how would you judge yourself about that?
+But I think it's also particularly important for early career people that may not have
+encountered this stuff before, and they may not have really heard anyone talk about it.
+So you know, you senior level people, it's a good thing to bring up to those earlier
+people.
+That's it.
+That's the end of the talk.
+I want to thank all the NormCom organizers, volunteers, sponsors, and donors.
+You can find me on Twitter and Mastodon.
+I have a bunch of websites.
+I'm doing a promo of my new book in the Zeph's Guides booth channel.
+So stop by if you want a chance to win a book or some schwag.
+And now I will stop sharing.

@@ -1,0 +1,1580 @@
+1
+00:00:00,000 --> 00:00:02,240
+don't do invisible work.
+
+2
+00:00:02,240 --> 00:00:05,680
+I would actually say that probably the lesson
+
+3
+00:00:05,680 --> 00:00:08,440
+to take away from this is that the most normie thing ever
+
+4
+00:00:08,440 --> 00:00:10,360
+is to like fight for your work
+
+5
+00:00:10,360 --> 00:00:12,960
+and to not do work that people don't see
+
+6
+00:00:12,960 --> 00:00:15,080
+and to get credit for your work.
+
+7
+00:00:15,080 --> 00:00:17,000
+So we will go through
+
+8
+00:00:17,000 --> 00:00:19,300
+and you'll see a lot of the similar themes.
+
+9
+00:00:19,300 --> 00:00:21,160
+So hi, I'm Chris.
+
+10
+00:00:21,160 --> 00:00:23,800
+I don't know how to screen share apparently,
+
+11
+00:00:23,800 --> 00:00:26,660
+but I do work at a somewhat popular website.
+
+12
+00:00:26,660 --> 00:00:31,660
+I also am a manager and I've been a manager for a long time
+
+13
+00:00:31,800 --> 00:00:33,600
+and I've also had managers.
+
+14
+00:00:33,600 --> 00:00:37,640
+In fact, one of my managers is actually in this Slack.
+
+15
+00:00:37,640 --> 00:00:38,500
+Grant is in here.
+
+16
+00:00:38,500 --> 00:00:41,240
+So if you ever wanna know like just like
+
+17
+00:00:41,240 --> 00:00:42,760
+why my life is terrible,
+
+18
+00:00:42,760 --> 00:00:45,360
+just point to Grant and then just rag him right now.
+
+19
+00:00:45,360 --> 00:00:47,080
+I can't actually see the Slack,
+
+20
+00:00:47,080 --> 00:00:48,980
+but definitely just point to Grant.
+
+21
+00:00:50,720 --> 00:00:53,960
+So let's do a little visualization.
+
+22
+00:00:53,960 --> 00:00:57,600
+This is a representation of all the work
+
+23
+00:00:57,600 --> 00:01:00,840
+that you as a diligent employee
+
+24
+00:01:00,840 --> 00:01:04,100
+of Acme software did in a month.
+
+25
+00:01:05,680 --> 00:01:08,180
+Let's say this was like some big project
+
+26
+00:01:08,180 --> 00:01:10,400
+that the CEO wanted you to do, right?
+
+27
+00:01:10,400 --> 00:01:12,780
+And so it took five units of whatever.
+
+28
+00:01:13,640 --> 00:01:16,320
+This is this recurring work that you do every week
+
+29
+00:01:16,320 --> 00:01:18,760
+where you standardize code
+
+30
+00:01:18,760 --> 00:01:21,200
+or debug something or something.
+
+31
+00:01:21,200 --> 00:01:24,400
+And then here is one ad hoc thing off to the side
+
+32
+00:01:24,400 --> 00:01:26,080
+because someone from some department
+
+33
+00:01:26,080 --> 00:01:27,400
+you've never heard of before comes to you
+
+34
+00:01:27,400 --> 00:01:29,000
+and wants some kind of analysis.
+
+35
+00:01:30,880 --> 00:01:35,880
+The problem is that if you don't consciously spend the time
+
+36
+00:01:36,340 --> 00:01:37,960
+to track your work,
+
+37
+00:01:37,960 --> 00:01:40,760
+this is what you actually remember what you did
+
+38
+00:01:40,760 --> 00:01:42,200
+and like a week later.
+
+39
+00:01:42,200 --> 00:01:44,440
+And everyone knows this feeling, right?
+
+40
+00:01:44,440 --> 00:01:47,720
+It is so hard to write about what you did the week before
+
+41
+00:01:47,720 --> 00:01:48,980
+if you wait until Monday.
+
+42
+00:01:48,980 --> 00:01:52,260
+And if we keep going with the same pattern,
+
+43
+00:01:52,260 --> 00:01:55,500
+this is what you remember a month later.
+
+44
+00:01:56,740 --> 00:01:59,340
+And if you go even farther, take one step away,
+
+45
+00:01:59,340 --> 00:02:01,660
+this is what your boss remembers,
+
+46
+00:02:01,660 --> 00:02:03,220
+all the things you did, right?
+
+47
+00:02:03,220 --> 00:02:04,900
+For a month later.
+
+48
+00:02:04,900 --> 00:02:08,100
+This is what your boss remembers a year later.
+
+49
+00:02:08,100 --> 00:02:10,640
+And everything else in there,
+
+50
+00:02:10,640 --> 00:02:12,660
+if it's not tracked in some way,
+
+51
+00:02:12,660 --> 00:02:15,180
+like if there's not a way to jog your memory that you did it
+
+52
+00:02:15,180 --> 00:02:17,500
+and very specifically to jog your boss's memory
+
+53
+00:02:17,500 --> 00:02:21,700
+that you did it, it is as if it is invisible work, right?
+
+54
+00:02:22,940 --> 00:02:26,300
+It means that you don't get credit for doing those things,
+
+55
+00:02:26,300 --> 00:02:28,540
+even though as we've established, if we go back,
+
+56
+00:02:28,540 --> 00:02:30,500
+like you did all this super cool stuff, right?
+
+57
+00:02:30,500 --> 00:02:31,700
+You worked on this big project,
+
+58
+00:02:31,700 --> 00:02:33,140
+you did this recurring debugging thing,
+
+59
+00:02:33,140 --> 00:02:35,700
+you talked to this like special person off to the side
+
+60
+00:02:35,700 --> 00:02:37,180
+and helped them out with the project.
+
+61
+00:02:37,180 --> 00:02:40,260
+And yet you don't get any credit for it from your boss
+
+62
+00:02:40,260 --> 00:02:42,700
+if no one remembers that it happens.
+
+63
+00:02:42,700 --> 00:02:45,520
+And the thing that I would like to point out
+
+64
+00:02:45,520 --> 00:02:47,260
+and the thing that I hope you take away
+
+65
+00:02:47,260 --> 00:02:51,020
+from this presentation is that it happens all the time,
+
+66
+00:02:51,020 --> 00:02:54,340
+all the time in tech, all over the place.
+
+67
+00:02:54,340 --> 00:02:58,140
+And the fundamental problem is that performance reviews
+
+68
+00:02:58,140 --> 00:03:01,020
+and promotion packets and whether or not you get a bonus
+
+69
+00:03:01,020 --> 00:03:03,100
+or whether or not you get targeted for a layoff
+
+70
+00:03:03,100 --> 00:03:05,780
+or whether or not you can do anything
+
+71
+00:03:05,780 --> 00:03:08,220
+is based on what people remember you did.
+
+72
+00:03:08,220 --> 00:03:11,060
+People as in your boss, your skip,
+
+73
+00:03:11,060 --> 00:03:13,180
+other peers and yourself, right?
+
+74
+00:03:13,180 --> 00:03:14,940
+If no one remembers that something happened,
+
+75
+00:03:14,940 --> 00:03:17,540
+it's as if you don't get credit for it.
+
+76
+00:03:17,540 --> 00:03:20,420
+And the problem is that without tools,
+
+77
+00:03:20,420 --> 00:03:23,760
+people really suck at remembering what people do.
+
+78
+00:03:25,700 --> 00:03:30,380
+The solution is both simple and frustratingly difficult.
+
+79
+00:03:30,380 --> 00:03:33,620
+It's to record your work and to tell people about it.
+
+80
+00:03:33,620 --> 00:03:36,460
+And this really parallels very closely
+
+81
+00:03:36,460 --> 00:03:38,900
+the stuff that Rose was talking about, right?
+
+82
+00:03:38,900 --> 00:03:41,860
+Figure out what matters, record whether you're doing it
+
+83
+00:03:41,860 --> 00:03:44,120
+and then tell people that you're doing it.
+
+84
+00:03:44,120 --> 00:03:46,460
+And that is like a very,
+
+85
+00:03:46,460 --> 00:03:48,420
+the reason I wanted to do this talk for this one
+
+86
+00:03:48,420 --> 00:03:50,940
+is it's a very, very like norm comfy idea.
+
+87
+00:03:50,940 --> 00:03:53,060
+It's just like record what you're doing
+
+88
+00:03:53,060 --> 00:03:54,300
+and tell people about it.
+
+89
+00:03:55,940 --> 00:03:59,180
+And the thing is that no one is gonna do this for you.
+
+90
+00:03:59,180 --> 00:04:03,420
+And some of you, some of you would be probably screaming
+
+91
+00:04:03,420 --> 00:04:04,820
+at your screen right now, because you're thinking,
+
+92
+00:04:04,820 --> 00:04:08,220
+well, I do all my work in, you know, GitHub, right?
+
+93
+00:04:08,220 --> 00:04:10,020
+Like, so therefore I could just look back in GitHub
+
+94
+00:04:10,020 --> 00:04:12,300
+and see every single thing I did.
+
+95
+00:04:12,300 --> 00:04:16,180
+The problem is that a lot of the work you end up doing
+
+96
+00:04:16,180 --> 00:04:19,020
+is actually valuable, but outside of GitHub.
+
+97
+00:04:19,020 --> 00:04:21,480
+So say if you work in some kind of proprietary system
+
+98
+00:04:21,480 --> 00:04:24,020
+off to the side, say you, you know, work in like,
+
+99
+00:04:24,020 --> 00:04:25,740
+I don't know, like say Snowflakes IDE
+
+100
+00:04:25,740 --> 00:04:28,120
+or something like that, it might not appear in GitHub.
+
+101
+00:04:28,120 --> 00:04:30,500
+Say you end up like actually mentoring someone.
+
+102
+00:04:30,500 --> 00:04:32,620
+So like someone wants to be a data scientist
+
+103
+00:04:32,620 --> 00:04:33,740
+from the ads department,
+
+104
+00:04:33,740 --> 00:04:35,580
+you've spent a few lunches helping them out
+
+105
+00:04:35,580 --> 00:04:36,860
+or something like that.
+
+106
+00:04:36,860 --> 00:04:39,140
+You can actually end up in a situation
+
+107
+00:04:39,140 --> 00:04:41,400
+where you aren't getting credit for that work
+
+108
+00:04:41,400 --> 00:04:44,200
+because it doesn't appear in your regular tracking thing.
+
+109
+00:04:45,640 --> 00:04:48,980
+And the problem is that
+
+110
+00:04:48,980 --> 00:04:51,260
+because you're the primary beneficiary of this
+
+111
+00:04:51,260 --> 00:04:54,300
+and because GitHub is more about like tracking work
+
+112
+00:04:54,300 --> 00:04:56,400
+as if like with the goal of completing that work
+
+113
+00:04:56,400 --> 00:04:57,340
+for some kind of project,
+
+114
+00:04:57,340 --> 00:05:01,180
+not tracking your contribution as a whole,
+
+115
+00:05:01,180 --> 00:05:04,240
+a lot of this stuff can fall by the wayside.
+
+116
+00:05:04,240 --> 00:05:08,660
+And it means that the one of the best things
+
+117
+00:05:08,660 --> 00:05:10,060
+you can do for yourself,
+
+118
+00:05:10,060 --> 00:05:12,180
+really like just genuinely one of the best things
+
+119
+00:05:12,180 --> 00:05:15,460
+you can do for yourself is just record what you do
+
+120
+00:05:15,460 --> 00:05:16,740
+and tell people about it.
+
+121
+00:05:19,220 --> 00:05:20,540
+The other thing that comes up is that
+
+122
+00:05:20,540 --> 00:05:24,180
+some work is just more susceptible to being invisible.
+
+123
+00:05:24,180 --> 00:05:25,260
+Rose brought up Blue Work,
+
+124
+00:05:25,260 --> 00:05:28,500
+which is a very classic example of the type of work,
+
+125
+00:05:28,500 --> 00:05:30,560
+type of work that's very often done by women
+
+126
+00:05:30,560 --> 00:05:34,740
+in tech companies that is things that just don't appear
+
+127
+00:05:34,740 --> 00:05:37,020
+in many other places, right?
+
+128
+00:05:37,020 --> 00:05:39,860
+It would be things like mentorship or talking to customers
+
+129
+00:05:39,860 --> 00:05:42,900
+or expanding documentation or some kind of like
+
+130
+00:05:42,900 --> 00:05:45,900
+one-off project or things like communication.
+
+131
+00:05:45,900 --> 00:05:48,700
+That it's just, it's easy for that to fall by the wayside
+
+132
+00:05:48,700 --> 00:05:50,900
+because it's not naturally tracked in any kind of like
+
+133
+00:05:50,900 --> 00:05:54,300
+Asana or GitHub or something like that.
+
+134
+00:05:54,300 --> 00:05:57,540
+And so if you do some kind of like ad hoc mentorship
+
+135
+00:05:57,540 --> 00:05:59,940
+with someone and no one ever brings it up again,
+
+136
+00:05:59,940 --> 00:06:01,740
+again, it's as if it's a visible work.
+
+137
+00:06:01,740 --> 00:06:02,900
+It's as if you didn't do it.
+
+138
+00:06:02,900 --> 00:06:04,260
+You're not gonna get credit for it
+
+139
+00:06:04,260 --> 00:06:05,620
+for any kind of promotion.
+
+140
+00:06:05,620 --> 00:06:06,500
+And that's wrong.
+
+141
+00:06:06,500 --> 00:06:08,500
+Like you should fight and get credit for it.
+
+142
+00:06:08,500 --> 00:06:09,340
+You already did the work.
+
+143
+00:06:09,340 --> 00:06:10,740
+You guys will get credit for it.
+
+144
+00:06:11,940 --> 00:06:13,420
+So what can we do?
+
+145
+00:06:13,420 --> 00:06:16,220
+It's a very complex two-step process.
+
+146
+00:06:16,220 --> 00:06:17,980
+I sort of joke here, but it's actually like,
+
+147
+00:06:17,980 --> 00:06:19,060
+it's actually really difficult to do.
+
+148
+00:06:19,060 --> 00:06:21,140
+And I'll talk to like, you know,
+
+149
+00:06:21,140 --> 00:06:23,860
+what some of the ways to get around it is.
+
+150
+00:06:23,860 --> 00:06:26,260
+One, build a really lightweight system
+
+151
+00:06:26,260 --> 00:06:28,940
+for tracking your own work and your own lightweight system.
+
+152
+00:06:28,940 --> 00:06:31,020
+Don't like rely on like the company system
+
+153
+00:06:31,020 --> 00:06:32,860
+for tracking your work, like build your own
+
+154
+00:06:32,860 --> 00:06:36,500
+that is hosted locally somewhere that you can control.
+
+155
+00:06:36,500 --> 00:06:38,300
+And then two, tell people about your work.
+
+156
+00:06:38,300 --> 00:06:40,380
+And there's various ways that you can end up doing that.
+
+157
+00:06:41,500 --> 00:06:43,740
+There are lots of ways to end up recording work.
+
+158
+00:06:43,740 --> 00:06:47,220
+And I don't, I, in designing this talk,
+
+159
+00:06:47,220 --> 00:06:49,860
+I didn't want to focus too much on like specific ways,
+
+160
+00:06:49,860 --> 00:06:53,260
+like Rose brought up the way that she ends up using.
+
+161
+00:06:53,260 --> 00:06:54,900
+There's lots of different ways.
+
+162
+00:06:54,900 --> 00:06:55,980
+I'll talk about a few of them.
+
+163
+00:06:55,980 --> 00:06:57,420
+I'll talk about my own one,
+
+164
+00:06:57,420 --> 00:07:00,060
+but whatever works for you is fine, right?
+
+165
+00:07:00,060 --> 00:07:01,900
+The only real requirements to this thing
+
+166
+00:07:01,900 --> 00:07:04,460
+is that you like record what you do
+
+167
+00:07:04,460 --> 00:07:06,580
+and then be able to like use that
+
+168
+00:07:06,580 --> 00:07:08,620
+and it'll communicate back to people.
+
+169
+00:07:09,860 --> 00:07:13,220
+Brag docs, Julie Evans, I think she came up with it.
+
+170
+00:07:13,220 --> 00:07:14,540
+And I want to give her credit for it
+
+171
+00:07:14,540 --> 00:07:16,500
+because I think she invented it,
+
+172
+00:07:16,500 --> 00:07:17,700
+but I don't want to like, if there was,
+
+173
+00:07:17,700 --> 00:07:19,220
+if it actually came up from somewhere else,
+
+174
+00:07:19,220 --> 00:07:22,300
+I don't want to like jump on their credit.
+
+175
+00:07:22,300 --> 00:07:24,860
+But that was the first time I read about it
+
+176
+00:07:24,860 --> 00:07:29,060
+was Julie Evans' work works blog posts.
+
+177
+00:07:29,060 --> 00:07:30,940
+And the idea behind of a brag document
+
+178
+00:07:30,940 --> 00:07:32,580
+is actually super powerful.
+
+179
+00:07:32,580 --> 00:07:37,060
+So you create this document that inside that document,
+
+180
+00:07:37,060 --> 00:07:39,620
+you write really polished notes about,
+
+181
+00:07:39,620 --> 00:07:41,660
+you know, like things that you've accomplished, right?
+
+182
+00:07:41,660 --> 00:07:45,340
+And so like you, you know, accomplish some projects,
+
+183
+00:07:45,340 --> 00:07:47,140
+you mentor some people, whatever it is,
+
+184
+00:07:47,140 --> 00:07:48,620
+and you write those little nuggets,
+
+185
+00:07:48,620 --> 00:07:50,500
+like in the document itself.
+
+186
+00:07:50,500 --> 00:07:52,260
+And then you share those document,
+
+187
+00:07:52,260 --> 00:07:56,420
+that exact document with your boss
+
+188
+00:07:56,420 --> 00:07:58,540
+or with your skip or something like that.
+
+189
+00:07:58,540 --> 00:08:00,140
+And the thing that's very,
+
+190
+00:08:00,140 --> 00:08:03,060
+that is very appealing about that approach
+
+191
+00:08:03,060 --> 00:08:06,620
+is that the thing that you're recording your work in
+
+192
+00:08:06,620 --> 00:08:09,100
+is also the thing that you're actually ending up sharing.
+
+193
+00:08:09,100 --> 00:08:11,700
+So your communication pathway using the doc
+
+194
+00:08:11,700 --> 00:08:14,820
+is actually the exact same as the way
+
+195
+00:08:14,820 --> 00:08:16,380
+that you're recording it.
+
+196
+00:08:16,380 --> 00:08:19,660
+There's tons of resources out there on Brag Docs.
+
+197
+00:08:20,740 --> 00:08:21,940
+Julia has a template.
+
+198
+00:08:21,940 --> 00:08:24,620
+There's also, you can literally go to bragdocs.com,
+
+199
+00:08:24,620 --> 00:08:26,180
+I think, and there's actually like a template there.
+
+200
+00:08:26,180 --> 00:08:28,100
+Like there's tons of really cool things out there.
+
+201
+00:08:28,100 --> 00:08:31,300
+There's lots of Brag Doc templates on GitHub.
+
+202
+00:08:32,100 --> 00:08:33,420
+It's a great approach.
+
+203
+00:08:34,540 --> 00:08:37,060
+What I do, because I was never able
+
+204
+00:08:37,060 --> 00:08:41,700
+to actually successfully accomplish a true Brag Doc,
+
+205
+00:08:41,700 --> 00:08:43,780
+is I keep a private activity log.
+
+206
+00:08:44,660 --> 00:08:47,940
+So instead of having a document
+
+207
+00:08:47,940 --> 00:08:50,180
+where I would write what I accomplished
+
+208
+00:08:50,180 --> 00:08:52,340
+and, you know, like for some kind of project,
+
+209
+00:08:52,340 --> 00:08:55,180
+I was always like the idea of writing something
+
+210
+00:08:55,180 --> 00:08:58,660
+in a way that was polished enough to share it to my boss
+
+211
+00:08:58,660 --> 00:09:01,020
+always kind of made it that I ended up procrastinating
+
+212
+00:09:01,020 --> 00:09:02,780
+actually writing down that I did the thing
+
+213
+00:09:02,780 --> 00:09:03,780
+and then I would forget.
+
+214
+00:09:03,780 --> 00:09:05,860
+And so it was just like vicious cycle.
+
+215
+00:09:05,860 --> 00:09:07,460
+So instead I kind of split them up
+
+216
+00:09:07,460 --> 00:09:10,740
+where I have a private activity log
+
+217
+00:09:10,740 --> 00:09:13,820
+where I just write super messy notes on what I did.
+
+218
+00:09:13,820 --> 00:09:15,700
+That is sort of the like really, you know,
+
+219
+00:09:15,700 --> 00:09:17,740
+super messy one line kind of notes,
+
+220
+00:09:17,740 --> 00:09:20,740
+mostly just to jog my memory later on that I did something.
+
+221
+00:09:21,900 --> 00:09:24,900
+The example on the second half of the slide
+
+222
+00:09:24,900 --> 00:09:28,460
+is a real example of my activity log.
+
+223
+00:09:28,460 --> 00:09:30,380
+I've changed like some dates and blah, blah, blah.
+
+224
+00:09:30,380 --> 00:09:31,980
+But like, basically this is what it looks like.
+
+225
+00:09:31,980 --> 00:09:34,380
+It's just hundreds of lines like this.
+
+226
+00:09:34,380 --> 00:09:36,100
+And I'm adding lines, you know,
+
+227
+00:09:36,100 --> 00:09:38,380
+I'm adding like two or three lines like a day,
+
+228
+00:09:38,380 --> 00:09:41,820
+every single day, just dumping them in.
+
+229
+00:09:41,820 --> 00:09:44,060
+And I don't think all those lines would really like
+
+230
+00:09:44,060 --> 00:09:46,180
+reach the level of brackiness.
+
+231
+00:09:46,180 --> 00:09:47,140
+I don't know what to put.
+
+232
+00:09:47,140 --> 00:09:50,220
+Really like reach that level of, you know,
+
+233
+00:09:50,220 --> 00:09:51,460
+wanting to like show that to people.
+
+234
+00:09:51,460 --> 00:09:53,020
+But I'm just like dumping anything
+
+235
+00:09:53,020 --> 00:09:57,060
+that I think might be useful for the, you know,
+
+236
+00:09:57,060 --> 00:09:58,700
+for the future that I can use it.
+
+237
+00:10:00,500 --> 00:10:02,060
+Then the second part,
+
+238
+00:10:02,060 --> 00:10:04,060
+which is that there's lots of ways
+
+239
+00:10:04,060 --> 00:10:05,980
+to tell people about your work.
+
+240
+00:10:06,940 --> 00:10:11,940
+And I think the thing that was difficult for me
+
+241
+00:10:12,780 --> 00:10:16,020
+with the Brag Doc was that a lot of times,
+
+242
+00:10:16,020 --> 00:10:20,900
+like the way that organizations communicate
+
+243
+00:10:20,900 --> 00:10:23,900
+their performance and communicate like the work that you did
+
+244
+00:10:23,900 --> 00:10:25,780
+is often like weirdly formal.
+
+245
+00:10:25,780 --> 00:10:28,180
+So at the Wikimedia Foundation,
+
+246
+00:10:28,180 --> 00:10:30,060
+like in Grant's, Grant was my boss
+
+247
+00:10:30,060 --> 00:10:31,260
+at the Wikimedia Foundation.
+
+248
+00:10:31,260 --> 00:10:32,220
+We'd have like a separate thing,
+
+249
+00:10:32,220 --> 00:10:36,180
+like every quarter I would like paste what I did
+
+250
+00:10:36,180 --> 00:10:39,340
+into betterworks.com.
+
+251
+00:10:39,340 --> 00:10:40,980
+That was where I paste it.
+
+252
+00:10:40,980 --> 00:10:42,260
+And so like, it didn't really work
+
+253
+00:10:42,260 --> 00:10:43,620
+with the Brag Document format,
+
+254
+00:10:43,620 --> 00:10:44,900
+cause I would have to like take it out
+
+255
+00:10:44,900 --> 00:10:48,460
+and put it into this like separate third-party SaaS platform
+
+256
+00:10:48,460 --> 00:10:51,060
+to show my work.
+
+257
+00:10:51,060 --> 00:10:55,740
+And so, you know, to me, I think like, of course,
+
+258
+00:10:55,740 --> 00:10:59,420
+like using the internal places of reporting work,
+
+259
+00:10:59,420 --> 00:11:00,540
+like we used better works,
+
+260
+00:11:00,540 --> 00:11:02,860
+so I would put it into better works.
+
+261
+00:11:02,860 --> 00:11:05,620
+Written is way better than doing it verbally
+
+262
+00:11:06,940 --> 00:11:09,380
+because you remember things longer if it's written
+
+263
+00:11:09,380 --> 00:11:10,980
+and you can refer it back to them.
+
+264
+00:11:10,980 --> 00:11:12,980
+But I don't think you should like discount
+
+265
+00:11:12,980 --> 00:11:15,020
+the just informal, like bringing up
+
+266
+00:11:15,020 --> 00:11:16,300
+that you did something, right?
+
+267
+00:11:16,300 --> 00:11:18,780
+Like if you're having like a casual one-on-one
+
+268
+00:11:18,780 --> 00:11:21,100
+with your manager, glance through your doc
+
+269
+00:11:21,100 --> 00:11:22,420
+and make sure you say some of the things
+
+270
+00:11:22,420 --> 00:11:24,020
+that you think might be interesting, right?
+
+271
+00:11:24,020 --> 00:11:27,980
+Like just like, it's, I wouldn't like formalize everything
+
+272
+00:11:27,980 --> 00:11:30,140
+to the point where like the only way
+
+273
+00:11:30,140 --> 00:11:31,420
+that you're talking about your work
+
+274
+00:11:31,420 --> 00:11:32,780
+is through like this one document.
+
+275
+00:11:32,780 --> 00:11:34,900
+I would just be like, I have tons of ammunition
+
+276
+00:11:34,900 --> 00:11:37,180
+in my activity log and I'm just like hammering them out
+
+277
+00:11:37,180 --> 00:11:38,620
+through every medium possible.
+
+278
+00:11:38,620 --> 00:11:40,660
+I'm talking about it on Slack,
+
+279
+00:11:40,660 --> 00:11:43,660
+I'm writing a weekly update to the whole staff
+
+280
+00:11:43,660 --> 00:11:45,260
+where I'm putting things in there.
+
+281
+00:11:45,260 --> 00:11:48,060
+I'm talking about it in weekly one-on-ones verbally,
+
+282
+00:11:48,060 --> 00:11:50,100
+I'm putting it into like a one-on-one note doc
+
+283
+00:11:50,100 --> 00:11:53,220
+if I have like whatever I can, I'm like pushing it out there
+
+284
+00:11:53,220 --> 00:11:54,940
+that I'm doing this kind of stuff.
+
+285
+00:11:56,620 --> 00:11:59,940
+The one that's kind of like incredibly impressive
+
+286
+00:11:59,940 --> 00:12:03,660
+and I think I would like to do more of
+
+287
+00:12:03,660 --> 00:12:05,380
+is blog posts and newsletters.
+
+288
+00:12:05,380 --> 00:12:08,340
+So there was this person who worked at Slack
+
+289
+00:12:08,340 --> 00:12:11,500
+and I won't name her, but she was really accomplished
+
+290
+00:12:11,500 --> 00:12:13,540
+at Slack and an amazing person.
+
+291
+00:12:13,540 --> 00:12:17,260
+And one of the things that she talked about
+
+292
+00:12:17,260 --> 00:12:19,060
+sort of in like a private meeting
+
+293
+00:12:20,980 --> 00:12:23,340
+was that like by putting stuff out there
+
+294
+00:12:23,340 --> 00:12:25,620
+in blog posts and newsletters,
+
+295
+00:12:25,620 --> 00:12:27,500
+you know, like here's this cool project we did,
+
+296
+00:12:27,500 --> 00:12:28,900
+here's all the work I did on it
+
+297
+00:12:28,900 --> 00:12:30,420
+and that kind of stuff, like a project on your,
+
+298
+00:12:30,420 --> 00:12:32,780
+like on a blog post on your personal blog,
+
+299
+00:12:32,780 --> 00:12:34,860
+you are in a way communicating it
+
+300
+00:12:34,860 --> 00:12:36,740
+in a way that you can then refer to later.
+
+301
+00:12:36,740 --> 00:12:38,980
+And so like even things like writing stuff
+
+302
+00:12:38,980 --> 00:12:42,540
+for this audience is actually a way
+
+303
+00:12:42,540 --> 00:12:45,300
+for you to communicate out that you're doing stuff,
+
+304
+00:12:45,300 --> 00:12:47,260
+which is just super valuable.
+
+305
+00:12:47,260 --> 00:12:51,740
+And it, you know, we talk about things like Brad documents
+
+306
+00:12:51,740 --> 00:12:55,500
+or activity log in terms of like promotion
+
+307
+00:12:55,500 --> 00:12:56,780
+for your current job.
+
+308
+00:12:56,780 --> 00:12:58,820
+So think about it in terms of job security,
+
+309
+00:12:58,820 --> 00:13:01,540
+but there's a huge benefit to actually just telling
+
+310
+00:13:01,540 --> 00:13:03,260
+the world that you're doing stuff.
+
+311
+00:13:03,260 --> 00:13:06,460
+Like if you're doing some super cool, I don't know,
+
+312
+00:13:06,460 --> 00:13:08,940
+like some super cool new Kubernetes thing
+
+313
+00:13:08,940 --> 00:13:12,020
+or something like that, like, you know,
+
+314
+00:13:12,020 --> 00:13:13,900
+like record that stuff in your activity log,
+
+315
+00:13:13,900 --> 00:13:16,580
+write a blog post about it and put it out into the world.
+
+316
+00:13:16,580 --> 00:13:19,100
+And like, you get, you will get credit for that
+
+317
+00:13:19,100 --> 00:13:20,620
+in ways that are really interesting.
+
+318
+00:13:20,620 --> 00:13:22,940
+You'll get, you know, someone when you're applying for a job,
+
+319
+00:13:22,940 --> 00:13:24,300
+someone will look at your personal site,
+
+320
+00:13:24,300 --> 00:13:25,900
+see the kind of stuff that you're doing,
+
+321
+00:13:25,900 --> 00:13:27,100
+think it's super interesting,
+
+322
+00:13:27,100 --> 00:13:28,620
+and then you'll sort of advance the next round
+
+323
+00:13:28,620 --> 00:13:29,700
+or something like that.
+
+324
+00:13:29,700 --> 00:13:31,060
+And it's just, it's really useful,
+
+325
+00:13:31,060 --> 00:13:32,180
+but you're not gonna be able to do that
+
+326
+00:13:32,180 --> 00:13:34,180
+if you're not sort of recording for yourself
+
+327
+00:13:34,180 --> 00:13:35,060
+like what you do.
+
+328
+00:13:36,820 --> 00:13:38,780
+The other one is that you should definitely
+
+329
+00:13:38,780 --> 00:13:41,660
+keep personal access to the things.
+
+330
+00:13:41,660 --> 00:13:45,620
+Don't just rely on the internal customer company systems.
+
+331
+00:13:45,620 --> 00:13:48,940
+I say that because honestly, like no joke,
+
+332
+00:13:48,940 --> 00:13:52,980
+the best place to put like your activity log
+
+333
+00:13:52,980 --> 00:13:55,380
+or what you're doing, like the most easiest place,
+
+334
+00:13:55,380 --> 00:13:58,300
+and it's wonderful, is if your company uses Slack,
+
+335
+00:13:58,300 --> 00:14:01,140
+just use your own Slack channel,
+
+336
+00:14:01,140 --> 00:14:03,220
+like direct message yourself on Slack.
+
+337
+00:14:03,220 --> 00:14:06,780
+That's like, it's timestamped, it's awesome, it's amazing.
+
+338
+00:14:06,780 --> 00:14:08,100
+But if you lose access to Slack,
+
+339
+00:14:08,100 --> 00:14:09,700
+you're gonna lose access to all that information.
+
+340
+00:14:09,700 --> 00:14:12,980
+So like, I don't use that even though it's so nice
+
+341
+00:14:12,980 --> 00:14:15,660
+and easy and simple to use,
+
+342
+00:14:15,660 --> 00:14:17,460
+but you really do wanna make sure that like,
+
+343
+00:14:17,460 --> 00:14:19,260
+whatever happens, right, you can do it.
+
+344
+00:14:19,260 --> 00:14:23,700
+And I actually messaged in our Slack for this conference
+
+345
+00:14:23,700 --> 00:14:26,260
+that like the Brag Doc or Activity Log
+
+346
+00:14:26,260 --> 00:14:29,380
+or whatever you wanna do is a tool
+
+347
+00:14:29,380 --> 00:14:30,340
+for you to build your resume.
+
+348
+00:14:30,340 --> 00:14:31,220
+Like if you lose your job
+
+349
+00:14:31,220 --> 00:14:33,540
+and you need to like update your resume,
+
+350
+00:14:33,540 --> 00:14:35,500
+all of a sudden you have, you know,
+
+351
+00:14:35,500 --> 00:14:37,500
+this huge record of what you've done,
+
+352
+00:14:37,500 --> 00:14:38,500
+and you can sift through it
+
+353
+00:14:38,500 --> 00:14:40,500
+and find some really interesting stuff.
+
+354
+00:14:41,820 --> 00:14:46,660
+The goal for this whole thing is if someone asks your boss
+
+355
+00:14:46,660 --> 00:14:49,140
+or like someone asks a recruiter or something like,
+
+356
+00:14:49,140 --> 00:14:50,300
+what have you done?
+
+357
+00:14:50,300 --> 00:14:54,020
+They have that deep well of examples to choose from.
+
+358
+00:14:54,020 --> 00:14:54,860
+And actually, you know,
+
+359
+00:14:54,860 --> 00:14:57,140
+Rose brought up this like really great point
+
+360
+00:14:57,140 --> 00:14:59,580
+that I think people overlook,
+
+361
+00:14:59,580 --> 00:15:04,300
+that as a manager, I know that there are times
+
+362
+00:15:04,300 --> 00:15:06,540
+that I'm advocating for a staff member
+
+363
+00:15:06,540 --> 00:15:09,100
+or like one of my reports,
+
+364
+00:15:09,100 --> 00:15:11,140
+and then the report doesn't know that, right?
+
+365
+00:15:11,140 --> 00:15:13,260
+There's some like special project that's coming up
+
+366
+00:15:13,260 --> 00:15:15,220
+and I want them to be the one doing it.
+
+367
+00:15:15,220 --> 00:15:17,060
+And someone's like,
+
+368
+00:15:17,060 --> 00:15:18,500
+oh, I don't know if they're the right person.
+
+369
+00:15:18,500 --> 00:15:21,460
+And like, if I have that, you know,
+
+370
+00:15:21,460 --> 00:15:23,340
+like if I can dig through those notes
+
+371
+00:15:23,340 --> 00:15:25,700
+and those Brag Docs for them or whatever they have listed,
+
+372
+00:15:25,700 --> 00:15:27,380
+like I can bring up all these great examples.
+
+373
+00:15:27,380 --> 00:15:28,900
+If I remember all those great examples,
+
+374
+00:15:28,900 --> 00:15:30,500
+if I can look through their, you know,
+
+375
+00:15:30,500 --> 00:15:32,860
+like formal, like, you know, letters that they're writing,
+
+376
+00:15:32,860 --> 00:15:35,260
+like weekly updates or whatever that they're writing,
+
+377
+00:15:35,260 --> 00:15:37,740
+I can use that as ammo for like an argument.
+
+378
+00:15:37,740 --> 00:15:39,220
+And their actual report who wrote them,
+
+379
+00:15:39,220 --> 00:15:41,540
+like doesn't even know that I'm doing this, right?
+
+380
+00:15:41,540 --> 00:15:43,620
+But like, it's important, it's important.
+
+381
+00:15:43,620 --> 00:15:44,860
+And if you have a good manager,
+
+382
+00:15:44,860 --> 00:15:46,900
+that manager is advocating for you.
+
+383
+00:15:46,900 --> 00:15:49,060
+And it's great to give them that kind of ammunition
+
+384
+00:15:49,060 --> 00:15:49,900
+that they can use,
+
+385
+00:15:49,900 --> 00:15:52,380
+even though if you end up not seeing it in any, you know,
+
+386
+00:15:52,380 --> 00:15:53,220
+like you don't actually know
+
+387
+00:15:53,220 --> 00:15:54,900
+that they're doing it at the moment.
+
+388
+00:15:56,740 --> 00:15:59,660
+That is the end of my talk.
+
+389
+00:16:01,100 --> 00:16:01,940
+And here's my little,
+
+390
+00:16:01,940 --> 00:16:03,660
+I'm gonna add this to my own activity log,
+
+391
+00:16:03,660 --> 00:16:07,260
+gave a presentation at NormConf because, you know,
+
+392
+00:16:07,260 --> 00:16:09,420
+we should all track our work.
+
+393
+00:16:09,420 --> 00:16:11,580
+And I definitely think probably the most normy thing to do
+
+394
+00:16:11,580 --> 00:16:14,860
+is just to take credit for what we do,
+
+395
+00:16:14,860 --> 00:16:34,860
+because what we do is pretty freaking awesome.
+

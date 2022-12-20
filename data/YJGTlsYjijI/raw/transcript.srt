@@ -1,0 +1,1492 @@
+1
+00:00:00,000 --> 00:00:01,000
+Hello, everybody.
+
+2
+00:00:01,000 --> 00:00:02,000
+Hello, NormConf.
+
+3
+00:00:02,000 --> 00:00:03,720
+My name is Peter.
+
+4
+00:00:03,720 --> 00:00:06,240
+And as was just mentioned, it's all about cost.
+
+5
+00:00:06,240 --> 00:00:09,520
+This talk is about how to think about machine learning products specifically from an engineering
+
+6
+00:00:09,520 --> 00:00:12,720
+perspective to try and save money.
+
+7
+00:00:12,720 --> 00:00:15,320
+So first off, who am I and why am I talking to you today?
+
+8
+00:00:15,320 --> 00:00:16,520
+Well, my name is Peter Sobot.
+
+9
+00:00:16,520 --> 00:00:18,620
+I'm a staff machine learning engineer.
+
+10
+00:00:18,620 --> 00:00:23,520
+By day, I work on audio-based machine learning for all sorts of interesting purposes, trying
+
+11
+00:00:23,520 --> 00:00:28,480
+to tell people how happy songs are or how energetic songs are and doing all sorts of
+
+12
+00:00:28,480 --> 00:00:31,560
+cool stuff with data and music like that.
+
+13
+00:00:31,560 --> 00:00:35,600
+If you've been online on Twitter and you do audio-based machine learning or anything to
+
+14
+00:00:35,600 --> 00:00:38,800
+do with audio, you may have seen one of the packages that I work on called Pedalboard
+
+15
+00:00:38,800 --> 00:00:41,200
+for doing nice stuff with audio in Python.
+
+16
+00:00:41,200 --> 00:00:46,000
+But today, I'm not talking about any of those specifics or what I actually do day to day.
+
+17
+00:00:46,000 --> 00:00:50,640
+Today I'm focusing on how I tend to apply engineering principles to the world of data
+
+18
+00:00:50,640 --> 00:00:54,980
+science and machine learning so that we can deploy things to millions and millions of
+
+19
+00:00:54,980 --> 00:00:56,880
+users without breaking the bank.
+
+20
+00:00:56,880 --> 00:01:01,200
+And I really want to focus on this word engineer first, because this is really where I'm coming
+
+21
+00:01:01,200 --> 00:01:02,200
+from.
+
+22
+00:01:02,200 --> 00:01:07,280
+I don't consider myself a data person or a data science person or anything like that.
+
+23
+00:01:07,280 --> 00:01:10,680
+I've been working in machine learning for years now and I have a good grounding in it.
+
+24
+00:01:10,680 --> 00:01:15,000
+But what I really come from, my background is really more in what I would call traditional
+
+25
+00:01:15,000 --> 00:01:16,000
+engineering.
+
+26
+00:01:16,000 --> 00:01:21,120
+I was educated as an engineer, as a software engineer technically, but still at a school
+
+27
+00:01:21,120 --> 00:01:26,640
+that really focused on things like engineering for bridges and engineering for roads and
+
+28
+00:01:26,640 --> 00:01:30,240
+engineering for all these big structures that humans have been building for hundreds of
+
+29
+00:01:30,240 --> 00:01:31,240
+years.
+
+30
+00:01:31,240 --> 00:01:33,360
+Now, how does this relate to data science and machine learning?
+
+31
+00:01:33,360 --> 00:01:38,960
+Well, engineering is really all about building systems that are scalable, reliable, and come
+
+32
+00:01:38,960 --> 00:01:41,240
+within cost and budget and things like that.
+
+33
+00:01:41,240 --> 00:01:44,760
+And the reason it's treated as a separate discipline or it's something that people give
+
+34
+00:01:44,760 --> 00:01:49,000
+a name to is really that these systems fail over time.
+
+35
+00:01:49,000 --> 00:01:52,960
+And over the past couple of hundreds of years, many of these engineering systems have failed
+
+36
+00:01:52,960 --> 00:01:55,120
+and we've learned terrible lessons about that.
+
+37
+00:01:55,120 --> 00:01:58,320
+The bridge you see on the screen here is not actually just any bridge, but it's a bridge
+
+38
+00:01:58,320 --> 00:02:01,720
+called the Quebec Bridge in the Canadian province of Quebec.
+
+39
+00:02:01,720 --> 00:02:04,000
+And it fell down twice during construction.
+
+40
+00:02:04,000 --> 00:02:07,880
+And we have this bridge to thank, or specifically the negligence of its engineers for what we
+
+41
+00:02:07,880 --> 00:02:09,640
+call modern engineering today.
+
+42
+00:02:09,640 --> 00:02:13,520
+So if you've ever heard of some engineers having licenses or being professionally regulated
+
+43
+00:02:13,520 --> 00:02:17,440
+or being members of professional organizations, specifically outside of tech, this is very
+
+44
+00:02:17,440 --> 00:02:18,560
+common.
+
+45
+00:02:18,560 --> 00:02:22,280
+And that's because this bridge failure and the corners that were cut during this bridge's
+
+46
+00:02:22,280 --> 00:02:27,280
+construction really started the process of having engineering being more regulated and
+
+47
+00:02:27,280 --> 00:02:30,920
+being treated like a very serious profession in a way.
+
+48
+00:02:30,920 --> 00:02:34,640
+Fun side note, if you're a Canadian engineer like I am, when you graduate, you get a ring
+
+49
+00:02:34,640 --> 00:02:38,760
+from this bridge or supposedly made from the iron of this bridge to remind you every time
+
+50
+00:02:38,760 --> 00:02:42,640
+that you sign your name to a document, the bridge fell down, make sure you're doing this
+
+51
+00:02:42,640 --> 00:02:44,000
+right.
+
+52
+00:02:44,000 --> 00:02:45,480
+But I digress.
+
+53
+00:02:45,480 --> 00:02:48,900
+This bridge really fell down because corners were cut and constraints for the problem were
+
+54
+00:02:48,900 --> 00:02:50,880
+not well observed.
+
+55
+00:02:50,880 --> 00:02:54,040
+Engineering fundamentally is about building the best thing that you can, given the constraints
+
+56
+00:02:54,040 --> 00:02:56,200
+of the problem itself.
+
+57
+00:02:56,200 --> 00:02:57,600
+And many of these constraints are kind of obvious.
+
+58
+00:02:57,600 --> 00:03:00,240
+So you've got things like safety and reliability.
+
+59
+00:03:00,240 --> 00:03:03,020
+You want anything you build to be safe and reliable.
+
+60
+00:03:03,020 --> 00:03:07,040
+And others apply to really any project, not just engineering projects like time and cost,
+
+61
+00:03:07,040 --> 00:03:08,040
+right?
+
+62
+00:03:08,040 --> 00:03:09,560
+We don't have infinite time to build a system.
+
+63
+00:03:09,560 --> 00:03:13,360
+We don't have infinite budget to build a system either.
+
+64
+00:03:13,360 --> 00:03:16,220
+So this brings me to the way that I think about engineering in general, and this applies
+
+65
+00:03:16,220 --> 00:03:20,080
+to machine learning just as much as it applies to bridges.
+
+66
+00:03:20,080 --> 00:03:24,760
+One can build a bridge that stands, but it takes an engineer to build a bridge that barely
+
+67
+00:03:24,760 --> 00:03:25,760
+stands.
+
+68
+00:03:25,760 --> 00:03:27,840
+And this seems kind of flippant, and it is.
+
+69
+00:03:27,840 --> 00:03:31,240
+But what this really means is it takes an engineer to build a bridge that is cheap enough
+
+70
+00:03:31,240 --> 00:03:32,860
+so that it barely stands, right?
+
+71
+00:03:32,860 --> 00:03:37,020
+It takes an engineer to build a bridge that meets the design criteria in such a way that
+
+72
+00:03:37,020 --> 00:03:39,840
+it fulfills all of the things that we need to fulfill, right?
+
+73
+00:03:39,840 --> 00:03:40,840
+It's not over budget.
+
+74
+00:03:40,840 --> 00:03:42,740
+It doesn't take forever to build.
+
+75
+00:03:42,740 --> 00:03:46,120
+And we can do it without bankrupting the town that asked for the bridge or the company that
+
+76
+00:03:46,120 --> 00:03:48,180
+asked for the software to be built.
+
+77
+00:03:48,180 --> 00:03:51,720
+In this case, think about the fact that the Romans built bridges thousands of years ago
+
+78
+00:03:51,720 --> 00:03:55,420
+that still stand today, but they were extremely expensive even by their standards.
+
+79
+00:03:55,420 --> 00:03:59,880
+And today we wouldn't do the same thing because we have costs to think about.
+
+80
+00:03:59,880 --> 00:04:02,920
+So to finish off this little tangent about engineering and kind of where I'm coming from
+
+81
+00:04:02,920 --> 00:04:06,640
+here, I want to compare two different fields of engineering, and that is civil engineering,
+
+82
+00:04:06,640 --> 00:04:10,180
+where we're building bridges and software engineering, where we're building, well, software.
+
+83
+00:04:10,180 --> 00:04:13,800
+And that includes data systems and ML systems and whatnot.
+
+84
+00:04:13,800 --> 00:04:17,180
+In both of these fields, one of the most important choices you get to make when you're starting
+
+85
+00:04:17,180 --> 00:04:21,680
+a project is what material to use or what tools with frameworks and so on to use.
+
+86
+00:04:21,680 --> 00:04:24,720
+In civil engineering, this might be what you literally build your bridge out of.
+
+87
+00:04:24,720 --> 00:04:28,080
+In software engineering, this might be what framework do you choose or what language do
+
+88
+00:04:28,080 --> 00:04:30,100
+you use or things like that.
+
+89
+00:04:30,100 --> 00:04:33,360
+And these all have different trade-offs and different costs and different amounts of performance
+
+90
+00:04:33,360 --> 00:04:34,780
+you can get from them.
+
+91
+00:04:34,780 --> 00:04:37,880
+In civil engineering, you might build your bridge out of wood, and that's great.
+
+92
+00:04:37,880 --> 00:04:38,880
+It's plentiful.
+
+93
+00:04:38,880 --> 00:04:40,280
+It literally grows on trees.
+
+94
+00:04:40,280 --> 00:04:42,020
+Everybody knows where to get wood from.
+
+95
+00:04:42,020 --> 00:04:45,120
+And in software engineering, the analog might be something like JavaScript.
+
+96
+00:04:45,120 --> 00:04:46,120
+It runs everywhere.
+
+97
+00:04:46,120 --> 00:04:48,160
+Seemingly, everybody can write JavaScript.
+
+98
+00:04:48,160 --> 00:04:49,160
+It's very, very common.
+
+99
+00:04:49,160 --> 00:04:52,360
+It's cheap to build, but it might not be as powerful as you want it to be, or it might
+
+100
+00:04:52,360 --> 00:04:56,360
+not be able to do certain things that you want your software to do.
+
+101
+00:04:56,360 --> 00:04:59,280
+In civil engineering, you might use iron if you want to build a bridge that's a bit more
+
+102
+00:04:59,280 --> 00:05:01,080
+sturdy than your wooden bridge there.
+
+103
+00:05:01,080 --> 00:05:03,640
+And in software engineering, maybe you would choose Python.
+
+104
+00:05:03,640 --> 00:05:08,080
+Again, a little bit more expensive, maybe sometimes harder to build, but gives us more
+
+105
+00:05:08,080 --> 00:05:09,080
+performance.
+
+106
+00:05:09,080 --> 00:05:13,040
+Continuing down the list, you might use steel to build your bridge if you really want something
+
+107
+00:05:13,040 --> 00:05:16,120
+that is very performant or very sturdy.
+
+108
+00:05:16,120 --> 00:05:19,840
+And in software engineering, maybe you want to rewrite your code in C++ if you want to
+
+109
+00:05:19,840 --> 00:05:24,000
+make it even faster to run or to run in certain scenarios where Python is just too heavy or
+
+110
+00:05:24,000 --> 00:05:28,560
+too slow, but it takes a lot longer to write your code, so it's more expensive.
+
+111
+00:05:28,560 --> 00:05:32,920
+And then continuing to the very bottom of the cost here, I guess the most expensive
+
+112
+00:05:32,920 --> 00:05:33,920
+options.
+
+113
+00:05:33,920 --> 00:05:36,520
+In civil engineering, there are new materials that people are using all the time, one of
+
+114
+00:05:36,520 --> 00:05:38,540
+which, for example, might be carbon fiber.
+
+115
+00:05:38,540 --> 00:05:40,560
+You wouldn't build a whole bridge out of carbon fiber.
+
+116
+00:05:40,560 --> 00:05:42,600
+That's quite expensive to do.
+
+117
+00:05:42,600 --> 00:05:46,240
+But for certain applications, carbon fiber really gives you a lot of strength and it
+
+118
+00:05:46,240 --> 00:05:48,800
+can do things that other materials cannot do.
+
+119
+00:05:48,800 --> 00:05:52,520
+And the equivalent here in software engineering, in my opinion, is machine learning.
+
+120
+00:05:52,520 --> 00:05:54,300
+It's like the carbon fiber of bridges.
+
+121
+00:05:54,300 --> 00:05:56,820
+You don't want to build an entire bridge out of carbon fiber.
+
+122
+00:05:56,820 --> 00:06:00,960
+You wouldn't want to build your entire project out of machine learning, but it's got some
+
+123
+00:06:00,960 --> 00:06:01,960
+very, very nice properties.
+
+124
+00:06:01,960 --> 00:06:06,620
+And if you're willing to pay for it, it can do some things that other materials cannot.
+
+125
+00:06:06,620 --> 00:06:10,560
+So if machine learning is the new expensive tool that everybody wants to use, then how
+
+126
+00:06:10,560 --> 00:06:12,680
+can we use less of it in order to save money?
+
+127
+00:06:12,680 --> 00:06:16,480
+How can we still get the benefits of machine learning, but not have to put it everywhere
+
+128
+00:06:16,480 --> 00:06:22,000
+in our product and use it as minimally as possible to still make it economical to deploy?
+
+129
+00:06:22,000 --> 00:06:23,800
+That's basically the entire point of my talk today.
+
+130
+00:06:23,800 --> 00:06:25,880
+So let's dive into this.
+
+131
+00:06:25,880 --> 00:06:27,000
+Congratulations.
+
+132
+00:06:27,000 --> 00:06:31,720
+You and I, everybody on this call, we all now work at a new company.
+
+133
+00:06:31,720 --> 00:06:34,000
+And this company is called VideoChat Inc.
+
+134
+00:06:34,000 --> 00:06:37,840
+It's actually the video conferencing platform that we're using right now to host this conference.
+
+135
+00:06:37,840 --> 00:06:40,200
+And it's how you might talk to your coworkers every day.
+
+136
+00:06:40,200 --> 00:06:43,720
+This fictional company is the world's most popular video conference platform.
+
+137
+00:06:43,720 --> 00:06:48,160
+And we are engineers or data scientists or machine learning people on one of its engineering
+
+138
+00:06:48,160 --> 00:06:49,400
+teams.
+
+139
+00:06:49,400 --> 00:06:52,680
+And we've been tasked with building interesting new features for VideoChat.
+
+140
+00:06:52,680 --> 00:06:55,480
+One such new feature just came on our desks right now.
+
+141
+00:06:55,480 --> 00:06:58,400
+And it showed up as this RFC.
+
+142
+00:06:58,400 --> 00:07:02,400
+The business people and product people at VideoChat Inc. want us to build a coffee brand
+
+143
+00:07:02,400 --> 00:07:03,680
+detector.
+
+144
+00:07:03,680 --> 00:07:08,680
+Now what that means is they want us to build a system such that on each video call, VideoChat
+
+145
+00:07:08,680 --> 00:07:13,920
+Inc. can automatically detect the brand of coffee that shows up in video calls and then
+
+146
+00:07:13,920 --> 00:07:18,320
+automatically put a button on the screen so users can reorder their coffee and stay caffeinated
+
+147
+00:07:18,320 --> 00:07:20,320
+without even leaving their seats.
+
+148
+00:07:20,320 --> 00:07:24,680
+Sounds like a pretty lofty idea, but it also sounds like something that isn't impossible
+
+149
+00:07:24,680 --> 00:07:25,680
+to build.
+
+150
+00:07:25,680 --> 00:07:26,680
+So we might as well get started here.
+
+151
+00:07:26,680 --> 00:07:30,600
+Now, if you're a machine learning practitioner, as soon as you see something like this, you
+
+152
+00:07:30,600 --> 00:07:32,600
+might start to think of ways to implement it.
+
+153
+00:07:32,600 --> 00:07:35,640
+You might jump in and say, well, I could use an object detection model.
+
+154
+00:07:35,640 --> 00:07:40,640
+I could use PyTorch Vision or ResNets or any things that you've seen online or in the community.
+
+155
+00:07:40,640 --> 00:07:41,640
+And that's great.
+
+156
+00:07:41,640 --> 00:07:45,000
+But coming from an engineering perspective, that's like someone telling me to build a
+
+157
+00:07:45,000 --> 00:07:48,880
+bridge and me saying, well, I'd love to build that bridge out of wood, even though I don't
+
+158
+00:07:48,880 --> 00:07:54,100
+know which river it's going to cross or how many people need to be on top of it.
+
+159
+00:07:54,100 --> 00:07:58,320
+We don't need to use our tools anywhere near this point in the process.
+
+160
+00:07:58,320 --> 00:08:02,560
+We should instead figure out what this project needs and what the requirements are.
+
+161
+00:08:02,560 --> 00:08:03,560
+So let's do that.
+
+162
+00:08:03,560 --> 00:08:06,440
+Let's say that we've worked with the product team and the business team to figure out the
+
+163
+00:08:06,440 --> 00:08:07,440
+actual needs here.
+
+164
+00:08:07,440 --> 00:08:10,560
+And we've come up with a list that we can use to start building.
+
+165
+00:08:10,560 --> 00:08:14,160
+This does sound kind of waterfally and less agile, maybe.
+
+166
+00:08:14,160 --> 00:08:18,480
+But for a big project like this, we need at least some guidelines to work within.
+
+167
+00:08:18,480 --> 00:08:22,320
+So we've come up with these requirements and I've split these requirements into two different
+
+168
+00:08:22,320 --> 00:08:23,320
+lists.
+
+169
+00:08:23,320 --> 00:08:26,240
+Now they're in two different lists because this is a technique that comes from more traditional
+
+170
+00:08:26,240 --> 00:08:27,240
+engineering.
+
+171
+00:08:27,240 --> 00:08:31,320
+We've got one list called functional requirements and another called non-functional requirements.
+
+172
+00:08:31,320 --> 00:08:34,880
+Now the functional requirements are things that we need to make the system work in the
+
+173
+00:08:34,880 --> 00:08:35,880
+first place.
+
+174
+00:08:35,880 --> 00:08:36,880
+Right?
+
+175
+00:08:36,880 --> 00:08:41,560
+So this functional requirements list is how we judge if the system is done, if it's been
+
+176
+00:08:41,560 --> 00:08:42,560
+built yet.
+
+177
+00:08:42,560 --> 00:08:46,920
+And then non-functional requirements are ways that we can evaluate how well we did or the
+
+178
+00:08:46,920 --> 00:08:48,480
+quality of the final system.
+
+179
+00:08:48,480 --> 00:08:53,120
+So regardless of if it works, was it cheap enough for us to build or is it fast enough
+
+180
+00:08:53,120 --> 00:08:55,720
+if it's a software system, stuff like that.
+
+181
+00:08:55,720 --> 00:08:59,000
+So our fictional system here is going to have a couple of functional requirements.
+
+182
+00:08:59,000 --> 00:09:02,920
+We need to be able to detect the top 10 most popular coffee brands that show up in people's
+
+183
+00:09:02,920 --> 00:09:03,920
+video calls.
+
+184
+00:09:03,920 --> 00:09:08,080
+We also want to be able to detect the brand of up to 1000 users of the system per day.
+
+185
+00:09:08,080 --> 00:09:09,160
+So that's our load.
+
+186
+00:09:09,160 --> 00:09:11,700
+That's kind of our scope here.
+
+187
+00:09:11,700 --> 00:09:15,800
+And then also our system must have a precision of at least 99% and a recall of at least 90%.
+
+188
+00:09:15,800 --> 00:09:19,800
+So these numbers are kind of just picked out of thin air, but we can try to build a system
+
+189
+00:09:19,800 --> 00:09:21,840
+that does have these numbers.
+
+190
+00:09:21,840 --> 00:09:24,960
+And then for non-functional requirements, well, we want the system to cost less than
+
+191
+00:09:24,960 --> 00:09:29,520
+$100 per day, which is quite tight time bound or sorry, quite a tight cost bound.
+
+192
+00:09:29,520 --> 00:09:32,960
+But we definitely want to make sure that we respect that because that's going to determine
+
+193
+00:09:32,960 --> 00:09:35,000
+if we can deploy this or not.
+
+194
+00:09:35,000 --> 00:09:37,240
+And the system must provide data by the end of each day.
+
+195
+00:09:37,240 --> 00:09:41,560
+So it doesn't really matter exactly how quickly or how slowly it works as long as we give
+
+196
+00:09:41,560 --> 00:09:45,480
+the results to the business about the end of each day.
+
+197
+00:09:45,480 --> 00:09:49,640
+So with those requirements in mind, let's do some engineering.
+
+198
+00:09:49,640 --> 00:09:54,400
+So big disclaimer first, the following calculations are incredibly oversimplified to make a friendly
+
+199
+00:09:54,400 --> 00:09:56,920
+and digestible point in a 20 minute talk.
+
+200
+00:09:56,920 --> 00:09:58,360
+Do not depend on these numbers.
+
+201
+00:09:58,360 --> 00:09:59,360
+You might find bugs in them.
+
+202
+00:09:59,360 --> 00:10:01,560
+You might find miscalculations.
+
+203
+00:10:01,560 --> 00:10:06,540
+But given that, please continue to suspend your disbelief for the rest of my talk here.
+
+204
+00:10:06,540 --> 00:10:10,240
+So following from Joel's talk that you just heard from, let's start with the simplest
+
+205
+00:10:10,240 --> 00:10:12,620
+thing that might possibly work first.
+
+206
+00:10:12,620 --> 00:10:14,880
+Let's have a tip number one at the bottom of the screen here.
+
+207
+00:10:14,880 --> 00:10:19,580
+Let's just run machine learning on every single frame of the video we get in real time.
+
+208
+00:10:19,580 --> 00:10:23,340
+So we get frames coming in from our customers, just like what you're seeing right now.
+
+209
+00:10:23,340 --> 00:10:26,560
+Some of these frames have coffee cups in them and others don't.
+
+210
+00:10:26,560 --> 00:10:29,600
+And let's say we pick an object detection model off of GitHub.
+
+211
+00:10:29,600 --> 00:10:33,520
+Someone's already pre-trained one for us and it has the required accuracy that we're looking
+
+212
+00:10:33,520 --> 00:10:34,520
+for.
+
+213
+00:10:34,520 --> 00:10:37,920
+Let's just run that on every single frame of video in real time and take the outputs
+
+214
+00:10:37,920 --> 00:10:41,880
+and put them into some sort of aggregation tool for later.
+
+215
+00:10:41,880 --> 00:10:44,800
+Now I'm going to do a bunch of back of the envelope calculations here on the left hand
+
+216
+00:10:44,800 --> 00:10:49,160
+side and I'm going to fill up with a bunch of numbers, but don't be too scared.
+
+217
+00:10:49,160 --> 00:10:51,640
+I'll talk through every single number as we go through.
+
+218
+00:10:51,640 --> 00:10:53,680
+We know our daily compute budget is $100.
+
+219
+00:10:53,680 --> 00:10:56,080
+So that's what we want to be underneath here.
+
+220
+00:10:56,080 --> 00:11:00,200
+And we know we get in 30 frames per second of video from each user.
+
+221
+00:11:00,200 --> 00:11:03,800
+We also know that this PyTorch model we have here, well, let's say we've measured it and
+
+222
+00:11:03,800 --> 00:11:07,240
+we found that there's a certain number of floating point operations we need to do in
+
+223
+00:11:07,240 --> 00:11:10,440
+that model to process each frame.
+
+224
+00:11:10,440 --> 00:11:13,600
+From our measurements, that turns out to be about 40 billion floating point operations,
+
+225
+00:11:13,600 --> 00:11:17,800
+which sounds like a lot and kind of is a lot, but multiplying these numbers out tells us
+
+226
+00:11:17,800 --> 00:11:23,040
+that we need about 1.2 teraflops per second of computing power to process these videos
+
+227
+00:11:23,040 --> 00:11:25,620
+in real time and give us results.
+
+228
+00:11:25,620 --> 00:11:27,520
+That's actually kind of doable on modern GPUs.
+
+229
+00:11:27,520 --> 00:11:30,360
+This is not too out of the ordinary.
+
+230
+00:11:30,360 --> 00:11:33,880
+Then we also know we have a maximum daily load of 1 million users.
+
+231
+00:11:33,880 --> 00:11:37,320
+We know that we have about four hours of daily usage per user.
+
+232
+00:11:37,320 --> 00:11:41,360
+People are on this app all the time because they talk to their coworkers and they spend
+
+233
+00:11:41,360 --> 00:11:44,440
+half their days in meetings, or at least I do.
+
+234
+00:11:44,440 --> 00:11:48,520
+And then that multiplied out means that our daily hours of video is 4 million hours per
+
+235
+00:11:48,520 --> 00:11:49,600
+day we need to process.
+
+236
+00:11:49,600 --> 00:11:52,160
+So that's quite a bit of video.
+
+237
+00:11:52,160 --> 00:11:57,960
+Then multiplying that by the number of teraflops per stream, well, that means we need 17.3
+
+238
+00:11:57,960 --> 00:11:59,960
+zeta flops or zeta flops.
+
+239
+00:11:59,960 --> 00:12:02,580
+I don't know how to pronounce this number, but it's a lot.
+
+240
+00:12:02,580 --> 00:12:06,440
+And we're going to have to use that to estimate our cost here.
+
+241
+00:12:06,440 --> 00:12:10,720
+So let's say we have GPUs available in our cloud of choice and we're using the cloud
+
+242
+00:12:10,720 --> 00:12:11,720
+here.
+
+243
+00:12:11,720 --> 00:12:15,520
+The number of GPUs available per GPU turns out to be 8.7 teraflops and dividing those
+
+244
+00:12:15,520 --> 00:12:22,440
+two numbers, we need 551,724 GPU hours per day to make this work.
+
+245
+00:12:22,440 --> 00:12:26,920
+That sounds like a lot, but let's suspend our disbelief here and say that we can get
+
+246
+00:12:26,920 --> 00:12:30,840
+that amount of GPU capacity and we just have to pay for it.
+
+247
+00:12:30,840 --> 00:12:35,120
+Looking at our price sheet here, let's say our cost per GPU hour is 45 cents.
+
+248
+00:12:35,120 --> 00:12:41,000
+And that means our total daily compute cost is only $248,275 per day.
+
+249
+00:12:41,000 --> 00:12:43,000
+That's a quarter million dollars per day.
+
+250
+00:12:43,000 --> 00:12:47,960
+I don't know about you, but that's not viable for any environment I've ever worked in.
+
+251
+00:12:47,960 --> 00:12:52,920
+And if I presented that to the folks who asked for a product like this, they would probably
+
+252
+00:12:52,920 --> 00:12:57,700
+laugh me out of the room and find a engineer who can build a system that actually works.
+
+253
+00:12:57,700 --> 00:13:01,040
+So let's see which numbers that we can change here.
+
+254
+00:13:01,040 --> 00:13:05,040
+What can we look at to make this system cheaper without sacrificing our functional requirements
+
+255
+00:13:05,040 --> 00:13:08,280
+like our accuracy and our load and such like that?
+
+256
+00:13:08,280 --> 00:13:12,360
+Well, to start with, we have the number of frames per second that we're processing here.
+
+257
+00:13:12,360 --> 00:13:14,880
+We're processing every single frame of video right now.
+
+258
+00:13:14,880 --> 00:13:19,800
+So attempt number two might be something as simple as just run the ML on fewer frames,
+
+259
+00:13:19,800 --> 00:13:20,800
+right?
+
+260
+00:13:20,800 --> 00:13:21,800
+Just run ML on some of the frames.
+
+261
+00:13:21,800 --> 00:13:23,720
+Don't even change the model just yet.
+
+262
+00:13:23,720 --> 00:13:25,560
+Let's just sub-sample the stream.
+
+263
+00:13:25,560 --> 00:13:26,980
+And I know this is a big if.
+
+264
+00:13:26,980 --> 00:13:29,480
+We don't actually know if this is going to work, but I'm going to guess that if you're
+
+265
+00:13:29,480 --> 00:13:33,880
+drinking coffee, you can't raise the coffee cup to your mouth and take a drink in less
+
+266
+00:13:33,880 --> 00:13:35,560
+than 1 30th of a second.
+
+267
+00:13:35,560 --> 00:13:38,160
+It's going to take longer than that for you to actually take a sip of coffee.
+
+268
+00:13:38,160 --> 00:13:43,500
+So this assumption might have to be tested offline, but let's say let's run with it.
+
+269
+00:13:43,500 --> 00:13:46,180
+This reduces our frames per second to one frame per second.
+
+270
+00:13:46,180 --> 00:13:48,440
+And then our per stream compute is now 30 times lower.
+
+271
+00:13:48,440 --> 00:13:51,480
+So only 40 gigaflops across our entire user base.
+
+272
+00:13:51,480 --> 00:13:57,000
+The number of daily flops required is a much more pronounceable 576 exaflops.
+
+273
+00:13:57,000 --> 00:14:00,740
+And that means the number of GPU hours required is actually within the realm of possibility.
+
+274
+00:14:00,740 --> 00:14:06,400
+We only need 18,400 GPU hours, which could be done with a large GPU cluster maybe.
+
+275
+00:14:06,400 --> 00:14:11,160
+And at the cost of 45 cents per GPU hour, this only costs $8,280 now.
+
+276
+00:14:11,160 --> 00:14:14,920
+So we're down from a quarter million dollars a day to just less than 10,000, which is still
+
+277
+00:14:14,920 --> 00:14:20,480
+quite a lot and almost 10 times our budget, but it's gone from being completely unenviable
+
+278
+00:14:20,480 --> 00:14:24,500
+to maybe we could kind of do this, but let's keep going.
+
+279
+00:14:24,500 --> 00:14:28,120
+What else can we do to make this cheaper and find a solution that optimizes for all of
+
+280
+00:14:28,120 --> 00:14:29,120
+our constraints?
+
+281
+00:14:29,120 --> 00:14:32,600
+Well, let's take a look at the number of floating point operations per frame that we're running
+
+282
+00:14:32,600 --> 00:14:33,600
+here.
+
+283
+00:14:33,600 --> 00:14:35,300
+We've got this PyTorch model that we pulled off the internet.
+
+284
+00:14:35,300 --> 00:14:37,200
+It works, but can we make it faster?
+
+285
+00:14:37,200 --> 00:14:38,720
+Can we make it smaller?
+
+286
+00:14:38,720 --> 00:14:42,520
+And this is where I'm going to, I know this is Norm Kant, we're not talking about papers,
+
+287
+00:14:42,520 --> 00:14:45,040
+but I'm going to show a paper on the screen.
+
+288
+00:14:45,040 --> 00:14:46,040
+I'm so sorry.
+
+289
+00:14:46,040 --> 00:14:47,760
+One second here.
+
+290
+00:14:47,760 --> 00:14:48,760
+It'll be only up for a second.
+
+291
+00:14:48,760 --> 00:14:49,760
+Don't worry.
+
+292
+00:14:49,760 --> 00:14:52,560
+So this is a paper from Google from 2017.
+
+293
+00:14:52,560 --> 00:14:56,280
+It's called MobileNet and it presents a class of efficient models called MobileNets for
+
+294
+00:14:56,280 --> 00:14:58,360
+mobile and embedded vision applications.
+
+295
+00:14:58,360 --> 00:15:02,080
+Now, what these researchers have found is they can change the model architecture they
+
+296
+00:15:02,080 --> 00:15:07,520
+use for object detection and spend one 10th of the computing power for only a small drop
+
+297
+00:15:07,520 --> 00:15:10,280
+in accuracy of a couple percentage points.
+
+298
+00:15:10,280 --> 00:15:15,200
+If we use this architecture or any similar cheap architecture to run our model, we can
+
+299
+00:15:15,200 --> 00:15:20,160
+potentially get huge gains in cost or huge savings in cost without significantly affecting
+
+300
+00:15:20,160 --> 00:15:21,160
+our performance.
+
+301
+00:15:21,160 --> 00:15:22,160
+So let's do that.
+
+302
+00:15:22,160 --> 00:15:23,840
+Let's say that we've retrained our model.
+
+303
+00:15:23,840 --> 00:15:28,680
+We still have video coming in here, but let's retrain this model with a more efficient architecture.
+
+304
+00:15:28,680 --> 00:15:32,320
+Now let's deploy this with something a little more optimized for cost.
+
+305
+00:15:32,320 --> 00:15:37,000
+Let's maybe use TensorFlow Lite and let's deploy this as a MobileNet on our back ends
+
+306
+00:15:37,000 --> 00:15:38,200
+here.
+
+307
+00:15:38,200 --> 00:15:41,640
+And each frame of video is still giving us the same outputs, but we only need to spend
+
+308
+00:15:41,640 --> 00:15:45,120
+4 billion flops per frame instead of 40 billion.
+
+309
+00:15:45,120 --> 00:15:49,000
+That reduces our per stream compute to 4 gigaflops per second, which is much more manageable.
+
+310
+00:15:49,000 --> 00:15:55,280
+Again, now by a factor of 10, our daily flops required is 57.6 exaflops, much better.
+
+311
+00:15:55,280 --> 00:16:01,960
+GPU hours is now only 1,840, and that means our total daily cost is $828, which again,
+
+312
+00:16:01,960 --> 00:16:06,520
+still a lot, still almost 10 times our cost budget, but we're getting really close here.
+
+313
+00:16:06,520 --> 00:16:09,720
+Our viability is, you know, within a stone's throw from what we've got now.
+
+314
+00:16:09,720 --> 00:16:11,680
+But what can we do next?
+
+315
+00:16:11,680 --> 00:16:13,080
+What's the next thing we can turn to?
+
+316
+00:16:13,080 --> 00:16:17,920
+Well, I see one number in this list that's a little bit suspect, and that's the number
+
+317
+00:16:17,920 --> 00:16:21,800
+of floating point operations that a single GPU can do.
+
+318
+00:16:21,800 --> 00:16:26,440
+This number seems low to me because GPUs get more powerful every single year.
+
+319
+00:16:26,440 --> 00:16:30,160
+And if we were to simply upgrade to more expensive, more modern GPUs, we might be able to get
+
+320
+00:16:30,160 --> 00:16:32,160
+much more performance per dollar here.
+
+321
+00:16:32,160 --> 00:16:33,160
+So let's try that.
+
+322
+00:16:33,160 --> 00:16:37,680
+For attempt number four, let's use more cost effective GPUs.
+
+323
+00:16:37,680 --> 00:16:42,540
+And if I pick the most advanced GPU on the shelf right now, I can get 312 teraflops per
+
+324
+00:16:42,540 --> 00:16:45,440
+second instead of 8.7 per GPU.
+
+325
+00:16:45,440 --> 00:16:49,760
+And that means we only need 52 hours of GPU time per day instead of those thousands we
+
+326
+00:16:49,760 --> 00:16:51,200
+had before.
+
+327
+00:16:51,200 --> 00:16:57,520
+Even though these GPUs are more expensive at $2.93 each rather than what they were before.
+
+328
+00:16:57,520 --> 00:16:59,120
+And this reduces our cost even more.
+
+329
+00:16:59,120 --> 00:17:04,080
+This means our total daily compute cost for all this GPU time is only $152.
+
+330
+00:17:04,080 --> 00:17:05,080
+Which is great.
+
+331
+00:17:05,080 --> 00:17:06,080
+This is amazing.
+
+332
+00:17:06,080 --> 00:17:10,000
+This is only 52% over budget, which for many engineering projects would be a slam dunk,
+
+333
+00:17:10,000 --> 00:17:12,040
+a huge success.
+
+334
+00:17:12,040 --> 00:17:14,000
+But we can go even cheaper.
+
+335
+00:17:14,000 --> 00:17:17,240
+What do we do to get down from $152 to almost $0?
+
+336
+00:17:17,240 --> 00:17:19,920
+Well, I have a proposal here.
+
+337
+00:17:19,920 --> 00:17:24,160
+What if we take this model we have here and we were to make an even cheaper model, even
+
+338
+00:17:24,160 --> 00:17:27,160
+faster model that is way, way, way less accurate.
+
+339
+00:17:27,160 --> 00:17:28,600
+I know we have accuracy bounds.
+
+340
+00:17:28,600 --> 00:17:30,960
+We want a certain amount of precision and recall here.
+
+341
+00:17:30,960 --> 00:17:34,640
+What if we retrain this model, use some transfer learning and build our own copy of it?
+
+342
+00:17:34,640 --> 00:17:37,040
+That is wrong a lot of the time.
+
+343
+00:17:37,040 --> 00:17:40,760
+We can get our per stream compute numbers down here by a huge factor if we just pre-filter
+
+344
+00:17:40,760 --> 00:17:44,680
+some of our data and only deploy our more expensive model on frames that were reasonably
+
+345
+00:17:44,680 --> 00:17:47,140
+certain already contained coffee cups.
+
+346
+00:17:47,140 --> 00:17:48,220
+So let's do that.
+
+347
+00:17:48,220 --> 00:17:52,380
+For attempt number five here, let's use a two-stage model architecture.
+
+348
+00:17:52,380 --> 00:17:53,560
+So let's take our original model.
+
+349
+00:17:53,560 --> 00:17:56,440
+Let's retrain it so that it gives us a huge amount of recall.
+
+350
+00:17:56,440 --> 00:18:01,040
+It catches almost all the coffee cups that do show up in frame, but it's not very precise.
+
+351
+00:18:01,040 --> 00:18:04,760
+Sometimes it'll think that a cell phone is a coffee cup rather than an actual coffee
+
+352
+00:18:04,760 --> 00:18:06,560
+cup or a cell phone.
+
+353
+00:18:06,560 --> 00:18:08,160
+But this model here is much cheaper.
+
+354
+00:18:08,160 --> 00:18:14,080
+It only requires 100 megaflops per second, and it could even run on CPUs, which is great.
+
+355
+00:18:14,080 --> 00:18:16,200
+So we're almost done here.
+
+356
+00:18:16,200 --> 00:18:18,560
+Let's take this and drop this into temporary storage.
+
+357
+00:18:18,560 --> 00:18:22,640
+So the outputs of this model go in there, and then we run a batch pipeline and then
+
+358
+00:18:22,640 --> 00:18:25,640
+drop the results into mobile net.
+
+359
+00:18:25,640 --> 00:18:29,520
+And then there we have our full precision output.
+
+360
+00:18:29,520 --> 00:18:32,960
+If I race through all these numbers here, because I know I'm almost out of time, this
+
+361
+00:18:32,960 --> 00:18:35,080
+reduces our cost all the way down.
+
+362
+00:18:35,080 --> 00:18:39,480
+We only need to run our heavy model on 0.0001 frames per second.
+
+363
+00:18:39,480 --> 00:18:43,040
+Our offline computing power is in the kiloflops instead of the teraflops.
+
+364
+00:18:43,040 --> 00:18:48,000
+And multiplying all the numbers out, we get to $0.01 or one cent.
+
+365
+00:18:48,000 --> 00:18:52,240
+Of course, I'm ignoring a bunch of overhead here, but we're pretty much good to go.
+
+366
+00:18:52,240 --> 00:18:53,240
+And that's all I've got.
+
+367
+00:18:53,240 --> 00:18:57,960
+We talked about five things, how to do the simplest approach first, how to process less
+
+368
+00:18:57,960 --> 00:19:02,320
+data, how to make our model smaller, how to use more efficient hardware, and then finally,
+
+369
+00:19:02,320 --> 00:19:06,240
+how to split up our model and use cheap ML to pre-filter our data before applying the
+
+370
+00:19:06,240 --> 00:19:08,160
+heavy ML.
+
+371
+00:19:08,160 --> 00:19:09,160
+And thanks so much for listening.
+
+372
+00:19:09,160 --> 00:19:10,720
+I'll stick around for questions, but that's my talk.
+
+373
+00:19:10,720 --> 00:19:13,200
+Thanks, NarmConf.
+

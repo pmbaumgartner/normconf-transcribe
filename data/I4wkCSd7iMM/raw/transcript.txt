@@ -1,0 +1,226 @@
+Hi, everybody. My name is Ethan Rosenthal. I manage a small team of AI engineers at Square.
+I'm not going to talk about any of that fun stuff today. We do things with large language
+models and all sorts of hot stuff. Like with much of this job, I think the majority of
+my job is not doing that stuff and it's instead dealing with the norm-confy things. Today,
+I'm going to talk about the absolute terrible time that I had trying to get my team's code
+base to build on an Apple M1 laptop. And so this is largely going to be a cathartic rant,
+but I hope that it's also, you know, helpful and maybe you all will learn something too
+along the way. So why am I talking about this today? I would be surprised if you could forget,
+but if you all remember our, you know, intrepid norm-conf leader, Vicky, sent out that tweet
+that was heard around the world back in July about creating this conference. And I was
+like nose deep into trying to get my team's code base to build on this M1. And I, you
+know, kind of snarkily made a reply to that tweet. And here I am now actually talking
+about that. So kind of fun to bring things full circle. So what is the M1? For those
+of you who don't know, back in 2020, Apple released a new line of laptops that use their
+M1 chip, which is kind of like the first time that Apple had created their own CPUs, like
+specifically for their laptops. And so they followed up like a year later with the M1
+Pro and the M1 Max, and it had all these nice charts showing that, you know, you get more
+performance for lower power. And so, you know, a lot of people are excited about that, you
+know, who doesn't want their code to run faster and who doesn't want to burn their thighs
+with their laptop when it's using too much power. And so this all seemed cool, but I
+was not very interested in any of this because, you know, I know the first rule of programming,
+which is that you should never change anything. Like if it ain't broke, don't fix it. And
+my team's code base was working. And so I don't want to mess with like success. Unfortunately,
+you know, time is like the one thing that changes that, you know, none of us can stop
+that even if we wanted to. And so what happened at work was that in January 2022, there was,
+it was announced that M1s were now available to new hires at the company, as well as people
+that were eligible to upgrade their laptop if, you know, their current laptop was kind
+of old. And so they made that announcement. And one of the people on my team was kind
+of excited by these new laptops. And so they requested an upgrade, they got an M1 and they
+failed to get the code base to build. You know, they spent about a week with this and
+no luck. And then a couple months later, another teammate tries to get a new M1, spends a week
+trying to build the code base and they fail. And then in August, we knew that there would
+be two new members starting on the team and they were going to be issued M1s. And I stupidly
+decided to start managing the team a couple of weeks before. And so this meant that this
+was now my problem and I was going to be the one that had to figure this out. And so like
+any good engineer, I completely underestimated how much work or time this could possibly
+take. But, you know, I tried to be reasonably smart about this. And so anytime you embark
+on something new at a company, I think it's a good idea to, you know, check the wisdom
+of the masses. And, you know, Square is the biggest company I've worked at. I used to
+work at some startups before this and I never really appreciated how helpful it is to have
+a big company Slack. It's kind of like your own personal Reddit where you can get recommendations
+for like local accountants or holiday gift ideas and everything else. And so I decided
+to delve into Slack to try to see if anybody else had already run into this problem before.
+And so, you know, I'm reading through Slack search and other sorts of things. And I find
+these esoteric Google Docs and Notion Docs where other people had attempted to solve
+this problem. And if you search through these docs, you stumble upon these like incantations,
+right? These cryptic brew libraries that you have to install before you do anything and
+these other cryptic environment variables that you have to set. And, you know, you don't
+understand what any of this means, but you're just going to like copy and paste it and run
+it like everything else that you do with Stack Overflow. So I did that and I thought, all
+right, like I'm good to go. Other people have run into this. I'll be good to go. And so
+the first step is, you know, now that I've done my Roo installing and set my environment
+variables, now I just need to install Python. Like my team's code base is built in Python.
+That's the first step. And immediately I failed because my team's code base was based on Python
+3.7, which it turns out is not supported on Apple M1 laptops. And so now I find out that
+we can't use our version of Python. We're going to have to change the version of Python.
+Thankfully, it's not like going from two to three, but you know, I'm guessing most of
+you out there probably don't like to change your version of Python too often. And so setting
+this version, this Python version, this was kind of like the first node in this like tangled
+web of shit that I had to wade through. And so one recommendation I have is if you want
+to deal with different versions of Python, Pyenv is a great little package that allows
+you to install different versions of Python on your laptop. And so then anytime you are,
+you know, starting a new project, starting a new virtual environment, you can choose
+which version of Python you're going to use via that. And then, you know, I had to decide
+which version of Python to use. And I think, you know, my rule of thumb is to like to go
+with Goldilocks. So don't go with the latest and greatest 3.10 because, you know, this
+is like on the bleeding edge. Don't go with the oldest 3.8 because it's, you know, it
+was kind of like almost out of support by that point. And so just, you know, go with
+something in the middle that's only a couple of years old. So we chose 3.9. So this was
+like a two minor version upgrade that we went from 3.7 to 3.9.
+So now that I've changed my version of Python, this means that I'm going to have to change
+some of my Python dependencies because certain dependencies only work with like certain versions
+of your dependencies only work with certain versions of Python. So what I mean by a Python
+dependency is like a library that you are pip installing like NumPy or Matplotlib or
+something like that. And so now I'm going to have to change the versions of these dependencies,
+but it's not just that I have to change them because they are now incompatible with my
+new version of Python. The other issue is that I have this brand new flashy sports car
+of a laptop and there are no wheels. So Python wheels, for those of you who don't know, are
+like zip files where other people have kind of like prebuilt your code so that it will
+run wherever you run your code. And so for a lot of these libraries, you need prebuilt
+wheels in order to run this code on like your laptop or in the cloud or something like that.
+And it turned out that even if I had certain Python dependencies whose versions worked
+with my new version of Python, these versions of these dependencies did not work on Apple
+M1s. And so now I need to go and find what version actually introduced wheels that are
+compatible with the M1.
+OK, so we've changed our version of Python. We've changed a whole bunch of Python dependencies.
+And then ideally, you are not managing these dependencies yourself. I think if you're spending
+all day kind of hard coding all of your dependencies into a requirements.txt file, then you're
+not going to have a good time. But if you use a dependency manager, which is a tool
+where you can kind of declare, you know, these are the high level dependencies that I need
+for my package, then this manager will go out and find those dependencies, dependencies,
+those dependencies, dependencies, dependencies, and this entire like nested graph. And it
+will make sure that it finds, you know, the exact versions of all of the sub-dependencies
+such that everything will work and kind of, you know, be reproducible every time you install
+your package.
+And be aware, a little bit of self-promotion, but I have an entire blog post about this
+where my actual entire process around how I do data science is that every time I start
+a new project or analysis, I create an entire Python package and I manage all the dependencies
+with a dependency manager. And the nice thing here is that this means that, you know, six
+months later when I come back to the analysis, because, you know, some stakeholder had a
+question in a Google doc from an analysis that I ran six months ago, I can, you know,
+reinstall my package and rerun my analysis and have everything work.
+The other thing that I learned in this process is, you know, it's kind of difficult sometimes
+to make sure that all of your different versions of your Python package actually all work together.
+And so what you end up finding is that, you know, you run your dependency manager, try
+to get all your versions to work together, and the dependency manager spits out some,
+you know, weird error saying, you know, these two packages conflict with each other. There
+is no way that you can install all of these. So I kept running into this and a very stupid
+skill that I now have is that I learned how to debug this pretty well. And my debugging
+strategy is that I create a minimum viable Python package. And so what that means is
+that instead of starting with my huge code base that has all these dependencies that
+takes, you know, it takes a really long time to add a new dependency because you have to,
+like, traverse this giant graph, I create a tiny little new Python package and I first
+install that offending dependency that seems to conflict with other ones. And then one
+by one, I start to add some new dependencies until the conflict appears. And then I know
+which exact dependencies are conflicting with each other. Hopefully, like, you know, chat
+GPT solves one day and you can just ask it, you know, feed it your lock file and ask it
+what the issue is. But until then, you now have this very painful process that you get
+to go through, too. Along the way, you know, we were using pipenv
+as our dependency manager. I never really liked it. I always wanted to change the poetry,
+but I, you know, don't like to change things at the same time because everything was working.
+But, you know, never let a good crisis go to waste. And so we ended up switching our
+dependency manager in the process. We also had to do this because for the life of me,
+I could not get SciPy to install with pipenv. I think there was a bug somewhere. And so
+this ended up being actually like a necessary requirement of this refactor.
+So now we've changed our version of Python. We've changed a whole bunch of dependencies.
+And we've changed the way that we actually install and manage those dependencies. And
+so, of course, we don't do all of this manually because we are engineers and we like to abstract
+stuff and, you know, build declarative systems. And so everybody's favorite declarative system,
+the make file, and we have, you know, a couple hundred line make file in our code base. This
+now needed to be updated to work with the new dependency manager.
+But thankfully by this point, I actually got everything to build. So, you know, I was able
+to build my code. I was able to run tests. I was able to, you know, train some small
+models on my laptop. So I should be done, right? I fixed it for the new laptop. But
+unfortunately code doesn't just run on our laptops. Code runs in the cloud. And the way
+that we run our code in the cloud is we build Docker images, at least on my team. So we
+use a Docker file to build a Docker image. And then we ship our code up to the cloud
+and run the code up there. And that Docker file is building the code that we are writing
+locally. And so there is kind of a natural coupling between the Docker file and our code
+base. And one of the things that the Docker file has to do is it has to install Python.
+It has to install Python dependencies and other sorts of things like that. And so this
+meant that I needed to update all of our Docker files so that they now worked with this new
+setup. But we don't just run regular code in the cloud. We run code on GPUs because
+we're training fun things like language models and everything else. And that code that runs
+on GPUs, you know, we need to install CUDA, which is like the NVIDIA library. We need
+to install that in both the Docker container as well as the EC2 instances that the container
+is running on. And so now we have this other piece of our cobweb. If you go to NVIDIA's
+website, they have this diagram there where I think they're trying to argue that it's
+simple to do stuff on GPUs. And maybe it's a lot simpler than it used to be. But what
+you actually are not really, you know, what's not entirely clear until you look closer at
+this is that there's this tight coupling that exists in GPUs between all sorts of layers
+of the stack. So you have to make sure that you have like the right versions of drivers
+and CUDA that are running on the actual instance that's running in the cloud. That is coupled
+to the version of these libraries that is running in the Docker container. And all of
+this gets coupled with the application that is actually doing the programming, which in
+our cases is PyTorch code. And it turns out that all of this coupling is terrible. And
+it's like a lot of work and it's a total pain. And I wanted to try to find the words, but
+I couldn't find the words to convey this to you. And so instead I decided to burden some
+GPU hours and ask Stable Diffusion to paint me a Renaissance painting of a GPU burning
+in hell. And ironically, the hallmark of the GPU here is really the heatsink fans, which
+seem to be trying to dissipate the heat of hell. And so, yeah. So if you go to PyTorch's
+website, which is the deep learning library that we use, they have this wonderful little
+widget where you can pick, you know, are you on Linux or Mac? Do you install your Python
+packages with pip? Which version of CUDA are you on? You pick all of these pieces and then
+they give you this wonderful command that if you just run it, works most of the time
+in order to install these libraries. And all of this is great if you're on like the latest
+and greatest version of PyTorch. But for various reasons, my team was not. And so if you try
+to go back to earlier versions of PyTorch, this is the recommendation. So depending on
+which version of CUDA you're running or if you need GPU support or not, and which platform
+you're on, you have all of these different pip commands with like pip indices and other
+sorts of things that you have to worry about. And so, you know, I needed this to work with
+our dependency manager. And so I was having some trouble. So I decided to search on Google
+for how to, you know, work with PyTorch and poetry and stumbled upon, you know, 36 common
+GitHub issues that was prematurely closed because the problem was definitely not resolved.
+And so then a new issue was opened. And that issue is definitely still open because this
+is entirely unresolved right now. And so I ended up doing something terrible. You know,
+I had this beautiful dependency manager that allowed me to, you know, declare my dependencies
+and it would figure everything out for me. And instead I ended up kind of just having
+to hack and ruin it. So what I ended up deciding to do was that, you know, in our code base
+in the dependency manager, we would just install the version of PyTorch that does not have
+any GPU support because I don't have any GPUs locally. And then in our Docker file, we're
+going to first export a requirements.txt file from our dependency manager. So we will generate
+kind of like running pit freeze. We're going to generate all of our requirements. And then
+I have this terrible sed command, which just substitutes the line of PyTorch with a hardcoded
+URL to a wheel of my exact version of PyTorch. And so it feels bad, but it works. And I haven't
+touched it since I made this change. And so maybe that's a sign that it's working. And
+if you're struggling with PyTorch and poetry, this hack, like it actually does work. So
+sorry if you end up having to implement it too. So fine, we've figured out how to build
+our code locally. We've figured out how to make sure that that code also works in the
+cloud. We're good to go, right? Unfortunately, there's actually a third place that my team
+runs code and that's in continuous integration. So anytime we want to merge our code into
+our main branch of our repo, we run various tests and things like that in our own build
+system, kind of like GitHub actions. And so we need to do everything within continuous
+integration as well. And it was at this point that I realized that kind of like, I've been
+possibly blaming a lot of other systems out there, right? I've been complaining a bit
+about GPUs and poetry and all sorts of other things. But part of this is my team's fault
+as well. And so one of our issues that I realized is that we had three entirely separate different
+processes for where our code runs. So when we're local on our laptop, we have one way
+of installing Python. You have to install a dependency manager, install those dependencies
+and then run your tests or run your code. And so there is a very set process for doing
+that on your laptop. But then when you're in CEI, there's an entirely separate process
+for installing Python, an entire separate process for installing those dependencies.
+And there's a little bit of coupling between the two. We kind of use a make file for a
+little bit of this coupling, but not fully. And then within Docker, there's an entirely
+separate process for all of these. And so what this meant was that any time I had to
+change one of these blocks, I had to change it in three different places. And so this
+is maybe a sign that we have not architected our setup in quite the right way. And so I
+realized actually after this that at previous companies that I'd worked at, we had been
+a bit smarter about this. And so one option is that you do all of your CEI within the
+same Docker container that you're going to use when you run your code in the cloud. And
+this actually kind of makes sense because the whole point of CEI is to test your code
+in an environment that's fairly similar to the production environment, kind of like the
+same way that you create a test set with your machine learning model, because you want that
+test to be representative of what's going to actually happen when your model is running
+in the real world. And so one option is to use that exact same Docker container within
+CEI so that you only have like, you know, within that container, you have your method
+of installing Python and the dependencies and everything else. And then this way, we
+actually at least only have two ways of doing this. You can start to collapse this more,
+but I don't know, programming with Docker locally is not great. So what ended up actually
+happening? If you notice, it was August 2022 was when I needed to finish this by. If we
+go back and look at some of our timestamps, you can see that it was July 26, that I sent
+that tweet at Vicki. Next day, I submitted a PR. And my goal was to get that PR reviewed
+by August 3, for the very important reason that I was going to be on vacation, and I
+didn't want to have to worry about this after going on vacation. And sure enough, August
+4, it got merged. I went on vacation and somehow nothing broke. So that's the story of that.
+And you can find me elsewhere on the internet and thank you all.

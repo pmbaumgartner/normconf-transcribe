@@ -1,0 +1,154 @@
+My name is Jeremy Jordan, and I'm a machine learning engineer at Duo Security,
+and as been mentioned, also one of the organizers of the conference.
+So thank you all, everyone for coming out. Thank you all to the speakers that have given
+some wonderful talks today. It's really, really exciting to see everything coming together.
+So today I will be talking about machine learning and rules engines and how they can work together.
+So let's start by walking through the life cycle of a typical machine learning project.
+Let's pretend that we work at an email company and a product manager comes to us and says,
+hey, users are complaining about spam. Can you filter out those messages?
+And so we say, yeah, sure thing. And we get to it. So where do we start? The kind of like the
+standard advice is to start with a rule-based approach and deploy that into your product.
+This is literally rule number one on Google's great guide to machine learning. And there's a
+good reason for that. And that's that machine learning requires ideally labeled data. We don't
+necessarily have the luxury of having that at this stage. So instead, we spend some time to get
+familiar with the problem and build up some domain expertise that we can encode into machine learning.
+We can start off by writing a simple rule that looks for spammy keywords in the email body and
+then deploy that into our product. And now that we've rolled out a spam folder into our product
+and are using that heuristic that we just wrote to decide which content should be placed in that
+folder, we can start to observe user behavior. So we can see when users move emails into the spam
+folder. And we can also see when users move emails out of the spam folder back into the inbox.
+And just like that, now we have a labeled data set to work with. So now we're cooking.
+We have labeled data, a better understanding of the problem we're trying to solve,
+and we can go ahead and replace that simple heuristic with a smarter machine learning model
+to identify spam. So we'll take that data that we observed from user interactions in our product,
+instantiate a model, fit it to our data. Great. Now we have a model that we can use to replace
+that heuristic that we deployed in the first iteration to now improve our product.
+However, I've learned that it doesn't always work this way. And specifically, I've been working in
+the field of cybersecurity for the past five or so years. And working as a machine learning
+engineer, just for some context in cybersecurity, I've mainly been focused on threat detection tasks.
+So this is things like detecting phishing URLs or malware attachments and emails,
+and trying to identify when bad actors might be trying to log into your accounts.
+And threat detection exists in an adversarial environment. As we get better about detecting
+and blocking malicious content, threat actors find new vulnerabilities to exploit. This means
+that the threat landscape is constantly changing, and we need to be able to keep up with those
+evolving threats. And spoiler alert, this is typically done using both tools and machine
+learning, since they each have their own unique advantages, which I want to touch on.
+So, let's talk a little bit about rules. Rules are honestly pretty great. They allow us to
+directly encode our domain knowledge about threats and the threat landscape in the rules that we
+write. We can also easily update those rules to fix false positives quickly when, you know,
+like a customer complains about something getting blocked. Hopefully, you haven't experienced this
+personally, but blocking benign content can be very disruptive, and we definitely want to be able
+to make sure that we can remediate those false positives quickly after we learn about them.
+Rules also allow us to react quickly to new threats. We may learn about a new threat through
+a research briefing and want to provide protection against that threat before we actually see that
+threat in our product data. And if you're curious, like, how that might work, a lot of research
+briefings will include useful information. They call it indicators of compromise, think
+hashes of known bad files, for example, that we could use to quickly write a rule. So, you know,
+just to give you an example, here's a recent threat research report on some new malware variant,
+along with some of the file hashes that we could use to detect known samples. And then, finally,
+rules have interpretable logic, which makes it easier to understand and fine tune the rule,
+and we can look at a given rule and kind of reason about why it classified a piece of content
+a certain way. But machine learning is also pretty great. It's much better at generalizing
+to unseen data. And this is useful in a variety of settings. I've built threat hunting tools that
+leverage machine learning and semantic search that let a threat researcher say something like,
+here's some malicious content that I'm interested in. Can you show me similar examples? Or maybe,
+can you show me examples that have this particular aspect in common? And this can be very useful for
+tracking the evolution of malware, for example, over time, as, you know, those files evolve and
+are changed to try to evade detections. These models can also be useful for, you know, kind of
+just like being able to learn more nuanced, complex decision boundaries than rules might be able to,
+and allow us to discover new threats when we're using them for, you know, classifying malicious
+content. And part of that's because, you know, as I mentioned, we're often very sensitive to false
+positives. So we have to write, when we're crafting rules, we have to make sure that they're
+very high precision. So those rules can usually end up carving out like very narrow areas in
+feature space. So sometimes, like kind of like my mental model is like a model can help fill in some
+of those gaps. And another nice thing about machine learning is we can automate the process of
+figuring out the proper detection logic. So this is simplifying things a bit. But like, you know,
+as long as you have a labeled data set, you can kind of let computers figure out the rest as far
+as like classifying that malicious content goes. And then that aspect becomes very powerful as we
+continue to collect data from product usage, as it enables us to easily retrain our models
+and improve them over time as we collect more data. And that's one thing that you can't really
+do with rules. You can't necessarily take recent product data and call fit on a rule to make it
+better. And then finally, I'd argue that the maintenance costs scale better than rules.
+The maintenance costs for machine learning scales better than rules. I think rules can be great for
+simple logic and capturing low hanging fruit. But you can reach a certain complexity where
+it starts making a lot of sense to leverage machine learning. And so from another perspective,
+just to kind of like help visualize this, if we were to look at a precision recall curve,
+one of the ways I think about this is kind of rules helps us capture some of the low hanging fruit
+and capture threats that are easy to express in a rule. But adding in machine learning to the mix,
+we're able to kind of push out that Pareto frontier and detect more malicious content.
+And again, when we're making locking decisions based on threats, we have to make sure that we're,
+you know, we have extremely high precision. So in practice, adding machine learning models to
+complement the rules really helps us kind of like push out our recall and stop more threats from
+causing users harm. But ultimately, these two systems are strongest when they're used together.
+And I think that's the really important point that I want to emphasize here is that each of
+these two systems have different perspectives on the data. And combining those perspectives gives
+us a unique vantage point. We're able to look at subsets of the data where the model and rules agree
+as well as highlighting subsets of the data where the two systems disagree. And those disagreements
+or discrepancies are really useful tool for triaging human review of data, where we can
+investigate and, you know, go in and attach like a ground truth label to that example. So, for
+example, we can look at a mocked up discrepancy feed here, which compares the outputs of a rules
+engine and a model prediction. And we're able to surface data where the two systems are disagreeing.
+Humans can then come in and review this discrepancy feed and attach an ultimate
+ground truth label to resolve the disagreements and improve the individual detection systems.
+So, for example, we have a row here where the rule classified the data as malicious,
+but the model said it was benign. And after human review, we concluded that it was in fact benign.
+In this case, we now know that we need to go fix that rule to reduce its false positive rate.
+And then in this case, we have a rule also classifying a piece of content as malicious,
+where the model says it's benign. And after human review, we concluded that it is in fact
+a malicious piece of content. And so, we'd want to take that example and maybe some other similar
+examples, make sure they're all labeled, and then include that in some of our training sets,
+so we can retrain that model and improve that model's performance.
+Ultimately, to build kind of an effective threat detection system, we need to have a layer defense.
+And this includes some manual effort, kind of exploring the data and hunting for threats,
+developing rules to encode our domain knowledge of the threats that exist,
+and training models to help scale our detection of malicious content.
+We can leverage discrepancy feeds to help improve our rules and machine learning models.
+And ideally, we can also capture user data and feedback and incorporate that data in our model
+training as well. So, hopefully, you can start to gain an appreciation for the values of both
+rules and machine learning in a threat detection system. And one topic that I've been thinking
+about a lot lately is how we can make this all work well together. So, I'll talk through a couple
+things that I've been thinking about in the past. One is the idea of a single-use model.
+So, I'll talk through a couple things that I've been thinking about here.
+The first is being able to package rules and machine learning models such that they
+look similar at inference time. And this allows us to easily start with a rule and deploy that
+out for a given threat, but just as easily introduce machine learning models kind of in
+parallel as we've collected more labeled data into our detection stack. And there's a really
+cool library by one of our Norm Comp speakers today, Vincent, called Human Learn, which basically
+lets you craft rules and wrap that into a scikit-learn interface. So, if you're at all
+interested, I highly recommend you check it out. Vincent has some great examples and documentation
+to get started on that. And I think it's a very interesting kind of like library and approach to
+making inference look the same. I also think it's incredibly valuable to be able to track
+and evaluate these models and heuristics using common infrastructure. So, after writing a rule,
+you should be able to run it through an evaluation set and capture important metrics for that model
+at the time that you authored that rule. And then after training a machine learning model,
+we can run it through that same evaluation set, capture those same important metrics that we care
+about, and all of our experimentation data and context can easily be stored and discovered in
+a single tool. And then this can also carry over into something like a model registry,
+or I guess in this case, a model plus rules registry, where we can link artifacts back to
+all the data that we have in our experiment tracking system, as well as have a kind of
+centralized control plane for rolling out new artifact versions to production. And this can
+be really useful in quickly answering questions like what models are deployed right now? Did we
+make updates to that one heuristic? And this detection rule seems to be firing a lot. How
+often did it fire in our evaluation set? And then finally, when we have multiple systems
+making judgments about a certain piece of content, we need to be able to combine those outputs into
+a single decision. So this concept of a policy layer, which is kind of responsible for defining
+how those outputs should be combined, becomes important. And in some cases, the policy might be
+super simple, like just a logical or a statement. So if any subsystem classifies a piece of content
+as malicious, then we'll go ahead and block it. Or in other cases, you might have some more complex
+logic here, such as scenarios where you may not trust the machine learning model's output.
+Like maybe that machine learning model has low certainty on a specific piece of data,
+and you want to be able to fall back on the rule system's output. Or let's say the machine
+learning model has a false positive that a customer reported, and you want to be able to
+very quickly remediate that. You might want to be able to override the model's prediction
+for that specific scenario in the policy layer.
+And ultimately, I think as we take a step back to kind of look at the big picture,
+machine learning exists as a part of an overall threat detection system. So if you were just
+listening in to Peter's talk, I thought it was a really great point about kind of like, you know,
+machine learning is the carbon fiber material. And you wouldn't build an entire bridge out of
+carbon fiber, but it's a very useful material that you can use. So in my experience, I haven't
+actually seen the scenario where we replace some initial rule-based logic with the machine learning
+model. Instead, the two systems, at least for threat detection scenarios, the two systems kind
+of work together in a symbiotic fashion. All right, that's all I've got for today. I hope
+you found it interesting to kind of learn a little bit more about the world of threat detection and
+how rules and machine learning models can work together to improve the overall threat detection
+system.

@@ -1,0 +1,282 @@
+My name is Shreya. I am a PhD student at the UC Berkeley Epic Club and I work on
+data management for machine learning. So like very much continuing with the theme
+of what we've been doing today. In previous lives I've been a machine
+learning engineer and the reason that I kind of went to do a PhD is it's like a
+fully funded experience to sit back and fundamentally rethink the way that we do
+things. So that's why I'm here and I'm super excited to share with you what I'm
+thinking about in the last couple of weeks. And this talk is brought to you by
+hundreds of hours of databases, at least studying about databases, machine
+learning debugging, and stable diffusion. So it's no surprise that machine
+learning is kind of taking the world by storm in the way that we develop
+applications across industries, across different sizes of companies, but it's
+not very pretty in practice. I mean we have a whole conference track
+dedicated to this, but there are a bunch of bugs that happen when you have
+machine learning in production. I'll talk about two of some of my favorite. One is
+you have this ML model that takes in a feature that relies on a different part
+of the code base and if an engineer makes a change to that code base that
+causes this kind of get status to fail, how would you know that really? And maybe
+it's failing and it's failing quietly, it's returning like a negative value for
+example, something that kind of doesn't put an error out there and it really
+begs the question, at least the authors of this paper ask, do you know when
+your data gets messed up? Are you able to do that? Who knows? And another kind of
+bug was when a healthcare and company is kind of monitoring patient outcomes and
+they take a lot of vitals through a mobile app logging device and one of
+their patients kind of was just their battery on their phone was dying over
+time and they stopped sending data in. So this is kind of complete opposite, it's
+not that the data is changing, it's that the data is staying the same when you're
+pulling the latest data, you know when you stop getting data. This seems like a
+nightmare to kind of catch all these different bugs out there and I feel like
+we've had this sentiment really in building and debugging ML pipelines
+where it's like when we train an ML model and it works well and we feel
+satisfied that it actually accomplishes something that we want, unfortunately we
+kind of throw the model over the wall, if you've heard that sentiment before, and
+it becomes some sort of ops problem. And what does it mean to have an ops problem
+now? It means you have an engineer out there just sitting there collecting
+bugs, getting super overwhelmed, and most of these ML failures really have nothing
+to do with machine learning. They have something to do with some data
+corruption in the pipeline, some engineering bug as I mentioned earlier,
+but still someone is tasked of identifying that and then
+trying to fix that as quickly as possible. And kind of as Jeremy mentioned
+in the previous talk, when you try to fix things very quickly you tend to use
+rules, you tend to use other things off the shelf, you don't want to go and try
+to retrain a model for every bug that you get, and you end up stitching
+together all sorts of tools, all sorts of different rules, all sorts of different
+filters, and it creates something called a pipeline jungle. I
+really really love this term because it's a jungle really not just of tools,
+it's also a jungle of people. You know this diagram gives me anxiety, I think it
+also gives Vicky anxiety, I'm not even gonna go through it, I'm just gonna put
+it out there. And this diagram also gives me anxiety, it's a jungle of tools. And
+when you have all of these tools, one thing very very terrible about it but
+natural, is you feel like you're getting sold snake oil. At least I felt like I've
+been getting sold snake oil. Last year I went to some networking event and
+someone was telling me they had this new tool where all you had to
+do is add decorators to your functions and then set their dependencies and set
+your schedule, and it's just a few lines of code, but you can get
+some production ML pipeline. And I'm sitting here thinking like okay I don't
+even know if I want to productionize anything but it's a Jupyter Notebook
+that I want to productionize. Another networking event that I went to is
+someone's trying to tell them sell me feature stores and while they might be
+useful for a lot of cases, I was very skeptical, I was very happy with my table
+of features that I was just adding to on a schedule. I didn't really know why I
+needed feature stores but I felt like I was being sold this a lot. And maybe that
+was just me at a startup but I'm sure a lot of people have kind of similar
+experiences here. But it's not just this kind of feeling of getting sold snake
+oil that's a bad thing about pipeline jungles. Lots and lots of reasons why
+pipeline jungles suck, you know, onboarding sucks. There are tons and
+tons of bugs that come up out there. It takes forever to go and diagnose a bug
+where you don't even know where it is. And at least this is my opinion, I
+really think it requires some sort of PhD or equivalent of experience. You know
+you work for so many years and collect all this expertise just to be able to
+maintain or have hope of maintaining these pipelines in production. I can
+think of, you can think of many many more. But the goal of this talk really is to
+give you a data practitioner or software engineer without like a PhD in machine
+learning, someone who's not training machine learning models but you're
+working on ML-powered software. I want to give you maybe a new different
+framework for interpreting ML bugs. And kind of spoiler alert, it has to do with
+materialized views. So before we get into it, at least before we get into the new
+view of ML bugs, I want to talk about how we kind of get to pipeline jungles in
+the first place. I have this section called Jupiter notebook, from Jupiter
+notebook to pipeline jungle. And I took this example from a paper that I wrote
+earlier this year. But the first kind of step in ML is just to identify, you know,
+is ML even the correct pop or ML even the correct tool for you to solve this
+problem? Can you actually train a model that gets good performance on some set
+of data? So maybe we open up a notebook, we experiment, you know, we do EDA,
+exploratory data analysis. And this is, this example is also just taken from the
+internet, scraped from GitHub. And we create this notebook and maybe we do
+decide that, you know, this model outputs something reasonable, and we want to go
+ahead and productionize it. And we have different kind of components in this
+notebook workflow. And what does it mean to really productionize something like
+this? So one mode of production ML, I call single use production ML. And that
+is I want to take the results from this workflow and present them to someone
+else or have that kind of implicitly inform business decisions. So maybe I
+clean it up, get rid of my EDA, and I only include the relevant code. And then
+I submit these results and I am happy I call it a day. And that's great. There's
+also a different, another mode of production ML, which I'll call multiple
+use production ML, which is I want to run this on a regular basis when the
+underlying data is training, or sorry, underlying data is changing. I want to
+run this regularly, I want it to continually provide value, and I want to
+do it with some form of low latency. So I want to take the same thing. And I kind
+of want to construct some directed acyclic graph, a DAG out of these
+different nodes. And I don't have the tags here, but the same like data loading
+tag and the same fitting the model tag. But there are also in multiple use
+production ML, there are also different stages that we need to do, especially if
+we're getting continually changing data, right, we need to do data cleaning or
+some sort of validation. Maybe we have an inference node, quote unquote, serves a
+model. And very, very quickly, you go from something like this to something
+like this. And this is taken from a blog post from Uber a while back that was
+motivating feature stores. And the idea here is you have this DAG of dependent
+or you have this DAG of nodes that need to run in order to be able to serve real
+time, or even like low latency predictions, you have your model, you
+have your data preparation, and you have your inference. And maybe you start out
+with something like this just to meet your like online requirements. But as
+kind of ML engineers observe new bugs that come in over time, they need to
+react quickly, right? So they how do you patch this whole pipeline up to prevent
+against failure modes in the future. And an interview study that I did quite
+recently, I love this quote. But whenever they deployed their model, it was a
+chatbot like customer service kind of model. And someone would ask the model
+the language model, like what time is the business open, the model will
+hallucinate sometime 9am, something that like kind of looks right on the surface.
+But if you look at kind of the website of that business, it's not going to be
+it's making up times. So the ML engineer responsible for this, you know, if they
+they filtered the output, if they detected time, they filtered the reply,
+they referred them to the website, rather than try to fine tune the model on every
+single customer or every single business's web page. So what ends up
+happening in the pipeline is you end up adding filters. And after the inference,
+sometimes you add filters even like before the model, if you can kind of
+detect that the data asked for something like time. So you can see how these kinds
+of pipelines will get to something that is this like amalgamation of ML models
+and filters. So now now argue that this kind of DAG is not really great. It
+gives us a headache, gives us meaning ML engineers, for a lot of reasons.
+Current ML pipeline DAG suck, because they for one, require low level
+scheduling. So for every task in that diagram before, I need to set a schedule,
+like maybe I use airflow, I use some cron thing, I need to make sure that we
+materialize each single one, each single tasks outputs on the schedule. Then most
+of these tasks run on different schedules. And that's not like it makes
+sense that it does run on different schedule, like data ingestion, for
+example, runs maybe every day, but model retraining might run like every week.
+Maybe the model retraining step even take several weeks. And so maybe it's run
+every month. So given like compute requirements, just like organizational
+requirements, also, these tasks end up running on different schedules. And then
+when you have these kind of low level DAG requirements, people now have to
+handle consistency on their own, right? What do you do when a task fails? What
+do you do when someone changes the code? Do you go and backfill old outputs? All
+of these questions now come up, and especially when you have rotating ML
+engineers, right? Like that's an incredible amount of knowledge that you
+need to share just to make sure that this works. It requires constant
+constant babysitting and monitoring, which absolutely no one wants to do. And
+now I'll argue that these DAGs kind of are the way they are because they're
+quite training centric. What is training centric mean? It means that your
+workflow starts with, you know, the goal of the workflow in the beginning is to
+understand whether a model can achieve good performance. So everything is about
+the model, be it data centric, model centric, whatever. It's about getting
+good model that gets good validation set performance. And in this training
+centric approach, right, recall like the Jupyter Notebook that I showed you
+earlier, you do some sort of data preparation, you run experiments. And
+this part is like really where you spend most of your initial time, right? Like
+can you even get a bottle that will work? Is ML a good use here? And then
+once you're satisfied with that, you can get the best model artifact and then
+throw it over the wall, hand off this artifact for deployment. What does this
+look like in the pipeline setting? It means your model or your kind of
+training job, your retraining job is really written first. Your predict job
+is written second, your data preparation and cleaning is written third. And then
+finally, all the online stuff, like the queries in itself, are an afterthought.
+This is not great. So maybe I'll maybe I'll present to you an alternative view
+the idealistic view of how we would want to do machine learning, the query
+centric approach. So what does this look like? It means so that this is
+actually a way to forget kind of how you've been taught ML in the past,
+this forget that training centric approach. Completely different way of
+thinking about using machine learning in software systems is to think from the
+perspective on the query. When a new example, when a new query arrives, what
+we want to do is retrieve the historical examples that were similar to that or
+retrieve the historical examples of the same schema per se, fit a model to
+these historical examples, maybe all of them, and then use this model on the
+new example to surface the prediction and return that prediction to the end
+user. So I'll keep this diagram here for a little bit. The idea here is we
+want to, I know it sounds crazy, the idea of training a different model for
+every query, but conceptually, like this is how we want to think about machine
+learning, right? It's when you get a new data point and fit a model to your
+existing data points, and then return a prediction. We can't do that. We're not
+even close to this yet, right? Obviously, this is the highest latency policy you
+could ever imagine. There's a huge gap between these training centric and query
+centric worlds. I'm not going to argue that you should be doing this. That's
+like the goal of research really is to figure out how we can move closer to
+this world. But what is the gap between the training centric and query centric
+worlds? In the training centric world, fitting the initial bottle is really
+an experimental process. Like, can we even get a good model? What is the best
+model even look like? What are the best minimal, like, what is a good set of
+features? All sorts of things, right? In the training centric world, the model in
+itself is really an artifact. Whereas in the query centric world, the kind of
+training set, the store of all examples, that is mainly the artifact that we want
+to manage in production over time. In training centric worlds, your tasks are
+recomputed inconsistently, right? Data preparation is run differently than model
+retraining. So those maybe run batch offline, different schedules. But in the
+query centric world, right, once you get a new query, kind of everything, all of
+your data is as fresh as possible. It's clean, it's whatever. We have those kind
+of guarantees. And you've seen this word consistency, consistent data all over my
+slides. So this smells a lot like a data management problem, right? What does it
+mean to have consistency in DAX? So now I will kind of pitch ML engineering to you
+as materialized view maintenance. And don't worry too much if you don't
+remember what views are, materialized views are. I'll do a very brief
+refresher. So suppose you have a table, something like this. So tables, like you
+are all familiar with this data structure of rows and columns stored in your
+database. So a view is kind of a virtual manipulation of this data. So it's kind of
+formed as a result of a query, but it's not stored separately. You can query this
+view as you would query a table. And when you do query the view, then the outputs of
+this view is then materialized or created when it's queried. So then the question
+becomes, okay, like what is materialized views even mean? What is, how do we do
+that? So materialized views are stored in the database. And they're computed when
+you initially define that view and on base updates to the table. So every time I
+add a row to the new table, then I recompute my view. There's a ton of open
+problems or open questions in materialized view maintenance. So you're
+wondering, well, how does this apply to ML pipeline land? Materialized views in
+the literature really are just some form of derived data. So same thing with ML
+pipelines, right? When I issue a query to an ML pipeline, that prediction is some
+result of transformations of the data. So in the ML pipeline world, we can think
+of views as kind of the training sets and the models that we are creating. And
+the idea of view maintenance, which maintain these views, is this crazy DAG
+that we're building to update the training sets in models as we get new
+data points. And views can be kind of maintained, updated, all sorts of
+different ways. You can do it immediately. You can do it in batch, like deferred
+view maintenance. So retraining is almost always done in a batch setting. You can,
+every time you need to recompute your view, materialize it on every update to a
+base table. You can materialize a whole thing from scratch. So retrain the whole
+model from scratch, for example. Or you can kind of write custom operators to
+incrementally materialize them. So try to, this is super, super tedious, right?
+Because you have to maintain some state. You have to maintain what you will do on
+update. That's different from the initial, that requires custom logic. So, you know,
+food for thought, what is low latency, right? If you do things in batch, that's
+low latency. If you redo things from scratch the whole time,
+that's easy to code up. So you can think about that later. But whole crux of my
+argument now is that in these kind of ML DAGs, you have these inconsistent
+materialized view maintenance policies. So when you're training models in
+development, you're working off of like immediately materialized features,
+right? Like things that can make you iterate as quickly as possible. But when
+we're training a production, since we're retraining on a cadence oftentimes, we
+have this like, it's deferred view maintenance. Like this cadence kind of
+comes out of thin air. And, you know, when we're issuing online queries,
+we can't really, it's not the same assumption as this immediate maintenance
+in development. And then when you're serving in prod, maybe some of your
+features are immediately materialized, right? They're done online. Maybe you're
+querying your batched features or joining with some batch features. So you have this
+like hodgepodge of immediate and deferred policies. And we're using some
+retrained model. So you have all these like crazy mismatch in policies, and
+it's really no wonder that we get so many bugs. At least if you get anything
+from this talk, that should be, this should be it. Like no wonder we get so
+many bugs. It makes a lot of sense. So now, I know I have only a few minutes
+left. So I'll finish in two minutes, I promise. But if you think about
+recasting kind of ML bugs as view maintenance challenges, you can think
+about them, some of them as view saleness problems, right? When you're doing,
+you're materializing outputs offline in batch, you might get trained
+serves queue, right? You need to make sure that your model is retrained as kind of
+frequently as possible. In the interview study that I did, I love one of these
+quotes, the retraining cadence was just like finger to the wind. I almost never
+see like a very principled way of figuring out what the retraining cadence
+is. And you get kind of these feedback delays also. So if labels are done, if
+humans are in the loop, like labeling data, and labels only come in every
+couple of weeks or so, right? This will make your training sets stale. Your
+models will be stale, even in offline, right? So how do we kind of think about
+that or reason about that? Then we also have view correctness problems, right? If
+I run inference on bad quality data, if I retrain a model on bad quality data,
+right? Like all ensuing predictions from that model are also going to be bad.
+I have a paper on that coming up soon. And data errors really compound, right,
+over time. If you have a data, if you have error ingestion, right, like the error
+just grows as you move throughout the pipeline. So are you really, you got to
+implement data validation and monitoring at every stage in your pipeline. And
+then finally, kind of bugs that arise from the dev-prod gap. This is stuff
+that I never thought about when I was an ML engineer. But it was my validation and
+development time equivalent to kind of how I served at prod. So for this
+retraining cadence, did my validation set have the same number of examples that I
+would serve in production, the same representation, like same subpopulations,
+etc. Was my validation set in development time sampled like a contiguous sample of
+production queries? This was almost never the case at the company that I
+previously worked out. I almost always saw random train test splits. This is not
+the same way that you would kind of monitor performance and production. And
+finally, are you verifying this when you're promoting from development to
+production, like in your CI? I'll skip through this almost, but this is really
+just kind of tips and tricks for if you're an ML infrastructure engineer.
+Validate everywhere, as I mentioned before, version data, training sets, and
+code together. Make it super easy to check out old versions. If I time
+traveled back to last week, can I get a view of the pipeline? Everything in the
+pipeline of that week. This is super hard to do, but very important to kind of
+get debugging in provenance as first class citizens. And with that, thanks so
+much.

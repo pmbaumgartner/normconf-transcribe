@@ -1,0 +1,374 @@
+I am a data science consultant, especially doing NLP these days, along with a bunch of
+other data science-y problems.
+I also used to do data visualization and in fact ran a conference called OpenVizConf a
+few years ago, which was less well organized than this.
+So kudos to you guys.
+I have also been a professor at various points, but talk about a difficult job.
+And these days I do a lot with creative AI, which my newsletter reflects as well.
+So I work part-time with Google Arts and Culture and other clients.
+And I'm going to talk a little bit about some of them today, because I've had some interesting
+problems with them.
+I've got a lot in this deck, and I'm probably going to go kind of fast.
+I'm not going to spend a ton of time on the code examples.
+But having been a professor, I believe solidly in giving code examples, and I spend a lot
+of my days looking for them online.
+So there's going to be a bunch of code, including stuff I'm not going to cover in my repo, that
+will be linked from these slides.
+So you can find how to do things from that.
+And this is the essential plan.
+The last one, Misk Life Tips, is some of the tools I use that helped me solve some of the
+problems I'm going to show today.
+And we may not get to it.
+We'll see.
+So I'm going to use today a bunch of data related to text to image.
+So unless you're living under a rock, you know about these models where you can type
+in a phrase of what you want to see, and then you get an image out at the end.
+Stable diffusion is the most popular open source model.
+And there are a bunch of repos of prompts that people have typed in, including this
+one, which is Lexica.
+So I'm going to use a sample of these for some of my examples today, just so you know
+what's coming.
+The first technique I want to talk about is called UMAP, which is a data visualization
+technique.
+This is incredibly useful for exploratory analysis.
+I've been using this technique of dimensionality reduction for a while.
+And before it was UMAP, it was T-S-N-E, which people call t-S-N-E, which drives me nuts
+for some reason.
+But anyway, we've got UMAP now, which is a little bit better, although related, as papers
+have shown.
+And it's something that allows you to get a glimpse of your data, big picture text data,
+and really impresses clients, just as a side note.
+This is an old, not very pretty or sexy picture that I made using T-S-N-E.
+This is a word to Vec embedding of a bunch of poetry on Gutenberg books.
+So open source poetry.
+Allison Parrish collected all of this and turned it into a corpus that people use for
+various creative text projects.
+I was using it for a talk a few years ago, and then later was using the same corpus for
+a text generation project.
+And the first thing I did was this T-S-N-E display of that poetry colored by date.
+So this is words, not sentences, embedded using Word2Vec.
+And then I mean, it's a blob.
+It's not like a good separation of anything.
+But the coloring and the sort of shape of it helped me discover something that I had
+suspected when I was playing with the data in a generation algorithm.
+In particular, this blob on the lower left is like archaic, Latin, old English types
+of things, which basically were screwing up a lot of my output in this project.
+And having made this picture and done this color coding, I was able to clean the dataset
+to turn it into something a little bit more modern, which is what I actually needed.
+So this was a tremendously useful display for me at the time.
+I do this all the time still.
+Now frequently it's with sentences or in this case prompts.
+So this is prompts in this online dataset that I'm going to be talking about, where
+basically in this case I was looking at a subset with I think the word body was the
+subset that I picked for reasons that will become clear.
+And I did this interactive display so that I could take a look at how was the word body
+appearing in these prompts.
+And in particular, is it a bad use?
+Because I was interested in not safe for work content detection.
+Making these interactive things like the little GIF I just showed is actually incredibly easy
+these days.
+The tools are just getting better and better.
+It's very easy with sentence transformers to just pick whatever model you want.
+Body prompts in this code example is just all of the text strings that have the word
+body in them.
+We do our model encoding.
+Then we run it through UMAP, which is this dimensionality reduction algorithm that Leland
+McKinnis published.
+And that gets us XY coordinates, a two dimensional matrix, which we can turn into an interactive
+plot.
+Doing the interactive plot code is actually surprisingly easy.
+I mean, I'll put this in my repo.
+But basically we're going to use this library called Bokeh.
+And the thing that's cool about this library in particular is that you can either output
+in your notebook, in your Jupyter notebook, or you can make a file.
+And the file is self-contained.
+So you can send it to a client or show it later or save it in your repo.
+And it's fully interactive where you can mouse over the text and see what the text is.
+So you can put HTML on the tooltips if you want.
+So that's that little hand symbol that you see there.
+That's me putting some HTML in.
+So it's really, really easy.
+This is another couple of examples.
+This is a different dataset where I was looking at the use of the word blood in these prompts
+because I was concerned about whether blood was being used in a really gory way or whether
+it was just sort of generic.
+And it turned out, actually, that very few of them were really gory.
+A lot of it was very generic.
+So in particular, down at the very bottom is a lot of references here to blood moon,
+which is just a phrase, right?
+It's not especially about blood.
+So one of the things I end up doing a lot with these plots is sort of a crappy labeling
+where I basically outline what's happening where on the plot in terms of content.
+This is painful.
+And involves, you know, doing sort of XY coordinates, getting an average, or just doing
+it by hand.
+So this over here on the right is one where I took this is a bunch of books, and I did
+various averaging over the books for genre purposes.
+And the authors are the color coding here.
+And then I went into Photoshop and I did a really, really careful labeling job with all
+the content.
+So that takes a long time.
+And I mean, hopefully the tools for doing this are going to get better and better.
+The libraries for doing this are getting better and better.
+It's super powerful when it's presented nicely.
+And the interactive side of it is very cool, too.
+So you might have seen this thing from Nomic AI, which is actually Ben Schmidt, who's a
+digital humanities guy who's essentially a data viz genius.
+He did this thing with all of these prompts from CREA.ai's stable diffusion search engine.
+It's very cool.
+All right.
+So relatedly, our previous speaker, Vincent Warmerdon, he's been working on a tool called
+bulk that supports selecting from one of these in order to do labeling or to help with labeling
+in a kind of weak supervision method, which I had been doing before.
+So as soon as he released this library, I sent him like six issues of feature requests.
+And then Leland McInnis, the UMAP guy, is also working on a library called this.that,
+which might actually end up being better for data viz artifact creation.
+I don't know.
+I haven't had time to dig into it.
+But it looks like it's really cool.
+So that's essentially one of my main tips is like if you do these displays, which are
+not actually hard to make anymore, you can get a whole lot of mileage out of them.
+They're fun and people like them.
+And you can make them look really good.
+Okay.
+So leaving behind the fun and not hard to make, let's talk about like real entity recognition
+issues in the wild.
+I've had two client issues this past year that are that raised so many issues around
+the tooling and the decision making and the design of these problems in this problem space.
+So here's one of the client problems.
+Suppose you want to see trends in searches in these prompts.
+So you have prompts like you see here from Lexica where people are visualizing content,
+like in this case, castles, and they're putting in names of artists that they're interested
+in using as sort of inspirations.
+We all know that this is like a vexed issue in terms of artist citations.
+So suppose you want to track who's being used in these artist names.
+Well, that's an entity recognition problem, right?
+It's also kind of hard for various reasons.
+I mean, right out of the box, it looks like it ought to be easy.
+But here's why it gets hard.
+So I took 80,000 stable diffusion prompts and the repo link is shown there.
+There's much bigger sets out there.
+But for the purpose of this talk, I didn't want to use a big set.
+Went through Spacey, a natural language processing library, and got these totals.
+So right away, you can see the ones in red are essentially the same artist.
+Art germ, art germ, Stanley, art germ, it would be probably in quotes there.
+So like this is one of those immediate questions that you hit immediately when you do one of
+these projects, which is what do we do about that?
+I want to point out for people who know about using databases of entities to disambiguate
+or to link, a lot of these artists aren't in Wikipedia.
+You have to go to other places to get any kind of canonical reference ID or page for
+them.
+So yeah.
+The thing that comes up quickly with this kind of project is what are you going to do
+with these?
+Like, what do you care about when you want to look for entities like that?
+So for instance, this is Mastodon's Spark lines showing trending terms, hashtags on
+one of the servers.
+So in this case, like, probably they don't care at Mastodon, but we might care from an
+NLP or data science perspective.
+Do we care that people don't know what the right term is?
+So for the natural language conference, EMNLP, do we care that people are using both EMNLP
+2022 and without the 2022?
+Should those be in some sense merged or not?
+So this is essentially an entity resolution problem.
+And the other question is, like, do you want to know the truth about what people are typing?
+Or do you want to know what, like, do you want to know what they're actually typing
+in terms of how they type it out, the string, including mistakes?
+Or how they refer to our term?
+Do they know that it's Stanley Lau?
+And so all these questions come up quickly about, like, what is truth and what are you
+going to be accurate with respect to in the data?
+You hit these problems immediately with this kind of project.
+So like I said, entity resolution is what we're talking about here, where we're usually
+talking about techniques that sort of identify, group, and link things to some object in the
+real world.
+So there is some artist who is Art Germ, and how do we talk about him?
+Or how do people talk about him?
+And do we care about the differences in how they talk about him or not?
+So that's where the UI and the sort of system design part of it comes in.
+This is a huge topic of research and of tooling and companies have solutions, et cetera.
+I'm a person.
+I'm not a company.
+Well, I am technically.
+But you know what I mean.
+So you end up doing research on, like, what are the best ways to deal with this?
+You've only got a certain number of hours or days for the client or whatever.
+There's a bunch of papers and links that you can follow on this.
+But some of the issues that you're going to come up with, you've done your named entity
+recognition.
+You've got in that data, you've got misspellings or orthographic variants that you found.
+Like Leonardo da Vinci might be written in any number of ways.
+There might be misspellings, like Leonardo da Vinci.
+Looks like probably they're trying to refer to the same person.
+Maybe not in some cases.
+And then we have things like name and label variants that are all true but are different.
+So this comes up a lot in researching things related to women's names.
+So Mrs. Smith, Mrs. John Smith, Pamela Smith, Mae Austin, these are all potentially the
+same person.
+They're referred to, unfortunately, with a man's name in some cases.
+So your entity resolution situation has to handle these, right?
+Then there's misrecognitions of the model.
+So for instance, Mary's, it's actually Mary that's the entity, but this particular spacing
+model I was using often had an apostrophe S merged in with the token.
+Coreference.
+So this is essentially another problem that sometimes clients care about and sometimes
+they don't.
+So Barry the bat was a fun guy.
+Barry partied all night.
+Barry the bat and Barry are referring to the same entity with different strings.
+So this is also classic with full names in journalism and then you use the last name
+to refer to somebody.
+So sometimes clients want those merged and sometimes they don't.
+You need a coreference detector to handle that.
+Or crappy heuristics, which is what I end up doing a lot.
+All right.
+So tooling to handle this.
+So if you're just interested in counting and merging things, there's a whole bunch of tools
+out there that I've used a lot.
+One of them is the string grouper tool, which has various algorithms for how it tries to
+merge strings that might be the same.
+So it's a cool repo.
+I recommend looking at it.
+And you can do things like get what the similarity threshold is, use different algorithms, et
+cetera.
+So what essentially you're seeing here is I've run this thing over my list of artists
+or names from that data.
+And on the left is the original string and on the right it says right name.
+That's the first mention in the group that it made that it's saying these are all probably
+the same thing.
+So you can see down at the bottom, Krenz Koshart, et cetera, et cetera, et cetera.
+They're all basically the same.
+Now you're going to find that you have errors in your data.
+So those are the apostrophe S's, et cetera.
+Some of them are just bad.
+You might want to use a different tool.
+So here we're looking at like a combined list of who are the biggest groups.
+So Greg Rutkowski, Franz Puka had the biggest number of different variants, et cetera.
+Notice that not all of these are artists, some of them are content of the image like
+Emma Watson.
+So do you care is the question.
+So some of these things also have to be done by hand.
+So for instance, for big string differences, things like Price Waterhouse Cooper, PwC is
+a valid way of referring to it.
+So you have to actually create a dictionary that says this is a thing that also is this
+thing.
+So the by hand thing is super vexed.
+You have to do this a lot, it turns out.
+So James Jean and James Dean are not the same person.
+One is an actor and one is an artist.
+But string similarity would say that they should be grouped together and you're going
+to have to manage that.
+So you end up doing a ton of by hand stuff and maintaining databases and sort of lists
+of entities.
+It's just a problem in this space that you have to do that.
+And the tooling around this isn't superb.
+I just end up in dictionaries and lists a lot.
+It's a big problem.
+One of the I'm going to skip this and move on to the next example.
+So one of the tools that I use actually, this is very norm conf, is OpenRefine.
+So this is a GUI tool for helping you deal with data problems and sort of merge them
+and manage them.
+This is a great tool because I can just decide in this label, like right there in the list,
+how do I want to call that group and fix the string labeling issues.
+It requires a number of steps.
+And essentially what you want to do is you do this cluster and edit thing.
+And I recommend a sort of a workflow where you keep the original entity over in another
+column and then you work off this column and then you end up with a mapping so that you
+can use them later in a tool.
+All right.
+So wow.
+I'm definitely not going to get through all my slides.
+I knew this was coming.
+So basically you'll be able to manage a dictionary of the original and the merged and export
+the data and deal with it.
+One of the things, one of the reasons I want to talk about that is because dealing with
+rules is actually a big thing in NLP, at least in my world of NLP.
+You end up having to augment models with rules quite a lot.
+So, so, Spacy has a bunch of tools for helping you deal with this because you can write patterns
+and define rules that you can use as part of your pipeline in Spacy, which is super
+useful.
+So the entity ruler in particular allows you to say that this art germ version is also
+this art germ version with an ID.
+There's a whole bunch of docs and tooling around this that you can look at.
+So I'm now going to switch to this body prompts issue and the not safe for work classification
+problem that I was working on for one client.
+So say you have 8 million unlabeled examples and you're trying to work on a not safe for
+work porn classifier for these prompts.
+It turns out that one of the things that some of the moderators dealing with this data were
+looking at was mentions of porn stars.
+It turned out that that was actually not a bad idea.
+And in fact, in a lot of the cleaned up repos of this kind of data, the porn stars are still
+in there because nobody thought of ruling them out as content problems.
+So for instance, in this data set I was looking at.
+And let's talk about why that is.
+So the text itself is not bad, but the output image will probably be bad because it's been
+trained on photos of porn stars.
+So this is like, I was like, okay, this is an obvious gazetteer problem.
+I just need a list of porn stars.
+Where am I going to get a list of porn stars?
+Well, it turns out Wikipedia is excellent at this.
+Why might that be?
+Well, that's because an awful lot of editors of Wikipedia are white men.
+And so it's just a known fact that the Androzon women porn stars are amazing.
+So this turns out to be a very good database for getting lists of porn stars.
+So Chris Alvin is talking later.
+Someone give him shit about this.
+So what I did, and this is something that a tool like Spacey will allow you to do, is
+you basically take a classifier that doesn't necessarily know enough about, say, porn stars,
+and you add them in as rules because you have this ability to do rules, and then you basically
+can override the text classification in case it doesn't know about the porn star and say,
+this is actually bad stuff.
+So I've spent a bunch of time doing, like, these creative modifications of pipelines
+in Spacey, and this is one of them.
+So I'm here to tell you how to do that.
+So basically all you have to do is define your own component that says, if I have a
+label that's a porn person, I'm going to call that a positive classification for porn, regardless
+of what the model did.
+And this is the crucial thing.
+It's like override the model and just don't allow it in this case.
+So you can get the code from my repo or from the slides, but basically we load in a trained
+text cat model, and then we define our rules for all the porn people, and we say override
+and use those rules for the porn person instead.
+This is just tremendously useful.
+So for instance, I can have coffee with Mia Khalifa in the coffee shop and come out with
+these entities.
+One of them is a porn person, so the classification is definitely, like, this is not safe for
+work.
+Whereas, otherwise, if it's not a porn person, I get sort of ordinary entities, and then
+I'm fine.
+I've learned a lot about doing really, really wacky things with Spacey pipelines, some of
+which would not be probably approved of by the Spacey explosion team, but basically here
+we are.
+So a bunch of examples in my code in the repo.
+And I just want to wrap up.
+So Peter Baumgartner, who's also speaking later, has a great post about rules in NLP.
+And I mean, it's essentially the process you kind of want to go through is sort of this,
+which is you use rules to help yourself train a model, and then you review your errors,
+you fix and improve your model.
+This is fantastic, but also you might want to keep the rules around.
+So in this case, I mean, rules are fragile, and in this kind of context, you probably
+want to have, like, absolutely call it porn or call it not safe for work if this name
+comes up.
+You don't want to allow the model to be unsure.
+You just want to say this is blocked.
+There are a ton of Spacey resources.
+I have become an expert on digging through them.
+You definitely want to use my list if you aren't up to date with how to use Spacey and
+how to learn among their tools.
+There's a lot of information sort of floating around.
+There's a giant scary flow chart, which I'll show you a glimpse of in a second, but it's
+very, very useful.
+They have a customized labeling tool, and essentially they're like great people, and
+two of them are speaking here.
+So obviously they're excellent.
+This is only a part of the giant scary flow chart, but it is tremendously useful.
+Sorry to jump in, Lynn.
+It would be a shame if we didn't get to any questions.
+We've got a real quick one for you.
+Have you found that there are some sentence embedding models that work better out of the
+box for the purposes of UMAT?
+So I just try a bunch, because like I said, it's an exploratory method for me, so I just
+try a few until I see if I can see clusters.
+But the problem is that with UMAP, you also have a bunch of different things you can control
+in the settings.
+So you can end up iterating a lot until you get to the point that you like your picture.

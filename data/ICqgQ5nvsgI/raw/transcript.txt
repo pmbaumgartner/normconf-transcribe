@@ -1,0 +1,464 @@
+Thank you all for having me here today.
+I'm super excited to be talking about the physics of data,
+two of my favorite subjects combined.
+So let's talk about how I actually got here.
+I got into computers through physics and math.
+The world of physics and math is so wonderful
+because the world is modeled through equations
+that reflect what's going on in the world beautifully.
+You don't actually need to get into a lot of
+the intricacies of thinking about how a computer functions
+when you're doing those computations.
+Generally, when I was working in the world
+of physics and math, I thought about working in industry.
+And in industry, I really had this image of like,
+oh, you don't really need to understand how,
+like you're just working at algorithms and making models
+and letting computers compute.
+But you then join industry and it's like
+horrifying reality hits you one day.
+You know, someone comes up to you and they're like,
+why is your job so slow?
+Why does it cost so much?
+Or maybe you're trying to escape from the dinosaurs
+that are free in the theme park you're in.
+And you realize you really need to know
+how a computer functions to actually do your job.
+So let's start first with relative orders of magnitude
+because these orders of magnitude of operations
+really drive the constraints of the system.
+So in 2012, Jeff Dean published a list of numbers
+called Numbers Everyone Should Know.
+I have it here on the left.
+It's kind of small, so I pulled out.
+Some of the operations that I think are interesting.
+There's a few things to notice here.
+Number one, it takes a while to send data somewhere
+over a network and get it back.
+And it takes longer the longer the distance.
+So a data sent around trip versus a packet from California
+to another one to California again.
+Reading data, also slow, but a sequential read
+of approximately a megabyte is only twice
+the length of time as a disk speed
+to actually like go find data on a disk somewhere.
+And then I kind of summarize these like CPU operations,
+things that are close to CPU and RAM,
+where you have a L1 cache reference
+or a branch misprediction in CPU.
+These are fast.
+So when we think about data,
+the first thing we want to recognize
+is that we want to move it around as little as possible
+because it's incredibly slow.
+I've included a link down here
+and you can get access to my slides later
+for a great reference where you can see
+these numbers over time.
+These numbers are old, they're 2012.
+That's really the relative magnitude
+that I'm interested in.
+So let's start with some very norm data processing.
+If you work at a company,
+very norm data processing means you first query data
+that lives in the data warehouse somewhere.
+Usually this is data spread across a few servers,
+maybe there's a bunch of different tables,
+maybe you have a large amount of data.
+And then after some querying,
+you maybe aggregate it to a point
+that you're gonna do some math on a single machine.
+Maybe it's your laptop,
+maybe it's some math in the data warehouse
+or in the cloud, whatever that is.
+So I'm gonna break this up into two parts.
+The first part, I'm gonna talk about querying data
+in the data warehouse and implications there.
+So the question is how fast can we move?
+And this is kind of about the physics of data,
+but also about pictures that I think are funny.
+And so IBM has this photo
+that they are letting me use very generously.
+I planned it up in advance to ask.
+This is four dudes moving a raw Mac 305 into a truck
+because this is how they move five megabytes at a time.
+Very difficult, it can only go as fast as a text scan.
+Well, actually that's not quite true.
+You could also load it into a plane
+and a plane would be faster.
+And I think maybe an interesting thing to note here
+is that the cylindrical object there
+is actually a disc of magnetic platters
+that record the bits, the bytes of data
+of this data processing machine.
+And that's how they're read off of them.
+And so this might remind you of something.
+This is like a closeup of a raw Mac 305
+at the Computer History Museum that they're restoring.
+And these like cylindrical shaped platter disc
+is where the image of the database logo icon
+that you see in every architecture diagram
+actually gets its image from.
+So much as the kids of today don't know
+that the save icon is a floppy disc,
+I didn't really know this was related
+until someone told me.
+So I hope you enjoy that.
+And so you might think to yourself,
+oh, surely technology has improved.
+Things have gotten so much faster.
+But in fact, if you have about a hundred petabytes
+and you need to move some data into AWS,
+they will send you a semi truck
+and take all of your data,
+load it into the semi truck and drive it
+to their data center.
+So while it is much faster to move five megabytes,
+there's still bandwidth limits.
+So what does this actually mean
+for querying the data warehouse?
+Well, first of all,
+we want to move things as little as possible.
+And so that means doing work as close as possible
+to where the data lives.
+Netflix actually does exactly this.
+And I'm not gonna talk to our data processing team at all.
+Instead of Netflix,
+you watch movies at home on your TVs,
+you stream those movies to your TVs from somewhere.
+And like I just said,
+it's actually quite expensive and difficult
+to move large amounts of data around.
+And so when Netflix has done and built its own CDN,
+we know that we have people all over the world
+that will be reading these files,
+streaming the data to them.
+So a very read heavy workload.
+We feel very comfortable making copies of these files
+all over the world.
+So we actually partner with ISPs,
+put little boxes inside of the ISPs
+and cache films that we think people nearby
+will want to see.
+And when you request it,
+you actually stream it from somewhere much closer.
+And so the distance that we're sending data
+is much shorter.
+And so I think this is kind of fascinating
+because it is a read heavy workload,
+much like analytic workloads.
+It doesn't really matter if we have copies
+and you're not like trying to make changes or transactions.
+This is kind of exactly the concept of data locality,
+except distributed all over the world.
+So let's talk a little bit more about data locality.
+Data locality means a few things.
+One is that you've organized your data really well
+so that your work and your processing happens close by.
+So good data organization,
+but also the best kind of data
+is less data than you have today.
+And so you really, you know, data, wonderful, great,
+but maybe think about storing lots of it,
+both for data governance, data privacy,
+but also reading one megabyte sequentially off disk.
+It doesn't matter how you've imported it.
+It doesn't matter how you've compressed it.
+You still have all these CPU cycles
+relative to reading off of this.
+And so having good encoding and compression
+can really help us storing literally less of it.
+Let's talk about what a hard drive actually looks like.
+In the raw Mac 305, we saw these magnetic platters.
+In computers, at least, I mean,
+nowadays on a laptop, you'll get an SSD.
+Whole other story, but also like Asterisk,
+kind of not sequential reads are still faster on SSD.
+On a hard drive, we have here this magnetic disk
+and we have a reader head, this yellow,
+like that yellow area that will move to the position
+that it needs to read.
+The disk is spinning and it has to wait
+until the right position comes around again
+to begin the sequential read.
+So really we're trying to move around the reader head
+as little as possible.
+And just read sequentially.
+So that brings up the question like,
+well, if we want to read sequentially,
+what are the workloads that we're usually doing?
+Let's talk about table layouts.
+We have a few tables, there's rows and columns
+in these tables.
+We might want to aggregate all of these,
+like what is the average of column B?
+Maybe that's how much a certain transaction costs.
+Maybe column C is like what state or country people are in.
+Maybe we want to group by.
+And so we're doing scans over these columns, right?
+There's a few different ways we can think about
+actually storing these data in a file.
+One is we could take every row
+and store the rows in sequence,
+or we could take every column
+and store the columns in sequence.
+Here we can see that if we were to store the columns
+in sequence, if we wanted to take the average of B,
+we could do a sequential read
+if all of these were immediately after one another.
+So this actually now gets us to the place of,
+hey, have you heard of Parquet?
+Why does Parquet exist?
+Parquet exists.
+This is often a default file format
+that you'll see all over the place
+in larger data warehouses.
+But the principles behind it apply in many situations.
+First, it allows a lot of different compression,
+well, three very useful lossless compression algorithms.
+It has a few different types of encoding,
+and both the encoding and compression
+can be applied to a single data set.
+And both the encoding and compression can be applied
+at a column level.
+And so that is incredibly useful for us
+because again, we're doing column scans usually.
+And it's column oriented
+because it's organized in a column way.
+Like again, an asterisk kind of,
+it's actually, it has the concept of row groups,
+but that's neither here nor there.
+I got 20 minutes, time to move on.
+Second section, we're gonna do math in a single machine.
+Great, we have some kind of concept
+about how we sort of spread our data around
+in a data warehouse and process on it.
+Now we're gonna do something more with mathematics.
+Single machine computation.
+Probably the,
+apologies, I'm a little, getting a cold.
+Probably the thing that comes up the most
+when thinking about computation on a single machine,
+you can imagine we've already read the data off of Zip.
+Moore's law just comes up all the time, right?
+The density of transistors just keeps increasing,
+but I hate to break it to you.
+Moore's law is topping out.
+We're kind of getting to the end of it.
+So what are we gonna do about exactly?
+Well, first we're going to use wider SIMDs.
+SIMDs are a very special type of processing unit
+inside of a CPU, where normally in a CPU,
+you have registers that can use instructions
+and data input and then write the data somewhere.
+So let's say you want to take a number,
+put it in a register, you have an instruction,
+add three to this, and then you're gonna write this
+out somewhere else.
+So that's like three CPU clock cycles.
+SIMDs let you do that with groups of registers.
+So it's like four registers
+and four of exactly the same instructions.
+So that's same instruction, multiple data.
+So you apply the same instruction to like these vectors.
+So again, like sounding a whole lot like
+the type of sequential, let's do a bunch of things
+parallelized at once.
+So the wider the SIMD, the more registered,
+but it has the bigger vectorized calculations you can do.
+It also have multiple core processors.
+I think people talk a lot more
+about multiple core processing.
+So I'm just gonna skip it in this talk
+and go a little bit deeper into SIMDs.
+Or you can have higher clock frequency.
+And this is where it gets kind of fascinating
+and challenging.
+When you look at what is constraining CPUs
+in a number of ways.
+One is purely the size of the transistors.
+And the second is the amount of power
+you need to actually do computation.
+You don't wanna spend a lot on energy.
+I mean, you already do, but you don't wanna spend more
+than you have to.
+But also when you have power going across these transistors,
+it's letting off heat and you might melt it,
+like literally.
+And so data centers use a lot of HVAC.
+And so their costs are both powering all of their computers,
+but also cooling it so nothing melts.
+Wider SIMDs scales linearly with power.
+Multi-core processors scales quadratically
+and a higher clock frequency scales cubically.
+So while all processors have started moving
+and increasing these directions,
+wider SIMDs are where the power trade-off
+makes the most sense.
+Cool.
+Is that the only thing we can do?
+Absolutely not.
+There's lots of really cool processors
+that people have made to make things a little bit better,
+faster, and specifically less power.
+It's both financial reasons,
+but if you want another incentive,
+like do you like polar bears in the Antarctic,
+you should use less energy.
+One, which I've just talked about,
+is wider SIMDs and CPUs.
+Second is GPUs.
+So often these are used for video game processors
+or fancy deep learning things.
+They're kind of interesting
+because they're still very generic
+in the sense that they can use
+multiple types of instructions.
+So they're somewhat flexible.
+And then ASICs,
+which are application-specific integrated circuits.
+And the fanciest example of this,
+and probably the one that I think is the fanciest
+because it's related to deep learning,
+are Google's TPUs.
+And these are tensor processing units,
+which literally all they do is linear algebra all day.
+It's like matrix multiplication.
+It's like matrix multiplication after matrix multiplication.
+And there's a really great power trade-off.
+That's all I can talk about it
+because deep learning is too not-norm-close.
+I'm done.
+Great.
+So this is a picture of what a data center looks like.
+This is a Google data center in the Dalles, Oregon.
+And this is specifically where the power grid meets it.
+Power is a real concern.
+These things cost a lot.
+So we're going the wider SIMD track.
+How are we going to do this?
+There's really kind of three ways
+that I think are relatively common.
+D, using vector primitives.
+Like in the language,
+there are vector primitives
+that allow you to access SIMD vectorization.
+I don't think it comes up that much, but it's possible.
+I personally don't write a lot of raw C.
+Another example that all of us probably have used
+behind the scenes without knowing is Lopak, Slask,
+all of these libraries that are linear algebra libraries
+written forever ago that are hyper-optimized
+and are able to use the vectorization capabilities
+inside of the platform that it's been like compiled against.
+And so this is actually why a lot of Python
+to be a little tricky
+because it's not just Python versions that we're managing.
+We're also managing these like C and Fortran libraries
+that are underlying.
+And then the third is LLVM.
+LLVM is a tool chain in C
+that allows you to take compiled C code
+and an intermediate representation of compiled C code
+and then optimize the assembly language output.
+So let's talk a little bit about LLVM for a second.
+Impala is a distributed query engine.
+It's written in D.
+Skye Wonderman-Nolne, she's an incredible engineer
+and she works on vectorization of queries
+that were submitted, that gets submitted to Impala,
+have huge performance gains
+and there's a link to a talk that she gave about it.
+You can use LLVM back and flat.
+This is super common.
+So if you yourself are writing a Python library
+that's scientific computing oriented
+and you're like, no, I'm not gonna use SciPy
+or NumPy for some reason,
+you could have your own binding
+through using these libraries.
+But much more frequently,
+you're gonna try to install something
+and if you install it correctly, it will just happen.
+So these are instructions for a library called Axe.
+It's a Bayesian optimization library built on PyTorch
+and in it, it's like, hey, be careful about the order
+that you're installing things
+because if you do it correctly,
+it'll be significantly faster and this is why.
+So I think that's cool.
+In 2007, Gordon Moore was invited
+to the Computer History Museum for an interview
+and he had this quote, which I think is incredible.
+The fact that materials are made of atoms
+is the fundamental limitation and it's not that far away.
+We're pushing up again some of the fairly fundamental limits.
+So one of these days,
+we're gonna have to stop making things smaller.
+And I hate to break it to you, ladies and gentlemen,
+that day is very close.
+If you look at transistor size in nanometers,
+in 1971, it was about 10 million.
+This year, the transistor size is about three nanometers
+and the silicon atom is 0.2 nanometers.
+So if we look at now transistor size
+in terms of silicon atoms, it used to be 50 million
+and now we're about 15 atoms across.
+And so trying to get electrons to cross there,
+it actually begins to make us have to take into account
+quantum effects, let alone the fact
+the amount of power that it takes
+to actually make these transistors function.
+It's predicted that next year,
+we're gonna get down to two nanometers across,
+which is again, incredible,
+but we're hitting a real physical reality.
+What's kind of exciting is sure,
+quantum computers are being built.
+This is amazing.
+I don't see math immediately happening on them.
+It seems like that would be very expensive,
+but again, this is a new boundary of computation.
+Totally different talk, because again, 20 minutes.
+So the question is, data and computation with data
+happens on computers.
+How do you build your skills?
+How do you learn about this?
+How do you get better at understanding what is going on
+when you run into a problem?
+Well, I think that we are, this is like a skilled trade.
+And so not only are there things that you can learn,
+like computers are not magical, learning is possible.
+You need to figure out how to go about doing that.
+There's a few books that I think,
+well, resources that I think are excellent.
+One is Wizard Zines by Bork,
+great for like little Unix tools,
+extremely fun, delightful to read, strong recommend.
+And then the second is
+Designing Data-Intensive Applications by Martin Plotman.
+I'd be pretty interested to hear in Slack
+what other ways you all have best learned
+or resources that you've had.
+But again, we're skilled craftspeople.
+Practice is what makes perfect.
+And so if something happens,
+like your job runs out of memory,
+don't just double your memory and call it good.
+What happens?
+What does the hypothesis, test it, dig into it,
+learn to monitor your system.
+But what if you're like,
+I don't know how to monitor your system.
+Again, like reading, one way to do it.
+But my absolute favorite way to learn
+about how these systems work is to pair with them.
+Someone that's experienced and knows what's going on.
+When they're doing some kind of performance debugging,
+they're like, oh, this job is slow, what are we gonna do?
+And see what tools they use.
+I learned just incredible tool sets from people
+and like pick up little things here and there
+that just begin to add to your speed
+and ability to get things done.
+Thank you.

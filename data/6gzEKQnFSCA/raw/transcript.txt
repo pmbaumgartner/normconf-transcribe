@@ -1,0 +1,175 @@
+Good evening, everyone. My name is Rose Wigley. I'm a senior staff software engineer at Shopify.
+Our team likes for me to mention that we are hiring for limited roles. So please check
+out our job page if you're interested. Today, I'm going to start with a story.
+Once upon a time, in the land before there was a cloud.
+Shortly after Y2K failed to lead to the end of the world. But right as it was starting
+to feel like the end of the world in tech. The first time, that is.
+There was a young software engineer working at a startup who wanted a raise. Her name
+was Rose. Yes, that is my name. But in this case, Rose
+also stands for the gigantic pair of rose colored glasses I viewed the world through.
+For example, I was so naive, I believed the startup when they told me that all those options
+I should buy outright were going to make me rich.
+The type of rich where 21 years in the future, I would be relaxing in my cabin on 500 acres
+instead of madly writing conference slides a week before my talk was due.
+Luckily, you'll notice my husband has a very clear pair of glasses. Well, except about
+stock options. We both made that mistake in the beginning.
+One day after work, I was venting at how frustrated I was. I had been trying to get my raise for
+some time and still hadn't gotten one. And that's when he asked what seemed like the
+absolutely most ridiculous question ever. Have you asked for a raise?
+At which point, I looked slightly horrified and said, of course not. I've been working
+really hard and putting in lots of extra hours. Aren't they just supposed to give me one because
+I deserve it? This sums up the look on his face when I said
+that. After recovering, he looked at me and said, okay, please sit down. We need to have
+a talk. And that was the day I learned what now seems
+obvious. It doesn't matter how much you deserve something. If you don't ask for it, you aren't
+going to get it. So why data-driven promotions? Because even
+asking isn't enough. Wikipedia says the adjective data-driven means
+that progress in an activity is compelled by data rather than by intuition or by personal
+experience. How many of us have either had or have heard
+of someone asking for a promotion just to be told? I feel you aren't at that level yet.
+But I can't tell you why. I like to imagine this in my best Lumberg voice, but I can't
+do an imitation of it. Something as important as promotions and raises
+should not be left up to someone else's intuition, especially since that's a great way to introduce,
+you know, unconscious or even conscious bias into the process.
+As an example, a study by MIT Sloan associate professor Daniel Lee found that on average,
+women receive higher performance ratings than male employees, but receive 8.3% lower ratings
+for potential. Potential being the exact sort of thing a manager is going to think about
+when deciding on a promotion. If we make our promotions dependent on other
+people's feelings, they are no longer dependent on what we have done and what we can do.
+But just like we can't rely on others to automatically give us the promotions we deserve, we also
+can't rely on others to gather the data that shows we deserve them.
+Even if you have the absolute best manager in tech, they will not be able to do that.
+Managers are busy. And good managers are not looking over your shoulder every single second.
+There is only one single person who can talk about everything you have done. And that is
+you. So how do you do that?
+Data-driven promotions in three easy steps. Okay. Well, except I'm introverted with a
+strong case of ADHD diagnosed late in life. Maybe not easy.
+And if you noticed on my first slide, I have some teenagers. And if you're thinking about
+a promotion, I'm guessing your workday is very full.
+And there's those three really important things you just have to go to first.
+So how about this? Data-driven promotions in three rather difficult
+to get around to but very important steps. To remember these steps, I have a nice acronym.
+What is the first thing you are going to think after working super hard, super long, and
+being told by your manager they don't feel like you are ready?
+WTF. Or more precisely, first, W, what matters? T, track progress. And F, frame your review.
+First, W, what matters? Before we can talk about what matters, we
+first have to talk about what does not matter. If you've never seen Tanya Riley's excellent
+talk on Glue Work, I highly recommend watching it.
+Glue Work can be summed up as work that keeps teams running but doesn't directly contribute
+to the product. Things like documentation, unblocking others, tooling, taking notes,
+planning team activities. Glue Work is often picked up by women and is often one of the
+reasons women will be passed over for a promotion as excellent but not technical enough.
+You want to make sure you are mostly doing promotable work and sharing the glue work
+across the team. But what is promotable work? That totally
+depends on your current role and your next role.
+To define out exactly what that is, I recommend making yourself a responsibility matrix. Grab
+your favorite spreadsheet software and set it up with three columns.
+Column one is going to be for the subheaders or for the headers and subheaders for the
+general areas of responsibility your organization uses to judge your performance.
+These categories should cover everything you would be expected to be due both technically,
+as a leader, as a teammate. If it's part of what somebody in your job should do, it should
+be covered by one of these. Column two is going to be your put your current
+role on top. And then underneath for each of those headers and subheaders, list out
+the behaviors that are expected under that topic for your current role.
+Then for column three, you're going to put in the role you want to be promoted to. And
+repeat column two except for that role instead. You want to cover both of these because at
+many companies, there's a little unwritten or unspoken, sometimes spoken, rule of tech
+that in order to be promoted, you have to show you are already acting at the next level
+or at least doing a lot of the tasks at that level.
+You need to know what that is so you can start targeting your tasks appropriately.
+If you're lucky, the place where you work has a documented job level expect has already
+documented job level expectations in detail. That will make this task easy. I was able
+to make my personal matrix by literally copying lines out of a company-wide document that
+says exactly what is expected at each category for each level.
+But what if your company has no documented job level expectations?
+Well, unless you work at a very tiny startup, we have an industry word for that. We call
+it a red flag. If a company can't tell you what you should be doing, how can they possibly
+judge that you are doing it? More practically speaking, that means you have a lot more work
+ahead of you. You still need that responsibility matrix. In fact, it's even more important
+than ever. Before you can work on being promoted, you first have to agree with your manager
+on what that even means. But this means you're going to have to at least start it yourself.
+You're going to make a responsibility matrix just like before, but this time you're going
+to have to do a lot of the research. Get online, talk to friends in the industry, look for
+what general industry standards are for each role, both what you want to be and the one
+you're aiming for. Then you need to go to your boss and have a really good conversation
+with them. Show them the information that you've gathered. Let them know that you want
+to work towards this promotion. And most importantly, ask them for their advice on how to build
+out what's missing. Even if you kick off this project, you want to get your boss's buy-in
+on it and contributions as early as possible. Because in the end, they're the one who's
+going to have to agree that this is what these definitions are. At the end, you should both
+have an understanding of what each role looks like.
+So now we have a definition of what you should be doing. So we go to the next step, T, track
+your progress. The best thing you can do to track your progress is keep an ongoing brag
+document. This is where you keep track of your accomplishments as you make them. Julia
+Evans has a great blog post on brag documents. I highly recommend reading it. I wish my younger
+self could have read this post years ago. It starts with, there is this idea that if
+you do great work at your job, people will or should automatically recognize that work
+and reward you for it with promotions, increased pay. Sounds familiar, doesn't it? However,
+I recommend one variation on the brag document. Remember this responsibility matrix we made
+in step W? Organize your brag document by each subcategory in your responsibility matrix.
+Include the descriptions for your current and next role under each header as an easy
+reminder to yourself. Then list out what you have done in each category with the date that
+you did it or the date range. Just to remind yourself, drop a star by anything you think
+counts as next level work. Side note, if you had to make a responsibility matrix from scratch
+for step one, make sure that lands on your brag document under something like, help define
+job level expectations for roles at the company. That sounds a lot like a task I would expect
+out of a manager, for example. Occasionally, skim over your brag document. It should become
+obvious where you are clearly meeting your level, the next level, or where you need to
+spend some extra time and focus. You want your brag document to be your map of where
+you are and where you need to go. You can use this map in two ways. First, it can point
+you to where you need to focus more time. If there is a category or two where you currently
+do nothing or are even weak for in your current role, then you need to find some work in that
+area. However, we do not need to be experts at everything. The brag document can show
+you where your strengths and where your weaknesses lie. For your weaknesses, you can do just
+enough to assure people you have the ability to do the work. Then, focus on your strengths.
+So you have a few things you do at a level that knocks it right out of the park. You
+want one or two items that's going to make people go, wait, what do you mean they aren't
+already at that level? Finally, F, frame your review. The funniest thing a manager ever
+said to me during a review was, I was very entertained by your self-reflection. It was
+also one of the more startling things a manager said to me because I wasn't sure what he meant
+at first. What was so entertaining by my self-reflection? It turned out it's because I organized it
+a lot like my brag document. When a review is about to start, when you are planning to
+ask for a raise or a promotion, when you just need to check with your manager, take your
+brag document and use it to show what you have done in each category. I will go through,
+word it nicer, clean things up, collapse multiple things down into a category. I don't mark,
+in this case, the things that are work at the next level. I assume, for starters, that
+my manager knows what the next level is and will recognize that. However, I'm also always
+prepared because I have the responsibility matrix. If it looks like my manager is missing
+its next level, we can talk about why it counts at that level.
+That's it. WTF. W, you want to know what matters. T, you want to track your progress. F, you
+want to frame your review so that you're providing your manager with the information that shows
+why are you ready for the next level. Before we end, I want to stop and talk about two
+final things. First, I want us to pause because this advice makes some assumptions. First,
+it assumes you are ready for a promotion. This isn't a check box activity where you
+do one thing under each category and once you've checked off all the items, that means
+you're ready for a promotion. Usually, you have to be working at this level long enough
+to show that you can do this skill repeatedly for your company at the level that's expected.
+Just because you put a single check mark in each thing, that does not mean when you go
+to talk to your manager, they're going to be like, okay, we're all set. Now you're going
+to get your promotion. This is part of a process. Second, this assumes you have a good relationship
+with your manager. All of us are in different situations at work. Throughout my career,
+I have had amazing managers, I have had average managers, and I've had a few awful managers.
+Sometimes you're going to be in a situation where it is not going to matter what you do.
+You are going to be stuck dealing with a manager who is not going to promote you. So one thing
+you have to learn is to watch for the red flags in your organization and make sure that
+you trust your manager to have your back. Now, having your back doesn't mean just promoting
+you. Having your back means that they're willing to have the conversations with you that are
+tough conversations where they might point out where you still need to work stuff. So
+you need somebody who will look out for you, push you when you're ready, and help you when
+you're not. Second, remember when I mentioned that I'm a mother, an introvert, and have
+diagnosed ADHD? Please don't think because I talk about the system that I have implemented
+even close to perfectly. Last review period, I got so busy, I never even submitted my self-reflection.
+My Brag document is often reconstructed backwards every few months after combing through Slack,
+email, Google Docs, and any other source I can find to dig out what have I worked on
+recently and why did I not remember to write it all down this time. Sometimes I've even
+forgotten about it so much to the point where I can't reconstruct it, and I just have to
+kind of declare, just like you'll declare I'm done with this inbox and wipe it to zero,
+I'll declare Brag's Doc deletion and start over from scratch. The point I want to make
+is I don't want you to judge yourself if you can't hit this ideal I'm talking about. You
+do not have to do this 100% to get yourself promoted. The goal is to aim for this, and
+any amount of work you can do on this on the way helps. The other goal is to remember that
+part of your job is to prioritize yourself and prioritize the time at work to take care
+of yourself, and that means doing things like documenting your work, talking to your manager
+about it, and making sure they know what you've done a great job at. Thank you. Thank you,
+Vicki, and thank you everyone at NormComp for a chance to give this talk. The blog post
+this is lightly based on is located on my very rarely updated blog.

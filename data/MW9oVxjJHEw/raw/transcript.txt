@@ -1,0 +1,353 @@
+So, I'm Joel, and I'm going to talk about what is the simplest possible thing that might
+work and why didn't you try that first.
+So first I tried to ask chat GPT to write my talk, but it gave me one of its mealy-mouthed,
+you know, it's complicated answers.
+If you're playing norm conf bingo, I hope you have chat GPT on your card a lot, because
+that's probably the only one that you're going to get, but you'll get it a lot of times.
+So anyway, like I said, I'm Joel.
+I wrote a book called Data Science from Scratch, which was mentioned.
+I also more recently wrote a book called 10 Essays on Fizz Buzz, which is interesting.
+You should check it out.
+I'm known sometimes for my live coding videos, and more infamously, I'm the guy who does
+not like Jupyter notebooks.
+And so if you don't like Jupyter notebooks, you can watch my talk and agree.
+Or if you do like them, you can watch my talk and not agree.
+And I have a podcast, Abracadabra Learning, which I didn't plug because we never make
+new episodes anymore, but maybe we will.
+So most of you have never worked with me, but if you had, you would know that my favorite
+people to ask questions or my favorite question to ask people about the problems is, what
+is the simplest thing that might possibly work?
+And the reason I started asking that is because people like to make things overly complicated.
+For example, not too long ago, I was talking with someone who wanted to do a machine learning
+project involving book reviews.
+And so they needed book reviews.
+And so they started asking questions about like, what's the best way to build a Goodreads
+scraper?
+And if you look, building a Goodreads scraper is a non-trivial endeavor.
+And so I looked in the mirror and asked myself, what is the simplest thing that might possibly
+work?
+And that was, hey, maybe someone else has already scraped this dataset and shared it.
+And sure enough, it turns out that they have.
+And so that was potentially a better solution, a simpler solution.
+And chatGPT knows this.
+If you asked it how to get the book reviews data, it will suggest downloading it.
+I'm very bullish on chatGPT.
+I would be even more bullish if it weren't broken.
+Half the time I asked it to try to slide, but big things are coming.
+And so over the course of my career, I've spent a lot of time teaching diverse teams
+of junior data scientists to do good data science.
+I've done this so much that if you ask Dally to draw a picture of someone doing this, it
+draws a picture that looks almost exactly like me.
+And so my style is to go off and let people try things.
+And then they try things and they come back and they tell me about them.
+And so then I have to ask, what's the simplest thing that might possibly work?
+And why didn't you try that first?
+And so I kept asking that a lot.
+But the further I go, I find that simplicity is not...
+Well, one, it's not easy to get an AI to draw it, but also it's not easy to define.
+And so, you know, here's this quote about simplicity requires hard work to achieve and
+complexity sells better.
+So maybe simplicity is sort of the opposite of complexity.
+Okay, well, then what's complexity?
+Well, you know, if you do machine learning, you've probably seen this bias-variance trade-off
+graph where as your model gets more complex, the bias goes down and the variance goes up.
+And here, complexity means something like, you know, number of parameters or model capacity.
+Is that a good way to think about it?
+That's probably not how I want to think about it, but we'll see.
+And you can find examples of, you know, here are some models that are simpler in the model
+capacity sense that do better than models that are more complex.
+And, you know, people will write about these.
+That's not where I kind of want to go.
+Rather, I would like to really seek what is simplicity and then you can distrust what
+I say.
+So a big part of why I ended up thinking about this problem is that for the last five plus
+years I've been doing a lot of natural language processing.
+And so I'm always talking to people about their natural language processing problems.
+And so I talked to a lot of people about text classification.
+It's come up a couple of times today already.
+And so if you're not an LP person, text classification is exactly what it sounds like.
+Trying to decide whether email is spam or not.
+Trying to decide whether a piece of text has positive sentiment or negative sentiment or
+neither.
+Trying to decide whether a blog comment is toxic or whether a talk is worth attending
+based on its title or its abstract or its presenter.
+Or whether a machine learning model is simple based on its description.
+So there's a lot of ways you could proceed.
+You know, one easy approach might be logistic regression.
+Take each email, convert it to a feature vector somehow using like bag of words or one-hot
+decoding or averaging word vectors and then you learn some weights, one per feature.
+So that's basically like one parameter for each word in your vocabulary.
+So you know, that's reasonably simple.
+Another very classic approach is what's called naive Bayes classification.
+I don't want to go through the math, but you chop your email into words.
+You do some computation about how likely you are to see a given word in the spam email
+or not.
+And then you apply this PIPA-BEBE theorem and then you know, you get it out.
+This is kind of the classical approach to spam detection.
+There's a chapter on my book.
+You could implement it yourself in an afternoon.
+And it again has like N parameters where that's the number of words.
+About five years ago, the state of the art would have been, you know, this less dim,
+tat-dim model where you take your email, convert it to a sequence of embeddings, run them through
+this recurrent neural network, get a final state, classify that hidden state.
+You know, this is now suddenly thousands and thousands of parameters for all these matrices
+that you're multiplying by.
+And you know, more recently you do a BERT model, which I'm using in shorthand for any
+kind of transformer model, where you take the email, convert it to a bunch of different
+embeddings, feed it to the transformer, get some pre-trained embedding as input to the
+classifier, fine tune it, and now you're talking like hundreds of millions of parameters.
+And so, you know, if I could see you and listen to you, I would ask you a question and I would
+say, which of these is the simplest approach to test classification?
+Logistic regression, Naive Bayes, LSTM, or BERT?
+And so there's no audience feedback, but I'm just going to assume that you're all voting
+for choice number one.
+So I don't know, I don't think there's a right answer.
+People can differ.
+But now here's a different question.
+Let's say you had a friend who was a junior data scientist and they needed to do some
+kind of test classification and they needed to get good results and their job depended
+on them getting good results.
+What would you recommend?
+And there I know what the answer is.
+I would recommend that they use BERT.
+And I know that's the answer because I keep meeting people who are doing test classification
+using Naive Bayes or, you know, logistic regression or XGBoost on TFIDF vectors or other things
+you don't even want to know about.
+And I'm like, why did you not just use BERT?
+And so it's not just that I tell them to use BERT, it's like, why are you wasting your
+time doing the others?
+But then there's this tension, right?
+Like on one hand, you have this angel on my shoulder saying, try the simplest thing first.
+And then you also have this devil that's like, why did you just not use BERT?
+And so I felt like there was this contradiction there, right?
+And so what do we do when we feel like we have a contradiction?
+You know, you turn to Anne Rand and she says, contradictions do not exist.
+When you think you have one, check your premises and one of them is wrong.
+So which of my premises is wrong?
+Well, let's take a step back.
+When we did that LSTM model, I said that it had thousands of parameters from these matrices
+that were multiplying things by and so on and so forth.
+But the reason that that model only has thousands of parameters is that it's kind of free riding
+off of whatever text embedding model you're using, GloVe vectors or Word2Vec.
+If you go and set out to download the GloVe vectors themselves, that's going to be hundreds
+of megabytes of data.
+So maybe those should count for part of the complexity of the model that, you know, in
+this model, you have millions of parameters worth of data that choose which word goes
+to which vector.
+But most of those parameters are already fixed by the time you show up.
+Someone had to learn those vectors once, but then you can use them over and over again
+for different problems, just changing some parameters here and there.
+So they're a black box that's not really part of our model.
+Do they count as complexity?
+They're pretty complex.
+Or do they count as simplicity because they move the complexity kind of out of our modeling
+and into the pre-processing, if you will.
+And so, you know, if we go back to BERT, you could also think of the BERT embeddings as
+a black box.
+So I think a BERT is something where I give it, you know, a sentence and it spits out
+an embedding.
+Okay.
+And now I take that embedding, use it as input to some simple classifier, logistic regression
+or whatever.
+And now I fine tune this.
+And that part of the model itself, that's thousands of parameters, not millions of parameters,
+right?
+And then like, you know, I'm cheating a little bit because when you fine tune, you are like
+updating those BERT weights somewhat, so they're not quite a black box or like a gray box.
+But there's actually, outside of BERT computing those embeddings for you, there's not a lot
+going on.
+In fact, there's less going on there than in the, you know, fancy LSTM model.
+And what's more, there's also some hidden complexity in the simple models like Naive
+Bayes.
+So, you know, imagine you're doing this Naive Bayes where I want to chop my email into words.
+Well, maybe I also want to consider phrases.
+So now I need to, you know, look at n-grams rather than words.
+And maybe I want to filter out stop words.
+And maybe I would like to do some kind of stemming so that classifier and classification
+show up as basically the same word.
+Maybe I want to split out contractions.
+Maybe I want to do any number of things.
+And so, you know, once you get into the mechanics of I want to do a simple Naive Bayes model
+on this, you have to make a lot of choices and you have a lot of degrees of freedom.
+And suddenly, if you include those degrees of freedom in your model, it's less simple
+with, you know, one of these transformer models.
+You just kind of shove the text in and it does with it what it does with it to kind
+of go back to what we were talking about earlier about find methods that can cope with your
+dirty data and just ignore it.
+So this is a lot of clutter.
+So where do we find the simplicity?
+And you know, I mentioned woodworking at the start.
+So now I'm actually going to talk about woodworking and hopefully it will be relevant and make
+sense.
+So as I mentioned, you know, in the pre-talk banter, woodworking is sort of a new hobby
+of mine.
+I only started doing it in earnest a month or two ago.
+But what I've been doing all year is watching woodworking videos on YouTube.
+In fact, I'm not bragging when I say that I'm pretty much like a savant at watching
+woodworking videos on YouTube.
+Like I'm really, you know, I'm a 10X woodworking video watcher, if you will.
+As a woodworker, I'm not that good.
+I barely know how to use the tools, but good at the watching videos.
+So now imagine that you and your friends are like building a dining table, right?
+And so like these people, I think they're people, you have no idea what you're doing,
+but you know, you don't want it to have these sort of ugly, simple square legs.
+You want your table to be beautiful and have these complex tapered legs with, you know,
+nice slopes that intersect each other and that look good.
+And so, you know, one thing you can do, obviously what's the simplest thing you can do, and
+why do you not do that first is you can go to Amazon and buy tapered legs.
+It'll cost you 175 bucks.
+But if you just want legs and you just want to buy them, then you can do it that way.
+It works, it's expensive.
+But it is an intricate and involved process.
+And there's a lot of ways that it can go wrong.
+If you're not like a master craftsman like this guy, like this is a video of someone,
+you know, making tapered legs.
+He's really good at what he does.
+And he's got all these hand tools and he makes this precise cuts and, you know, it turns
+out beautifully.
+But then you watch more YouTube videos and you start learning about jigs.
+And so a jig is sort of like a tool that you build to take away some of your complexity.
+So this here is a tapering jig.
+I want to cut a piece of wood at a specific angle to a specific length.
+So I build this little frame that I can put my wood in.
+It has a stop so that the wood can only go in really one place.
+And it has another stop that holds the wood at exactly one angle.
+And you put a piece of wood in, you run it through your table saw, and you get the exact,
+you know, slope and size that you want.
+And it's repeatable and it always works.
+And so all you have to do is, you know, however many of these pieces you want.
+You shove a piece of wood in it, you run it through the table saw, and you try not to
+cut your fingers off and, you know, you're done.
+And it's suggested to me that how simple something is, is not just how complex it is in theory,
+but also how difficult is it for you to try it?
+So you know, if it's 2018 and you wanted to fine tune a BERT model, you were signing up
+for a lot of work.
+This is one of the examples.
+This is a text classification example from PyTorch pre-trained BERT, which was like the
+original precursor that became Hugging Face eventually.
+And if you wanted to make it work on your data, you were signing up for a minor adventure.
+This is like line 532 of the text classification example.
+And so, you know, many, many hundreds of lines of code.
+In 2022, if you want to fine tune BERT, like this is basically it.
+You import a couple of things from Transformers and, you know, create a tokenizer, create
+a padding collator, create a model, train it, and train.
+And like, I've left out a few lines, but this is like basically it, right?
+These days, you know, in 2018, it was not simple to use BERT.
+It was not simple to fine tune a BERT model.
+Today it is pretty simple to use a BERT model.
+And in fact, I would argue it's simpler to get good results by fine tuning a BERT model
+than it is to get good results with a simpler model.
+And if you just want like the pre-trained embeddings out of it, it's even simpler.
+It's basically three lines of code.
+You import from Sentence Transformers, load a model, and say encode my sentences, and
+you're done.
+So, there's like nothing to it.
+So maybe when I talk about simplicity, I mean not just a model that's itself simple, but
+a model by which it's simple to get good results.
+So, you know, one other example that's slightly out of the ML data science space is sorting.
+Sorting algorithms can be really simple.
+You know, sometimes if you interview canonically, they'll ask you to implement, you know, bubble
+sort or merge sort or quick sort or whatever.
+You know, back when I was preparing for coding interviews back in the day, I memorized like
+every one known to man.
+Not that that's really done me any good.
+And Python uses an algorithm called TimSort.
+You know, my guess is that most of you don't know how TimSort works, because I don't know
+how TimSort works.
+It's slightly complicated.
+It's not obvious.
+It's not a simple algorithm.
+And yet it's simple to use, right?
+So if you say, if you ask a chat GPT, what's the simplest sorting algorithm?
+It says probably bubble sort.
+And I think that's right.
+Probably conceptually, you know, if I had to explain it to my 11 year old, I would pick
+bubble sort.
+But if you're working in Python, you should of course use the built in sorted algorithm
+that you used to, unless you have like a super good reason not to, right?
+And then if you ask it, you know, is TimSort a simple algorithm?
+It says, no, it's not a simple algorithm.
+But is it simple to use correctly?
+Yes, it's very simple to use correctly, right?
+Unless you have a comparison function like the other day in the advent of code, which
+it was less simple to use correctly.
+But anyway, the point I'm trying to make is that as our tools get better, the boundary
+between simple and complex changes.
+So how easy a solution is to implement and scale depends a great deal on the tools and
+abstractions you have for working with it.
+With a tapering jig, it's simple to implement and scale making tapered legs.
+If you don't have a jig like that, it's not so simple.
+With the Python standard library, it's simple to use a stable hybrid merge insertion sort,
+which is what TimSort is.
+You know, in other languages, it's not so simple.
+So I saw an interesting tweet about this from the CEO of AngelList Venture.
+He says, why use AngelList to run a fund?
+He says, my answer, AngelList abstracts away all the complexity.
+So he said it was starting and running a fund.
+And so I found that phrase really interesting, right?
+It's not that it eliminates the complexity.
+Complexity can't be gotten rid of.
+But it abstracts it all away and gives you an API where for the most part, you don't
+have to worry about it.
+And from your perspective, it's much simpler.
+So sometimes things can be simple, not because they lack complexity, but because complexity
+has been abstracted away.
+And so, you know, I guess the lesson here is that as you're doing data science or machine
+learning or software engineering or data engineering, whatever, think about ways to abstract away
+the complexity.
+Sometimes that can be, you know, just using pre-trained models and user-friendly libraries.
+Sometimes you might want to create your own shared product, project templates, you know,
+crafting clean APIs, using engineering best practices and using shared processes.
+And then if you do that, you can use complex machinery in a norm-conf way.
+So there was a survey that was floating around the other day about ML and AI practices where
+like a third of the people said they were using natural language understanding, but
+only a third of those people said they were using transformers.
+And now, you know, maybe they didn't know because they say, oh, I use Hugging Face.
+I don't know.
+But when I see that, I think, wow, that's, you know, two-thirds of the people using natural
+language understanding are probably not getting as good results as they could with the same
+amount of work.
+So, you know, you have my blessing to go import transformers and go nuts, and I won't criticize
+you.
+And even Chad GPDT knows this one, right?
+If you ask it, what's the simplest way to solve a text classification problem, you know,
+it's just a bag of words.
+But then it says another option is to use a pre-trained language model to generate embeddings
+for each document and then train a classifier for these embeddings.
+So take it from Chad GPDT.
+That's a simple way to solve the problem.
+This is one of the woodworking YouTubers that I follow.
+He put out a video pretty recently about making a simple, elegant table.
+And of course, I saw the word simple and like it keyed with me.
+And you know, he said simplicity is something that sometimes we only discover through experience
+and with confidence.
+And that resonated with me, right?
+Like knowing what the complexity, what the complex parts and the simple parts are is
+how you know how to abstract those complex parts away and leave yourself with something
+simple to work with.
+And so I'll leave you with a quote by Lao Tzu about abstracting complexity away.
+It's not really about that, but there aren't too many quotes about abstracting complexity
+away.
+Manifest plainness, embrace simplicity, reduce selfishness, have few desires.
+So manifest plainness, that means don't put too many stickers on your laptop.
+There's too many, take them off.
+Reduce selfishness, that means don't hog all the GPUs, share them.
+Other people need to use them too.
+Everyone needs to train machine learning models.
+Have few desires, I don't really understand this one.
+I don't know.
+Someone can explain it to me later.
+I don't get it.
+And then embrace simplicity, right?
+So if there's a moral to this talk, it's maybe that simplicity isn't simple.
+Things that seem simple sometimes aren't, and things that seem complex might actually
+be a simpler choice.
+So thank you.
+I'm Joel.
+You can find me on Twitter.
+Everyone keeps saying that Twitter is dying.
+It's not dying.
+It's still there.
+It's like the same as always, pretty much.
+So I'm still there.
+And that's that.

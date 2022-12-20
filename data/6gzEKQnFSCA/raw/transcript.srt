@@ -1,0 +1,700 @@
+1
+00:00:00,000 --> 00:00:08,000
+Good evening, everyone. My name is Rose Wigley. I'm a senior staff software engineer at Shopify.
+
+2
+00:00:08,000 --> 00:00:12,940
+Our team likes for me to mention that we are hiring for limited roles. So please check
+
+3
+00:00:12,940 --> 00:00:19,840
+out our job page if you're interested. Today, I'm going to start with a story.
+
+4
+00:00:19,840 --> 00:00:27,440
+Once upon a time, in the land before there was a cloud.
+
+5
+00:00:27,440 --> 00:00:33,860
+Shortly after Y2K failed to lead to the end of the world. But right as it was starting
+
+6
+00:00:33,860 --> 00:00:41,260
+to feel like the end of the world in tech. The first time, that is.
+
+7
+00:00:41,260 --> 00:00:46,720
+There was a young software engineer working at a startup who wanted a raise. Her name
+
+8
+00:00:46,720 --> 00:00:52,160
+was Rose. Yes, that is my name. But in this case, Rose
+
+9
+00:00:52,160 --> 00:01:00,720
+also stands for the gigantic pair of rose colored glasses I viewed the world through.
+
+10
+00:01:00,720 --> 00:01:07,320
+For example, I was so naive, I believed the startup when they told me that all those options
+
+11
+00:01:07,320 --> 00:01:11,900
+I should buy outright were going to make me rich.
+
+12
+00:01:11,900 --> 00:01:19,440
+The type of rich where 21 years in the future, I would be relaxing in my cabin on 500 acres
+
+13
+00:01:19,440 --> 00:01:25,160
+instead of madly writing conference slides a week before my talk was due.
+
+14
+00:01:25,160 --> 00:01:32,680
+Luckily, you'll notice my husband has a very clear pair of glasses. Well, except about
+
+15
+00:01:32,680 --> 00:01:37,080
+stock options. We both made that mistake in the beginning.
+
+16
+00:01:37,080 --> 00:01:43,560
+One day after work, I was venting at how frustrated I was. I had been trying to get my raise for
+
+17
+00:01:43,560 --> 00:01:49,480
+some time and still hadn't gotten one. And that's when he asked what seemed like the
+
+18
+00:01:49,480 --> 00:01:57,720
+absolutely most ridiculous question ever. Have you asked for a raise?
+
+19
+00:01:57,720 --> 00:02:03,400
+At which point, I looked slightly horrified and said, of course not. I've been working
+
+20
+00:02:03,400 --> 00:02:09,200
+really hard and putting in lots of extra hours. Aren't they just supposed to give me one because
+
+21
+00:02:09,200 --> 00:02:15,080
+I deserve it? This sums up the look on his face when I said
+
+22
+00:02:15,080 --> 00:02:22,400
+that. After recovering, he looked at me and said, okay, please sit down. We need to have
+
+23
+00:02:22,400 --> 00:02:28,120
+a talk. And that was the day I learned what now seems
+
+24
+00:02:28,120 --> 00:02:35,600
+obvious. It doesn't matter how much you deserve something. If you don't ask for it, you aren't
+
+25
+00:02:35,600 --> 00:02:44,520
+going to get it. So why data-driven promotions? Because even
+
+26
+00:02:44,520 --> 00:02:55,520
+asking isn't enough. Wikipedia says the adjective data-driven means
+
+27
+00:02:55,520 --> 00:03:01,880
+that progress in an activity is compelled by data rather than by intuition or by personal
+
+28
+00:03:01,880 --> 00:03:08,120
+experience. How many of us have either had or have heard
+
+29
+00:03:08,120 --> 00:03:14,720
+of someone asking for a promotion just to be told? I feel you aren't at that level yet.
+
+30
+00:03:14,720 --> 00:03:20,440
+But I can't tell you why. I like to imagine this in my best Lumberg voice, but I can't
+
+31
+00:03:20,440 --> 00:03:25,640
+do an imitation of it. Something as important as promotions and raises
+
+32
+00:03:25,640 --> 00:03:31,840
+should not be left up to someone else's intuition, especially since that's a great way to introduce,
+
+33
+00:03:31,840 --> 00:03:37,200
+you know, unconscious or even conscious bias into the process.
+
+34
+00:03:37,200 --> 00:03:45,760
+As an example, a study by MIT Sloan associate professor Daniel Lee found that on average,
+
+35
+00:03:45,760 --> 00:03:54,180
+women receive higher performance ratings than male employees, but receive 8.3% lower ratings
+
+36
+00:03:54,180 --> 00:03:59,920
+for potential. Potential being the exact sort of thing a manager is going to think about
+
+37
+00:03:59,920 --> 00:04:05,240
+when deciding on a promotion. If we make our promotions dependent on other
+
+38
+00:04:05,240 --> 00:04:13,840
+people's feelings, they are no longer dependent on what we have done and what we can do.
+
+39
+00:04:13,840 --> 00:04:20,400
+But just like we can't rely on others to automatically give us the promotions we deserve, we also
+
+40
+00:04:20,400 --> 00:04:25,780
+can't rely on others to gather the data that shows we deserve them.
+
+41
+00:04:25,780 --> 00:04:32,600
+Even if you have the absolute best manager in tech, they will not be able to do that.
+
+42
+00:04:32,600 --> 00:04:38,760
+Managers are busy. And good managers are not looking over your shoulder every single second.
+
+43
+00:04:38,760 --> 00:04:45,640
+There is only one single person who can talk about everything you have done. And that is
+
+44
+00:04:45,640 --> 00:04:50,260
+you. So how do you do that?
+
+45
+00:04:50,260 --> 00:04:58,080
+Data-driven promotions in three easy steps. Okay. Well, except I'm introverted with a
+
+46
+00:04:58,080 --> 00:05:05,360
+strong case of ADHD diagnosed late in life. Maybe not easy.
+
+47
+00:05:05,360 --> 00:05:10,200
+And if you noticed on my first slide, I have some teenagers. And if you're thinking about
+
+48
+00:05:10,200 --> 00:05:14,440
+a promotion, I'm guessing your workday is very full.
+
+49
+00:05:14,440 --> 00:05:19,700
+And there's those three really important things you just have to go to first.
+
+50
+00:05:19,700 --> 00:05:25,600
+So how about this? Data-driven promotions in three rather difficult
+
+51
+00:05:25,600 --> 00:05:33,160
+to get around to but very important steps. To remember these steps, I have a nice acronym.
+
+52
+00:05:33,160 --> 00:05:39,520
+What is the first thing you are going to think after working super hard, super long, and
+
+53
+00:05:39,520 --> 00:05:44,240
+being told by your manager they don't feel like you are ready?
+
+54
+00:05:44,240 --> 00:06:01,920
+WTF. Or more precisely, first, W, what matters? T, track progress. And F, frame your review.
+
+55
+00:06:01,920 --> 00:06:09,000
+First, W, what matters? Before we can talk about what matters, we
+
+56
+00:06:09,000 --> 00:06:17,380
+first have to talk about what does not matter. If you've never seen Tanya Riley's excellent
+
+57
+00:06:17,380 --> 00:06:21,280
+talk on Glue Work, I highly recommend watching it.
+
+58
+00:06:21,280 --> 00:06:26,500
+Glue Work can be summed up as work that keeps teams running but doesn't directly contribute
+
+59
+00:06:26,500 --> 00:06:33,840
+to the product. Things like documentation, unblocking others, tooling, taking notes,
+
+60
+00:06:33,840 --> 00:06:39,560
+planning team activities. Glue Work is often picked up by women and is often one of the
+
+61
+00:06:39,560 --> 00:06:47,260
+reasons women will be passed over for a promotion as excellent but not technical enough.
+
+62
+00:06:47,260 --> 00:06:53,000
+You want to make sure you are mostly doing promotable work and sharing the glue work
+
+63
+00:06:53,000 --> 00:07:00,320
+across the team. But what is promotable work? That totally
+
+64
+00:07:00,320 --> 00:07:07,280
+depends on your current role and your next role.
+
+65
+00:07:07,280 --> 00:07:14,020
+To define out exactly what that is, I recommend making yourself a responsibility matrix. Grab
+
+66
+00:07:14,020 --> 00:07:18,940
+your favorite spreadsheet software and set it up with three columns.
+
+67
+00:07:18,940 --> 00:07:24,360
+Column one is going to be for the subheaders or for the headers and subheaders for the
+
+68
+00:07:24,360 --> 00:07:32,120
+general areas of responsibility your organization uses to judge your performance.
+
+69
+00:07:32,120 --> 00:07:38,040
+These categories should cover everything you would be expected to be due both technically,
+
+70
+00:07:38,040 --> 00:07:44,500
+as a leader, as a teammate. If it's part of what somebody in your job should do, it should
+
+71
+00:07:44,500 --> 00:07:50,680
+be covered by one of these. Column two is going to be your put your current
+
+72
+00:07:50,680 --> 00:07:57,320
+role on top. And then underneath for each of those headers and subheaders, list out
+
+73
+00:07:57,320 --> 00:08:04,280
+the behaviors that are expected under that topic for your current role.
+
+74
+00:08:04,280 --> 00:08:10,120
+Then for column three, you're going to put in the role you want to be promoted to. And
+
+75
+00:08:10,120 --> 00:08:16,360
+repeat column two except for that role instead. You want to cover both of these because at
+
+76
+00:08:16,360 --> 00:08:23,080
+many companies, there's a little unwritten or unspoken, sometimes spoken, rule of tech
+
+77
+00:08:23,080 --> 00:08:28,520
+that in order to be promoted, you have to show you are already acting at the next level
+
+78
+00:08:28,520 --> 00:08:33,000
+or at least doing a lot of the tasks at that level.
+
+79
+00:08:33,000 --> 00:08:39,520
+You need to know what that is so you can start targeting your tasks appropriately.
+
+80
+00:08:39,520 --> 00:08:44,960
+If you're lucky, the place where you work has a documented job level expect has already
+
+81
+00:08:44,960 --> 00:08:51,760
+documented job level expectations in detail. That will make this task easy. I was able
+
+82
+00:08:51,760 --> 00:08:58,280
+to make my personal matrix by literally copying lines out of a company-wide document that
+
+83
+00:08:58,280 --> 00:09:04,040
+says exactly what is expected at each category for each level.
+
+84
+00:09:04,040 --> 00:09:09,240
+But what if your company has no documented job level expectations?
+
+85
+00:09:09,240 --> 00:09:16,000
+Well, unless you work at a very tiny startup, we have an industry word for that. We call
+
+86
+00:09:16,000 --> 00:09:22,920
+it a red flag. If a company can't tell you what you should be doing, how can they possibly
+
+87
+00:09:22,920 --> 00:09:29,520
+judge that you are doing it? More practically speaking, that means you have a lot more work
+
+88
+00:09:29,520 --> 00:09:36,160
+ahead of you. You still need that responsibility matrix. In fact, it's even more important
+
+89
+00:09:36,160 --> 00:09:41,960
+than ever. Before you can work on being promoted, you first have to agree with your manager
+
+90
+00:09:41,960 --> 00:09:49,640
+on what that even means. But this means you're going to have to at least start it yourself.
+
+91
+00:09:49,640 --> 00:09:54,040
+You're going to make a responsibility matrix just like before, but this time you're going
+
+92
+00:09:54,040 --> 00:10:00,360
+to have to do a lot of the research. Get online, talk to friends in the industry, look for
+
+93
+00:10:00,360 --> 00:10:06,920
+what general industry standards are for each role, both what you want to be and the one
+
+94
+00:10:06,920 --> 00:10:12,400
+you're aiming for. Then you need to go to your boss and have a really good conversation
+
+95
+00:10:12,400 --> 00:10:17,880
+with them. Show them the information that you've gathered. Let them know that you want
+
+96
+00:10:17,880 --> 00:10:25,320
+to work towards this promotion. And most importantly, ask them for their advice on how to build
+
+97
+00:10:25,320 --> 00:10:33,160
+out what's missing. Even if you kick off this project, you want to get your boss's buy-in
+
+98
+00:10:33,160 --> 00:10:38,400
+on it and contributions as early as possible. Because in the end, they're the one who's
+
+99
+00:10:38,400 --> 00:10:45,920
+going to have to agree that this is what these definitions are. At the end, you should both
+
+100
+00:10:45,920 --> 00:10:52,360
+have an understanding of what each role looks like.
+
+101
+00:10:52,360 --> 00:10:59,680
+So now we have a definition of what you should be doing. So we go to the next step, T, track
+
+102
+00:10:59,680 --> 00:11:07,040
+your progress. The best thing you can do to track your progress is keep an ongoing brag
+
+103
+00:11:07,040 --> 00:11:13,520
+document. This is where you keep track of your accomplishments as you make them. Julia
+
+104
+00:11:13,520 --> 00:11:20,620
+Evans has a great blog post on brag documents. I highly recommend reading it. I wish my younger
+
+105
+00:11:20,620 --> 00:11:27,320
+self could have read this post years ago. It starts with, there is this idea that if
+
+106
+00:11:27,320 --> 00:11:34,680
+you do great work at your job, people will or should automatically recognize that work
+
+107
+00:11:34,680 --> 00:11:44,080
+and reward you for it with promotions, increased pay. Sounds familiar, doesn't it? However,
+
+108
+00:11:44,080 --> 00:11:50,880
+I recommend one variation on the brag document. Remember this responsibility matrix we made
+
+109
+00:11:50,880 --> 00:11:59,920
+in step W? Organize your brag document by each subcategory in your responsibility matrix.
+
+110
+00:11:59,920 --> 00:12:04,760
+Include the descriptions for your current and next role under each header as an easy
+
+111
+00:12:04,760 --> 00:12:11,760
+reminder to yourself. Then list out what you have done in each category with the date that
+
+112
+00:12:11,760 --> 00:12:17,920
+you did it or the date range. Just to remind yourself, drop a star by anything you think
+
+113
+00:12:17,920 --> 00:12:25,760
+counts as next level work. Side note, if you had to make a responsibility matrix from scratch
+
+114
+00:12:25,760 --> 00:12:32,160
+for step one, make sure that lands on your brag document under something like, help define
+
+115
+00:12:32,160 --> 00:12:39,280
+job level expectations for roles at the company. That sounds a lot like a task I would expect
+
+116
+00:12:39,280 --> 00:12:46,520
+out of a manager, for example. Occasionally, skim over your brag document. It should become
+
+117
+00:12:46,520 --> 00:12:52,280
+obvious where you are clearly meeting your level, the next level, or where you need to
+
+118
+00:12:52,280 --> 00:12:58,920
+spend some extra time and focus. You want your brag document to be your map of where
+
+119
+00:12:58,920 --> 00:13:06,940
+you are and where you need to go. You can use this map in two ways. First, it can point
+
+120
+00:13:06,940 --> 00:13:12,640
+you to where you need to focus more time. If there is a category or two where you currently
+
+121
+00:13:12,640 --> 00:13:19,560
+do nothing or are even weak for in your current role, then you need to find some work in that
+
+122
+00:13:19,560 --> 00:13:27,280
+area. However, we do not need to be experts at everything. The brag document can show
+
+123
+00:13:27,280 --> 00:13:33,800
+you where your strengths and where your weaknesses lie. For your weaknesses, you can do just
+
+124
+00:13:33,800 --> 00:13:41,080
+enough to assure people you have the ability to do the work. Then, focus on your strengths.
+
+125
+00:13:41,080 --> 00:13:46,720
+So you have a few things you do at a level that knocks it right out of the park. You
+
+126
+00:13:46,720 --> 00:13:51,800
+want one or two items that's going to make people go, wait, what do you mean they aren't
+
+127
+00:13:51,800 --> 00:14:04,380
+already at that level? Finally, F, frame your review. The funniest thing a manager ever
+
+128
+00:14:04,380 --> 00:14:11,720
+said to me during a review was, I was very entertained by your self-reflection. It was
+
+129
+00:14:11,720 --> 00:14:16,260
+also one of the more startling things a manager said to me because I wasn't sure what he meant
+
+130
+00:14:16,260 --> 00:14:24,360
+at first. What was so entertaining by my self-reflection? It turned out it's because I organized it
+
+131
+00:14:24,360 --> 00:14:31,720
+a lot like my brag document. When a review is about to start, when you are planning to
+
+132
+00:14:31,720 --> 00:14:38,040
+ask for a raise or a promotion, when you just need to check with your manager, take your
+
+133
+00:14:38,040 --> 00:14:46,560
+brag document and use it to show what you have done in each category. I will go through,
+
+134
+00:14:46,560 --> 00:14:54,420
+word it nicer, clean things up, collapse multiple things down into a category. I don't mark,
+
+135
+00:14:54,420 --> 00:15:00,320
+in this case, the things that are work at the next level. I assume, for starters, that
+
+136
+00:15:00,320 --> 00:15:06,480
+my manager knows what the next level is and will recognize that. However, I'm also always
+
+137
+00:15:06,480 --> 00:15:12,140
+prepared because I have the responsibility matrix. If it looks like my manager is missing
+
+138
+00:15:12,140 --> 00:15:22,520
+its next level, we can talk about why it counts at that level.
+
+139
+00:15:22,520 --> 00:15:32,920
+That's it. WTF. W, you want to know what matters. T, you want to track your progress. F, you
+
+140
+00:15:32,920 --> 00:15:38,360
+want to frame your review so that you're providing your manager with the information that shows
+
+141
+00:15:38,360 --> 00:15:45,800
+why are you ready for the next level. Before we end, I want to stop and talk about two
+
+142
+00:15:45,800 --> 00:15:56,980
+final things. First, I want us to pause because this advice makes some assumptions. First,
+
+143
+00:15:56,980 --> 00:16:04,640
+it assumes you are ready for a promotion. This isn't a check box activity where you
+
+144
+00:16:04,640 --> 00:16:10,820
+do one thing under each category and once you've checked off all the items, that means
+
+145
+00:16:10,820 --> 00:16:17,180
+you're ready for a promotion. Usually, you have to be working at this level long enough
+
+146
+00:16:17,180 --> 00:16:26,580
+to show that you can do this skill repeatedly for your company at the level that's expected.
+
+147
+00:16:26,580 --> 00:16:31,360
+Just because you put a single check mark in each thing, that does not mean when you go
+
+148
+00:16:31,360 --> 00:16:35,040
+to talk to your manager, they're going to be like, okay, we're all set. Now you're going
+
+149
+00:16:35,040 --> 00:16:44,780
+to get your promotion. This is part of a process. Second, this assumes you have a good relationship
+
+150
+00:16:44,780 --> 00:16:52,480
+with your manager. All of us are in different situations at work. Throughout my career,
+
+151
+00:16:52,480 --> 00:17:00,120
+I have had amazing managers, I have had average managers, and I've had a few awful managers.
+
+152
+00:17:00,120 --> 00:17:06,240
+Sometimes you're going to be in a situation where it is not going to matter what you do.
+
+153
+00:17:06,240 --> 00:17:12,120
+You are going to be stuck dealing with a manager who is not going to promote you. So one thing
+
+154
+00:17:12,120 --> 00:17:17,500
+you have to learn is to watch for the red flags in your organization and make sure that
+
+155
+00:17:17,500 --> 00:17:23,600
+you trust your manager to have your back. Now, having your back doesn't mean just promoting
+
+156
+00:17:23,600 --> 00:17:28,880
+you. Having your back means that they're willing to have the conversations with you that are
+
+157
+00:17:28,880 --> 00:17:33,720
+tough conversations where they might point out where you still need to work stuff. So
+
+158
+00:17:33,720 --> 00:17:38,960
+you need somebody who will look out for you, push you when you're ready, and help you when
+
+159
+00:17:38,960 --> 00:17:48,160
+you're not. Second, remember when I mentioned that I'm a mother, an introvert, and have
+
+160
+00:17:48,160 --> 00:17:55,920
+diagnosed ADHD? Please don't think because I talk about the system that I have implemented
+
+161
+00:17:55,920 --> 00:18:06,040
+even close to perfectly. Last review period, I got so busy, I never even submitted my self-reflection.
+
+162
+00:18:06,040 --> 00:18:13,880
+My Brag document is often reconstructed backwards every few months after combing through Slack,
+
+163
+00:18:13,880 --> 00:18:20,240
+email, Google Docs, and any other source I can find to dig out what have I worked on
+
+164
+00:18:20,240 --> 00:18:26,780
+recently and why did I not remember to write it all down this time. Sometimes I've even
+
+165
+00:18:26,780 --> 00:18:32,760
+forgotten about it so much to the point where I can't reconstruct it, and I just have to
+
+166
+00:18:32,760 --> 00:18:38,160
+kind of declare, just like you'll declare I'm done with this inbox and wipe it to zero,
+
+167
+00:18:38,160 --> 00:18:44,840
+I'll declare Brag's Doc deletion and start over from scratch. The point I want to make
+
+168
+00:18:44,840 --> 00:18:51,360
+is I don't want you to judge yourself if you can't hit this ideal I'm talking about. You
+
+169
+00:18:51,360 --> 00:18:59,400
+do not have to do this 100% to get yourself promoted. The goal is to aim for this, and
+
+170
+00:18:59,400 --> 00:19:06,480
+any amount of work you can do on this on the way helps. The other goal is to remember that
+
+171
+00:19:06,480 --> 00:19:14,760
+part of your job is to prioritize yourself and prioritize the time at work to take care
+
+172
+00:19:14,760 --> 00:19:20,480
+of yourself, and that means doing things like documenting your work, talking to your manager
+
+173
+00:19:20,480 --> 00:19:28,600
+about it, and making sure they know what you've done a great job at. Thank you. Thank you,
+
+174
+00:19:28,600 --> 00:19:34,320
+Vicki, and thank you everyone at NormComp for a chance to give this talk. The blog post
+
+175
+00:19:34,320 --> 00:19:59,320
+this is lightly based on is located on my very rarely updated blog.
+

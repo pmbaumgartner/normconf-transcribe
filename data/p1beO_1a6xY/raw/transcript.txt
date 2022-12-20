@@ -1,0 +1,321 @@
+This is the opposite of transformers.
+This is the Zen of tedium,
+or how I learned to stop worrying and love doing things the hard way.
+First off, I got to get it out of the way.
+There are some really valid reasons to avoid doing things the hard way.
+The first of these is some things just take too long.
+When we take our pup to the vet,
+we like to walk her, weather permitting,
+and if she's not in a bad way,
+it's a nice stroll through the Boston Public Garden and down a tree-lined pedestrian mall.
+It takes longer and we might be a little sweaty and a little dirty when we get there.
+But doing it the hard way is so much more satisfying than getting a car,
+popping in, popping out.
+But if I was going to check in at the home office in Sunnydale,
+I would not walk.
+However pleasant it might be,
+it would be too long,
+it would defeat the purpose.
+When we have code bases that are millions of lines long,
+or tables that have trillions of rows,
+a lot of times it's just not worth our while to do things the hard way.
+That's a valid excuse.
+Another one is, we're going to push back on this later,
+but the flip side is sometimes,
+legitimately, I could be using my brain to solve more valuable problems.
+If my job is to copy and paste cells from
+one spreadsheet to another spreadsheet in a similar way over and over again,
+I can legitimately argue that, hey,
+if I write a tool to automate this,
+then I can get it up and going and I could do things that might add
+a little more value to the team,
+to the department, to the company.
+That's totally fair, totally legitimate thing to do.
+Another valid reason to avoid doing things the hard way is,
+sometimes we have to, it's part of playing the game.
+The high point of my Twitter career was this tweet right here.
+It said, ML strategy tip.
+When you have a problem, build two solutions.
+One is a deep Bayesian transformer running on multi-Cloud Kubernetes,
+and the other is a SQL query built on a stack of egregiously oversimplifying assumptions.
+You put one on your resume and the other in production and everybody's happy.
+There is sometimes a justification for doing things the fancy way,
+the automated way, the slick way,
+for your promotion packet or
+for your next position that you're trying to get hired for.
+I don't like it, but it's the truth.
+Now, there are, got to call out,
+there are some less than valid reasons to avoid doing things the hard way.
+The first of these is the fallacy that doing a thing manually is a moral failing.
+Picture that you have a service or something that you're
+in charge of making sure it's healthy and running.
+So you get a few metrics like how long it takes to return a response,
+what fraction of the time it's up,
+what the volume of requests are that it's getting.
+You make a little dashboard that you can track these things day to day.
+You have a nice visual heartbeat health monitor right there.
+One approach is you sit down at your desk every morning,
+you pull these things up,
+you scroll through them, you take a look,
+and you get a feeling that yes,
+everything is working as it should.
+Some misguided souls will tell you,
+hey, we don't do things every day.
+We're engineers.
+We write tools for that.
+We automate that.
+Sure enough, there are tools that you can go in and set alerts.
+So if any of those limits are to fall too low or go too high,
+you can set an alert for that.
+If any of them change too much in one day,
+you can set an alert for that too.
+You can even get fancy and if two or three of them change in
+some concerted pattern that is worrying for some reason,
+you can set an alert for that too.
+Then you turn the thing on and forget about it and walk away.
+Life is good. You've solved the problem.
+Now, when you do that, there are three things that could happen.
+One is you get some alerts that something went wrong,
+and you go and you open it up,
+and you realize, well,
+yeah, sure, that one was high,
+but it was a Saturday and it was World Cup.
+We'd expect that one to be high.
+Not really a problem.
+Another thing that can happen is you don't get an alert,
+but you hear from a very disgruntled VP a few days later,
+what's wrong, and you go and you look and you're like,
+oh, no, I see what happened.
+I didn't think to set an alert for
+exactly this set of circumstances,
+but if I had been looking for it, I would have seen it.
+The third thing that can happen is
+your system that does this automated alert check can silently fail,
+and then you don't know if your service is healthy or not.
+You've got nothing. You're flying blind.
+Now, there are engineering solutions to all of these things.
+They're not unsolvable,
+but don't fall for the trap that there's an easy solution to wrap this up.
+Especially, don't fall for the line that it's
+wrong to pop it open and look at it with your own eyeballs every morning.
+Another mistaken belief is that manual tasks are beneath me, beneath any of us.
+No, I'm not going to do it the hard way.
+Do you know what my title is?
+There are other people who do that.
+We have contractors who do that.
+We have grad students do that.
+Sorry, grad students.
+We have people who somehow are suited to that and should do that,
+because I shouldn't have to worry about it.
+I build models.
+I deploy things in production.
+I call bullshit. Any job that needs to be done is fair game for any of us.
+Yes, we specialize.
+Some things take a long time to get comfortable with, that's fine.
+But if sweeping the floor is what needs to
+happen to get the product out the door, then we sweep the floor.
+If you like to eat, you learn to cook.
+If you like to build models, you spend time labeling data.
+You don't assume that someone is going to take care of those dirty details for you.
+Finally, this one can bring up feelings, busyness.
+When you sit down to do a task the hard way,
+often there's a repetitive nature to it.
+Our apex executive functions aren't always needed for that.
+We can set those offline.
+While we're paging through the documentation for our software tools,
+making sure all the functions are well-represented and properly typed,
+then that allows another part of our brain to kick back and say,
+oh, you know what, I'm so behind, I owe so many emails,
+and I need to review that paper,
+and I got to get that grant proposal in,
+and I need to write those letters of recommendation.
+That's legitimate because most of us are oversubscribed.
+But the jump that's easy to make there is,
+therefore, I should not be spending time on this task.
+I shouldn't be doing it the hard way.
+There's got to be a better way.
+It should be automated, or it should be delegated,
+or something, like it shouldn't happen.
+I'm going to skip it. I'm going to find a way out.
+It's oftentimes like if we've got a task,
+the best direct path through it is just to take a deep breath and keep going.
+Do it the hard way, get it out of the way, then move on.
+Now, the busyness is a big problem,
+and the solution to that is do less stuff.
+And if you want to know about that,
+you'll have to come to the next NormConf,
+which I'm told will be in 2015.
+Now, there is a handful of reasons to love doing things the hard way.
+So this same phenomenon of our apex cognitive functions,
+getting a break, is a bonus, because like any muscle,
+this thing gets tired.
+We have so many hours in the day, but brain hours, we have far fewer.
+Like if you're really good, you've got four, maybe five peak brain hours.
+I'm probably down to two.
+Like you only have so much that you can really work with.
+And so if you're doing something that's a little bit by the book,
+a little bit repetitive, checking the labels on your data set,
+you can let that part of your brain rest for an hour, 90 minutes.
+Then when you're done, you come out, you're ready to scheme and plan
+and pitch and strategize, and you can jump right back in.
+Another one is flow.
+So when you get into a task that is a little bit repetitive
+and has a little bit of a restricted domain,
+a beautiful thing can happen where it's like if your brain is a processor
+and you have your L1 and your L2 cache,
+you can cache all of the concepts and the relationships and the connections
+and just have them right there at your fingertips.
+And so it's almost at that point like you're spinning magic,
+like you don't have to go digging and dredging for these things.
+You're just like constructing it like Elsa with an ice castle,
+like you just have it right there.
+When there's a good flow when I'm coding,
+it's one of the best feelings in the world.
+Now, I have strong feelings about large language models.
+When I'm coding, I feel like there's maybe a dozen paths ahead of me
+at any given time, and the game is I'm thinking a couple steps forward
+on each one, like, well, is this a good way to represent this?
+How might it play with this other part of the system?
+How might it play with this other part I'm planning to write in the future?
+And then I'll inch forward, write a line or two,
+and then I'll repeat that again, and there's this repeated fan,
+kind of a fractal fan out ahead of me.
+If I write an informative comment and use that as a prompt
+to a large language model and it spits out a function for me,
+that's like it picks one road from beginning to end and says,
+use this, I'm confident that it's right.
+This is absolutely the way to do it, get obsessed.
+Now my thought process is totally hijacked.
+Instead, I'm evaluating at every tiny step,
+well, was this the right name for this variable?
+Was it the right type to assign to it?
+Did I want to put this in a function or maybe like abstract it out
+or maybe just put a couple lines in line in this other function?
+But you're focused on this proposed path,
+which can entirely distract you from something else,
+and you're forced to switch context very quickly.
+It breaks flow.
+So this is an instance where for me, at least,
+doing it the hard way is a beautiful thing.
+Another benefit is sometimes it is faster.
+It is better use of time.
+As always, Randall Monroe, XKCD, has our back on this,
+little back of the envelope calculation.
+How often you do a task, how much time you're going to save off
+if you automate it, and then if you plan to do this task for five years,
+how much time can you invest and break even?
+Nick HK on Twitter, he said we could use this tweet.
+He says, I stopped using a reference manager a few years ago
+and just put together a bib by hand for each new paper.
+I don't really miss it.
+Maintaining it was more work than it saved.
+My personal version of the bib file is I've got a laptop with Linux on it.
+When I sit down at my desk, I like to plug it into a big monitor
+so I can see all of my bright red errors much larger.
+Because Linux is what it is, it doesn't automatically detect the monitor,
+so I have to unplug it and plug it back in every time my laptop goes to sleep.
+Linux being what it is, I know that if I were to invest enough time,
+I could change the right config file or update the right driver,
+and it would fix the problem, automatically detect it like magic every time.
+But doing some quick math on how long this takes and how many times I do it,
+even if I invested an hour in that task, it would take me years to pay it off.
+So I do it the hard way.
+I just unplug it and plug it back in.
+I don't have to think about it.
+It just happens.
+Related to this, doing things the hard way ensures focus.
+The myth on top, again, from Randall Munroe, I'm working on a task.
+Oh, I should automate this.
+You write some code, automation takes over.
+Boom, free time.
+You can meme that much more.
+In reality, you write the code, and you get a great 80% solution,
+and you're excited.
+Like, this is a legitimate win.
+This is OKR success.
+But you're still spending time on the original task.
+It's not very satisfying in that sense.
+So you rethink it, you refactor, you go back, you debug.
+You get it up to a 95% solution.
+Like, that's really good.
+That is an A level of effort.
+But you haven't gotten rid of the original task.
+You still have to monitor it, and you still
+have to go back to it and take care of the other corner cases.
+So you're lying in your bed at 3 in the morning,
+you're staring at the ceiling, and you say, oh, I got it.
+If I solve this previously unsolved computer science problem,
+I can get it up to five nines of completion, at which point I can walk away.
+And I had a flash of inspiration for how to do this.
+And so you jump in with both feet, you work on this problem,
+you make a little headway, you publish a paper,
+you get recognized for it, you get a new position at another institution,
+and the original task is never touched again.
+And you live happily ever after.
+Maybe not what you're going for.
+The task is a failure.
+One of my favorites here is for doing things the hard way,
+sometimes there's no other way.
+My favorite example of this is feature engineering.
+I have to give respect to the AutoML tools who take all the features
+and in a lot of clever ways combine them to get plausibly engineered features
+and test them for predictive power.
+But at the end of the day, there's too many possibilities.
+There's too many permutations, too many functions you can use to combine these things.
+There's no way you can automate all that.
+And they often require knowing things that aren't in the data set.
+You have to know what you're measuring.
+You have to know how it interacts with the other pieces,
+often physically what's behind it.
+Sometimes you have to know exactly the details of how it was measured.
+I had one situation where you actually had to know who made each measurement
+so that you would know how to properly interpret it and make a good feature out of it.
+There's no shortcut for that.
+Doing it the hard way is the only way sometimes.
+And then finally, this is the last one, serendipity.
+It is totally valid when you need to get from point A to point B
+to find the nearest on-ramp, blaze down the freeway,
+listen to some tunes, hop off the off-ramp, and you're there.
+You're done.
+You saw some concrete and mission accomplished.
+But it's not the only way to do it.
+Sometimes you can take the long way, you can take the slow way, the hard way,
+and go by some back roads.
+When you do, you'll see some things.
+In The Hobbit, Thorin Oakenshield says,
+there's nothing like looking if you want to find something.
+You certainly usually find something if you look,
+but it's not always quite the something you were after.
+Now, he said this to Fili and Kili,
+because they were getting rained on and danger of getting crushed to death by some giants.
+Fili and Kili went and found a dry cave, which was a win.
+Now, it happened to be a golf course,
+but it was a cave, which was a win.
+Now, it happened to be a goblin-infested cave in the Misty Mountains,
+and they got kidnapped, but everything turned out OK in the end.
+They found something, but it wasn't quite the something they were after,
+and they were the better for it.
+My favorite example of this is when you get a new data set,
+so you have a CSV, pull up the data set or a manageable portion of it in a spreadsheet,
+just look at the columns.
+What are they labeled? Do they even make sense?
+Are there repeated names? Are there missing names?
+Are there entirely and utterly cryptic names?
+Look at the rows.
+Are there columns that have the same value for every row?
+Are there columns that are like 99% missing?
+Are there columns with states in the United States
+where some are capitalized and some are not?
+Actually ran across that pretty recently.
+Are there columns that tend to be missing together
+or tend to change in the same way together?
+Are there half a dozen different representations for missing values?
+Every single time I've done this, I've found things,
+seen things, found the answers to questions I didn't even think to ask.
+You'll find something.
+It won't always be quite the something you were after,
+but you'll find it and you'll be the better for it.
+And in my experience, this getting elbows deep in the code, in the data,
+this is the path from competency to expertise.
+I hope that you find your own Zen of tedium and have a good time doing it.
+Thank you.

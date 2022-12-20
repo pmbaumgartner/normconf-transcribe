@@ -1,0 +1,340 @@
+I am going to talk a little bit about my experience
+about being sort of staff citizen
+or a senior engineer at Twitter and how my job changed.
+So a little bit about me,
+I, you know, in a previous life,
+I had a PhD in math after some soul searching
+or life crisis as some other people might call it.
+I did what many people in that situation would do,
+which is go to find a software job.
+After a few years, I moved to San Francisco
+to do data science for a conversion and ad company.
+And in the past five and a half years ago,
+I have been at Twitter where I co-founded
+the Machine Learning Ethics Transparency
+and Accountability Team.
+And I operated as a capacity of tech lead
+for a research lead for the team.
+And sort of like this talk really came,
+I started thinking more about leadership for ICs
+during my time at Twitter.
+And so maybe if there is one thing that I want you
+to remember in the spirit of this conference is this name.
+So we'll, it's a little bit more nuanced than this,
+but when people talk about a manager in an IC
+sort of career, they are presented usually very separately.
+However, what I'm hoping to convince you
+is that they're actually not as different
+as people claim them to be.
+So maybe let me start with some disclaimers.
+This is not a talk about what being a staff plus IC mean.
+There has been books and blogs
+and many other resources being about that.
+So this is not about that.
+This is also not a talk to convince you to be an IC
+or not to be an IC, or if you should be a manager
+or you should not be a manager.
+I don't have anything against manager.
+Manager are awesome.
+Having a great manager really helps.
+Of course, there are not everyone is a great manager,
+but that's true for everyone.
+And so, I have talked about, I've used these words,
+like IC is geriatric IC, like what does the word mean?
+So let's start maybe by defining them.
+So IC is short for individual contributor,
+is someone who in, usually in tech companies
+is a person who might ship code or do analysis.
+Roughly speaking, we can think as someone
+who consumes your stories.
+For the purpose of this talk,
+we'll consider a geriatric IC or senior citizen,
+someone who is equal or above,
+of course, that depends on the role
+and the company senior level.
+And sometimes these roles are called staff or principal
+and senior level in most companies consider
+sort of like to be the final level,
+meaning that if you want, you can stay at that level
+without sort of getting flagged for performance,
+lack of performance.
+A manager, as we might know,
+but I just wanna make it clear,
+is someone who manages people, has like little direct reports
+and so usually is responsible for the team.
+Of course, it's not always like,
+there is a lot of gray areas in between the two.
+Some companies also allow
+what is usually called tech lead manager,
+but for the sake of this talk and for simplicity,
+we are going to ignore this for now.
+And so what is the latter?
+The latter is usually the process that,
+you know, is in companies to get promoted.
+And so as I was mentioning earlier in my introduction,
+like my time really at Twitter made me think
+a little bit more about all this leadership
+and like how, like sort of like a career for IC
+is not that different for manager in the sense that,
+so I was promoted to staff a couple of years ago.
+My job really changed drastically.
+However, I did not receive any proper or specific training
+for that.
+And so what really, what happened to me,
+it was, you know, I was trying to do my work
+and then someone would say like,
+oh, you should join this planning meeting.
+Or, you know, I was added to a bunch of other meetings
+and at the same time, I was still being asked
+to keep contributing, to keep being INC,
+like to ship my own code, to ship my own analysis.
+And at first I was very confused and annoyed
+and I would like begrudgingly join all these meetings.
+In fact, here's a picture of me in this meetings.
+And again, like not really understanding
+why I was being asked to do too many jobs at the same time.
+Over time, I realized that I was juggling multiple things
+and maybe that is what the job is all about.
+And so I was not only doing IC work for myself.
+So like, again, pushing code in my case, doing analysis.
+I was also mentoring junior people from my team, you know,
+meaning helping them with the day-to-day sort of jobs
+and should we do X or Y?
+How do we interpret this analysis?
+How do we frame this problem?
+A lot of that.
+And also people from other teams,
+maybe more on the monthly basis or so.
+But I was also involved in a lot of this sort of like
+planning, team strategy, high-level meetings,
+a lot of talking that I was not expecting at first.
+And you know, oftentimes when the discussion of like,
+should you be a manager?
+Should you stay as an IC?
+Should you be a team leader?
+And so when these questions and ideas
+and ideas and ideas and ideas come out,
+I feel there is a lot of themes that keep coming back
+and that I might disagree with.
+So for example, I hear a lot, you know,
+I want to remain on the C ladder
+because I don't like meetings.
+Or, you know, I don't like talking to people.
+I don't like being interviewed.
+So I think all of those are sort of like things
+that I've seen and heard multiple times in conversation
+when people were sort of deciding to be,
+maybe to switch to management.
+However, my friend Nick said that the best,
+in the best way possible,
+which is any simplicity advanced engineer
+is indistinguishable from management.
+It's a little bit of an exaggeration,
+but is what the entire sort of like idea
+behind this talk is.
+So let's talk for a moment about ladders,
+tech ladders, or how do you get promoted in a big company?
+So here's an example of what, you know,
+a data science ladder, for example,
+could look like in your company.
+So, you know, you have a couple of entry levels,
+then you might get to like senior level.
+And then there is a bunch of other things after senior.
+Again, they might be called staff,
+they might be called something else.
+There might be, you know, here is a seven step ladder.
+It might be a different number of levels in your company,
+but it doesn't matter.
+The point being, there is usually sort of like that level,
+which in here, we identify between sort of like senior
+and staff where the job really changes.
+And that's where we call it geriatric,
+as we defined earlier.
+Sometimes, you know, some people might decide
+that they want to actually do management.
+And usually that happens not before someone reaches
+sort of like the senior level of IC,
+and they say, I would like to be a manager.
+And the company says like, great, let me train you.
+Let me give you some training for that.
+And they would receive manager training and, you know,
+be a manager.
+On top of that, the more they go up their ladder,
+they will have even more training.
+Sometimes fancy school will do adult programs
+for director plus or VP level.
+And of course, this is absolutely not a complaint
+about manager receiving training.
+I do think, and I do hope people, you know,
+companies will keep trained manager.
+They are very important.
+However, my question is what happens,
+what do we get as ICs when we go up on our ladder?
+We don't really get anything.
+And so the point here in a maybe more visual way
+is that the two ladders are not really parallel
+as people tend to, as people like to think,
+but they actually tend to collide.
+And, you know, I know what you're asking now,
+like, did I do this terrible slide myself?
+Yes, thank you.
+As you may know, graphic design is indeed my passion.
+And so, you know, this is, it is something
+that I have seen many people struggle in,
+like at that level, when they not tend to be aware
+of sort of like the leadership part.
+Sometimes people tend to think that in order for them
+to grow to the ladder, to be promoted to all the levels,
+they just have to be sort of like more hardcore,
+whatever that means.
+However, this is not enough.
+In fact, this is probably not the most important part.
+So let's talk about skill sets.
+What better way than talking about skill set
+than Venn diagram?
+In fact, you know, like Kamala, I do a lot of Venn diagrams
+as well.
+I said before, usually skill set are presented
+very, in a very complimentary ways.
+So, you know, you have manager skills
+and then you have sort of like drag or IC skills
+and, you know, they don't really touch.
+Some example that, you know, we heard a lot is like,
+oh, you're good at talking with people.
+You should consider being a manager or maybe a PM.
+However, I think, again, as I mentioned earlier,
+I think this is a lie because after a certain threshold,
+and again, that's where the dragic part comes in,
+they really overlap a lot.
+And so I do think that the real picture
+is not to, it's not to non-overlapping Venn diagram,
+but it's something like closer to this.
+And of course there are some skills that are, you know,
+IC only or manager only.
+So for example, you know, as an IC,
+you're indeed expected to, you know, publish your own code,
+being opinionated about any kind of technical decision,
+write technical design docs and whatnot.
+As a manager, of course, you're, you know,
+supposed to do a salary conversation with your reports.
+You're supposed to honestly have a lot
+of awkward conversation,
+do a bunch of admin stuff and whatnot.
+However, my point here is that the stuff that really matters
+is not the stuff that it's on the border,
+but it's stuff that's in the middle.
+And that's what I see mostly tend to lack
+because we lack training.
+And so let's call this the make shit happen skills.
+And so if we look at this, at this like area of overlap,
+we see there is a lot of things that are classically
+not associated with IC work, right?
+So there is mentoring, for example, as I mentioned earlier,
+like literally checking with more junior people
+on a almost daily basis if needed,
+if they're blocked, if they need help, a lot of meetings.
+Some of this meeting might be about planning.
+Some other meetings might be, you know, with other teams.
+Indirect impact, so like, how do we make stuff happen
+that I cannot do it myself because of lack of time?
+And, you know, a big project honestly required a lot of people
+and so a single person cannot and should not,
+this is actually an anti-pattern, I think,
+if a single person does everything by themselves.
+And so what is it, you know,
+what does it convincing people to do stuff mean?
+Well, maybe it's, you know, you have an idea
+and you want to get headcount for that.
+In fact, our political amplification work
+started exactly that way.
+Like a simple idea, having a prototype
+and then trying to get a larger team to work on that.
+Maybe it's getting technical consensus
+for a critical decision, or maybe it's helping,
+you know, unblock someone on my team
+to work with some other team.
+Maybe there's an issue there
+and they're not understanding each other.
+Is there something we can do there?
+Or maybe, you know, it was to convince other teams
+that we should work together on a single issue.
+And so honestly, these, you know, in my work,
+this came out a lot because my team
+did not own any of the models.
+And so if you really wanted to have any kind of an impact
+in the product, we had to convince other people
+who owned the model themselves to,
+to make the changes.
+So that's where the indirect impact comes from.
+And so this is sort of, again,
+this is, this middle area is like the area that mostly,
+talking to people is the part that is most invulnerable,
+right?
+And not doing code yourself,
+but making sure that other people are enabled to do,
+to do their work.
+In fact, I would even argue that the technical work
+is the easy part.
+The people work is the hard part.
+Sometimes teams have conflicting priorities.
+How do you convince them that they should listen to you
+instead of maybe their own priorities?
+I do think that this is, you know,
+like as I mentioned, like the people work
+is really the hard part here.
+And so what's the difference really?
+You know, what do manager do maybe that we don't as I see?
+You know, capitalism, like the military requires
+a very strong hierarchical structure
+where there can only be one person formally in charge.
+And in companies, this is usually the manager.
+And so usually they have internal responsibility
+for the team.
+And this goes both ways, right?
+If something goes wrong,
+they are the first one getting yelled.
+And of course they will be able,
+they will then try to figure out
+what was wrong in the team.
+At the same time, if you know, everything is great,
+the manager will be the one sort of like represented
+in the team for the phrases.
+And of course, great manager will be able
+to elevate their reports as well.
+I mentioned that earlier, but I wanna say that again,
+like part of a manager job is also to have a bunch
+of awkward conversation.
+Not everyone likes it.
+And finally, you know, if you really want to sort of like
+be a C-level person in a company,
+eventually, if you eventually want to be a C-level person
+in a company, most often all the path
+involves the manager chain.
+And so what I was thinking about this talk, I was like,
+well, you know, what is that I've learned in my last,
+you know, a few years in my career that really helped me?
+What is like the sort of like a really important thing
+I learned?
+And I don't think it's anything related
+to a specific technology, a specific library
+or a specific whatever, but it's really like
+the social skills that I learned in my career
+and it's really like the social skills that I learned
+just by doing this work.
+And so, you know, the real transferable skills
+are the friends or the social skills we made along the way.
+And so to conclude and recap,
+I wanna say that, you know,
+manager usually get leadership training
+when they start being managers.
+However, I see don't even after they sort of like
+pass a threshold that we call geriatric.
+Their work is very similar to management.
+So why don't we get the same training?
+I think as an industry, we should be more aware of that.
+And, you know, especially because this is holding
+many folks back because no one told people
+that that is something that's really important.
+And so that resonates with you.
+And if you're interested,
+I've left some ways of keeping in touch.

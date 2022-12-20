@@ -1,0 +1,1132 @@
+1
+00:00:00,000 --> 00:00:01,760
+So my name is Matthijs.
+
+2
+00:00:01,760 --> 00:00:04,800
+I work at Accelerator where I give trainings.
+
+3
+00:00:04,800 --> 00:00:09,480
+I give a lot of trainings on data and DevOps related things in my work time.
+
+4
+00:00:09,480 --> 00:00:13,040
+In my spare time, I really like to dig into things and see how they work and what makes
+
+5
+00:00:13,040 --> 00:00:14,040
+them tick.
+
+6
+00:00:14,040 --> 00:00:17,080
+Docker is definitely one of them.
+
+7
+00:00:17,080 --> 00:00:21,440
+What I'll do today is I'll share a story with you that's based on some experience from like
+
+8
+00:00:21,440 --> 00:00:26,280
+seven, eight years ago when I was doing my first ML project that actually had to go to
+
+9
+00:00:26,280 --> 00:00:29,500
+production.
+
+10
+00:00:29,500 --> 00:00:34,940
+We recently started using Docker for some Django services, some Flask services.
+
+11
+00:00:34,940 --> 00:00:39,800
+We had them running on VMs and Docker seemed like a good bet to get this machine learning
+
+12
+00:00:39,800 --> 00:00:41,540
+project in production as well.
+
+13
+00:00:41,540 --> 00:00:47,560
+So I got some help from some people and I whipped up the first Docker file.
+
+14
+00:00:47,560 --> 00:00:52,480
+And the simplest Docker file that you could probably build to do this looked something
+
+15
+00:00:52,480 --> 00:00:53,480
+like this.
+
+16
+00:00:53,480 --> 00:00:57,680
+I mean, for go to version numbers, they're a bit more recent than seven years ago, of
+
+17
+00:00:57,680 --> 00:00:58,680
+course.
+
+18
+00:00:58,680 --> 00:01:02,600
+So we just grab a decent base image, Python three, eight.
+
+19
+00:01:02,600 --> 00:01:06,480
+We copy in some requirements files, we install them, we copy the rest of our source code
+
+20
+00:01:06,480 --> 00:01:10,960
+and like maybe we run some tests or we start an application when we actually are starting
+
+21
+00:01:10,960 --> 00:01:13,680
+up.
+
+22
+00:01:13,680 --> 00:01:17,800
+Because this was a data science problem, this was a container that trained a model or dependencies
+
+23
+00:01:17,800 --> 00:01:19,200
+look something like this.
+
+24
+00:01:19,200 --> 00:01:24,360
+We had, you know, second learn and pandas to do the actual ML part and the data wrangling
+
+25
+00:01:24,360 --> 00:01:29,600
+parts of course use NumPy as well and SciPy in the background.
+
+26
+00:01:29,600 --> 00:01:32,760
+Thing produced some plots so we needed not plotlib to make sure that we could actually
+
+27
+00:01:32,760 --> 00:01:36,920
+get some nice statistics out of this thing as well.
+
+28
+00:01:36,920 --> 00:01:42,600
+So you know, I, this together with the code of the actual model made a nice commit out
+
+29
+00:01:42,600 --> 00:01:46,400
+of this, submitted it, asked for a review.
+
+30
+00:01:46,400 --> 00:01:50,120
+And this is the answer that I got.
+
+31
+00:01:50,120 --> 00:01:52,200
+This container is massive.
+
+32
+00:01:52,200 --> 00:01:55,080
+There's all this stuff in there that you don't need.
+
+33
+00:01:55,080 --> 00:01:58,560
+We can't actually run this thing as it is now.
+
+34
+00:01:58,560 --> 00:02:03,240
+Yeah, whoops, that kind of makes sense.
+
+35
+00:02:03,240 --> 00:02:08,800
+And at this point you also maybe understand why Docker chose like a massive mammal as
+
+36
+00:02:08,800 --> 00:02:14,320
+their logo because this thing is 1.7 gigabytes for just a simple Python container.
+
+37
+00:02:14,320 --> 00:02:15,320
+It's insane.
+
+38
+00:02:15,320 --> 00:02:20,520
+And if we go back to the Docker phone, we think about that thing again and it's kind
+
+39
+00:02:20,520 --> 00:02:24,720
+of obvious also why it's so big.
+
+40
+00:02:24,720 --> 00:02:29,280
+There was this line in there that said copy dot dot and it just grabs our entire project
+
+41
+00:02:29,280 --> 00:02:35,800
+folder and yanks it into the container without really deciding whether that's needed or not.
+
+42
+00:02:35,800 --> 00:02:40,000
+And you know, I don't know about you, but a typical project folder for me looks something
+
+43
+00:02:40,000 --> 00:02:41,000
+like this.
+
+44
+00:02:41,000 --> 00:02:45,640
+There's a git folder that stores my git repository.
+
+45
+00:02:45,640 --> 00:02:50,560
+There's an IDE folder which has like my settings for my development environment.
+
+46
+00:02:50,560 --> 00:02:55,160
+Maybe there's some local data, some locally trained models, some notebooks that I'm using.
+
+47
+00:02:55,160 --> 00:02:59,520
+There's a virtual env in there that I'm using to test things and install things.
+
+48
+00:02:59,520 --> 00:03:03,080
+And all this stuff got copied into my container.
+
+49
+00:03:03,080 --> 00:03:06,000
+And a lot of this is actually not needed.
+
+50
+00:03:06,000 --> 00:03:09,480
+So what should we do here?
+
+51
+00:03:09,480 --> 00:03:14,840
+Well, we're not going to sort of one by one type out everything that we do need to add.
+
+52
+00:03:14,840 --> 00:03:19,840
+But what we do is we add like a Docker ignore file to our repo as well.
+
+53
+00:03:19,840 --> 00:03:22,800
+This thing works the same as a git ignore.
+
+54
+00:03:22,800 --> 00:03:27,520
+Essentially it tells Docker in this case, don't copy all these files when you're copying
+
+55
+00:03:27,520 --> 00:03:30,240
+into your container image.
+
+56
+00:03:30,240 --> 00:03:34,440
+I typically also use essentially the same thing that I use for my git ignore, except
+
+57
+00:03:34,440 --> 00:03:38,720
+that I also add the git folder to the Docker ignore because there's no need for git history
+
+58
+00:03:38,720 --> 00:03:42,280
+in there as well.
+
+59
+00:03:42,280 --> 00:03:45,840
+And when I rebuilt this container, it already started to make a bit more sense, but it was
+
+60
+00:03:45,840 --> 00:03:46,840
+still massive.
+
+61
+00:03:46,840 --> 00:03:51,760
+You know, 1.3 gigabytes, it's not as bad.
+
+62
+00:03:51,760 --> 00:03:54,560
+So I committed this, asked for another review.
+
+63
+00:03:54,560 --> 00:03:56,000
+And that's also the feedback that I got.
+
+64
+00:03:56,000 --> 00:03:59,760
+You know, it's much better, but still a bit on the big side.
+
+65
+00:03:59,760 --> 00:04:02,680
+So let's try to shave off a bit more.
+
+66
+00:04:02,680 --> 00:04:05,080
+Let's use a smaller base image.
+
+67
+00:04:05,080 --> 00:04:10,680
+Because if you look at the Docker history of this container that we just built, essentially
+
+68
+00:04:10,680 --> 00:04:17,080
+almost a gigabyte of this size came from this Python 3.8 base image.
+
+69
+00:04:17,080 --> 00:04:21,160
+So step two in this journey was using a different base image.
+
+70
+00:04:21,160 --> 00:04:27,720
+And that was very, very straightforward because there's a slim version of Python, Python 3.8
+
+71
+00:04:27,720 --> 00:04:34,320
+slim or 3.9 slim, which is based on a different Debian image, Debian buster slim, which doesn't
+
+72
+00:04:34,320 --> 00:04:42,200
+install manual pages and other useful packages that you use on like a normal Debian operating
+
+73
+00:04:42,200 --> 00:04:48,760
+system install, but not in a non-interactive environment like a container.
+
+74
+00:04:48,760 --> 00:04:54,520
+So I rebuilt this thing and at this point I kind of started enjoying myself.
+
+75
+00:04:54,520 --> 00:04:56,680
+This dropped down to 490 megabytes.
+
+76
+00:04:56,680 --> 00:04:59,360
+That's quite a big, big difference.
+
+77
+00:04:59,360 --> 00:05:00,880
+That's pretty cool.
+
+78
+00:05:00,880 --> 00:05:06,320
+So I went back to our operations and said, you know, this is fun.
+
+79
+00:05:06,320 --> 00:05:07,520
+This is triggering something in me.
+
+80
+00:05:07,520 --> 00:05:09,680
+This number going down is brilliant.
+
+81
+00:05:09,680 --> 00:05:12,000
+So what should I do next?
+
+82
+00:05:12,000 --> 00:05:16,440
+How can I figure out, what can I still do?
+
+83
+00:05:16,440 --> 00:05:19,200
+And they said, you know, there's this tool called Dive.
+
+84
+00:05:19,200 --> 00:05:20,920
+Dive is pretty cool.
+
+85
+00:05:20,920 --> 00:05:24,960
+It allows you to look at your container image that you've built and sort of see what's in
+
+86
+00:05:24,960 --> 00:05:25,960
+there.
+
+87
+00:05:25,960 --> 00:05:29,400
+So now at this point I thought, this sounds fun.
+
+88
+00:05:29,400 --> 00:05:33,560
+This is a couple of evenings of just digging around and trying things.
+
+89
+00:05:33,560 --> 00:05:35,480
+Let's dive in.
+
+90
+00:05:35,480 --> 00:05:37,320
+So this is what Dive looks like.
+
+91
+00:05:37,320 --> 00:05:40,040
+It's a terminal user interface.
+
+92
+00:05:40,040 --> 00:05:43,840
+You run Dive with an image name and then you get this after some analysis time.
+
+93
+00:05:43,840 --> 00:05:49,740
+And what we see here on the top left, sort of this area is essentially all the layers
+
+94
+00:05:49,740 --> 00:05:52,280
+that our Docker image contains.
+
+95
+00:05:52,280 --> 00:05:53,640
+You can scroll through them.
+
+96
+00:05:53,640 --> 00:05:58,680
+And then on the right side, you see the files that are the state of the file system at that
+
+97
+00:05:58,680 --> 00:06:02,200
+point in time for that layer.
+
+98
+00:06:02,200 --> 00:06:03,920
+Everything in orange is adjusted.
+
+99
+00:06:03,920 --> 00:06:06,000
+Everything in green is new.
+
+100
+00:06:06,000 --> 00:06:10,880
+So we can sort of see what this layer added.
+
+101
+00:06:10,880 --> 00:06:17,800
+And one of the first things that I noticed was that there is an 80 megabytes cache folder.
+
+102
+00:06:17,800 --> 00:06:21,360
+That seems kind of weird.
+
+103
+00:06:21,360 --> 00:06:23,640
+Also in Matplotlib, there's some tests.
+
+104
+00:06:23,640 --> 00:06:26,020
+All these tests have baseline images.
+
+105
+00:06:26,020 --> 00:06:28,960
+There's also a couple of megabytes.
+
+106
+00:06:28,960 --> 00:06:33,520
+Then if you dig further, you'll see there's markdown files and there's txt files and there's
+
+107
+00:06:33,520 --> 00:06:35,200
+like pyx files.
+
+108
+00:06:35,200 --> 00:06:40,920
+All of those things are useful in the context of interactive development, but kind of useless
+
+109
+00:06:40,920 --> 00:06:44,360
+for this production container image setting.
+
+110
+00:06:44,360 --> 00:06:49,440
+So I thought, let's just try to get rid of them.
+
+111
+00:06:49,440 --> 00:06:54,120
+So I adjusted my Docker file slightly again, and I added a couple of statements near the
+
+112
+00:06:54,120 --> 00:06:57,920
+end to say, well, get rid of this pip cache.
+
+113
+00:06:57,920 --> 00:07:02,240
+Look in this site packages folder and find everything that ends with like JPEG or JavaScript
+
+114
+00:07:02,240 --> 00:07:06,440
+maps or uncompiled C source code.
+
+115
+00:07:06,440 --> 00:07:08,400
+Just get rid of it.
+
+116
+00:07:08,400 --> 00:07:16,040
+That should save at least the 80 megabytes of our pip cache, but probably even more.
+
+117
+00:07:16,040 --> 00:07:21,360
+Now when I actually tried to build this, I kind of got surprised because in contrast
+
+118
+00:07:21,360 --> 00:07:26,560
+to what I believe, this actually made our image bigger rather than smaller.
+
+119
+00:07:26,560 --> 00:07:30,280
+It added like 14 megabytes for some reason.
+
+120
+00:07:30,280 --> 00:07:35,080
+I tried to look around for a bit, but I didn't really understand why this was happening.
+
+121
+00:07:35,080 --> 00:07:40,920
+So back to our operations person again, what's actually going on here?
+
+122
+00:07:40,920 --> 00:07:41,920
+Do you understand this?
+
+123
+00:07:41,920 --> 00:07:47,120
+And he pointed me in the right direction and said, you should read up on how these layers
+
+124
+00:07:47,120 --> 00:07:49,200
+of container images work.
+
+125
+00:07:49,200 --> 00:07:52,160
+Okay, all right, that sounds doable.
+
+126
+00:07:52,160 --> 00:07:54,880
+How do they work?
+
+127
+00:07:54,880 --> 00:07:59,720
+Essentially when you build a container image, every run statement in your Docker file becomes
+
+128
+00:07:59,720 --> 00:08:01,160
+a new layer.
+
+129
+00:08:01,160 --> 00:08:07,860
+And a layer is the difference in file system content of what happened after the layer versus
+
+130
+00:08:07,860 --> 00:08:09,760
+what was there before.
+
+131
+00:08:09,760 --> 00:08:16,720
+So if you have a layer that adds a requirements.txt, essentially that layer will have a zipped
+
+132
+00:08:16,720 --> 00:08:23,160
+tar file that has that requirements.txt there in that right location.
+
+133
+00:08:23,160 --> 00:08:29,720
+Requirements.txt is not that big, it's like 85 bytes, just that is that layer that's part
+
+134
+00:08:29,720 --> 00:08:31,840
+of our image.
+
+135
+00:08:31,840 --> 00:08:35,960
+Same thing will happen when we go pip install, this pip install will run, Docker will check
+
+136
+00:08:35,960 --> 00:08:39,760
+what is the difference after running pip install versus before.
+
+137
+00:08:39,760 --> 00:08:46,080
+Let's take that difference, put it in a tar, that's our new layer as well.
+
+138
+00:08:46,080 --> 00:08:52,200
+Now the thing that becomes interesting when we start to remove things, because a layer
+
+139
+00:08:52,200 --> 00:08:56,120
+can't go back to previous layers and change things in them.
+
+140
+00:08:56,120 --> 00:09:02,800
+So the only thing that we can do in that layer where we say, delete the cache pip folder
+
+141
+00:09:02,800 --> 00:09:05,920
+is essentially make a tombstone.
+
+142
+00:09:05,920 --> 00:09:09,080
+Say that there was a file here, but it's not anymore.
+
+143
+00:09:09,080 --> 00:09:12,920
+From this point on, you should consider it as if it doesn't exist.
+
+144
+00:09:12,920 --> 00:09:17,880
+It's essentially a zero bytes layer that says this file that was previously there, treated
+
+145
+00:09:17,880 --> 00:09:21,760
+as if it's not there anymore.
+
+146
+00:09:21,760 --> 00:09:28,160
+And the same thing happens of course for this find thing.
+
+147
+00:09:28,160 --> 00:09:34,040
+This is also why there is no actual size decrease when we structure our container image like
+
+148
+00:09:34,040 --> 00:09:35,800
+we did.
+
+149
+00:09:35,800 --> 00:09:40,740
+So after giving this some thought, the answer was kind of obvious.
+
+150
+00:09:40,740 --> 00:09:47,760
+We need to make sure that we add files and delete files in the same layer.
+
+151
+00:09:47,760 --> 00:09:51,360
+And we can simply do that by chaining some bash commands together.
+
+152
+00:09:51,360 --> 00:09:57,160
+So when I do a pip install, also on the same line, but part of the same run statement,
+
+153
+00:09:57,160 --> 00:10:02,120
+run this find command with the delete and instruct pip.
+
+154
+00:10:02,120 --> 00:10:07,360
+Pip has an option that says no cache there, so it can actually not even make that pip
+
+155
+00:10:07,360 --> 00:10:12,560
+cache in the first place.
+
+156
+00:10:12,560 --> 00:10:16,720
+And essentially squashing these layers together, that did work.
+
+157
+00:10:16,720 --> 00:10:21,560
+That was quite a big step.
+
+158
+00:10:21,560 --> 00:10:26,600
+One side note, we can do this manually like this, so just combining this adding and deletion
+
+159
+00:10:26,600 --> 00:10:27,880
+in the same run statement.
+
+160
+00:10:27,880 --> 00:10:32,560
+There is also a squash command when you do a Docker build that kind of does this for
+
+161
+00:10:32,560 --> 00:10:34,920
+you, but it just does this for all the layers.
+
+162
+00:10:34,920 --> 00:10:40,680
+Which makes it slightly smaller and slightly less work to do, but has some disadvantages
+
+163
+00:10:40,680 --> 00:10:42,680
+with layer caching.
+
+164
+00:10:42,680 --> 00:10:47,200
+Yeah, slightly less optimal now.
+
+165
+00:10:47,200 --> 00:10:53,480
+So at this point, we shaved more than a gigabyte of our initial image and almost a gigabyte
+
+166
+00:10:53,480 --> 00:10:55,440
+off the image with the Docker ignore.
+
+167
+00:10:55,440 --> 00:10:58,280
+So it was going in the right direction.
+
+168
+00:10:58,280 --> 00:11:02,660
+And I started Googling a bit and I got some hints that said, well, maybe you should try
+
+169
+00:11:02,660 --> 00:11:04,800
+looking at Alpine.
+
+170
+00:11:04,800 --> 00:11:09,040
+Python free Alpine is an even smaller base image than the Python free 8 slim version
+
+171
+00:11:09,040 --> 00:11:10,040
+that you're using.
+
+172
+00:11:10,040 --> 00:11:14,080
+That's true, it's only six megabytes or less than six megabytes.
+
+173
+00:11:14,080 --> 00:11:15,080
+So that's what I did.
+
+174
+00:11:15,080 --> 00:11:21,480
+I once again changed my Docker file that's built from this other base image instead.
+
+175
+00:11:21,480 --> 00:11:25,320
+Tried to build it, but unfortunately that errored out.
+
+176
+00:11:25,320 --> 00:11:31,560
+Command error with X, it said this one Python set of the pyeg info, check the logs.
+
+177
+00:11:31,560 --> 00:11:35,280
+So I started comparing the log of these two Docker builds.
+
+178
+00:11:35,280 --> 00:11:41,520
+And the first line that looked different was this downloading matplotlib line.
+
+179
+00:11:41,520 --> 00:11:47,520
+On the top, we have the line from the Python free 8 base image and the bottom we have it
+
+180
+00:11:47,520 --> 00:11:50,280
+from the Python free 8 Alpine image.
+
+181
+00:11:50,280 --> 00:11:54,640
+And the main thing that we see different is that in the top here, we see a wheel being
+
+182
+00:11:54,640 --> 00:11:59,080
+downloaded where in the bottom here, we see a title GC download.
+
+183
+00:11:59,080 --> 00:12:02,200
+And that seems to be the main difference.
+
+184
+00:12:02,200 --> 00:12:08,360
+And sort of the conclusion here is that PyPI wheels are not compatible with Alpine for
+
+185
+00:12:08,360 --> 00:12:11,080
+some reason.
+
+186
+00:12:11,080 --> 00:12:13,640
+So what is a wheel and why aren't they compatible?
+
+187
+00:12:13,640 --> 00:12:18,400
+A wheel is essentially the reason why most Python packaging just works nowadays.
+
+188
+00:12:18,400 --> 00:12:23,040
+When you do a pip install pandas or scikit-learn, it will just download something and there's
+
+189
+00:12:23,040 --> 00:12:26,360
+not a lot of dependencies that you need to have pre-installed on your PC.
+
+190
+00:12:26,360 --> 00:12:35,600
+And that's because wheels are a binary distribution format in which all external C code is already
+
+191
+00:12:35,600 --> 00:12:38,120
+built for you.
+
+192
+00:12:38,120 --> 00:12:42,400
+Rather than a so-called source distribution, which is the title GC thing, in which the
+
+193
+00:12:42,400 --> 00:12:47,520
+C code is not pre-built and actually needs to be compiled on your PC when you install
+
+194
+00:12:47,520 --> 00:12:49,800
+the package.
+
+195
+00:12:49,800 --> 00:12:53,560
+You can see, for example, for pandas, the difference between a source disk build and
+
+196
+00:12:53,560 --> 00:12:55,380
+a wheel disk on the right.
+
+197
+00:12:55,380 --> 00:13:05,880
+In the source disk build, we see algos.c and algos.pxd and algos.pyx, which are the C-Python
+
+198
+00:13:05,880 --> 00:13:08,840
+and original C codes.
+
+199
+00:13:08,840 --> 00:13:14,840
+Whereas on the right, we see this C-Python, FreeCyphon and Darwin.so, the shared object,
+
+200
+00:13:14,840 --> 00:13:21,360
+which is essentially the compiled C code in the wheel distribution for us already.
+
+201
+00:13:21,360 --> 00:13:26,680
+Again, on Alpine, it essentially downloads the left side, whereas on our previous one,
+
+202
+00:13:26,680 --> 00:13:31,120
+it downloaded on Python 3.8, it downloaded the right side's distribution.
+
+203
+00:13:31,120 --> 00:13:35,840
+So why are those two things incompatible?
+
+204
+00:13:35,840 --> 00:13:43,440
+That turns out because Alpine wants to be so small, they use a slightly different set
+
+205
+00:13:43,440 --> 00:13:47,260
+of base packages than, for example, Debian does.
+
+206
+00:13:47,260 --> 00:13:51,040
+This whole wheel thing is brilliant, but there's a lot of work in the background that needed
+
+207
+00:13:51,040 --> 00:13:53,520
+to happen to make this possible.
+
+208
+00:13:53,520 --> 00:13:57,800
+And essentially, all Linux distributions are slightly different from each other.
+
+209
+00:13:57,800 --> 00:14:02,640
+So what the original PEP writers thought of when they came up with the wheel PEP was to
+
+210
+00:14:02,640 --> 00:14:07,680
+make a standard subset of kernel plus user space APIs.
+
+211
+00:14:07,680 --> 00:14:12,000
+They could assume to work on many different types of Linux installations, and they called
+
+212
+00:14:12,000 --> 00:14:14,640
+this standard manyLinux.
+
+213
+00:14:14,640 --> 00:14:19,160
+Part of this standard is that things need to be built against glibc standard library,
+
+214
+00:14:19,160 --> 00:14:24,440
+whereas Alpine doesn't use glibc as the C library implementation, but uses Muzl.
+
+215
+00:14:24,440 --> 00:14:30,360
+So all normal manyLinux wheels that work on Debian and Ubuntu and what have you don't
+
+216
+00:14:30,360 --> 00:14:31,840
+work on Alpine.
+
+217
+00:14:31,840 --> 00:14:38,920
+So we kind of have to compile the code on our Alpine distribution to make them work.
+
+218
+00:14:38,920 --> 00:14:44,880
+That means adding a lot of dependencies, build-based, free type dev, libpng dev for Matplotlib,
+
+219
+00:14:44,880 --> 00:14:48,140
+open blast dev for NumPy and SciPy and stuff.
+
+220
+00:14:48,140 --> 00:14:53,840
+So let's add all of those to our Dockerfile, install again, do a build, takes about an
+
+221
+00:14:53,840 --> 00:14:57,040
+hour and it results in a bigger image.
+
+222
+00:14:57,040 --> 00:15:00,040
+That's a bit of a shame.
+
+223
+00:15:00,040 --> 00:15:01,080
+Makes sense though.
+
+224
+00:15:01,080 --> 00:15:07,200
+We needed all these build dependencies that we didn't have in our previous Python 3.8
+
+225
+00:15:07,200 --> 00:15:08,200
+image.
+
+226
+00:15:08,200 --> 00:15:13,600
+So we should probably try to get rid of them.
+
+227
+00:15:13,600 --> 00:15:20,600
+Now we already saw why this doesn't work, why we can't run this APK delete of our build
+
+228
+00:15:20,600 --> 00:15:26,360
+deps somewhere later on, because that's not how the Docker layering works.
+
+229
+00:15:26,360 --> 00:15:29,880
+But we also don't want to squash all these layers together, because with these kinds
+
+230
+00:15:29,880 --> 00:15:35,440
+of build times, like these hour-long build times, we really like to use this Docker layer
+
+231
+00:15:35,440 --> 00:15:41,520
+caching and make the most use out of it so that our iteration speed is at least somewhat
+
+232
+00:15:41,520 --> 00:15:43,760
+decent.
+
+233
+00:15:43,760 --> 00:15:48,840
+What we can do instead is use this thing called multistage builds.
+
+234
+00:15:48,840 --> 00:15:51,640
+Multistage builds essentially allow you to have multiple from statements in a single
+
+235
+00:15:51,640 --> 00:15:56,760
+Dockerfile and you can copy stuff from an earlier Docker container build in the same
+
+236
+00:15:56,760 --> 00:16:00,280
+file to a later Docker image.
+
+237
+00:16:00,280 --> 00:16:05,280
+So we make a builder stage here in the top, we make a runner stage here in the bottom.
+
+238
+00:16:05,280 --> 00:16:10,760
+And essentially what we do in the runner stage is we download from the builder all the installed
+
+239
+00:16:10,760 --> 00:16:14,120
+packages and all the therefore compiled code as well.
+
+240
+00:16:14,120 --> 00:16:19,080
+We still need open blast and freetype because those are runtime dependencies.
+
+241
+00:16:19,080 --> 00:16:23,160
+So we add those to the runner image as well.
+
+242
+00:16:23,160 --> 00:16:26,720
+That saves a good chunk of size.
+
+243
+00:16:26,720 --> 00:16:33,820
+But then the last question is kind of, okay, why did we still need open blast and freetype?
+
+244
+00:16:33,820 --> 00:16:38,820
+Because our wheel has the precompiled code that runs in the runner image, so why is that
+
+245
+00:16:38,820 --> 00:16:40,800
+still necessary?
+
+246
+00:16:40,800 --> 00:16:47,720
+And open blast and freetype, by the way, add like 200 plus megabytes to this image.
+
+247
+00:16:47,720 --> 00:16:52,640
+So what makes the wheels that we downloaded from PyPI different than the wheels that we
+
+248
+00:16:52,640 --> 00:16:56,760
+just build ourself in the builder image?
+
+249
+00:16:56,760 --> 00:17:03,920
+That has to do with that they're still linked against available dependencies on the operating
+
+250
+00:17:03,920 --> 00:17:10,160
+systems dynamically, that those dependencies aren't part of the wheel yet.
+
+251
+00:17:10,160 --> 00:17:13,980
+And we can check this using a tool called audit wheel.
+
+252
+00:17:13,980 --> 00:17:19,100
+So audit wheel is a tool that can check whether wheels are built correctly, whether they're
+
+253
+00:17:19,100 --> 00:17:24,760
+self-contained, but they can also nicely fix wheels and make sure that they don't need
+
+254
+00:17:24,760 --> 00:17:27,300
+any external dependencies.
+
+255
+00:17:27,300 --> 00:17:30,320
+So this is, for example, a wheel that I built myself for NumPy.
+
+256
+00:17:30,320 --> 00:17:35,320
+I ran audit wheel against it and it says, sure, this looks good, but there's still external
+
+257
+00:17:35,320 --> 00:17:37,960
+shared libraries required by the wheel.
+
+258
+00:17:37,960 --> 00:17:43,960
+If we would do this from Appleclip, we would see open blast and freetype in there.
+
+259
+00:17:43,960 --> 00:17:47,760
+But as I said, we can also use audit wheel to repair wheels.
+
+260
+00:17:47,760 --> 00:17:54,640
+So if I ask audit wheel to repair the NumPy wheel, it will essentially look in the operating
+
+261
+00:17:54,640 --> 00:17:59,380
+system and see, okay, which dependencies, external dependencies did we rely on?
+
+262
+00:17:59,380 --> 00:18:03,960
+And let's copy those into the wheel instead.
+
+263
+00:18:03,960 --> 00:18:09,600
+If we add that to, so if we add audit wheel and all those dependencies to our Docker file,
+
+264
+00:18:09,600 --> 00:18:18,640
+install the, or fix the wheels, then copy the fixed wheels to our runner image and run
+
+265
+00:18:18,640 --> 00:18:19,640
+our tests.
+
+266
+00:18:19,640 --> 00:18:26,360
+We see that we got this container image down to 288 megabytes.
+
+267
+00:18:26,360 --> 00:18:29,680
+At this point, most of the size comes from our site packages folder.
+
+268
+00:18:29,680 --> 00:18:30,680
+That's good.
+
+269
+00:18:30,680 --> 00:18:37,480
+197 megabytes out of the total, 230 something, 280 something.
+
+270
+00:18:37,480 --> 00:18:42,440
+But considering we can probably do even better because we're compiling all the source code
+
+271
+00:18:42,440 --> 00:18:47,480
+anyway, we can ask the C compiler, well, get rid of all kinds of debug information and
+
+272
+00:18:47,480 --> 00:18:51,840
+optimize for disk space for site by that saves about 10 megabytes.
+
+273
+00:18:51,840 --> 00:19:00,280
+We can add these compiler flags to our pip wheel statements that saves about 50 megabytes.
+
+274
+00:19:00,280 --> 00:19:04,720
+Then there's one last thing, which we can link some of the system dependencies, these
+
+275
+00:19:04,720 --> 00:19:07,600
+is all files together using sim links.
+
+276
+00:19:07,600 --> 00:19:10,240
+And that saves another 50 megabytes.
+
+277
+00:19:10,240 --> 00:19:11,860
+We really shouldn't do this though.
+
+278
+00:19:11,860 --> 00:19:13,440
+This is not norm core anymore.
+
+279
+00:19:13,440 --> 00:19:17,360
+This is not part for a norm conf conference anymore.
+
+280
+00:19:17,360 --> 00:19:22,320
+We should probably just stick with Python 3.8 slim and do the decent thing and get Docker
+
+281
+00:19:22,320 --> 00:19:26,440
+images that install in five minutes rather than an hour.
+
+282
+00:19:26,440 --> 00:19:27,440
+That's it.
+
+283
+00:19:27,440 --> 00:19:47,440
+Thanks for watching.
+

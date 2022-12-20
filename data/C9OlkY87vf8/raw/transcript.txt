@@ -1,0 +1,173 @@
+Hey, everybody. Welcome to NormConf. Good morning, good afternoon, good evening. I am
+going to start off. So it's very appropriate that James and Jesse were talking about Bards
+because what I want to do is I actually want to tell you a machine learning fairy tale.
+Once upon a time in the kingdom of all users contained in a matrix of M by N in the real
+number space, there lived a girl named Vectorella who was a machine learning engineer. And Vectorella
+was pretty happy. She was doing her machine learning stuff. She worked for a company that
+made Nutella, which is everybody knows is everybody's favorite spread for hypothesis
+testing fans. And as a company that made Nutella, this company shipped it far and wide across
+all places, both in the user matrix space and in the real world across hundreds and
+hundreds of countries. Now, as such, they had a lot of business transactions and a lot
+of data to deal with. So Vectorella had to handle a bunch of different stuff as a machine
+learning engineer. She had to handle API errors, time zone issues, import errors, K8s. And
+she was generally pretty okay with this, but she wanted a lot more. And what Vectorella
+saw whenever she went to her work slack was past the air flow alerts, past the memes,
+past the spark issues, there was a private channel that she could see that was called
+staff Emily's. And all Vectorella wanted to do was to get into that staff Emily channel
+with all of her heart. She was doing her day to day stuff, but she thought they were doing
+more in there. She thought they might have been doing stable diffusion or chat GPT. And
+all she wanted to do was do that cool stuff instead of the stuff that she did on a day
+to day basis. One day a miracle happened. Her very cool boss sent her a text message
+and said, hey, I think you've been doing a lot of this great work and it's time for you
+to join this channel. And Vectorella said, this is amazing. I would love to join this
+channel. But then a misfortune befell Vectorella. She went through a rework. And so what happened
+was the cool boss she used to have was replaced by an evil boss and two step PMs. So now not
+only did she have different work, but she had three people managing her work. And so
+she was further away from that staff Emily channel than she ever thought possible. And
+she said, can we, can I please go to this channel to her new evil step PMs and step
+manager? And they said, no, we have a lot of work for you to do. You have to do these
+three tasks. If you do these three tasks, maybe we will let you in the channel. Maybe
+we'll have to see how well you do them. And so Vectorella thought, okay, I guess I've
+already been doing a lot of this work, but I really want to see what they're discussing
+in there. So she put on her hat and got to work. The first task that they gave her was
+to count sales. So Noltella comes in all sorts of varieties, large jars, medium jars, small
+jars. And in order to increase revenue, they also branched out into gelato and biscuits.
+Vectorella's job was to count all of these. Don't forget it shipped both in the multidimensional
+vector space and in the real world. So there were sales across many, many countries. So
+she had sales for the U S Morocco and Japan and lots of other places. So she said, okay,
+I guess I'll do this. So she took all the orders that were placed in the United States.
+So there were biscuits, medium, small, large jars, et cetera. She had an enormous list.
+And she took that from the transaction logs and put that into a list. Then she said, okay,
+I guess I'll count these. So for every item in the orders, she added it to a default dict
+and then she incremented the counter for everyone in the U S until she had all her items added
+up all together. She wasn't done though yet, because there are a lot of other countries
+that had these sales. So she also had to do the same thing for Japan, Morocco, China,
+France, Italy, and others. At this point in Vectorella was getting really bored, but she
+really wanted to be in that channel. So then she said, okay, well now I guess I have to
+add all of these countries together. So then she incremented a counter. She took all her
+global orders and she added an incremented those orders as well, so that she had a global
+count of everything all together. And she said, okay, I guess this is it. I did this.
+This is so boring. And then she went to her evil step boss and step PMs and said, is this
+getting me closer to getting into that Slack channel? And they said, sure, but we have
+a second task for you. Now you have to turn words and millions of recipes into numbers.
+And Vectorella said, why, why do I have to do this? This is going to be so boring. And
+they said, just do it. Don't ask questions. So she said, okay. And she went to see that
+the recipes that Noltella had illegally scraped from the internet to do work with. She wasn't
+sure about that part, but she did look at these recipes and they had things like a list
+of ingredients, a list of steps, a list of things that went together to make things out
+of Noltella. So for example, this is a Noltella cake and there were millions of these. And
+she said, okay, well, how am I going to turn these into numbers? So what she did was first
+she turned it into code and she created a big long string for each recipe. Then she
+said, okay, what am I going to do next? I guess I have to clean this data so I can somehow
+process these strings. And so Vectorella did what she did best, which was clean a lot of
+data. So she had to lowercase all the stuff. She had to take out the contractions. She
+had to remove all the symbols, strip all the spaces. This is so boring. I bet they're doing
+stable diffusion in there, she thought as she was writing all this cleaning data.
+Then she had her cleaned words and then she thought, okay, what am I going to do next?
+Then she ended up mapping each word in the clean list to an integer, to a sequential
+integer. She said, okay, this is kind of something. But this is not really what they were asking
+for, I think. And so then what she did next was to actually encode the words. And so what
+she did was she created, she took the dictionary and for each word in the dictionary, she assigned
+it to a vector of zeros and then everywhere in the vector where the word actually was,
+she replaced it with a one. And then what she ended up having was a set of one hot encodings.
+And she said, okay, I guess this is something. What is this? Why am I doing this? I could
+be posting memes in that channel right now. People would be liking it and appreciating
+it instead of making dictionaries. Vectorella was tired and angry. So she went to her step
+PMs and her step manager and said, look, I've created this. I've processed them. I've mapped
+my vocab and I've encoded them so that I actually have vectors for each word. Is this something?
+Can I go now? And they said, no. You have one more task. Since you did these other two
+tasks and they were reasonably okay, we'll see if we let you in the channel after that.
+Now you have to schedule these to run every day on a daily basis because we sell Nutella
+every day and we also need to process it every day. And Vectorella said, oh, I just want
+to be in that room. So what she did was she rolled up her sleeves again and she created
+a crontab script that ran every day and that did a couple of things. First, it took all
+the code that she had run on her local machine and it's linked to a remote Linux server because
+Nutella only has one remote Linux server. It's a very norm core company. And then what
+that script does is at the same time every day, it runs that sales script and that number
+script. And she said, okay, I'm done. I cleaned everything. And she said, please, please,
+can I be in that channel? And they said, okay, fine. You win. So the fairy SRE came along
+and gave her all the correct admin access and unlocked the staff MLE channel. And that's
+when Vectorella became staff MLE Vectorella. Vectors. But when she got to the channel,
+she noticed something weird. She noticed that these staff MLEs were asking interesting questions.
+So the first one asked, hey, how do I run a distributed Spark job on a million parquet
+files in an S3 bucket to get the total counts of receipts for my sales forecast model? And
+Vectorella thought, hmm, curious. She thought, what do I know about Spark? What is Spark?
+So Spark is a way to do computation through data parallelism and fault tolerance across
+multiple commodity machines. What does that mean in English? It means that you can take
+a program that computes the frequencies or sums of all words or items in your sales catalog
+occurring in a set of text files and prints or outputs the most common ones. So what Vectorella
+realized was that the Spark diagram on the left was actually what she had been doing
+in adding sales per country and then aggregating them across the world this entire time. Vectorella
+was shocked and scandalized, but there was more in store for Vectorella. Second, in that
+super secret staff MLE Slack channel, she did not see people multiplying matrices or
+working on stable diffusion. What she did see, well, she kind of did, but not really.
+Not for the sake of the narrative. What she did see was the super staff MLE number two
+that said, I'm trying to create a set of embeddings projected into a lower dimension space to
+predict which ingredients I can cluster with Nutella for optimal combinations to show my
+customers. What does this mean? It means you have millions of recipes and you have one
+Nutella and you want people to select ingredients that they can cluster together to suggest
+what they can make with Nutella. So for example, on the right hand side, if you have lemon,
+peppermint and cream and they commonly cluster together, you can suggest that they make Nutella
+cookies. If you have vanilla, butter and chocolate, you can suggest that they make a Nutella cake,
+which requires buying four to five jars of Nutella. Buy Nutella, stock goes up. If you
+have for some reason, banana and pizza dough and crepe, I'm sorry about this one. You can
+make something in the category of sandwiches potentially, or flatbreads or something similar
+that you can sell Nutella to. But for that, you need to generate embeddings out of text
+and vector. I thought, well, what is an embedding? Embeddings are just a way to compress highly
+dimensional data, such as text or images and no smaller dimensional space by assigning
+each data point to a vector and comparing similarity of those vectors to each other.
+So she thought, okay, well, what is this? This sounds familiar to what was she doing?
+She was just creating vectors too. And in fact, if you go to the wonderful PyTorch documentation,
+it'll tell you that the one hot vectors that we created, which are sparse because they
+only have data points at certain points, are actually a special case of dense word embeddings,
+which we use for deep learning and stable diffusion.
+Finally, a third super staff machine learning engineer was asking a different question.
+Vectorola was puzzled. She thought this channel was going to be super high level discussions,
+theory, et cetera. But what they asked is, can someone validate my Airflow job to update
+my machine learning retraining pipeline? And Vectorola thought, what is Airflow?
+She remembered that Airflow is a programmatic way to create, monitor, and deploy batch workflows
+on a scheduled basis. She thought, what does this sound like? This sounds like something
+that I've done before. It sounds like fancy crontab. So Airflow is basically fancy crontab.
+It's a way to schedule a lot of different complicated tasks, like, for example, your
+Python scripts or your model runs. So it turned out that Vectorola had been doing this also
+kind of all along. What is the moral of the story? Basically,
+in the data science, machine learning, and general data space, we are all Vectorola today.
+Why? Because the advertised map for what we do at work is not the true territory. The
+interviews that we go through, the medium articles that we read, the hacker news articles
+that we read, all of this work, not all of it is encompassed by what we do on a day to
+day basis, which is crontab, and creating dictionaries and adding things to lists. This
+is the heart of the true work of machine learning. Second, what Vectorola realized is that building
+machine learning systems is just building software. And building software is fragile.
+It has lots of different components. It has lots of things that break. It's not glamorous.
+It's not sexy. It's real true work that you need to do to get your stuff to work. And
+that's what she had been doing when she started working on this.
+Third, even advanced work deals with normal problems. So this is actually a screenshot
+for when I tried to register for chat GPT on the first day it came out. And potentially
+they were having problems serving web requests, which has nothing to do with the really complicated
+and impressive model that was happening in the back end, which goes to my last point,
+which is that data work is also engineering work, and we deal with a lot of the complexities
+and fiddling with all the pieces that that entails.
+And finally, something that Vectorola realized was that the solid fundamentals that she had
+been working all along that seemed very boring to her and not related to what she had read
+about in the media were actually the fundamentals. And if she learned those very well, then she
+could do and be present for the advanced work as well. And I think that's something that
+we can all take to heart. So what Vectorola realized is that she now lived enlightened
+ever after, still also in the staff MLE room because the fairy Asari had forgotten to rotate
+her credentials. And so something we can all take away is ad astra per aspera. This is
+kind of like my personal motto. It means the stars through difficulty. We're all going
+to deal with this stuff. We're all going to have this happening. And it's up to us to
+embrace it. So thank you. I want to say a couple of thank yous before I go. That was
+my talk. First of all, enormous thank you to all the Norm Conrad organizers, Gania,
+Ben, Jeremy, and Roy. The amount of late nights, the amount of time spent, the love and effort
+put into this conference is amazing. I hope everyone sees it and enjoys it. We had so
+much fun planning it, and we hope you all love it too. Thank you to the emcees and moderators.
+Again, these people are, to my knowledge, not being paid for any of this. Everybody
+is doing it for fun and for love. And I'm excited to share this with you. Thank you
+to the speakers who I also voluntold to speak. I'm excited to hear what you're going to talk
+about. Thank you to our sponsors. If you are in Slack, you can come visit their booths.
+And they're all on our website. Thank you to our lightning speakers who led the way
+for the pregame to the conference and who had some amazing talks. Thank you to Numfocus,
+who make the tools that we use and who we're donating the optional donations of the conference
+to. And finally, thank you to you. This event would be nothing without the spirit of the
+data community, with everyone that works on this stuff, that contributes to it, and that
+builds on it every day. Welcome to NormCon!

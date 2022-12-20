@@ -1,0 +1,2196 @@
+1
+00:00:00,000 --> 00:00:04,880
+What I'm here to talk about is a group by statements
+
+2
+00:00:04,880 --> 00:00:07,400
+that will save the day,
+
+3
+00:00:07,400 --> 00:00:10,000
+which I thought was going to be an interesting topic.
+
+4
+00:00:10,000 --> 00:00:11,840
+So what I would like to do is explain
+
+5
+00:00:11,840 --> 00:00:13,200
+what this talk is about,
+
+6
+00:00:13,200 --> 00:00:15,440
+but I also want to explain who the talk is for,
+
+7
+00:00:15,440 --> 00:00:17,560
+because in my mind,
+
+8
+00:00:17,560 --> 00:00:21,880
+there are people like Alice and Bob and Factorella
+
+9
+00:00:21,880 --> 00:00:23,320
+that are interested in maybe getting started
+
+10
+00:00:23,320 --> 00:00:25,280
+in this field of stuff with data.
+
+11
+00:00:25,280 --> 00:00:27,140
+It's a very attractive field.
+
+12
+00:00:27,140 --> 00:00:29,700
+And maybe Alice and Bob are recent graduates.
+
+13
+00:00:29,700 --> 00:00:32,240
+Maybe they're just interested in a career transition,
+
+14
+00:00:33,100 --> 00:00:34,380
+but it's been a while since I was a beginner.
+
+15
+00:00:34,380 --> 00:00:35,680
+So I was thinking, you know,
+
+16
+00:00:35,680 --> 00:00:37,680
+what is it like to maybe start out now?
+
+17
+00:00:37,680 --> 00:00:39,680
+And then you give it a Google
+
+18
+00:00:39,680 --> 00:00:40,880
+and then you read stuff like,
+
+19
+00:00:40,880 --> 00:00:42,880
+hey, data drives everything
+
+20
+00:00:42,880 --> 00:00:45,000
+and you need to get the skills you need
+
+21
+00:00:45,000 --> 00:00:46,640
+for the future of work.
+
+22
+00:00:47,680 --> 00:00:51,600
+And there are these listicles of like 10 essential skills
+
+23
+00:00:51,600 --> 00:00:53,400
+for data scientists.
+
+24
+00:00:53,400 --> 00:00:55,280
+And if you really try hard, I mean,
+
+25
+00:00:55,280 --> 00:00:58,400
+you will even find like the best data science
+
+26
+00:00:58,400 --> 00:01:01,200
+certificate programs from a bootcamp
+
+27
+00:01:01,200 --> 00:01:03,080
+that I will not name here,
+
+28
+00:01:03,080 --> 00:01:05,080
+but people are very eager to take your money
+
+29
+00:01:05,080 --> 00:01:06,840
+so they can give you a certificate.
+
+30
+00:01:07,800 --> 00:01:08,920
+And, you know,
+
+31
+00:01:08,920 --> 00:01:11,000
+and that kind of brings me to the topic of this talk
+
+32
+00:01:11,000 --> 00:01:13,020
+because what I want to talk about in this talk
+
+33
+00:01:13,020 --> 00:01:15,920
+is two stories of two datasets.
+
+34
+00:01:15,920 --> 00:01:18,320
+These two datasets are properly beautiful
+
+35
+00:01:18,320 --> 00:01:20,080
+because they both tell a story,
+
+36
+00:01:20,080 --> 00:01:21,340
+but the reason why they're beautiful
+
+37
+00:01:21,340 --> 00:01:23,920
+is also because it's a story that I think
+
+38
+00:01:23,920 --> 00:01:28,520
+Alice and Bob and Vectorella really need to hear.
+
+39
+00:01:28,520 --> 00:01:30,600
+It is a story to help remind everyone
+
+40
+00:01:30,600 --> 00:01:33,120
+of the human aspect of this data work that we're doing.
+
+41
+00:01:33,120 --> 00:01:34,640
+And hopefully it's also a story
+
+42
+00:01:34,640 --> 00:01:36,680
+that might help remove some anxiety
+
+43
+00:01:36,680 --> 00:01:39,540
+against this whole must-have skills phenomenon
+
+44
+00:01:39,540 --> 00:01:41,800
+that I'm becoming increasingly frustrated with
+
+45
+00:01:41,800 --> 00:01:42,640
+on the internet.
+
+46
+00:01:43,640 --> 00:01:45,480
+So with that out of the way,
+
+47
+00:01:45,480 --> 00:01:47,840
+let's talk about a beautiful dataset.
+
+48
+00:01:47,840 --> 00:01:49,680
+The first dataset I want to talk about
+
+49
+00:01:49,680 --> 00:01:51,240
+is called ChickWaite.
+
+50
+00:01:51,240 --> 00:01:53,080
+ChickWaite comes with the language R.
+
+51
+00:01:53,080 --> 00:01:54,640
+So if you install R,
+
+52
+00:01:54,640 --> 00:01:56,440
+you can call this variable ChickWaite
+
+53
+00:01:56,440 --> 00:01:57,880
+and you actually get this dataset.
+
+54
+00:01:57,880 --> 00:01:58,800
+It comes with the language.
+
+55
+00:01:58,800 --> 00:02:00,160
+It's a neat feature.
+
+56
+00:02:00,160 --> 00:02:03,920
+And this dataset has a couple of columns.
+
+57
+00:02:03,920 --> 00:02:05,400
+So one column is chick,
+
+58
+00:02:05,400 --> 00:02:06,240
+the other one's time,
+
+59
+00:02:06,240 --> 00:02:07,320
+the other one's weight.
+
+60
+00:02:07,320 --> 00:02:10,120
+And the idea here is that the chicken number one
+
+61
+00:02:10,120 --> 00:02:12,240
+at time step zero had a certain weight.
+
+62
+00:02:12,240 --> 00:02:14,560
+And as time moves on,
+
+63
+00:02:14,560 --> 00:02:16,640
+the weight also increases.
+
+64
+00:02:16,640 --> 00:02:20,160
+But this chicken also had a diet.
+
+65
+00:02:20,160 --> 00:02:23,020
+This chicken got a specific kind of food.
+
+66
+00:02:23,020 --> 00:02:26,120
+And different chickens might have different kinds of food,
+
+67
+00:02:26,120 --> 00:02:28,440
+but you can imagine that there's kind of a use case here
+
+68
+00:02:28,440 --> 00:02:30,600
+where it's kind of like an A-B test.
+
+69
+00:02:30,600 --> 00:02:32,320
+We're trying to figure out which diet is best
+
+70
+00:02:32,320 --> 00:02:34,160
+for the chickens to get them to grow.
+
+71
+00:02:35,840 --> 00:02:38,120
+And if you're the good data science person
+
+72
+00:02:38,120 --> 00:02:39,280
+that you're supposed to be,
+
+73
+00:02:39,280 --> 00:02:40,460
+you do some exploratory work.
+
+74
+00:02:40,460 --> 00:02:43,320
+So you make a chart and you kind of get this.
+
+75
+00:02:43,320 --> 00:02:45,120
+On the X-axis, you've got time.
+
+76
+00:02:45,120 --> 00:02:47,320
+On the Y-axis here, you've got weight.
+
+77
+00:02:47,320 --> 00:02:50,520
+And you can see that there's this general pattern
+
+78
+00:02:50,520 --> 00:02:51,480
+in the middle over here.
+
+79
+00:02:51,480 --> 00:02:54,400
+You can definitely see the average is going up,
+
+80
+00:02:54,400 --> 00:02:57,120
+but you can also see that there's a bit of variance.
+
+81
+00:02:57,120 --> 00:02:59,080
+There's actually quite a bit of spread here.
+
+82
+00:02:59,080 --> 00:03:01,720
+And that is something that you can totally see.
+
+83
+00:03:01,720 --> 00:03:04,640
+But then you can do sort of the clever group by.
+
+84
+00:03:04,640 --> 00:03:08,080
+And what you then notice is that when you group by the time
+
+85
+00:03:08,080 --> 00:03:09,360
+as well as the diet,
+
+86
+00:03:09,360 --> 00:03:11,880
+you can kind of make a summary line for each diet.
+
+87
+00:03:11,880 --> 00:03:13,520
+And you can also see that some of these diets
+
+88
+00:03:13,520 --> 00:03:14,880
+perform better than others.
+
+89
+00:03:14,880 --> 00:03:16,960
+It's like something that you can conclude.
+
+90
+00:03:16,960 --> 00:03:21,600
+Ah, but now come the data machine learning people.
+
+91
+00:03:21,600 --> 00:03:24,040
+And they say, we have these tools for the future of work.
+
+92
+00:03:24,040 --> 00:03:26,600
+These are tools that you really want to use and apply.
+
+93
+00:03:26,600 --> 00:03:28,000
+So I can imagine the pressure, right?
+
+94
+00:03:28,000 --> 00:03:29,680
+Like you're doing analysis here,
+
+95
+00:03:29,680 --> 00:03:31,900
+but you need to wiggle a tool in here
+
+96
+00:03:31,900 --> 00:03:34,040
+that's supposedly the future of work.
+
+97
+00:03:34,040 --> 00:03:35,240
+And these are good tools by the way,
+
+98
+00:03:35,240 --> 00:03:37,160
+but like I can imagine that there's this pressure.
+
+99
+00:03:37,160 --> 00:03:39,600
+So then immediately your mind kind of goes like,
+
+100
+00:03:39,600 --> 00:03:42,040
+maybe I need to do something predictive here.
+
+101
+00:03:42,040 --> 00:03:43,200
+And you can actually come up
+
+102
+00:03:43,200 --> 00:03:45,000
+with a reasonable use case for that.
+
+103
+00:03:45,000 --> 00:03:47,360
+You can actually say, well, given a diet and the time,
+
+104
+00:03:47,360 --> 00:03:49,480
+maybe we can predict the growth trajectory
+
+105
+00:03:49,480 --> 00:03:50,320
+for these chickens.
+
+106
+00:03:50,320 --> 00:03:53,200
+And it's actually kind of a reasonable thing you could do.
+
+107
+00:03:54,360 --> 00:03:57,120
+But you can also just wonder,
+
+108
+00:03:57,120 --> 00:04:00,840
+well, is that the thing we should do?
+
+109
+00:04:00,840 --> 00:04:03,280
+Like, should we immediately think about the modeling thing
+
+110
+00:04:03,280 --> 00:04:05,120
+we want to predict here?
+
+111
+00:04:05,120 --> 00:04:07,600
+Because maybe that's a distraction.
+
+112
+00:04:07,600 --> 00:04:09,560
+And I'm about to give you like a very good hint.
+
+113
+00:04:09,560 --> 00:04:10,560
+Like if you're in data science,
+
+114
+00:04:10,560 --> 00:04:12,600
+there's one thing people don't do enough of.
+
+115
+00:04:12,600 --> 00:04:14,600
+And that is that when they make a visualization like this,
+
+116
+00:04:14,600 --> 00:04:15,880
+you need to take five minutes
+
+117
+00:04:15,880 --> 00:04:18,320
+and just stare at the thing for a while.
+
+118
+00:04:18,320 --> 00:04:21,760
+And you need to look for stuff that might surprise you.
+
+119
+00:04:21,760 --> 00:04:23,800
+Hadley Wickham has this really great quote,
+
+120
+00:04:23,800 --> 00:04:25,520
+a machine learning scales very well,
+
+121
+00:04:25,520 --> 00:04:27,000
+but it doesn't surprise you.
+
+122
+00:04:27,000 --> 00:04:28,840
+Visualizations don't scale super well,
+
+123
+00:04:28,840 --> 00:04:31,360
+but they do have the ability to surprise you.
+
+124
+00:04:31,360 --> 00:04:34,040
+And in this case, if you just squint your eyes a bit,
+
+125
+00:04:35,760 --> 00:04:37,480
+something fishy is happening here.
+
+126
+00:04:38,720 --> 00:04:41,680
+Notice here, like a time step zero, right?
+
+127
+00:04:41,680 --> 00:04:42,920
+It seems that there's a chicken
+
+128
+00:04:42,920 --> 00:04:45,200
+that's actually losing weight.
+
+129
+00:04:45,200 --> 00:04:47,320
+Because if I look at the height,
+
+130
+00:04:47,320 --> 00:04:48,840
+there's definitely like a chicken here
+
+131
+00:04:48,840 --> 00:04:50,600
+that seems to be losing weight.
+
+132
+00:04:50,600 --> 00:04:51,960
+I don't know which one of these chickens, right?
+
+133
+00:04:51,960 --> 00:04:53,600
+But that's a bit off.
+
+134
+00:04:53,600 --> 00:04:55,720
+And it's not just happening here.
+
+135
+00:04:55,720 --> 00:04:57,720
+It's also happening, well, here.
+
+136
+00:05:00,000 --> 00:05:00,920
+And that's a hint.
+
+137
+00:05:02,160 --> 00:05:05,520
+So, okay, something weird seems to be happening there.
+
+138
+00:05:05,520 --> 00:05:06,760
+Maybe we shouldn't model just yet.
+
+139
+00:05:06,760 --> 00:05:08,080
+Maybe we need to think a little bit about that.
+
+140
+00:05:08,080 --> 00:05:11,520
+Maybe we need to do another group by.
+
+141
+00:05:11,520 --> 00:05:12,440
+And what I'm going to do now
+
+142
+00:05:12,440 --> 00:05:13,840
+is I'm going to make the same visualization,
+
+143
+00:05:13,840 --> 00:05:15,440
+but I'm just going to group by the chicken.
+
+144
+00:05:15,440 --> 00:05:17,000
+Like I'm going to ignore the diet for now.
+
+145
+00:05:17,000 --> 00:05:18,040
+Just group by the chicken.
+
+146
+00:05:18,040 --> 00:05:19,080
+And when you do that,
+
+147
+00:05:19,080 --> 00:05:21,760
+you get a growth line for each of these chickens.
+
+148
+00:05:21,760 --> 00:05:23,120
+Let's just go back there.
+
+149
+00:05:23,120 --> 00:05:25,880
+You get a growth line for each of these chickens.
+
+150
+00:05:25,880 --> 00:05:29,440
+And you can kind of see the trajectory for each of them.
+
+151
+00:05:29,440 --> 00:05:30,640
+And when you then zoom in again
+
+152
+00:05:30,640 --> 00:05:32,440
+and you squint your eyes again,
+
+153
+00:05:32,440 --> 00:05:36,120
+you will notice that a chicken stops here.
+
+154
+00:05:36,120 --> 00:05:38,320
+And another chicken stops there.
+
+155
+00:05:38,320 --> 00:05:40,800
+Another chicken stops there.
+
+156
+00:05:40,800 --> 00:05:42,240
+And if we now zoom out again
+
+157
+00:05:42,240 --> 00:05:43,800
+and we just assign a color to the chickens
+
+158
+00:05:43,800 --> 00:05:45,360
+that stopped prematurely.
+
+159
+00:05:47,400 --> 00:05:49,920
+Okay, it seems that some chickens die prematurely.
+
+160
+00:05:49,920 --> 00:05:50,760
+I don't know for sure,
+
+161
+00:05:50,760 --> 00:05:52,440
+but that's a hint that I'm getting.
+
+162
+00:05:54,200 --> 00:05:56,280
+And now if I take a step back and I ask myself,
+
+163
+00:05:56,280 --> 00:05:59,640
+which of these two charts is more important, right?
+
+164
+00:05:59,640 --> 00:06:02,440
+Like even if I'm using the most fancy machine learning tools
+
+165
+00:06:02,440 --> 00:06:04,200
+and I'm like displaying all the metrics
+
+166
+00:06:04,200 --> 00:06:05,240
+that try to convince you
+
+167
+00:06:05,240 --> 00:06:07,120
+of how good the predictive power is,
+
+168
+00:06:08,440 --> 00:06:09,680
+we have to be very critical here
+
+169
+00:06:09,680 --> 00:06:13,080
+because suppose that you have a TensorFlow model
+
+170
+00:06:13,080 --> 00:06:14,240
+that's very good at predicting
+
+171
+00:06:14,240 --> 00:06:16,720
+like the average diet weight over here.
+
+172
+00:06:17,920 --> 00:06:20,360
+Are we actually sure that it's taking into account
+
+173
+00:06:20,360 --> 00:06:22,360
+that some of the chickens might've died?
+
+174
+00:06:23,920 --> 00:06:25,600
+Unless you are aware that that's the thing
+
+175
+00:06:25,600 --> 00:06:26,720
+you got a model for,
+
+176
+00:06:26,720 --> 00:06:28,560
+the model's not gonna know about it.
+
+177
+00:06:28,560 --> 00:06:30,920
+And this, I would argue,
+
+178
+00:06:30,920 --> 00:06:33,160
+is a really nice example of a group by statement
+
+179
+00:06:33,160 --> 00:06:34,560
+that can really save the day.
+
+180
+00:06:34,560 --> 00:06:36,640
+If you didn't know this upfront,
+
+181
+00:06:36,640 --> 00:06:39,520
+you might be pushing a model to production
+
+182
+00:06:39,520 --> 00:06:41,920
+that predicts dead chickens.
+
+183
+00:06:41,920 --> 00:06:44,200
+And that will be bad, I think.
+
+184
+00:06:46,480 --> 00:06:50,560
+So maybe we don't need TensorFlow to save the day.
+
+185
+00:06:50,560 --> 00:06:54,560
+Maybe we need a certificate for asking the right question
+
+186
+00:06:55,560 --> 00:06:57,360
+because that's something we maybe need more of.
+
+187
+00:06:57,360 --> 00:06:58,800
+It's like a very simple conclusion
+
+188
+00:06:58,800 --> 00:07:00,280
+that I have with this dataset.
+
+189
+00:07:02,320 --> 00:07:03,800
+So, okay, that's just one dataset.
+
+190
+00:07:03,800 --> 00:07:05,320
+Let's move on to the next one.
+
+191
+00:07:05,320 --> 00:07:06,360
+Now, this other dataset
+
+192
+00:07:06,360 --> 00:07:08,160
+deserves a slightly different introduction
+
+193
+00:07:08,160 --> 00:07:10,800
+because I have to talk about this kind of,
+
+194
+00:07:10,800 --> 00:07:13,880
+I will say, unclear task first
+
+195
+00:07:13,880 --> 00:07:15,400
+that's increasingly popular.
+
+196
+00:07:17,200 --> 00:07:19,240
+So what you can do is you can go to this website
+
+197
+00:07:19,240 --> 00:07:20,240
+called HuggingFace.
+
+198
+00:07:20,240 --> 00:07:21,920
+And HuggingFace has a couple of interesting features.
+
+199
+00:07:21,920 --> 00:07:24,240
+They host datasets, they host a bunch of models,
+
+200
+00:07:24,240 --> 00:07:26,080
+but you can also search for these models.
+
+201
+00:07:26,080 --> 00:07:28,240
+And one way of searching allows you to say,
+
+202
+00:07:28,240 --> 00:07:31,240
+well, I'm interested in the task of text classification.
+
+203
+00:07:31,240 --> 00:07:35,240
+That means text goes in and some sort of class comes out.
+
+204
+00:07:35,240 --> 00:07:36,720
+And you can predict just about anything
+
+205
+00:07:36,720 --> 00:07:39,280
+like topic of a newspaper article and whatnot.
+
+206
+00:07:39,280 --> 00:07:41,920
+But apparently in the top five,
+
+207
+00:07:41,920 --> 00:07:46,280
+like most downloaded models on text classification,
+
+208
+00:07:46,280 --> 00:07:49,080
+four or five are about sentiment,
+
+209
+00:07:49,080 --> 00:07:51,320
+which is basically saying text goes in
+
+210
+00:07:51,320 --> 00:07:53,240
+and out goes positive or negative.
+
+211
+00:07:55,120 --> 00:07:56,600
+But then you start wondering,
+
+212
+00:07:56,600 --> 00:07:58,600
+like how do I interpret positive and negative?
+
+213
+00:07:58,600 --> 00:08:01,000
+Because that's a pretty big bucket of stuff.
+
+214
+00:08:01,000 --> 00:08:04,640
+Like I can be in love and I can be laughing,
+
+215
+00:08:04,640 --> 00:08:06,520
+but those are two quite distinct emotions
+
+216
+00:08:06,520 --> 00:08:08,960
+that I don't think we should really pretend
+
+217
+00:08:08,960 --> 00:08:09,800
+like they are the same.
+
+218
+00:08:09,800 --> 00:08:11,280
+That feels a bit strange
+
+219
+00:08:11,280 --> 00:08:13,840
+and maybe the same thing for fear and anger.
+
+220
+00:08:13,840 --> 00:08:17,640
+Like I get that sentiment is like a simple concept,
+
+221
+00:08:17,640 --> 00:08:19,440
+but it might be too simple as well,
+
+222
+00:08:19,440 --> 00:08:21,960
+depending on what we're interested in doing with text.
+
+223
+00:08:22,960 --> 00:08:26,640
+So imagine my delight when around the same time last year,
+
+224
+00:08:26,640 --> 00:08:28,560
+like about a year ago, a bit longer,
+
+225
+00:08:28,560 --> 00:08:31,160
+I learned about this dataset called Google Emotions.
+
+226
+00:08:32,640 --> 00:08:34,960
+They took the effort of actually writing a paper
+
+227
+00:08:34,960 --> 00:08:36,800
+and the Google name is attached.
+
+228
+00:08:36,800 --> 00:08:39,960
+And this is a dataset where we're not doing just sentiment.
+
+229
+00:08:39,960 --> 00:08:43,160
+No, we're actually doing emotions.
+
+230
+00:08:43,160 --> 00:08:45,920
+So they took data off of Reddit
+
+231
+00:08:45,920 --> 00:08:49,080
+and you've got texts like this, like, oh my God, yep.
+
+232
+00:08:49,080 --> 00:08:50,040
+That's the final answer.
+
+233
+00:08:50,040 --> 00:08:51,240
+Thank you so much.
+
+234
+00:08:51,240 --> 00:08:53,440
+And like, you can attach labels to it.
+
+235
+00:08:54,360 --> 00:08:56,600
+This is not classification, it's more like tagging.
+
+236
+00:08:56,600 --> 00:09:00,360
+So you can have more than one class attached to this.
+
+237
+00:09:00,360 --> 00:09:01,520
+Let's move a bit of a detail,
+
+238
+00:09:01,520 --> 00:09:04,040
+but I think it's interesting because it also makes sense.
+
+239
+00:09:04,040 --> 00:09:07,320
+You can have texts where more than one emotion applies.
+
+240
+00:09:07,320 --> 00:09:08,640
+So that feels appropriate.
+
+241
+00:09:09,640 --> 00:09:11,120
+And what you can do here is that
+
+242
+00:09:11,120 --> 00:09:13,120
+they also did a bit of annotation.
+
+243
+00:09:13,120 --> 00:09:16,680
+So each example was annotated by at least three people.
+
+244
+00:09:16,680 --> 00:09:19,560
+Sometimes even five people had to look at it.
+
+245
+00:09:19,560 --> 00:09:20,520
+And you can read the paper
+
+246
+00:09:20,520 --> 00:09:22,960
+and read all sorts of interesting details.
+
+247
+00:09:22,960 --> 00:09:27,360
+So there's about 60, like almost 60,000 text examples,
+
+248
+00:09:27,360 --> 00:09:32,240
+over 200,000 annotations, 82 people were annotating here.
+
+249
+00:09:32,240 --> 00:09:36,560
+There were 27 emotion tags attached from amusement to joy,
+
+250
+00:09:36,560 --> 00:09:38,320
+to relief, to nervousness and grief.
+
+251
+00:09:38,320 --> 00:09:41,360
+I mean, it's a huge pallet of emotions that was covered.
+
+252
+00:09:41,360 --> 00:09:44,280
+They also made this correlation chart that was interesting.
+
+253
+00:09:44,280 --> 00:09:47,400
+So you can see that like some emotions co-occur together
+
+254
+00:09:47,400 --> 00:09:50,040
+and some don't, some just don't appear together at all.
+
+255
+00:09:50,040 --> 00:09:52,920
+That's something that the paper did mentioned.
+
+256
+00:09:52,920 --> 00:09:54,000
+There's also like a lot of effort
+
+257
+00:09:54,000 --> 00:09:55,360
+that went into pre-processing
+
+258
+00:09:55,360 --> 00:09:57,160
+that was pretty interesting to read.
+
+259
+00:09:57,160 --> 00:09:58,720
+So they removed a couple of subreddits
+
+260
+00:09:58,720 --> 00:10:02,040
+just because they were too vulgar, makes sense, Reddit.
+
+261
+00:10:02,040 --> 00:10:04,440
+But they also masked the name of people
+
+262
+00:10:04,440 --> 00:10:06,360
+as well as references to religion.
+
+263
+00:10:06,360 --> 00:10:07,920
+Seems like a good thing.
+
+264
+00:10:07,920 --> 00:10:11,080
+They made sure that each test had at least three tokens
+
+265
+00:10:11,080 --> 00:10:12,920
+and no more than 30.
+
+266
+00:10:12,920 --> 00:10:15,200
+All the annotators were English natives.
+
+267
+00:10:16,560 --> 00:10:18,520
+So, you know, a bunch of interesting things
+
+268
+00:10:18,520 --> 00:10:20,200
+that went into this, bunch of thought.
+
+269
+00:10:20,200 --> 00:10:22,600
+And then the paper also goes into like benchmark models.
+
+270
+00:10:22,600 --> 00:10:23,960
+So the deep learning thing
+
+271
+00:10:23,960 --> 00:10:26,520
+where they all show the confusion matrix.
+
+272
+00:10:26,520 --> 00:10:28,240
+And it makes sense that certain emotions
+
+273
+00:10:28,240 --> 00:10:29,560
+are confused with each other.
+
+274
+00:10:29,560 --> 00:10:32,040
+And oh, there's also these awesome like F1 charts
+
+275
+00:10:32,040 --> 00:10:33,400
+for transfer learning.
+
+276
+00:10:33,400 --> 00:10:36,200
+And here's where we need to stop again.
+
+277
+00:10:37,360 --> 00:10:41,040
+Because we can get excited about these charts like before.
+
+278
+00:10:41,040 --> 00:10:43,600
+Like we can really get the blood pumping.
+
+279
+00:10:44,560 --> 00:10:47,800
+But what if there are dead chickens in this dataset too?
+
+280
+00:10:47,800 --> 00:10:49,800
+And that's a question I've been asking myself
+
+281
+00:10:49,800 --> 00:10:51,240
+more and more recently.
+
+282
+00:10:53,160 --> 00:10:55,360
+So usually when you're looking for dead chickens
+
+283
+00:10:55,360 --> 00:10:57,280
+in the dataset, it's like a really good exercise to do.
+
+284
+00:10:57,280 --> 00:10:59,640
+But if you're looking for a good hint,
+
+285
+00:10:59,640 --> 00:11:02,840
+try to think about how the dataset got created.
+
+286
+00:11:02,840 --> 00:11:04,120
+Because let me give you a hint.
+
+287
+00:11:04,120 --> 00:11:06,400
+If you can't use visualization,
+
+288
+00:11:06,400 --> 00:11:09,200
+how a dataset got created usually gives a good hint too.
+
+289
+00:11:11,000 --> 00:11:13,000
+So this dataset got created
+
+290
+00:11:13,000 --> 00:11:16,000
+because a bunch of people on the internet were annotating.
+
+291
+00:11:16,000 --> 00:11:16,960
+And if I recall correctly,
+
+292
+00:11:16,960 --> 00:11:19,520
+I believe the paper mentioned Mechanical Turk.
+
+293
+00:11:19,520 --> 00:11:21,840
+So it's not just the fact that we have
+
+294
+00:11:21,840 --> 00:11:23,280
+many people annotating.
+
+295
+00:11:23,280 --> 00:11:26,280
+We also have people annotating that aren't in the same room.
+
+296
+00:11:26,280 --> 00:11:27,600
+You can actually assume that these people
+
+297
+00:11:27,600 --> 00:11:29,440
+don't necessarily talk to each other.
+
+298
+00:11:30,680 --> 00:11:31,640
+And you can kind of wonder,
+
+299
+00:11:31,640 --> 00:11:35,040
+well, maybe these people occasionally disagree.
+
+300
+00:11:35,040 --> 00:11:36,960
+That's definitely possible.
+
+301
+00:11:36,960 --> 00:11:38,800
+Especially when it's emotion,
+
+302
+00:11:38,800 --> 00:11:40,640
+which is culturally like a thing.
+
+303
+00:11:40,640 --> 00:11:41,920
+It's not necessarily universal.
+
+304
+00:11:41,920 --> 00:11:43,920
+It's language, that's also a thing.
+
+305
+00:11:43,920 --> 00:11:46,640
+Oh, and by the way, it's also Reddit data.
+
+306
+00:11:46,640 --> 00:11:48,880
+And that brings in an interesting phenomenon.
+
+307
+00:11:50,040 --> 00:11:51,920
+So on Reddit, you can have texts like,
+
+308
+00:11:51,920 --> 00:11:54,560
+oh my God, those tiny shoes desire to,
+
+309
+00:11:54,560 --> 00:11:55,920
+should be boob snoot,
+
+310
+00:11:55,920 --> 00:11:57,640
+a desire to boob snoot intensifies.
+
+311
+00:11:57,640 --> 00:12:00,240
+Like that's a perfectly normal sentence on Reddit.
+
+312
+00:12:01,680 --> 00:12:05,160
+But I can imagine that if you're like the 25 year old
+
+313
+00:12:05,160 --> 00:12:07,400
+or 50 year old trying to parse
+
+314
+00:12:07,400 --> 00:12:09,240
+what's actually being communicated here.
+
+315
+00:12:09,240 --> 00:12:11,480
+Like, can we really assume that everyone
+
+316
+00:12:11,480 --> 00:12:13,320
+has the same opinion on whether or not
+
+317
+00:12:13,320 --> 00:12:14,840
+this is about excitement?
+
+318
+00:12:16,040 --> 00:12:19,560
+And by the way, this is an actual example from the dataset.
+
+319
+00:12:19,560 --> 00:12:20,440
+I'm not making this up.
+
+320
+00:12:20,440 --> 00:12:22,160
+This stuff just naturally appears.
+
+321
+00:12:22,160 --> 00:12:25,160
+But no, okay, maybe this is grouped by time.
+
+322
+00:12:25,160 --> 00:12:27,080
+Maybe this is one of those things I just need to check
+
+323
+00:12:27,080 --> 00:12:29,200
+before I do any sort of modeling on this thing.
+
+324
+00:12:29,200 --> 00:12:31,960
+Let's just see if I can come up with a nice little number.
+
+325
+00:12:31,960 --> 00:12:34,520
+So I group by text and I just check
+
+326
+00:12:34,520 --> 00:12:36,440
+whether or not all annotators agree.
+
+327
+00:12:37,480 --> 00:12:39,960
+On all 27 emotions, by the way, at the same time.
+
+328
+00:12:39,960 --> 00:12:42,200
+That's the number that I'm calculating here.
+
+329
+00:12:42,200 --> 00:12:43,520
+And there you go.
+
+330
+00:12:43,520 --> 00:12:47,400
+Out of the 58,000 text examples,
+
+331
+00:12:47,400 --> 00:12:50,320
+less than 8,000 of them have every annotation
+
+332
+00:12:50,320 --> 00:12:52,200
+agree on every emotion.
+
+333
+00:12:52,200 --> 00:12:55,120
+So it's like 13% of all the examples
+
+334
+00:12:55,120 --> 00:12:58,040
+have everyone actually agree on the emotions that are there.
+
+335
+00:13:01,040 --> 00:13:02,960
+That's not a huge number.
+
+336
+00:13:04,560 --> 00:13:06,640
+But I do want to caveat just a little bit.
+
+337
+00:13:06,640 --> 00:13:08,720
+So when there are 27 emotions,
+
+338
+00:13:08,720 --> 00:13:10,840
+if only one of the annotators disagrees
+
+339
+00:13:10,840 --> 00:13:12,000
+with one of the emotions,
+
+340
+00:13:12,000 --> 00:13:13,640
+that also means that there's no agreement
+
+341
+00:13:13,640 --> 00:13:14,480
+between all of them, right?
+
+342
+00:13:14,480 --> 00:13:17,720
+So it's not like I expected this number to be high.
+
+343
+00:13:17,720 --> 00:13:19,440
+But I would also expect that if I'm going to do
+
+344
+00:13:19,440 --> 00:13:20,440
+machine learning on this,
+
+345
+00:13:20,440 --> 00:13:23,320
+I do expect this number to be just slightly higher, maybe.
+
+346
+00:13:25,800 --> 00:13:27,560
+And what's more, you can also do some other
+
+347
+00:13:27,560 --> 00:13:28,960
+really interesting group buys here.
+
+348
+00:13:28,960 --> 00:13:30,800
+So what you can also do is you can say,
+
+349
+00:13:30,800 --> 00:13:32,880
+let's just look at the top three annotators.
+
+350
+00:13:32,880 --> 00:13:34,320
+Usually these data sets, by the way,
+
+351
+00:13:34,320 --> 00:13:35,880
+they come with like a huge skew,
+
+352
+00:13:35,880 --> 00:13:40,000
+like the top N% has like way more than N% of the annotations.
+
+353
+00:13:40,000 --> 00:13:42,680
+So in this case, the top three annotators
+
+354
+00:13:42,680 --> 00:13:44,920
+annotate about 14% of all the data.
+
+355
+00:13:44,920 --> 00:13:48,360
+Together, they annotated almost 7,000 examples
+
+356
+00:13:48,360 --> 00:13:51,240
+and not even half of them agree with each other.
+
+357
+00:13:51,240 --> 00:13:52,520
+So this whole disagreement thing,
+
+358
+00:13:52,520 --> 00:13:54,640
+you didn't need 82 people to discover this.
+
+359
+00:13:54,640 --> 00:13:55,640
+If you just take three people,
+
+360
+00:13:55,640 --> 00:13:57,200
+it seems that they immediately disagree
+
+361
+00:13:57,200 --> 00:13:58,800
+on a lot of this stuff.
+
+362
+00:13:58,800 --> 00:14:00,240
+And again, I would argue,
+
+363
+00:14:00,240 --> 00:14:02,080
+this is another example of a group buy statement
+
+364
+00:14:02,080 --> 00:14:03,920
+that could really save the day.
+
+365
+00:14:03,920 --> 00:14:05,400
+Imagine running this,
+
+366
+00:14:05,400 --> 00:14:08,880
+imagine not running this statistical check up front.
+
+367
+00:14:09,960 --> 00:14:11,720
+Imagine training a huge group of people
+
+368
+00:14:11,720 --> 00:14:13,320
+to do a group buy statement.
+
+369
+00:14:13,320 --> 00:14:15,920
+Imagine training a huge model on it.
+
+370
+00:14:17,400 --> 00:14:18,240
+Right?
+
+371
+00:14:18,240 --> 00:14:19,080
+And again, it's the same thing,
+
+372
+00:14:19,080 --> 00:14:19,960
+like which is more important.
+
+373
+00:14:19,960 --> 00:14:23,240
+And I hopefully don't have to convince too many people.
+
+374
+00:14:23,240 --> 00:14:25,480
+There's a risk that you're gonna model too early
+
+375
+00:14:25,480 --> 00:14:27,480
+if you focus too much on the modeling tools
+
+376
+00:14:27,480 --> 00:14:28,440
+that are out there.
+
+377
+00:14:29,400 --> 00:14:31,520
+And just to like really drive this point home,
+
+378
+00:14:31,520 --> 00:14:33,680
+like the standard data science pipeline, right?
+
+379
+00:14:33,680 --> 00:14:35,240
+You start with your data,
+
+380
+00:14:35,240 --> 00:14:37,000
+you pre-process the thing,
+
+381
+00:14:37,000 --> 00:14:38,360
+you model the thing,
+
+382
+00:14:38,360 --> 00:14:39,440
+outcomes on metrics.
+
+383
+00:14:39,440 --> 00:14:40,360
+And if we like the metrics,
+
+384
+00:14:40,360 --> 00:14:42,200
+we do the prediction thing.
+
+385
+00:14:42,200 --> 00:14:45,240
+Well, if your data is not too great,
+
+386
+00:14:45,240 --> 00:14:47,880
+your predictions are not gonna be too great,
+
+387
+00:14:47,880 --> 00:14:49,800
+but your metrics can still be super shiny.
+
+388
+00:14:49,800 --> 00:14:52,760
+Like if people have bad labels, for example,
+
+389
+00:14:52,760 --> 00:14:54,640
+your accuracy numbers are not gonna prevent you
+
+390
+00:14:54,640 --> 00:14:57,120
+from putting bad predictions out there.
+
+391
+00:14:58,800 --> 00:15:00,760
+And I don't necessarily wanna dunk on people,
+
+392
+00:15:00,760 --> 00:15:03,720
+but I also had a look on the same Hugging Face website.
+
+393
+00:15:03,720 --> 00:15:05,200
+And it turns out that a whole bunch of people
+
+394
+00:15:05,200 --> 00:15:06,800
+trained models on Google Emotions
+
+395
+00:15:06,800 --> 00:15:08,600
+and they put them out there.
+
+396
+00:15:08,600 --> 00:15:11,920
+And some of these models got downloaded
+
+397
+00:15:11,920 --> 00:15:14,400
+like 260,000 times.
+
+398
+00:15:15,360 --> 00:15:16,200
+And you gotta wonder,
+
+399
+00:15:16,200 --> 00:15:17,720
+like, did they run the group by?
+
+400
+00:15:19,840 --> 00:15:21,440
+Maybe not.
+
+401
+00:15:21,440 --> 00:15:23,480
+And I also don't wanna blame them, right?
+
+402
+00:15:23,480 --> 00:15:26,760
+If you see a dataset from Google,
+
+403
+00:15:27,600 --> 00:15:30,440
+you know, that's like had all of this effort being taken in
+
+404
+00:15:30,440 --> 00:15:31,920
+and had all the charts,
+
+405
+00:15:31,920 --> 00:15:34,120
+I could definitely imagine that all of that distracts you
+
+406
+00:15:34,120 --> 00:15:35,360
+from thinking about running
+
+407
+00:15:35,360 --> 00:15:37,080
+this one little group by statement.
+
+408
+00:15:37,960 --> 00:15:39,320
+Like, I do think it's a shame
+
+409
+00:15:39,320 --> 00:15:44,120
+because people forget how these datasets came to be,
+
+410
+00:15:44,120 --> 00:15:46,840
+but this whole annotation process that happens before it
+
+411
+00:15:46,840 --> 00:15:48,360
+is really, really important.
+
+412
+00:15:48,360 --> 00:15:50,960
+And I do worry that maybe if we're convincing ourselves
+
+413
+00:15:50,960 --> 00:15:53,160
+that let's say TensorFlow or Scikit-learn,
+
+414
+00:15:53,160 --> 00:15:54,960
+if those are the must-have tools,
+
+415
+00:15:54,960 --> 00:15:57,320
+that maybe we forget about the step back
+
+416
+00:15:57,320 --> 00:15:58,960
+that we gotta do once in a while.
+
+417
+00:16:00,520 --> 00:16:04,720
+And, you know, with that in mind, looking back,
+
+418
+00:16:04,720 --> 00:16:06,320
+I do gotta admit,
+
+419
+00:16:06,320 --> 00:16:08,280
+Google Emotions is actually kind of a beautiful dataset
+
+420
+00:16:08,280 --> 00:16:09,360
+if you think about it.
+
+421
+00:16:10,400 --> 00:16:12,480
+Like, sure, there's annotated disagreement,
+
+422
+00:16:12,480 --> 00:16:14,680
+but I also don't wanna dunk on Google Emotions here
+
+423
+00:16:14,680 --> 00:16:17,240
+because a part of me actually fell in love with it.
+
+424
+00:16:18,240 --> 00:16:20,400
+Like, for a moment here, right?
+
+425
+00:16:20,400 --> 00:16:23,320
+How many datasets that are used for public benchmarking
+
+426
+00:16:23,320 --> 00:16:25,480
+actually contain the annotator information?
+
+427
+00:16:26,360 --> 00:16:28,200
+I can't think of a lot of them.
+
+428
+00:16:28,200 --> 00:16:30,400
+And it's a great case study, actually,
+
+429
+00:16:30,400 --> 00:16:31,680
+if you think about it.
+
+430
+00:16:31,680 --> 00:16:33,440
+And what's more, there are actually
+
+431
+00:16:33,440 --> 00:16:35,960
+some really interesting papers being written about this.
+
+432
+00:16:35,960 --> 00:16:38,520
+There's one paper that I do recommend giving a read.
+
+433
+00:16:38,520 --> 00:16:39,360
+The title is,
+
+434
+00:16:39,360 --> 00:16:41,920
+Are We Modeling the Task or the Annotator?
+
+435
+00:16:41,920 --> 00:16:43,240
+This is about annotator bias.
+
+436
+00:16:43,240 --> 00:16:45,240
+Turns out if there's like one person
+
+437
+00:16:45,240 --> 00:16:47,320
+who has like too many of the annotations
+
+438
+00:16:47,320 --> 00:16:48,800
+under the his or her belt,
+
+439
+00:16:48,800 --> 00:16:52,080
+that's gonna totally bias like the aggregate label
+
+440
+00:16:52,080 --> 00:16:53,360
+that might come out.
+
+441
+00:16:53,360 --> 00:16:54,600
+It's a really good read.
+
+442
+00:16:56,040 --> 00:16:58,200
+But also, Google Emotions definitely had like
+
+443
+00:16:58,200 --> 00:17:00,680
+an almost career-altering effect on me.
+
+444
+00:17:00,680 --> 00:17:03,600
+Before, I would say, oh my God, super cool, new dataset,
+
+445
+00:17:03,600 --> 00:17:04,800
+let's try stuff.
+
+446
+00:17:04,800 --> 00:17:07,280
+But now I like to think I'm a bit more critical.
+
+447
+00:17:07,280 --> 00:17:09,080
+Before actually putting this in production,
+
+448
+00:17:09,080 --> 00:17:10,000
+I really start to wonder,
+
+449
+00:17:10,000 --> 00:17:11,840
+well, maybe there's something wrong with it.
+
+450
+00:17:11,840 --> 00:17:15,520
+At least I should check like some basics.
+
+451
+00:17:15,520 --> 00:17:18,520
+And it also led me to write a library.
+
+452
+00:17:18,520 --> 00:17:20,280
+There's a library called Doubt Lab.
+
+453
+00:17:20,280 --> 00:17:22,000
+It is a relatively simple tool
+
+454
+00:17:22,000 --> 00:17:23,760
+with some scikit-learn-based tricks
+
+455
+00:17:23,760 --> 00:17:26,160
+to try and find some bad labels in your dataset.
+
+456
+00:17:27,840 --> 00:17:29,120
+And they're just simple tricks.
+
+457
+00:17:29,120 --> 00:17:30,320
+They're not necessarily state-of-the-art,
+
+458
+00:17:30,320 --> 00:17:34,000
+but there's stuff in there that generally is worth a try.
+
+459
+00:17:34,000 --> 00:17:36,400
+And if you find that there are like some weird labels
+
+460
+00:17:36,400 --> 00:17:37,400
+in your dataset,
+
+461
+00:17:37,400 --> 00:17:39,520
+that's an excellent time to maybe pull the plug
+
+462
+00:17:39,520 --> 00:17:41,880
+and say, let's first check our annotator process.
+
+463
+00:17:41,880 --> 00:17:43,320
+Maybe there's something up with that.
+
+464
+00:17:43,320 --> 00:17:46,800
+That's gonna prevent a whole lot of harm in production.
+
+465
+00:17:46,800 --> 00:17:48,000
+If you're interested in that, by the way,
+
+466
+00:17:48,000 --> 00:17:49,600
+like how those tricks work,
+
+467
+00:17:49,600 --> 00:17:50,880
+the Explosion YouTube channel,
+
+468
+00:17:50,880 --> 00:17:53,400
+which is again, my employer,
+
+469
+00:17:53,400 --> 00:17:54,880
+I was able to make some content for that.
+
+470
+00:17:54,880 --> 00:17:56,240
+So if you're interested in like the techniques
+
+471
+00:17:56,240 --> 00:17:57,480
+on how to find these bad labels,
+
+472
+00:17:57,480 --> 00:17:58,760
+definitely check that out.
+
+473
+00:18:00,160 --> 00:18:01,760
+But then if I sort of pivot back
+
+474
+00:18:01,760 --> 00:18:03,000
+to like the topic of the talk,
+
+475
+00:18:03,000 --> 00:18:04,840
+like if we're gonna be talking about like,
+
+476
+00:18:04,840 --> 00:18:08,040
+what are the must-have skills here, really?
+
+477
+00:18:08,040 --> 00:18:10,880
+I mean, I get that you're not gonna be able
+
+478
+00:18:10,880 --> 00:18:13,520
+to buy a certificate in common sense.
+
+479
+00:18:13,520 --> 00:18:15,600
+And I also understand that it's gonna be kind of hard
+
+480
+00:18:15,600 --> 00:18:17,400
+to find a bootcamp in critical thinking.
+
+481
+00:18:17,400 --> 00:18:20,680
+I also don't wanna suggest that these tools are useless.
+
+482
+00:18:20,680 --> 00:18:21,720
+They're not.
+
+483
+00:18:21,720 --> 00:18:24,160
+Tools can be super useful,
+
+484
+00:18:24,160 --> 00:18:26,360
+but maybe at this point in time,
+
+485
+00:18:26,360 --> 00:18:30,600
+there's too much emphasis on learning these technical tools.
+
+486
+00:18:30,600 --> 00:18:32,200
+And maybe it will be better
+
+487
+00:18:32,200 --> 00:18:33,680
+if we can come up with more content
+
+488
+00:18:33,680 --> 00:18:36,240
+that puts emphasis on this human part.
+
+489
+00:18:36,240 --> 00:18:39,080
+Maybe we just need more anecdotes to share around
+
+490
+00:18:39,080 --> 00:18:41,120
+and maybe that's gonna prevent more harm.
+
+491
+00:18:43,120 --> 00:18:45,480
+So looking back, I hope people look at this and they say,
+
+492
+00:18:45,480 --> 00:18:47,760
+well, this was indeed a talk about two datasets.
+
+493
+00:18:47,760 --> 00:18:49,200
+And I also hope that we all agree
+
+494
+00:18:49,200 --> 00:18:51,520
+that both of these datasets are actually super beautiful
+
+495
+00:18:51,520 --> 00:18:54,800
+because they tell a very beautiful story.
+
+496
+00:18:54,800 --> 00:18:56,280
+But most of all,
+
+497
+00:18:56,280 --> 00:18:59,720
+I hope that the story here helps give Alice and Bob
+
+498
+00:18:59,720 --> 00:19:02,560
+and Vectorella a sense of calm
+
+499
+00:19:02,560 --> 00:19:05,240
+because maybe even if we're Googling,
+
+500
+00:19:05,240 --> 00:19:06,880
+we should worry less about these must-have
+
+501
+00:19:06,880 --> 00:19:07,880
+and essential skills
+
+502
+00:19:07,880 --> 00:19:10,240
+because maybe we should just admit tools are just tools.
+
+503
+00:19:10,240 --> 00:19:11,800
+It's very good to learn some,
+
+504
+00:19:11,800 --> 00:19:14,120
+but maybe it's more important to just stay aware
+
+505
+00:19:14,120 --> 00:19:16,880
+of what you're doing and to be the human in the loop.
+
+506
+00:19:17,880 --> 00:19:19,000
+And when you do that,
+
+507
+00:19:20,400 --> 00:19:23,040
+you might just have group by statements that save the day.
+
+508
+00:19:23,040 --> 00:19:25,280
+And that, if anything else,
+
+509
+00:19:25,280 --> 00:19:27,440
+is what we need more of in our field.
+
+510
+00:19:27,440 --> 00:19:29,080
+And I also want to mention this
+
+511
+00:19:29,080 --> 00:19:30,800
+because I do get this question a lot.
+
+512
+00:19:30,800 --> 00:19:33,040
+It's this frustration with educational content
+
+513
+00:19:33,040 --> 00:19:34,960
+that actually led me to make CalmCode.
+
+514
+00:19:34,960 --> 00:19:36,080
+I get this question a bit,
+
+515
+00:19:36,080 --> 00:19:37,800
+so I figured I might just mention it.
+
+516
+00:19:37,800 --> 00:19:39,400
+It's honestly the fact that
+
+517
+00:19:40,240 --> 00:19:42,400
+mainly what we maybe should be doing
+
+518
+00:19:42,400 --> 00:19:44,880
+is just focusing on making educational content
+
+519
+00:19:44,880 --> 00:19:46,400
+that are more about tools and thoughts
+
+520
+00:19:46,400 --> 00:19:49,040
+that make your professional life just more enjoyable.
+
+521
+00:19:49,040 --> 00:19:50,280
+And maybe we should be less braggy
+
+522
+00:19:50,280 --> 00:19:51,360
+about the tools that we use
+
+523
+00:19:51,360 --> 00:19:53,360
+because they're not necessarily super state-of-the-art.
+
+524
+00:19:53,360 --> 00:19:56,360
+They're all just tricks to help us get through the day.
+
+525
+00:19:56,360 --> 00:19:57,720
+And I'm mentioning this explicitly
+
+526
+00:19:57,720 --> 00:20:00,080
+because a couple of you, dear listeners,
+
+527
+00:20:00,080 --> 00:20:01,720
+are also content makers yourself.
+
+528
+00:20:01,720 --> 00:20:03,320
+You do a bit of education.
+
+529
+00:20:03,320 --> 00:20:06,040
+Try to keep the calm in mind is the only thing I would ask
+
+530
+00:20:06,040 --> 00:20:07,480
+because I do think our profession
+
+531
+00:20:07,480 --> 00:20:08,880
+will be a whole lot better
+
+532
+00:20:08,880 --> 00:20:10,360
+if we stop bragging about the tools
+
+533
+00:20:10,360 --> 00:20:13,120
+and we just start sharing anecdotes a bit more.
+
+534
+00:20:13,120 --> 00:20:15,840
+I do think the field could maybe use a bit more of that.
+
+535
+00:20:17,400 --> 00:20:19,960
+So having said that, thanks for listening.
+
+536
+00:20:19,960 --> 00:20:21,320
+I hope this was super interesting.
+
+537
+00:20:21,320 --> 00:20:23,640
+And if I can give one small plug,
+
+538
+00:20:23,640 --> 00:20:25,440
+so I work for this company called Explosion.
+
+539
+00:20:25,440 --> 00:20:27,680
+And we have a bunch of cool tools like Spacey.
+
+540
+00:20:27,680 --> 00:20:29,200
+You might've heard of that.
+
+541
+00:20:29,200 --> 00:20:31,040
+And I can't announce anything just yet,
+
+542
+00:20:31,040 --> 00:20:33,120
+but I can say there's a bunch of really cool stuff
+
+543
+00:20:33,120 --> 00:20:34,080
+in the pipeline.
+
+544
+00:20:34,080 --> 00:20:36,800
+So like, give us a follow.
+
+545
+00:20:36,800 --> 00:20:37,960
+Like there's cool stuff coming.
+
+546
+00:20:37,960 --> 00:20:39,120
+Just wanna mention that.
+
+547
+00:20:40,360 --> 00:20:41,200
+Thanks for listening.
+
+548
+00:20:41,200 --> 00:20:42,240
+Ask me anything in Slack
+
+549
+00:20:42,240 --> 00:20:56,240
+and I'll be around for the conference today.
+

@@ -1,0 +1,441 @@
+Some of you guys may know me.
+I run my mouth on Twitter because I have adult ADHD
+and that's just exactly my drug of choice.
+I'm now hanging out on Mastodon,
+but I haven't left Twitter either.
+So you guys may know me from kind of either place.
+More importantly than me running my mouth too much
+and having been around data stuff for a while is in,
+in, let's see, I would have, I was born in 1972.
+So Christmas of 1980, I was eight years old
+and stuck under my bed in the place
+that would later hold Victoria's Secret catalogs
+was actually stuck at that point in my life,
+the Lego catalog.
+And the Lego catalog was dog-eared
+and this was the Lego kit that 1980 version of me
+wanted more than any,
+this was my Red Ryder BB gun of 1980.
+And in Christmas morning, 1980,
+I came downstairs and Santa Claus had brought this Lego kit
+and it was the apex Lego experience of my life.
+And I'm not even sure if my parents know this,
+but I'll make sure they watch this video and know this.
+And actually my only regret was every other Christmas
+for the rest of my life has been somewhat
+of a disappointment compared to getting this kit
+with the actual motor and it changed gears
+and it even went in reverse.
+And I was eight years old, right?
+So by the time I got in middle school
+and taking physics class,
+I thought that the people who thought the engine spun
+in the other direction when you put it in reverse,
+I thought they were brain damaged
+because that was beyond intuitive to me
+because I had been building actual little transmissions
+with gears since I was eight years old.
+Anyway, I mentioned Lego and Lego being the apex toy
+because much to my pleasant surprise,
+last year in Nature Magazine,
+Adam Converse, Hales and Klotz had a paper
+that had a Lego example.
+They did actual work with humans
+and it had a Lego problem in the middle of it.
+So I'm immediately interested
+because we know Lego are the apex toy.
+So in their paper, they gave participants in a study
+the Lego arrangement you see on the left.
+Actually, it wasn't a Lego minifigure.
+They had a Star Wars character
+and I'll show it to you in a minute in the next slide.
+When it got published for copyright reasons,
+they couldn't put the Star Wars Stormtrooper in there.
+So I think actually in the, I got the paper right here.
+I think they do just a little drawing
+with figurine removed.
+But anyway, it looked like the thing on the left.
+And what they asked participants first, yeah,
+they don't even have the figurine in here.
+It's just a placeholder.
+What they asked participants to do is said,
+okay, take this Lego model
+and make it so that we can put this brick
+on top of that top part
+and it not crush the figurine.
+That was the first challenge they gave folks.
+And so you can imagine,
+and you guys should do this in your head.
+Imagine you've got these blocks, you've got this figurine,
+you've got this Lego arrangement.
+How do you arrange this so you can put the block on,
+or sorry, the brick on top of the Lego blocks
+and not crush the figurine?
+All right, so think about that.
+And that's actually how it looked in real life.
+So like the next cycle of this,
+they say, okay, we're gonna give you a dollar
+to solve this problem,
+but each additional block costs 10 cents
+and it's gotta hold this brick on top.
+So think about how you might solve that.
+All right, so you might put three more blocks on there.
+You'll be down 30 cents, still make 70 cents, right?
+There's other ways you might've solved.
+You might try to put just one in the corner
+and hope they put the brick on really square
+so it balances.
+Anyway, they also in a third round prompted people
+with just the phrase, removing a block has no cost.
+Now think about this yourself.
+How would you have solved this Lego problem
+if I prompt you with removing a block has no cost?
+Now, I wish I could see the whole audience.
+If you're in the chat over here,
+I've got the general tab open.
+Let me know if you changed your mind
+when I said removing a block has no cost
+because a huge number of respondents in this study did
+because the default action
+was to think about adding something.
+And they discovered that it was only through prompting
+and they had to do pretty strong prompts.
+They could get people to think about removing
+and people would see it.
+And then they would begin to choose subtracting.
+And it was kind of like the big surprise
+of this whole paper is additive ideas come to mind quickly
+and easily, but subtractive ideas
+require more cognitive effort.
+So they decided to test this with a bunch of stuff
+that boringly weren't Lego blocks.
+I don't know why,
+but they tested it with things like recipes.
+So if we give people a recipe and say,
+how do you make this better?
+Almost nobody removed something from the recipe.
+What they do is they add something.
+The exception to that is if they had something ridiculous
+in the recipe that folks will be like,
+oh, right, yeah, remove that.
+That doesn't belong, you know,
+something savory doesn't belong in the dessert, right?
+Like it would be better if you subtracted that.
+But outside of kind of the ridiculous,
+people don't see subtracting something for a recipe
+as a way to get it better.
+And trust me, every recipe that I have ever made
+that I got offline, after I made it,
+I'm like half this crap, we don't need it.
+And we can simplify it dramatically
+by just like not doing all these steps.
+It's almost like they think people won't enjoy it
+if they don't do a lot of complicated steps.
+Similarly, the study took that this nation
+that mentioned in this nature paper,
+they took a bunch of vacation plans
+and put them in front of people
+and said, make these vacation plans better.
+And most folks default is to add an activity.
+Now, my wife and I would have had that tendency
+and we had a kid who is now 15 and we later learned,
+you know, we have a lot more fun
+if we try to do one thing in the morning
+and maybe one thing in the afternoon,
+but make the thing in the afternoon, like optional,
+so that like no charge to cancel,
+so that we can punch out if things start going bad.
+Like that's how we discovered how to have happy holidays
+and good vacations.
+But if you give people just an agenda,
+they will try to shove more stuff into it.
+And it's because this is human nature,
+which as I looked around and thought about it,
+I realized I see this kind of everywhere.
+And this is a little bit like getting a new car
+of a certain type.
+You will begin to see these everywhere.
+Once I have primed you for subtractive thinking is hard
+and people don't tend to do it,
+you will begin to see this everywhere.
+So that's my Santa gift to you all
+is introducing this idea of subtractive thinking
+and allowing you to see how hard it is,
+but that there's great benefit.
+So let's look at a few examples,
+other things where subtractive thinking comes in play.
+Or as my 15 year old daughter says,
+cool story, bro, but why do we care?
+Well, we have already seen mention
+of this minimum viable product diagram,
+at least in the chat.
+I don't know if it made it into one of the presentations,
+but for those of you who haven't seen it,
+the general idea is if you design products,
+it are incrementally where they aren't useful
+until you get to the very end,
+basically your customers are unhappy with you
+the whole time until the very end,
+except the reality we all know is at step four,
+they look at you because that was not what they wanted.
+So actually it doesn't even work this way.
+This is like a stylized positive version.
+The real way is, or I'm sorry,
+the MVP way that Henrik Kynberg recommends
+in his, what is Scrum is this thing that's become iconic,
+where you give somebody a skateboard
+and it's not super happy,
+but you give them a little bit more
+and it kind of becomes useful.
+And iteratively, we add a couple more features
+and we get iteratively more useful,
+but they don't hate it all the way through.
+Well, what is this exercise other than reducing down
+what is the minimum thing we can give somebody
+that they get positive utility from?
+I just slipped into economics talk,
+but that they're somewhat happy with,
+what is the minimum thing we can give them?
+And then we ask, what is the next marginal improvement?
+Oh my God, I did it again.
+What is the next marginal improvement
+that we can make on this thing
+to make it a little bit more useful?
+Okay, so this is this exercise
+in reductive subtractive thinking,
+where we are trying to figure out
+what's the least we can do to make the most positive value.
+So the whole minimum viable product exercise
+is really just to try to trick your brain
+into subtractive thinking.
+Some of you may see,
+I gave a presentation some years ago on empathy
+and I presented the thesis that in Agile, the user story,
+what that really is, is a hack
+to get you to be empathetic with a specific user, right?
+But we make it a specific user,
+we narrow down what it is we're talking about.
+And we introduce this hack of the user story
+and it forces empathy.
+It becomes a forcing function for empathy
+in the mind of a software developer.
+I think the minimum viable product
+is a forcing function for reductive thinking
+that we interject into our development processes
+in order to prime and pump us
+for this effective way of thinking, which is reductive.
+When what our brains kind of want to do is be additive.
+So it's a subtractive prompt.
+And remember from our first part of this presentation,
+prompting is incredibly important
+because we're actually open to subtractive thinking.
+We're not morally opposed to it.
+It's just not like our default mind state.
+And so having prompts is super useful.
+And I think that's why the MVP,
+part of why the MVP model has gotten so highly adopted
+is it's effective because we're responsive to prompts.
+All right, so let's think about more reductive things.
+A few of you may have seen my comment online
+where I talk about reading through an answer
+on Stack Overflow, and please ignore my spelling errors.
+And I thought, wow, that's a really great answer.
+And I really learned some things
+and I got down to the bottom
+and I discovered it was my answer
+that I wrote eight years ago.
+All right, so besides being kind of comically silly
+that I would read something I wrote
+and not even recognize it as my own writing,
+the one of the things that this reminded me of
+is the way I ended up writing so much on Stack Overflow
+was that I just happened to be there when it started.
+And I was just learning R as Stack Overflow was starting.
+And one of the things a handful of us did,
+and actually, Chris, I had forgotten
+you were involved in this
+because I found notes relatively recently.
+And I had completely forgotten, I didn't know you then.
+And by the way, long-time listener, first-time caller,
+this is the first time Chris and I
+have ever talked in real voice,
+although we have traded messages on and off
+over the last years and years.
+But Chris was there, Mike Driscoll,
+who's with RealData, RealR-I-L-L-Data,
+and they just launched product this week.
+Mike Driscoll and I helped prime Stack Overflow
+with R questions because there weren't many R questions,
+and we felt like the R discussion list online,
+the email list, was not super helpful for learners.
+And so we got a bunch of questions
+that had been asked on other R discussion forums
+and things that had been put into a search engine
+of a popular R site,
+and we turned them into questions for Stack Overflow.
+And then we just divided it up.
+A bunch of people posted questions,
+a bunch of people answered questions,
+and we seeded the R tag on Stack Overflow.
+So I was sort of there at the beginning in a bunch of ways,
+and I haven't answered or asked
+a Stack Overflow question in years,
+but I was real active early on.
+And one of the things I did
+is every time I was learning something,
+it was R, then later it was Pandas,
+as I began to use more Python as Pandas came on.
+And I started to ask more questions,
+and I had developed the skill of reducing
+my thinking and my question
+down to something fairly specific.
+And that allowed me to answer a good question
+that could be answered.
+And over time, this got a name.
+This began to be called a reprex,
+or a reproducible example,
+and began to be called that.
+And as a matter of fact, Jenny Bryan,
+who did one of the lightning talks about naming things,
+Jenny Bryan has a library for R called reprex
+for helping make these easier to make.
+Reprexes are an exercise in reductive thinking.
+They're unreasonably effective
+because when you write a reprex,
+it's a type of debugging.
+If you have a problem
+and you're writing a reproducible example,
+it is akin to rubber duck debugging
+in that the process of reducing your question down
+to a minimum viable example,
+you actually a lot of times,
+well, I actually a lot of times,
+discover what I was doing wrong or what the problem is
+before I ever answer the question,
+because I get all the noise
+of everything else I was working on out of the way,
+and I get down to the brass tacks of what the problem is,
+and then I'm like, oh, dumbass, there it is.
+And it just jumps out at me.
+Now, sometimes it doesn't,
+and I'm able to share it online on Stack Overflow
+with my team in a Slack, wherever,
+and somebody else can just copy, paste it
+into their editor, run it,
+and be like, oh, dude, here you go.
+Here's what's going on.
+And like, oh, I see now that matrix was shaped
+the opposite of what I thought it was or whatever.
+So you can get more eyes on the problem quickly
+because you allow someone else
+to understand your problem more quickly.
+That's reductive to get there, and it's hard.
+It's gotta be explicitly taught, right?
+When analysts come in and start working with us,
+they often sit down with me with a problem
+that is too complicated for me
+to understand what they're doing,
+and they're a little surprised
+because they've got this whole course of knowledge problem.
+They understand what's going on on the screen.
+They can't believe that I can't
+because I'm smarter than them from their point of view.
+I should be able to understand it.
+And so I always give them as a challenge,
+hey, let's do this as an exercise first
+in reducing and focusing your question down
+and creating a reprex.
+So I'm a huge fan of reprexes
+as a type of reductive thinking.
+Now, I'd went through this exercise recently with Coiled,
+who they're a company that supports
+and employs a number of Dask contributors.
+And I had a Dask problem that wasn't working well.
+We actually hired them to come in where I work
+and partner with us and work on a problem we had.
+And I've shared this story elsewhere,
+but at the end of it, they said,
+hey, this was kind of an interesting problem
+and showed a limitation or a challenge in Dask
+because it was a big, like unbalanced join,
+and it was a mini to mini join.
+It was just gnarly behaved problem.
+It just didn't flow well through anything.
+And they're like, hey, can we have your data,
+like anonymize it more and let's use it?
+And I said, actually, no, but I can make dummy data
+that acts, I think I understand this problem enough
+to make dummy data that acts like this real data.
+And I just went in and worked with them and we created,
+and this is all public on GitHub,
+we created a reproducible example of this dummy dataset
+that's got 4 billion records.
+Now, this is an awful lot,
+what Julia Silgi talked about
+with making simulated data to learn something.
+Well, I made simulated data to match a real problem,
+but I did it because I could make it public.
+And then we could use that as a test
+against different distributed platforms.
+I mean, Coiled can use it against Dask.
+Somebody else may wanna play with it against Spark
+to make Spark better.
+Great, everybody wins, right?
+It's a certain class of challenging problem.
+But that is a type of reductive thinking.
+We had to go through the process of figuring out
+what was it about my problem that made it difficult or hard?
+And then we had to reproduce that.
+That was largely a reductive exercise.
+It wasn't this, it wasn't that,
+it's only these facets of the problem.
+And then we created simulated data
+to represent those parts of the problem at scale.
+Super useful.
+So I'm a big fan of Adam Savage.
+And what could be more norm core
+than every tool is a hammer?
+I kind of psychologically made my way through COVID
+by laying underneath an old Jeep,
+getting various motor fluids in my face.
+And part of the time I was doing this,
+I was listening to Adam Savage's book.
+And one of the things that really jumped out at me
+in the book is he talks about buying material
+to build everything he builds three times.
+So he goes into a build
+knowing he's gonna build it three times.
+The first time you work the kinks out
+and you just sort of figure out how it works.
+The second time you get a really good version,
+but it isn't camera perfect.
+And he makes props for movies, so it has to be camera perfect.
+So after the second time,
+he then knows enough to build it the third time
+and get it camera perfect.
+And I think this is part of a reductive thinking
+is not planning the first time we do something
+to boil the ocean.
+And that was mentioned in the presentation right before me
+about not trying to do everything.
+Like just get your logic flowing through a system
+and then figure out where your performance bottlenecks are.
+That's a certain type of reductive thinking.
+So to repeat myself,
+subtractive or reductive thinking is not our default.
+It's hard.
+Prompting to think subtractive helps considerably.
+We can be prompted.
+MVPs are a great prompt to think about reducing
+or subtracting things.
+Reproducible examples are a critical meta skill
+that are reductive.
+Refactor for simplicity,
+reduce it down is a really good use case
+of subtractive thinking.
+And even taking out code and using a library
+that someone else maintains,
+that's even subtractive thinking.
+So on that note, I had listed some job openings.
+They're also in the chat, in the Slack.
+So let me stop sharing and we'll do Q&A.

@@ -1,0 +1,301 @@
+My name is Zachary Blackwood, and I am a senior data engineer at Snowflake, part of the Streamlet
+team and acquisition.
+And I want to talk to you today about what it says on the screen, how to hack your way
+to a better API.
+Hopefully not to get hacked, but that could be a risk that you face along the way.
+So I suspect many of you have interesting stories for how you got into data.
+I don't know how many of the people listening and watching are at what stage in their career
+and how many people kind of had this vision that I want to be a data person, I want to
+do things with, I want to do machine learning and modeling, or at least I want to do computer
+science.
+That was not at all my original plan.
+I actually began as a teacher, taught high school, various things.
+And eventually couldn't afford to do that anymore, sadly.
+And so I went to software.
+And one of the themes that I've noticed throughout my career as I've grown and as I've transitioned
+is thinking, realizing this doesn't seem like it's working great.
+There's got to be a better way.
+Even when I started teaching physics, I realized I went in not understanding a lot of fundamental
+things even with a physics degree.
+And so I wanted to do better for my students than I had experienced.
+And so a lot of that shifted into last few years, I want to build better tools for data
+related stuff.
+And in particular lately, I want to help build better data apps with working with Streamlet
+and being at Snowflake helping to do that.
+So I do some amount of data engineering on the pipelines and dbt models and things like
+that.
+But I get to spend a lot of my time just playing around with Streamlet apps and trying to make
+things work better, which is a lot of fun and has led me to this topic.
+I remember very distinctly beginning my very first software job, I was in a small startup
+sitting in a room with a bunch of smart people having done zero professional programming
+before.
+And basically, I would spend a few minutes, get stuck on something and turn around and
+ask ask the guy sitting behind me.
+And there was very smart and very patient and kind people sitting around me.
+And so I'm sure they got annoyed.
+But they did answer my questions.
+And slowly I got to learn more and more things about about what we were doing, ask fewer
+questions or better questions.
+Eventually I learned there was this there was a way to ask those questions on the internet.
+And I got slightly better, you know, look for what is the specific error message or
+error numbers and things like that.
+What is the specific software that I'm using?
+Can I figure out what's actually causing the problem?
+And I got pretty good at googling things to find the solution.
+And for a long time, that was sufficient.
+But at a certain a few years in, we a new co worker came in and he just seemed to know
+so many things about the software that we were using.
+And you know, and I've been working with it for a while and you how did how did you find
+that out?
+Oh, well, I read it here.
+Well, how did you find that out?
+I read it here.
+And this is a guy who would actually read, he would read the peps for the new Python
+features coming out.
+And he would just read the documentation for the tools we were using.
+And I finally finally after, you know, going to him again and again realized, oh, I should
+start doing that.
+So that that became kind of the next the next stage of my journey as a developer that was
+slowly moving into the data world somewhat.
+But the kind of the last stage, which is really the thing I want to talk about today, and
+maybe 90% of you are here, but I hope there's a few of you who maybe are still at stage
+two or three here is I actually realized as as someone who's working with software, I
+can actually dig into the internals of the software that I'm using of the third party
+tools that I'm using and get and actually can get a lot of value by doing that.
+So I want to convince you today that the internals of the software that you're using may be more
+accessible than you think.
+And that sometimes messing around with those internals is a good idea.
+So I want to talk about two particular kinds of messing around with internals that have
+that have been very interesting and useful to me, particularly in the last few years.
+And the first one is monkey patching.
+So monkey patching, besides being a great, an excellent term, is is a broadly applicable
+idea and various dynamic languages where you actually can replace some of the some of the
+code as as your code runs, you can actually replace some piece of code with another piece
+of code, which turns out to be a pretty handy thing.
+I think I first was exposed to this idea with with writing, writing tests, and oh, well,
+we need to we need to pretend that API works this way.
+And so just for the context of this test, we're going to swap out a little bit of code
+to make it do something different, you know, not not hit a server and things like that.
+So this is a this was a very surprising idea to me.
+I had no no intuition that if I, you know, said x dot something equals something else,
+that it would actually work.
+But it turns out it did, which is a very interesting thing and opens up a lot of doors.
+Oftentimes, I and maybe you have the same question of, okay, why is this package broken?
+Or maybe more often, why doesn't it do the thing that I want it to do?
+Why doesn't it work the way I want it to work?
+And I need it to work for this particular this particular instance.
+And before we get into too far into the internals, the wonderful thing if you have a either a
+modern, modern IDE or an ancient IDE with some modern plugins, it's very, you can very
+quickly get access to things like here's the doc string for this method, you can find it
+all sorts of things.
+No, this is very basic kind of thing.
+But this is where often it all starts.
+And sometimes it all ends like, oh, now I understand why it does what it does.
+I understand I was using it in the wrong way.
+Or, oh, it actually does support it.
+It just has this extra argument that I didn't realize.
+And so sometimes that's enough.
+But not always.
+Sometimes you really need to get start digging in a little deeper.
+So one of the one of the very handy things about many editors is you can actually go
+from your reference to a particular method in this case to the actual method itself.
+So the couple of command clicks in my case, here is the actual code behind that.
+And the interesting thing to me that is that not is this some abstract representation of
+the source code as it exists somewhere.
+This is the actual code that is in my virtual environment that is being run whenever I call
+this method.
+Which means, of course, that I could just change the code.
+You know, I could literally go into this file and say I would like it to work this way.
+I'm going to edit this file with my editor and then my code will work.
+This is sort of this is not monkey patching, but this is sort of the, you know, the mad
+man version one of it.
+This code doesn't work the way I want it to.
+I'm just going to change the code.
+Of course, maybe this is very obvious to you.
+It was not obvious until I tried it once.
+Oh, that's not a good idea, because number one, I now have no documentation about what
+I changed and I'm probably going to forget what I did and never going to be able to find
+it again.
+And two, the next time I update that package, my beautiful function code is gone.
+So not a good plan, but a pretty cool thing that you can do.
+And at least digging around and actually looking through the actual source code is a pretty
+handy thing to do.
+But if you want to do the slightly saner thing, which is, okay, I have this code, I want it
+to behave differently, here's an example of what you can do.
+So if I'm building a Streamlet app, it has this markdown function that I think is nice,
+but it really could be a little more exciting.
+It really could be, you know, I just want to have a little more emphasis, a little more
+oomph, whatever I'm writing, adding some markdown to my app.
+So I've taken I've imported my original code, and I've written this new function, which
+takes the same arguments as the old one, and manipulates the Streamlet I've just said a
+little bit and some other boring stuff that I don't care too much about and I just copied
+from the source code of the old one.
+The main thing is this line here.
+And now I can actually replace the old function with my new one by just declaring it to be.
+This is now going to be this.
+And like magic, it just changes, and everything is fine.
+And now I can use it, and it works the way it should work, which is every time I write
+something, it yells it out in title in H1 with lots of exclamations.
+So this is obviously an incredibly useful example, but you can even do more things with
+monkey patching, and I'll give you another example later.
+Another wonderful thing that is more open than it seems at first glance is pretty much
+any website that you use.
+So if you're not yet familiar with developer tools, find out how to open developer tools
+in your favorite browser and just start poking around.
+And it turns out that there's all kinds of information that you get just from opening
+that up and reloading the page and seeing what happens.
+You can look in details about all the different elements on the page and what makes those
+happen.
+You can see the underlying source code, what's the JavaScript, what's the CSS behind the
+scenes.
+You can see what the network traffic is happening.
+All kinds of exciting things that are exposed to you, even just as a casual user of the
+website.
+So that's pretty neat.
+But even more fun is it's not just websites anymore.
+Your favorite editor may in fact be a website in disguise.
+So here is VS Code, and you see that's the same code I was previously editing.
+On the right I have developer tools open, which you could just open up in VS Code, because
+it's all electron apps these days.
+So I can actually see here the network requests that are being made to populate things, to
+load plugins, and various things like that.
+And while we're at it, it's not just editors.
+Your instant messaging program may well also be a website under the covers.
+So in this case, you don't get it for free.
+You have to pass an extra environment variable.
+Once you've passed that environment variable, once you've set that environment variable,
+now we can explore Slack as a website, which is of course exactly what it is.
+It's just a JavaScript app.
+HTML, CSS, JavaScript.
+Just like I guess everything is these days.
+So here is the general channel from a couple weeks ago.
+And here are the network calls that are being made.
+And there's quite a lot of them.
+So all right, so what you actually do with that as the most obvious thing that you can
+do, which my students were very thrilled whenever I showed them that they could do this, was
+oh, I can change any website to look any way that I want.
+They thought it was really cool that they could go to the school website that showed
+their grades and show it to their parents after they had handily edited it.
+So of course you can do that.
+You can play around.
+It's very helpful for tweaking designs and things like that if you're actually building
+a website.
+But more interesting to me and more practical for a lot of my work is the network tab.
+So this is a particular request from the normcomp Slack.
+This is one particular request.
+I hope I chopped off enough of the token so that you can't impersonate me.
+But oh, well.
+So this is a request to get and I particularly like the everyone and not bots and not apps.
+So apparently this is to populate the list of who is in this channel.
+And I think this is the general channel.
+And I now not only see that this request was made and have the ability to see, okay, here's
+the parameters that were passed.
+But developer tools gives me this very wonderful thing, which is I can copy it.
+I can copy it not just like copy the URL, but copy all of the details behind it so that
+I could replay that.
+And in my terminal I can run a curl command to rerun that exact query with all of the
+cookies and everything set so that I can it just works until my token expires and things
+like that.
+But for now I could rerun that and get that data out as a curl command.
+Maybe you love Unix kind of tools like curl.
+I personally don't have a I love that they work and they're simple, but I often prefer
+to bring them into something I'm a little more familiar with.
+So there's probably several tools like this, but one that I like is curl converter, which
+allows you to take a curl command and convert it into the language of your choice.
+So here's that specific request turned into Python with a little bit of details stripped
+out.
+And then this is now a functioning Python script that will return a response object
+that I can then get as JSON or whatever I want.
+And it just works.
+And now I can do programmatic things like maybe I really do want to see bots.
+Maybe whatever.
+Maybe I want to see what apps are loaded in this channel.
+Or I just want to make a cool contact list of all the cool people who are in the general
+channel in norm conf.
+So turns out this is oftentimes a good way to work with a website or an app disguised
+as a website.
+I had a friend in another Slack group ask about, hey, is there anybody know any good
+packages for scraping the Jenkins API?
+And I responded very cheekily with requests.
+And it turned out it actually was a pretty good option.
+So oftentimes just a simple ability to make arbitrary requests and take an actual network
+request that are being made and turn them into code turns out to be really useful.
+So I want to talk about two real world ways that I've used this kind of digging into internals.
+One particular one happened a few months ago.
+And we had this situation where we had all this data that was being collected in a data
+dog and it was really useful for alerting engineers when something happened.
+But we wanted to store it in a more long term place.
+We wanted to put it in our warehouse so we could have it for queries later and see how
+things were happening over time.
+And there wasn't a real straightforward obvious way that I could find to do this.
+So a colleague and I worked on a way to do this.
+And one of the first things that he actually found was data dog has this wonderful UI and
+their website for building these queries and building up these monitors.
+And then they even give you a export as cURL, which is just a really wonderful thing.
+It really encourages this kind of use this other places reusability.
+It's a very nice feature.
+And so that immediately gave us what we wanted.
+Almost.
+We really wanted it to be a little more programmatic than just the raw cURL request.
+It turns out they also have a nice Python API to wrap around those cURL commands.
+And you can basically take the query part of it and slap it into this Python library
+and you get out something that yeah.
+And you have type hints and all that niceness because the library knows when it returns.
+But used it.
+Sometimes it worked.
+But I found a case where it didn't work.
+It was complaining that it was expecting a string and it was throwing a validation error
+because it was receiving a Boolean.
+I was very sure as far as I could tell things were set up right on the data dog side.
+It really was supposed to be a Boolean.
+I think I was using the wrapper right.
+Very possibly I wasn't.
+But as far as I could tell, I was.
+And I need to get around this error.
+So what did I do?
+Monkey patch it.
+And it turned out to be as simple as here's the old version of the method.
+Here's my new version of the method which has the same arguments and it returns the
+old version except in this case.
+And it just skips the validation.
+Is that a great idea?
+It worked and it solved my problem.
+And I knew for sure I was smarter than this validator.
+This really was supposed to be Boolean.
+So it worked out okay.
+And then I just slapped that in and ta da!
+Everything worked great.
+Other than that, no issues.
+One other issue that's very one other example of this is very near and dear to my heart.
+So I'm on the part of the Streamlet data team.
+I don't work on the Streamlet core, but we use Streamlet a lot.
+So we build a lot of apps for seeing how things are how are things going in the ecosystem
+or people using it or people using the new features.
+And we tend to, you know, get the bleeding edge of the latest and greatest features and
+get real excited.
+And we were so excited when the multi page app, the native multi page app feature, you
+get this nice sidebar with all the different pages.
+It changes your URL.
+We could throw out the old radio button based one.
+But as soon as I started using it, I realized, oh, you get this boring file icon.
+But you can put emojis in, just like we did in our radio button version.
+But you have to put emojis in the file name.
+And trust me, it's like my stomach putting emojis in my file name.
+It hurt my soul too deeply to allow this to be the way.
+And so I had to find a hat.
+So looked around in the Python source code and found this method that's being called
+to generate that sidebar, which is called get pages.
+And lo and behold, it returns this dictionary that is a global variable that is cached.
+Which means that if I make a new method that takes that calls that get pages method, empties
+out the dictionary and replaces it item by item with what I want it to be, with whatever
+icon and whatever path and whatever name I'd like to get those pages and then call this
+internal method, it just works.
+And so I could very nicely have my sidebar, have my cake and eat it too with just a little
+extra method.
+This is technically a monkey patch.
+I'm not actually replacing the code, but in the sense that I'm digging into the internals
+using things that may not be advisable to use.
+All right, this is my goal with this.
+You've learned over the years to use Google, to read the docs, use chat GPT.
+And I hope I've convinced you that sometimes it's a good idea to dig into the internals
+and make your own API.

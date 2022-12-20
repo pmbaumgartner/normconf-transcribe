@@ -1,0 +1,361 @@
+I'm the chief scientist at Motif Analytics, and I'm going to tell a story about something
+that we've been working on and basically my like ex post rationalization for why what
+we did made sense.
+And I hope it sort of portrays like a lesson that I've learned and that like actually what
+we're doing does make sense, but maybe it doesn't and maybe I'm just making up some
+excuses.
+So this is a David Byrne quote that I've adapted.
+I joined Motif in July, we started working on sequence analytics, and I found myself
+at this beautiful startup with all these smart people and we wrote a query language.
+And that's what we've been working on for the last few months and I'm not ready to show
+it to you today.
+And this isn't going to be a Motif commercial as much as I would love to do that.
+But it is a little bit questionable, like should you write a query language and everyone
+loves SQL.
+And I know a lot of people don't like new query languages.
+This is somebody that I really respect a lot, Eric Bernardson, saying I don't really like
+software that invents its own query language.
+We would joke at the company that like maybe our product is dead on arrival because no
+one's going to want to learn a new thing.
+And smart kids say no to DSLs.
+Which is like, I just love this graphic that he included.
+And you know, like once you decide to go down this road, every time you make a bad choice
+becomes harder to make a good one.
+And so you can end up in a bad state if you make a bad choice at the very beginning of
+your project.
+And so new query language may be a terrible idea.
+I'm going to try to justify to you why we might need that.
+And then like how why you also might need to be thinking about different kinds of query
+languages.
+So here's the setup for Motif.
+And I'm not going to belabor it too much.
+But roughly we think about user behavior on a website or an app as a sequence of events
+that occur that have a user ID, a timestamp, an event name, possibly some other metadata.
+And the kinds of questions that we like to ask are what happens after a user does something?
+What happens before something happens to a user?
+And then what happens between?
+These are what we call like sequential questions.
+They have a certain flavor to them.
+And so we can lay this out left to right on a timeline and say, OK, this is the kind of
+golden path for a user of a video streaming service.
+So they started a search page.
+They see some search results.
+They click on that.
+They preview the video, start watching, and finish watching.
+And a very natural set of questions to ask are things like, how many users make it through
+this process?
+Are they getting stuck at various times?
+And where do they get stuck?
+And where do they stop using your site?
+Do they take detours into doing something else that isn't on this happy path?
+And does it depend on things that happened earlier in the sequence of various ways, like
+say maybe what device they're using or what kind of connection that they're on?
+And is it something that we could possibly fix?
+And so this is a space of questions that's really rich and important for people.
+And I think we all are kind of interested in answering questions like these in our jobs
+often.
+One person in particular, T.H. Murphy, who's a friend, and he gave me permission to share
+some of his slides from his Snowflake talk, spent a long time thinking about this and
+working on it.
+So he has this talk, Funnel Analysis and SQL from Start to Finish.
+And I didn't actually get to see the talk in person, so I can't claim it was a great
+talk.
+I'm sure it was.
+But the slides are great, and they're very informative.
+He basically spent a long time prototyping three ideas, and then there's a fourth one
+that I won't include because it's inconvenient for my point.
+But he's got three approaches to solving this problem using SQL.
+And so the idea is we want to count how many users make it from A to B to C to D, possibly
+with time gaps in between that we want to constrain, and that we want to kind of figure
+out how to analyze this funnel.
+And there's three approaches to it.
+There's a join approach, a window function approach, and a regular expressions approach.
+And they have different characteristics, like max k is one of them, which is like this is
+how many steps that you're actually capable of counting in a reasonable amount of time.
+And so we can see for join, it's like a small number.
+Then there's performance, which is like how much data we're able to process.
+And then very importantly, there's this column on ease of use, and Tej very conveniently has
+this star rating system.
+I don't know if it's like out of five stars or out of three.
+And perhaps he said this in the talk, but this is kind of roughly what we think about
+a lot as analysts, is like how do we solve a problem in SQL?
+And then what kind of characteristics will that solution have?
+So you can think about like, what are we trying to do when we do sequence analytics in SQL?
+And why might this be a little bit challenging to think about how to do?
+Well, the left join approach is like taking a table and doing joins onto the same table.
+And you could even do like a recursive join if you wanted to, and create like a bunch
+of columns for all the different sequence elements.
+And this is what Edgar Codd, the inventor of the relational model, would want you to
+do because he doesn't want you to add window functions or denormalize your data in any
+way.
+But this is very not performant because you have to do joins.
+And for some reason, databases are bad at doing many joins, despite that that's what
+they're designed for.
+You could also use window functions.
+So the predicate now would, instead of being across columns like in these purple boxes,
+it would be across rows.
+And this is really kind of getting at the heart of what we're trying to do here is like
+apply conditions or predicates that span multiple rows in the data or multiple relations.
+And so we partition, order the data, and then we can do this window function approach.
+Or we could denormalize the data and create a special column that has an aggregate type.
+And then that aggregate type, we could write like UDFs or something like that to apply
+to that.
+And in Tiege's approach, it's like, oh, we'll just use regular expressions.
+We'll construct strings and use regular expressions.
+And that's another kind of like way that we might think about solving this problem.
+At the end of his approach, he sort of like motivates these things plus a fourth approach.
+And then like several months later, I saw him tweet this last night.
+This is like shows how late I was working on my slides.
+I never want to write a funnel in SQL ever again.
+So this is the person that I know who spent the most time working on funnels in SQL.
+Maybe it's because he spent so much time on it, but he knows the most about how to do
+it and how it could be done.
+And he doesn't think it's particularly fun to do or usable.
+I think they want to get to the point here of like, just because something is possible
+to do in a query language or in any language for that matter, it doesn't mean that it's
+likely that people will do it.
+And this is an important point.
+It's just not about like whether something is capable of doing something.
+It's about whether a user would practically do something.
+And we have Tiege Murphy, the expert on funnel analysis, telling us that he never wants to
+do it again.
+It's a bad sign for whether people will be doing funnel analysis in their jobs.
+I want to make the point that it's not the relational model that's the problem here.
+It's a fully expressive model.
+I mean, like, you know, Edgar Codd is right.
+Like relational model can solve this problem.
+And the events are perfectly well represented as a relation.
+So it's very reasonable to think about like, why should SQL not be capable of doing this
+very easily?
+And like, why should what should we be doing instead?
+And another important point to make here is that this is an analysis we're not going to
+probably write one time.
+There's this illusion that like, oh, we write this query and walk away from it.
+But actually, we all know that when we write a query that we end up tweaking it and making
+changes and that the funnel might change or be more complicated than we first, you know,
+first acknowledge and that this is an iterative process.
+And so we're going to need to solve this in maybe a different way.
+And I want to be open minded about that.
+And that's where that foolish consistency is the hobgoblin of little minds.
+So like, this is the only tool I'm allowed to use is the one that I already have is a
+little bit of a foolish consistency.
+So we have three possible things that we really want to boxes that we want to tick.
+We want to have completeness, which means like any possible funnel question could be
+answered.
+And it might be, it might be possible that some things are not possible in SQL, I don't
+want to make that claim, because I know someone will immediately rebut it.
+So I'm not going to say that there's a there's a thing that you can't do in SQL, unless I
+want someone to actually solve that problem.
+But I do think that expressiveness is a really important criterion here.
+It's like, even if it were possible to do an analysis, do I need an expert to do it?
+Could I do it in a reasonable amount of time?
+And then there's this like efficiency question, which Tej is very concerned with is like,
+could it be done quickly or at all on the large amount of data that we might have?
+So we want to kind of like, tick these three boxes if we can.
+So let's think like abstractly about what are we really trying to do when we design
+this procedure is like we have input data, and then our job is to fill this hole, the
+dashed line here and create some output data that is the answer to our question.
+So break this down into three phases.
+There's this expressing phase, where I go from intention to query syntax, and you can
+see all the joins that I have to do to get it to work.
+And then the database system will execute that query, produce a result, and then I will
+look at the feedback and like verify that it is complete.
+And so you can see like all three steps together, we get a core loop for an analyst who's working
+through a problem.
+I have an intention.
+It's like, this is what I want.
+This is the question that I'm answering.
+I want to answer.
+I have my human time that I spent getting to syntax.
+I have machine time getting from syntax to result.
+And then I have human time sort of spending time on the result and verifying that it's
+the right thing that I want.
+And getting through this loop quickly is really the name of the game for analytics productivity.
+And if we could do this quickly, then we could solve a lot of problems.
+A lot of people will say, hey, the machine time actually does matter.
+And I think that often we're just playing in different areas of this two dimensional
+space of how often we spend writing new queries versus how often we spend executing new queries.
+And I think a lot of people will think about, oh, like the query needs to be efficient.
+So it must be written in SQL.
+Well, that's people who want to work in the upper left hand quadrant where they want a
+mature data pipeline where it's very repeatable and reliable.
+I am very interested in this bottom right hand quadrant where we're interactively working
+with data and reframing our questions on a regular basis in order to get the answer that
+we really want and verify that it's correct.
+And there might be two paths up into this like holy grail top quadrant where you're
+doing a lot of interactive work and also very fast on the machine time.
+And I think it's plausible that we'd start from interactive analytics and figure out
+how to scale something from there rather than start with a really mature thing that answers
+one question well and expand the scope of it, say, using something like templates.
+All right.
+So I got a little recap where there's the ProSQL side.
+I'm not even going to make the argument because everyone's already made it online and told
+me not to even give this talk.
+SQL is great.
+It's fast and scalable.
+The data I have are already easily queryable.
+And of course, everyone can already read and fix my SQL queries, which I don't think that's
+actually true.
+You can see it's an anti-SQL point too.
+And also, people have figured out how to analyze funnels in SQL.
+So it's not impossible, but it's an awkward fit and human time is important.
+And key to my point here is that if it takes a long time, we might not ever even do it.
+And there'll be questions that are left unanswered that are important for our business.
+And so just because something can be solved in SQL doesn't mean it's important to our
+business.
+And some things that are hard to solve in SQL might actually be very difficult, but
+it might actually be very important for what we need to learn.
+Okay.
+So next phase of the talk is how to not use SQL.
+And actually, I changed the name of the slide at the last minute to how to use not SQL because
+I don't think it's about replacing SQL whole hog.
+I don't really ever want to claim that I'm going to invent a new query language that's
+better than SQL in all ways.
+There's no free lunch, but we need to think about building systems that are complimentary
+to the expressive power of SQL in other ways.
+And that it will be a thing that extends our superpowers and gives us like ability to answer
+new questions, but can compose well with the SQL queries that we're already writing.
+So here's my rough diagram of an analytics data, like a whole data work and the end from
+the raw data all the way to the things that users really care about.
+I know a lot of people online will probably quibble about all the boxes and arrows here,
+but just all models are wrong.
+This one serves my purpose.
+And okay.
+So we've got the stuff on the very far right.
+This is the impact that we're having from the data.
+And then we have the raw data all the way on the left.
+And any analysis that we do, anything that builds value as a path along this graph in
+some ways, including possibly loops where we do something more than once.
+So if we could think about different roles here, like here's an ML engineer who queries
+relational data with Python and then trains a model and then serves the model and the
+model drives impact by powering some beautiful new feature.
+We got the business analyst who queries the relational data that's already been turned
+into an OLAP cube with a BI tool, creates a plot and convinces the CEO that they're
+going to do a bad course of action.
+Or the data engineer who is thinking about how are we going to extract the load, the
+raw data and get it into relational data?
+And how are we going to run the pipelines, which are a batch of SQL queries that we're
+going to run on the relational data and continue to write new relational data into the relational
+data store.
+So everyone sort of has a place in this graph and it's usually like a path through it that
+you are responsible for and that you think about.
+But the heart of the graph is the relational data.
+It's like, this is the heart of our organization.
+And I used to study social networks, we call this a brokerage position of brokerage and
+social networks.
+It means that to solve any problem, to communicate between any two nodes in this graph, it's
+very likely that you're going to have to go through the relational data.
+And so this is an important kind of like design consideration when you're building a new thing.
+It's like if it doesn't read from and write to relational data, then it might be dead
+on arrival, like the query language that we built.
+So this is the inner loop, is a set of functions that we're going to run that consume relational
+data and emit relational data.
+And typically this is done with SQL or with Python and R in my experience, maybe less
+often.
+SQL is the most common case.
+Python and R can do this too.
+You can read from it.
+There's lots of connectors for databases and then you can write back to the database, very
+common pattern at both of the companies that I work for, Lyft and Facebook.
+And one way that I like to think about this is that there's this abstract space of relational
+data and each of these operations that we're doing, it's like a path that we're creating
+between two points where the starting point is the data that we have and the end point
+is the data that we'd like to have, which is like the answer to the question.
+And so by looping through this loop many, many times, we construct a path that gets
+us to the data that we want.
+So a chain of these operations is a solution to the problem that we're trying to solve
+when we're doing analytics tasks.
+So how can we add a new functionality?
+How can we be more expressive than SQL?
+We need to remove the SQL node and replace it with something else.
+And so here are three broad strategies that I've seen in practice for doing this.
+And so the first one is kind of like the one that I already talked about, which is like
+taking the data, putting it in R or Python, working with it in pandas or dplyr, which
+know how to deal with relational data and can then like emit relational data.
+So this sort of like substitutes out a SQL execution environment for something else,
+but it still conforms to the interface that we care about.
+Then there's this like new breed of thing that I'm seeing, which is like to transpile
+a language into SQL.
+So Malloy does this and prequel does this, which is like, take, take a query that is
+easier to write in some language and make it into a SQL query that could be like a big
+ginormous thing that we're really worried about whether it's going to work, but it will
+because it's a transpiler and it can guarantee correctness.
+This is also an attractive strategy because you can add this for expressivity, but get
+all the benefits of using SQL under the hood and using the same execution environment.
+And then what I'm going to talk about is actually this, like convert it into a new space and
+then operate it within the new space and then convert it back into relational data.
+So we need two things is the box is a noun.
+It's a useful representation for the data.
+That's not relational data, a converter to and from that thing.
+And then some expressive set of operations that work within that space.
+So here's my topological analysis of this is that we have relational data space on the
+left-hand side, and we have some alternative representation.
+And so this is how we do this.
+We have a round trip that we're going to take this difficult or expensive transformation
+that we'd like to make in space X, but that we can actually do in space Y under some sort
+of operations that we actually understand and are debuggable and easy to express.
+And then we're going to round trip it back using the converter.
+So this doesn't sound like a crazy idea.
+Actually I think I've seen this play out in practice in kind of informal ways.
+And there's at least four different kinds of intermediate representations that I think
+make sense here.
+One is graphs.
+Graphs are sort of very hard to query in SQL, especially along paths.
+But if you convert something to a graph, it's very easy to think about how to solve graph
+query problems in some other way, say with a language like Cypher.
+And then you could convert a graph back to SQL quite easily because they're very easy
+to map back and forth.
+I see people using embeddings where you take individual rows or items within a SQL table
+and convert them into vector representation and then work with vectors.
+And then we could generalize vectors into some kind of tensor and work with tensors.
+And tensor operations are very easy to do on, say, GPUs or in some area where you have
+a better ability to execute the computation in a more efficient way.
+And tensors are very easy to map back and forth into the relational model.
+And then finally you have the heart and soul of Motif is moving it into a sequence representation,
+operating on sequences directly, and then moving sequences back into the relational
+model when they need to be analyzed in a different way.
+And if this all sounds really crazy to you, I want to just call out almost everybody who's
+watching this talk has done this mapping at some point in their lives.
+They have exported a CSV file from a database, worked with it in Excel, and uploaded it back
+into the database.
+You're using the design pattern that I'm proposing.
+If you've done this, and I bet if I asked, if there were a real audience here and you
+could all raise your hands, a lot of people would be raising them right now.
+This is the OG way of mapping something into a space where it's more malleable, the operations
+are easier to think about, and that you can be more productive.
+And think about what is the problem with this workflow?
+It's not Excel.
+It's that exporting CSVs and importing CSVs is a lossy converter.
+And if you had like lossless conversion, that actually this design pattern would be much
+more resilient than it really is in practice.
+I have one minute to wrap up.
+I just want to make the claim here.
+I love SQL.
+I'm not trying to tell you not to use it.
+I'm just saying that sometimes you may be considered not using it when things are hard
+to do in SQL.
+And it comes from this kind of willingness to admit that you're going to iterate on solving
+a problem.
+I don't think that we write queries one time.
+They're usually like a malleable artifact that we're trying to nudge into the right
+state and that we iterate as our business changes.
+And so expressive code and things that are able to express operations in a succinct way
+are very valuable, both for writing and for reading and understanding and reasoning about
+your system behavior.
+And so this expressiveness really matters.
+And choosing a good representation will actually make expressing the problem that you want
+to solve, the solution to the problem that you want to solve a lot easier.
+And this and the way to integrate it with the way that we currently work is to think
+really hard about the interfaces.
+Don't reinvent nouns, reinvent verbs.
+And you can you can add one new noun if you want.
+But then at that point, you need to think only about verbs.
+And this has been a very productive way for me to think about the problem.
+I've seen this design pattern in other places, like say in the tidyverse where, you know,
+the type of data frame that we use has expanded in scope over time.
+So I just want to kind of like encourage everybody to be a polyglot and think about new verbs.
+They can change the way you think about problems.
+And you might find that it's more productive and that you can still use SQL.
+It's always going to be there.
+All right.
+Thanks, everybody.

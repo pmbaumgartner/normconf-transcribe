@@ -1,0 +1,940 @@
+1
+00:00:00,000 --> 00:00:05,840
+This is about how to represent the intermediate thing because Vicky said she wanted talks
+
+2
+00:00:05,840 --> 00:00:09,200
+about the day-to-day work of machine learning.
+
+3
+00:00:09,200 --> 00:00:14,060
+I spend so much of my time sitting, staring at a couple of functions that I have maybe
+
+4
+00:00:14,060 --> 00:00:18,460
+stubbed out going, okay, but like, should I use a dictionary?
+
+5
+00:00:18,460 --> 00:00:20,560
+Should I use a custom class?
+
+6
+00:00:20,560 --> 00:00:24,920
+And this talk is my attempt to articulate some of the thought patterns that I use for
+
+7
+00:00:24,920 --> 00:00:29,200
+figuring that out.
+
+8
+00:00:29,200 --> 00:00:34,840
+So data structures are often really clear at the beginning and end of whatever it is
+
+9
+00:00:34,840 --> 00:00:35,840
+that you're doing.
+
+10
+00:00:35,840 --> 00:00:39,840
+So in my case, I work on our platform.
+
+11
+00:00:39,840 --> 00:00:41,680
+And so this is often API boundaries.
+
+12
+00:00:41,680 --> 00:00:44,320
+I know what's coming in and I know what's going out.
+
+13
+00:00:44,320 --> 00:00:47,680
+Partly because I have had a lot of design discussions about it.
+
+14
+00:00:47,680 --> 00:00:49,040
+It's been ironed out.
+
+15
+00:00:49,040 --> 00:00:51,280
+We've thought it through very carefully.
+
+16
+00:00:51,280 --> 00:00:57,280
+Here's an example of an endpoint that I wrote where I have a bunch of data about a game.
+
+17
+00:00:57,280 --> 00:01:02,640
+My company makes an interactive narrative game that you can play with your friends.
+
+18
+00:01:02,640 --> 00:01:05,480
+So we have a bunch of data about the game and what's going on.
+
+19
+00:01:05,480 --> 00:01:11,000
+I need to return a ranked list of the best words for the situation with some metadata
+
+20
+00:01:11,000 --> 00:01:13,960
+about those words and why they're ranked that way.
+
+21
+00:01:13,960 --> 00:01:15,840
+Okay, cool.
+
+22
+00:01:15,840 --> 00:01:19,400
+That's very well defined.
+
+23
+00:01:19,400 --> 00:01:25,760
+But then at the next step, I feel like everything kind of drops off and it's easy to expect
+
+24
+00:01:25,760 --> 00:01:30,840
+that how to structure things in between should be obvious.
+
+25
+00:01:30,840 --> 00:01:32,800
+But it's not, actually.
+
+26
+00:01:32,800 --> 00:01:34,040
+Or if it is, please tell me.
+
+27
+00:01:34,040 --> 00:01:35,040
+Because I missed that memo.
+
+28
+00:01:35,040 --> 00:01:39,800
+If it is obvious, it might not even be the best thing.
+
+29
+00:01:39,800 --> 00:01:44,760
+For example, you might be following patterns that are used everywhere else in the codebase.
+
+30
+00:01:44,760 --> 00:01:48,840
+Which is good for consistency, but it doesn't mean it's the right thing to use there.
+
+31
+00:01:48,840 --> 00:01:53,240
+Or maybe you are in a very strong habit of always, I don't know, making a list and appending
+
+32
+00:01:53,240 --> 00:01:57,520
+to the end of the list and that's all you ever do.
+
+33
+00:01:57,520 --> 00:02:01,920
+Also the problems don't usually perfectly match basic Python data structures.
+
+34
+00:02:01,920 --> 00:02:06,880
+So if you go Google, as I did once upon a time as a baby software engineer, because
+
+35
+00:02:06,880 --> 00:02:10,400
+I was a data scientist and I wanted to get better at software engineering, how do I pick
+
+36
+00:02:10,400 --> 00:02:12,780
+a Python data object?
+
+37
+00:02:12,780 --> 00:02:19,200
+What you wind up with is like, okay, pick a list, if it's okay being mutable and you
+
+38
+00:02:19,200 --> 00:02:21,520
+want to sort it, pick a tuple.
+
+39
+00:02:21,520 --> 00:02:24,560
+I hate saying words out loud that people disagree on pronunciation.
+
+40
+00:02:24,560 --> 00:02:27,160
+I'm going to say tuple.
+
+41
+00:02:27,160 --> 00:02:29,400
+Pick a tuple if it needs to be immutable.
+
+42
+00:02:29,400 --> 00:02:31,960
+Write a custom class if you need to define methods and stuff.
+
+43
+00:02:31,960 --> 00:02:34,120
+But it never matches up that well.
+
+44
+00:02:34,120 --> 00:02:40,520
+I so rarely have a machine learning engineering problem where, oh, the thing I need to do
+
+45
+00:02:40,520 --> 00:02:45,920
+is have a chunk of things that are all the same type and are immutable and that solves
+
+46
+00:02:45,920 --> 00:02:47,360
+my problem.
+
+47
+00:02:47,360 --> 00:02:49,400
+Great.
+
+48
+00:02:49,400 --> 00:02:53,280
+So it gets complicated and often bane of my existence.
+
+49
+00:02:53,280 --> 00:02:55,440
+Multiple ways will usually work.
+
+50
+00:02:55,440 --> 00:03:01,120
+So it's kind of about picking the best one and the one that works for what you're trying
+
+51
+00:03:01,120 --> 00:03:02,120
+to do.
+
+52
+00:03:02,120 --> 00:03:05,960
+So getting it wrong, at least in my world, is not really the end of the world.
+
+53
+00:03:05,960 --> 00:03:07,120
+It's annoying.
+
+54
+00:03:07,120 --> 00:03:08,120
+It causes friction.
+
+55
+00:03:08,120 --> 00:03:09,920
+It will waste time.
+
+56
+00:03:09,920 --> 00:03:11,120
+And I don't like doing that.
+
+57
+00:03:11,120 --> 00:03:15,360
+So I would rather figure out how to do it right off the bat.
+
+58
+00:03:15,360 --> 00:03:17,000
+Ultimately this isn't a coding problem.
+
+59
+00:03:17,000 --> 00:03:19,000
+This is a decision making problem.
+
+60
+00:03:19,000 --> 00:03:24,560
+It's about how you access and associate information.
+
+61
+00:03:24,560 --> 00:03:28,880
+Because at least for now, it's still mostly human brains that are reading and writing
+
+62
+00:03:28,880 --> 00:03:29,880
+the code.
+
+63
+00:03:29,880 --> 00:03:30,880
+There's Copilot.
+
+64
+00:03:30,880 --> 00:03:35,760
+But, like, you still have to be able to understand what's going on and you or some unfortunate
+
+65
+00:03:35,760 --> 00:03:38,780
+colleague is going to have to debug what's going on.
+
+66
+00:03:38,780 --> 00:03:44,360
+So it makes sense to start with how you are associating the information you're working
+
+67
+00:03:44,360 --> 00:03:46,140
+with.
+
+68
+00:03:46,140 --> 00:03:48,040
+So start with what you know.
+
+69
+00:03:48,040 --> 00:03:51,400
+Write down all of your needs and constraints.
+
+70
+00:03:51,400 --> 00:03:54,400
+By which I mean literally physically write it down.
+
+71
+00:03:54,400 --> 00:03:59,200
+There are things you have in your head and things you have in front of you in the physical
+
+72
+00:03:59,200 --> 00:04:00,240
+world.
+
+73
+00:04:00,240 --> 00:04:02,520
+Those are very different things.
+
+74
+00:04:02,520 --> 00:04:06,640
+And the ones in your head are a lot more fuzzy than you might think they are until you try
+
+75
+00:04:06,640 --> 00:04:08,320
+to write them down.
+
+76
+00:04:08,320 --> 00:04:14,000
+So no matter how silly it feels, if you are looking at this kind of problem, get everything
+
+77
+00:04:14,000 --> 00:04:17,760
+in your head out of your head as messily as you need to.
+
+78
+00:04:17,760 --> 00:04:21,560
+My researcher and designer friend tells me this is called an affinity map, if you would
+
+79
+00:04:21,560 --> 00:04:24,760
+like something interesting to Google.
+
+80
+00:04:24,760 --> 00:04:29,320
+Basically just get everything you know onto the page, move it around, figure out explicitly
+
+81
+00:04:29,320 --> 00:04:32,040
+how you make those connections.
+
+82
+00:04:32,040 --> 00:04:35,600
+And that's a really good starting point for finding a common thread that runs through
+
+83
+00:04:35,600 --> 00:04:36,600
+it.
+
+84
+00:04:36,600 --> 00:04:41,440
+Especially if you're trying to do a fairly complicated set of things that are kind of
+
+85
+00:04:41,440 --> 00:04:44,060
+hard to hold in your head at once.
+
+86
+00:04:44,060 --> 00:04:49,800
+So for example, that endpoint that I showed earlier, I need to go get a bunch of words,
+
+87
+00:04:49,800 --> 00:04:56,120
+score them for a variety of metrics, and then sum all that up into a weighted sum and sort
+
+88
+00:04:56,120 --> 00:04:57,360
+the list and return it.
+
+89
+00:04:57,360 --> 00:05:02,080
+That's not too many steps, but you wind up needing to access it in several different
+
+90
+00:05:02,080 --> 00:05:03,080
+ways.
+
+91
+00:05:03,080 --> 00:05:05,000
+I just got a visit from my dog.
+
+92
+00:05:05,000 --> 00:05:06,000
+This is Fury.
+
+93
+00:05:06,000 --> 00:05:08,000
+Come say hi.
+
+94
+00:05:08,000 --> 00:05:09,360
+Come on.
+
+95
+00:05:09,360 --> 00:05:12,360
+This is Fury, everyone.
+
+96
+00:05:12,360 --> 00:05:19,240
+The next thing that I prefer to think about is how sure are you?
+
+97
+00:05:19,240 --> 00:05:22,360
+This is my accidental argument for cowboy code.
+
+98
+00:05:22,360 --> 00:05:25,040
+But consider it cowboy code.
+
+99
+00:05:25,040 --> 00:05:30,720
+Because when you are committing to more structured and more rigid data types, so in this case,
+
+100
+00:05:30,720 --> 00:05:36,400
+I'm talking about, like, defining a custom class instead of using a dictionary, you get
+
+101
+00:05:36,400 --> 00:05:37,920
+certain benefits from that.
+
+102
+00:05:37,920 --> 00:05:43,000
+You get more certainty and predictability in how things will break.
+
+103
+00:05:43,000 --> 00:05:46,680
+You can access things a little easier sometimes.
+
+104
+00:05:46,680 --> 00:05:48,920
+But you need to be more sure because it's going to be more of a pain in the butt to
+
+105
+00:05:48,920 --> 00:05:50,280
+make a change.
+
+106
+00:05:50,280 --> 00:05:57,000
+I have shot myself in the foot with this several times, trying to get too precise too soon
+
+107
+00:05:57,000 --> 00:05:58,920
+and then having to go rewrite it.
+
+108
+00:05:58,920 --> 00:06:03,300
+And it's annoying.
+
+109
+00:06:03,300 --> 00:06:07,160
+So just go with the least committed you can get away with.
+
+110
+00:06:07,160 --> 00:06:12,240
+I do want to caveat that this is I work for a startup.
+
+111
+00:06:12,240 --> 00:06:15,880
+I'm not writing financial software.
+
+112
+00:06:15,880 --> 00:06:22,880
+My goal is to write good code efficiently and not spend more time than it needs to have.
+
+113
+00:06:22,880 --> 00:06:27,880
+So staying a little bit flexible in the first layer of implementation can actually be really
+
+114
+00:06:27,880 --> 00:06:30,280
+helpful.
+
+115
+00:06:30,280 --> 00:06:33,280
+And harder to make a change, not as in literally you can't do it.
+
+116
+00:06:33,280 --> 00:06:37,840
+It just takes time and refactoring.
+
+117
+00:06:37,840 --> 00:06:44,280
+Once you know how sure you are, my best piece of advice is to make the code match your brain.
+
+118
+00:06:44,280 --> 00:06:50,640
+Humans index things by name pretty intuitively, which is why I love Python dictionaries.
+
+119
+00:06:50,640 --> 00:07:01,920
+It is so much easier to say, you know, give me words.genrescore than words at the whatever-eth
+
+120
+00:07:01,920 --> 00:07:07,840
+element of the tuple or list that you've stuck on there.
+
+121
+00:07:07,840 --> 00:07:10,800
+Honestly this whole talk could have just been titled dictionaries are the best.
+
+122
+00:07:10,800 --> 00:07:13,800
+Probably use those if you're in doubt.
+
+123
+00:07:13,800 --> 00:07:20,640
+They offer a really nice balance of ease of access.
+
+124
+00:07:20,640 --> 00:07:25,680
+You have some methods that let you be a little more careful and defensive.
+
+125
+00:07:25,680 --> 00:07:31,220
+You can use get for carefully checking to see if something exists in the dictionary.
+
+126
+00:07:31,220 --> 00:07:36,280
+You can use a default dictionary if you do want to accumulate things as you go.
+
+127
+00:07:36,280 --> 00:07:39,040
+I am a dictionary fan.
+
+128
+00:07:39,040 --> 00:07:42,680
+And again, there are usually several ways to do this.
+
+129
+00:07:42,680 --> 00:07:47,400
+I find that pair programming is really great for not going down the rabbit holes of I could
+
+130
+00:07:47,400 --> 00:07:50,800
+do it this way or I could do it this way.
+
+131
+00:07:50,800 --> 00:07:55,520
+But this is why that step where you write everything down is very helpful because you
+
+132
+00:07:55,520 --> 00:08:03,960
+can start to extract patterns for how you're thinking about it.
+
+133
+00:08:03,960 --> 00:08:06,040
+The next point I have is on the next slide.
+
+134
+00:08:06,040 --> 00:08:08,840
+Which is that you should blend data structures if you need to.
+
+135
+00:08:08,840 --> 00:08:11,440
+And that's part of making that code match your brain.
+
+136
+00:08:11,440 --> 00:08:17,400
+So the example I was just thinking of is when I'm thinking about words, specifically the
+
+137
+00:08:17,400 --> 00:08:22,400
+words that I'm talking about in the example problem that I gave with the API spec, I tend
+
+138
+00:08:22,400 --> 00:08:27,020
+to think about them in terms of the word string itself and the part of speech.
+
+139
+00:08:27,020 --> 00:08:31,740
+That's just like the easiest unique way of identifying the words.
+
+140
+00:08:31,740 --> 00:08:37,280
+Often I need to access the whole word object, which has other metadata in it, in order to
+
+141
+00:08:37,280 --> 00:08:39,200
+do stuff.
+
+142
+00:08:39,200 --> 00:08:44,880
+There's no reason you can't make a dictionary where the key is that tuple of word string
+
+143
+00:08:44,880 --> 00:08:51,700
+and part of speech and the value is the entire word object.
+
+144
+00:08:51,700 --> 00:08:53,560
+Because that's how I think about the problem.
+
+145
+00:08:53,560 --> 00:08:59,840
+That's how I think about solving the various intermediate steps I need to do, making the
+
+146
+00:08:59,840 --> 00:09:02,120
+calculations I need to make.
+
+147
+00:09:02,120 --> 00:09:05,740
+And so if I make the data structure match that, the whole thing flows and I'm much more
+
+148
+00:09:05,740 --> 00:09:12,920
+likely to catch if I have missed some detail about how I needed to organize it.
+
+149
+00:09:12,920 --> 00:09:18,040
+Again, you can tell I'm working for a little startup.
+
+150
+00:09:18,040 --> 00:09:19,360
+Care about performance later.
+
+151
+00:09:19,360 --> 00:09:20,360
+Seriously.
+
+152
+00:09:20,360 --> 00:09:23,680
+You need to care about performance.
+
+153
+00:09:23,680 --> 00:09:27,120
+Going down too many rabbit holes at once makes you code in circles.
+
+154
+00:09:27,120 --> 00:09:32,560
+You will get halfway down figuring out the correct data structure for the problem at
+
+155
+00:09:32,560 --> 00:09:38,160
+hand and then you'll start going, okay, wait, but like is that going to parallelize well?
+
+156
+00:09:38,160 --> 00:09:40,120
+Will I be able to submit this to some other thing?
+
+157
+00:09:40,120 --> 00:09:41,120
+Like don't.
+
+158
+00:09:41,120 --> 00:09:45,160
+Just get it all the way ironed out.
+
+159
+00:09:45,160 --> 00:09:50,000
+Because then you have a first draft to optimize against.
+
+160
+00:09:50,000 --> 00:09:55,640
+It is so much easier to evaluate the pros and cons of a structure you have chosen and
+
+161
+00:09:55,640 --> 00:10:07,040
+written down than halfway thinking through three or four different ones.
+
+162
+00:10:07,040 --> 00:10:10,360
+I would just like to point out that nobody has this solved or it would be automated as
+
+163
+00:10:10,360 --> 00:10:15,000
+a refactoring tool in PyCharm and also Copilot would provide it for you.
+
+164
+00:10:15,000 --> 00:10:20,800
+Part of my grand goal for this talk was to write a flowchart and I could be famous on
+
+165
+00:10:20,800 --> 00:10:21,920
+the internet forever.
+
+166
+00:10:21,920 --> 00:10:26,160
+I could sell it like flashcards.
+
+167
+00:10:26,160 --> 00:10:29,880
+It would just have a series of questions and you would go all the way to the end and it
+
+168
+00:10:29,880 --> 00:10:33,600
+would tell you what data structure to use.
+
+169
+00:10:33,600 --> 00:10:35,520
+Maybe someday.
+
+170
+00:10:35,520 --> 00:10:41,280
+But it turns out that what you actually need is to think about how your brain thinks about
+
+171
+00:10:41,280 --> 00:10:45,640
+your particular data and you'll start to see patterns.
+
+172
+00:10:45,640 --> 00:10:50,000
+Like I said, a lot of the stuff I do lately has to do with associating words with other
+
+173
+00:10:50,000 --> 00:10:51,000
+things.
+
+174
+00:10:51,000 --> 00:10:53,120
+Dictionaries lend themselves really nicely to that.
+
+175
+00:10:53,120 --> 00:10:55,080
+So when in doubt, I just use a dictionary.
+
+176
+00:10:55,080 --> 00:11:01,920
+You will probably also eventually wind up with shorthands for your flavor of data.
+
+177
+00:11:01,920 --> 00:11:05,680
+But if you do have it automated, let me know.
+
+178
+00:11:05,680 --> 00:11:08,000
+And this is a fractally repeated process.
+
+179
+00:11:08,000 --> 00:11:10,040
+So what do you have?
+
+180
+00:11:10,040 --> 00:11:11,240
+What do you need?
+
+181
+00:11:11,240 --> 00:11:17,040
+And how are you going to access what you need out of the data and the objects to get there?
+
+182
+00:11:17,040 --> 00:11:19,680
+This applies at the API interface level.
+
+183
+00:11:19,680 --> 00:11:21,520
+What's going in, what's coming out.
+
+184
+00:11:21,520 --> 00:11:26,680
+This applies with any major function that's happening behind that endpoint.
+
+185
+00:11:26,680 --> 00:11:29,640
+And it applies to each smaller function within there.
+
+186
+00:11:29,640 --> 00:11:35,720
+So to take the word score ranking examples and apologies for not having any outlined
+
+187
+00:11:35,720 --> 00:11:37,240
+code examples on the slide.
+
+188
+00:11:37,240 --> 00:11:41,040
+Like I said, the internet ate them.
+
+189
+00:11:41,040 --> 00:11:45,360
+For each of those words, I need to get scores for a handful of different metrics.
+
+190
+00:11:45,360 --> 00:11:48,480
+I want to normalize those scores within a metric.
+
+191
+00:11:48,480 --> 00:11:53,840
+Which means that I need to have all of those scores at once.
+
+192
+00:11:53,840 --> 00:12:00,760
+So that might influence okay, I probably don't want to accumulate it only by word and then
+
+193
+00:12:00,760 --> 00:12:06,280
+make it hard to get out again all of the scores for a particular metric.
+
+194
+00:12:06,280 --> 00:12:07,920
+So like all of the genre scores.
+
+195
+00:12:07,920 --> 00:12:10,320
+I'm going to need those all at once.
+
+196
+00:12:10,320 --> 00:12:15,000
+And if you do this at each layer, it usually becomes pretty clear how to structure the
+
+197
+00:12:15,000 --> 00:12:18,040
+things that you're starting with.
+
+198
+00:12:18,040 --> 00:12:20,840
+Okay.
+
+199
+00:12:20,840 --> 00:12:23,600
+I would like to end with some of my heuristics.
+
+200
+00:12:23,600 --> 00:12:27,120
+I just told you it's not a solved problem and I am absolutely going to throw some hot
+
+201
+00:12:27,120 --> 00:12:29,400
+takes out here.
+
+202
+00:12:29,400 --> 00:12:32,480
+Use a dictionary if you're a human with a human brain.
+
+203
+00:12:32,480 --> 00:12:35,360
+This is always my starting point.
+
+204
+00:12:35,360 --> 00:12:39,000
+Default dicks, as I mentioned, are really nice if you want to smoothly add things as
+
+205
+00:12:39,000 --> 00:12:40,000
+you go.
+
+206
+00:12:40,000 --> 00:12:45,280
+I actually used this for those word scores because I didn't want to set in stone what
+
+207
+00:12:45,280 --> 00:12:47,880
+the scoring metrics were going to be.
+
+208
+00:12:47,880 --> 00:12:51,680
+We might add some others and some words might not have all of them.
+
+209
+00:12:51,680 --> 00:12:56,440
+I didn't want it to blow up if I needed to add a new score.
+
+210
+00:12:56,440 --> 00:13:01,300
+Classes are great if you have put more thought into what you're doing.
+
+211
+00:13:01,300 --> 00:13:03,640
+If you're more sure about it, go ahead.
+
+212
+00:13:03,640 --> 00:13:05,640
+Use a class.
+
+213
+00:13:05,640 --> 00:13:11,240
+I love Pydantic because I am a massive typing fangirl.
+
+214
+00:13:11,240 --> 00:13:17,120
+I convinced my entire data science team to adopt type annotations in my first real job.
+
+215
+00:13:17,120 --> 00:13:19,640
+It was great.
+
+216
+00:13:19,640 --> 00:13:23,480
+But classes kind of lock you in a little bit more.
+
+217
+00:13:23,480 --> 00:13:27,240
+Lists are great for if you have stuff, you might want to sort it.
+
+218
+00:13:27,240 --> 00:13:28,880
+You don't care if it's mutable.
+
+219
+00:13:28,880 --> 00:13:32,960
+Everyone has been bitten by the mutable lists bug that they accidentally wrote into their
+
+220
+00:13:32,960 --> 00:13:37,120
+code and if you haven't, your time will come.
+
+221
+00:13:37,120 --> 00:13:40,680
+Tuples are great if they need to be immutable.
+
+222
+00:13:40,680 --> 00:13:42,160
+They're not going to change.
+
+223
+00:13:42,160 --> 00:13:49,000
+I only use them if I only have a few things because you can't really access them intuitively.
+
+224
+00:13:49,000 --> 00:13:54,120
+You're accessing them by index unless you use a named tuple.
+
+225
+00:13:54,120 --> 00:14:00,040
+So I don't think those are great for collecting long sets of things.
+
+226
+00:14:00,040 --> 00:14:04,400
+I will be honest, every time I think I'm going to use a named tuple, I wind up using a dictionary
+
+227
+00:14:04,400 --> 00:14:07,000
+or a lightweight custom class.
+
+228
+00:14:07,000 --> 00:14:08,320
+I go in one direction or the other.
+
+229
+00:14:08,320 --> 00:14:14,240
+I guess in that situation, if your data really need to be immutable, it might work.
+
+230
+00:14:14,240 --> 00:14:18,320
+But I would love to hear from people who actually use these on a regular basis because I always
+
+231
+00:14:18,320 --> 00:14:22,500
+want to and I always wind up not doing it.
+
+232
+00:14:22,500 --> 00:14:24,200
+So these are my heuristics.
+
+233
+00:14:24,200 --> 00:14:26,760
+I would love to hear everyone else's.
+
+234
+00:14:26,760 --> 00:14:31,640
+Help your own, you'll get a feel for the kinds of data you work with.
+
+235
+00:14:31,640 --> 00:14:56,640
+Thank you.
+

@@ -1,0 +1,230 @@
+Thank you, everyone, for watching my talk. Data is the new coffee. I am Peter Baumgartner,
+and I am just going to dive right into it. So I'm a machine learning engineer at Explosion.
+We created the spacey natural language processing library and the prodigy annotation tool. I
+also lead our consulting services, so I work on various applied natural language processing
+problems. And often those problems involve the process of annotating data, which is also
+called labeling or coding data. For those of you not familiar, there's an example here
+on this page. In this image, we have a common natural language processing task called named
+entity recognition, where we're looking to identify entities and their types within a
+piece of text. So right now we have models that can do a pretty good job at this task.
+But the reason we have those powerful models that can make predictions about entities is
+because people have done the work to annotate thousands of documents with named entities
+like this one. So one part of my talk is going to be talking about this process and exploring
+this question of where does our data for machine learning come from? Specifically, what's this
+process that transforms unlabeled raw data by adding annotations or labels for supervised
+learning tasks? But we're going to get a little weird. We're going to take a winding road
+to answer that question, because first we have to talk about coffee. So I love drinking
+and learning about coffee. The idea for this talk came from this book on the right here.
+It's a sort of manuscript, a very long exploration into the world of professional coffee tasting.
+And as I was reading, I noticed there were just a lot of similarities between the world
+of professional coffee tasting and what we do when we annotate data. It raised a lot
+of interesting questions about coffee for me. It's like how does a bean travel thousands
+of miles to end up in our cup without having defects? When we're at the store, how do we
+actually know what kind of coffee we're buying? How does a coffee taster convert these raw
+taste perceptions into a quantitative and qualitative assessment of that coffee that
+can be shared? Who came up with the descriptions that we see on coffee bags and menus and how
+did they do that? So my twist on the norm comp theme here is illustrating that I think
+there's a lot we can learn from these mundane, habitual, very normy tasks like drinking coffee.
+And so we'll start getting some answers to these questions about coffee by exploring
+the world of professional coffee tasting and then see what we can adopt for data annotation.
+So a typical coffee tasting consists of sampling several coffees. Depending on the purpose
+of the tasting, this can result in a description of their flavors, assigning numeric values
+to the qualities of the coffee like bitterness or acidity, and tasting for any defects in
+the coffee. We'll see an example of this in a bit. This is a screen cap on the slide from
+a video that was the world's largest coffee tasting, which was a virtual event put on
+by YouTuber James Hoffman, who I'd strongly recommend if you're at all interested in coffee.
+In this video, he's doing part of this virtual tasting and he's tasting five different coffees
+that have been prepared in the same way with a process that's formally called cupping,
+which is different than how you typically brew coffee for consumption. You know, one
+difference being that you actually are going to slurp the coffee from a spoon like he's
+doing here. So on the right hand side of the frame here, there's a sheet for taking notes
+and scoring the coffee. And this is where the magic happens as tasters annotate their
+experience and convert it into structured data. Often tasters will use a structured
+form or a protocol like this one from the Specialty Coffee Association. There's a lot
+going on here. So I'm just going to split up this form into four different parts. So
+one thing that's happening is they're doing a numeric assessment of flavor characteristics.
+So we've got fragrance, aroma, flavor, aftertaste, acidity, body. There's some descriptive notes
+of the flavors. So this one is very floral, silky body, beautiful aftertaste, extremely
+balanced. There are checkboxes for any defects that are noted in the coffee. And then there's
+a final score that's basically the sum of all the points minus some points for any defects.
+So coffee tasters completing this form and doing a tasting is similar to annotating data.
+And the benefit for us is that they've been doing it for a long time and have these established
+methodologies that appear to be working. So now I'd like to transition into talking about
+practices in professional coffee tasting that I believe can be of service to those of us
+who rely on annotated data for data science. I'm going to talk about five different practices
+that exist within the world of coffee tasting and draw some analogies to annotation. All
+right. So first up is this idea of calibration and agreement. So professional coffee tasting
+sessions usually begin with a day of what's called calibration. What happens here is before
+evaluations and descriptions are formally recorded, tasters work together to come to
+a sense of agreement on what various descriptors and scale values mean. This is important because
+everyone has different backgrounds and tasting abilities and experiences that are going to
+merit the need for calibration. If everyone is proposing their own idea of what an 8.5
+for flavor means, a large value of the, a large part of the value of tasting is going
+to be lost due to that inconsistency. There was an interesting example of this in the
+book that I mentioned. So typically when the descriptor orange is used in North America
+by coffee tasters, it refers sort of straightforwardly to the flavor of the orange fruit. However,
+tasters from India typically use the descriptor orange as an iconic descriptor where it essentially
+serves as a substitute for the idea of good flavor. So this is just one of many examples
+of how interpretation and judgment being in can be influenced by sort of local characteristics
+of a tasting. So luckily with annotated data and with digital information, we have a way
+to measure how much people agree on the annotations and the labels. This is the idea that is called
+inner annotator agreement or inter-rater reliability. And these are measures that you can calculate
+when you have multiple annotators labeling the same set of examples. When you're starting
+a new project and you don't know how difficult your annotation task is, agreement metrics
+can provide extremely valuable information. If two humans can't agree on how something
+should be labeled, your model isn't going to output consistent results and you and your
+users want consistent results. Additionally, you're going to bias your training dataset
+based off the individual whims of your annotators. So like imagine if we had a magical machine
+learning model to predict whether coffee had orange flavor or not. If half the data sets
+annotated with North American tasters and half with tasters from India, what is it exactly
+that we'd expect that model to produce? So starting a project with multiple annotators,
+calculating agreement metrics and revising your project based on agreement, to me, seems
+like a cheat code for successful machine learning projects. As an example of this, here's a
+chart displaying an agreement metric called Cohen's kappa and the F1 scores for that model
+for a model trained on Google's Go Emotions dataset. Vincent covered this dataset a little
+bit in his talk. I think this dataset is sort of like a mini dumpster fire, but one of the
+good things that they did do was have multiple annotators and calculated agreement measures
+on their annotations. So the goal of this task, just as a refresher, they're classifying
+Reddit comments into one of 27 emotion categories. So each dot here is the agreement score for
+a single emotion category on the horizontal axis and then the F1 score from that model
+on the vertical axis. So there's super high correlation here. So hopefully it's clear
+that having multiple annotators and calculating these agreement metrics can tell you kind
+of early if your model's going to be trash. So if you agree with me that agreement metrics
+are awesome and you're using them on a project and find out you have a sort of poorly performing
+task with low agreement, what is it exactly that you would be fixing? So we'll talk about
+that as it relates to structure and process. So we saw that in coffee tasting, they have
+this form, this protocol. The form guides tasters towards what aspects of the coffee
+to pay attention to and how to pay attention to them. Coffee tasters also go through years
+of training and refining their perceptions and descriptions of taste. Essentially, there's
+just a deliberate effort to document and scale this task of tasting coffees and making sure
+this process is as shareable and consistent as possible. So here's another example of
+a tool that provides some structure. This is a flavor wheel. I know it's too small for
+you to read anything. Don't care about the details or go Google flavor wheel when you
+have more time. This one's from counterculture coffee and what it does is just lists out
+common descriptors or flavors in coffee in a hierarchical manner. So it's just a nice
+tool that coffee tasters can use. So for projects needing data annotation, the equivalent tool
+to the cupping form or something like a tasting wheel are called annotation guidelines. So
+annotation guidelines serve as your reference for how data should be annotated or labeled.
+Here's an example of one from I just Googled annotation guidelines. There's this time ML
+project. And essentially, this is just a specification for marking up temporal events within text.
+So, their annotation guidelines include detailed descriptions of all their tags, instructions
+on how to annotate with them, and most importantly, numerous examples of annotated texts. So,
+without guidelines, it's difficult to know exactly what you're evaluating when you do
+something like a model evaluation. Your model could be performing poorly because of inconsistencies
+in your annotations on your training or your evaluation data sets. Now, this isn't a document
+that you need to have perfectly defined when you start a project. Your annotation guidelines
+can be developed iteratively over the course of the project and then solidify over time.
+You really want them to be finalized, though, by the time you're annotating what we usually
+call like your gold or your test data set. And you also want to be sure that you're reapplying
+those finalized guidelines to your training data for consistency. So, speaking of iteration,
+let's talk a little bit about that. So, this one, I'm going straight to the example. Here's
+a bag of coffee I had a few months ago. I've highlighted the profile of this coffee on
+the bag. And it says it is apple, toffee, and milk chocolate with a medium juicy body.
+So, a natural question here is, you know, is the flavor of apple actually in this coffee
+once I brew it and taste it? Is it my job to extract this inherent taste sensation from
+my experience while drinking the coffee? And that's certainly one way to think of drinking
+coffee as a task. But tasting notes in this profile here can also serve as a jumping off
+point for additional discoveries. So, rather than being a specific experience I'm trying
+to extract, this apple flavor can be used as a jumping off point for additional discoveries.
+I might think of the flavor of apple, have a sip and try to locate that flavor and fail
+to do that. But that experience can lead me towards another flavor that I can experience
+more clearly. So, I could use that experience the next time I take a sip and see if there's
+something more clear that comes through. This is the idea of operating reflexively. It's
+like bootstrapping your experience by adopting an initial task and then, like, revising it
+in a cyclical process. So, we can adopt this same reflexivity in
+annotation and labeling data. If you have a new dataset and a new task and the concept
+or idea in which you're annotating is still sort of not well defined, you don't have to
+have your annotation scheme finalized or a production ready model in order to use those
+tools to help you explore the problem space. You can just make up an annotation task for
+yourself that will give you exposure to the data and experience with translating this
+raw sort of data information into a structured task. It's fine to start with something simple
+and discover your task as actually something else along the way as you start to encounter
+more and more data. Your goal here is to understand the data through this process.
+Another place this reflexivity shows up is with model in the loop workflows. In this
+case, you will have trained an existing model that's making predictions on the data that
+you're annotating. Here, the reflexivity stems from using these models, the model's predictions,
+to better understand what type of data you might additionally collect or annotate. In
+short, you can perform a simplified task or intermediate version of your final task as
+a stepping stone to your final solution. You know, don't expect to get it right the first
+time. So this very formal protocol-based testing
+isn't the only kind of tasting around. There are actually three different sort of categories
+of tasting. I've covered descriptive tasting, which is this long process with the form.
+There's also discriminatory tasting, which is like tasting for defects. And there's also
+hedonic tasting, which is just discovering whether a taster personally likes or dislikes
+a coffee. So these different tasting tasks get employed strategically, and we should
+be thankful for that. As lay tasters, we don't want to complete an entire form to determine
+if we enjoy a cup of coffee that we brewed in the morning.
+Flexibility is important because it helps you not waste time solving the wrong problem.
+On the left here are examples of two types of defects in coffee beans, insect damage
+and fully black beans, which usually result from environmental issues like frost. Fortunately,
+these can be visually inspected for issues before the coffee is tasted. But if the process
+didn't include that task of checking for defects, you know, these beans could get all the way
+to an actual tasting, and we'd have people wasting their time with the wrong task, which
+is tasting coffee when there are known defects. In the same way, you have to think about the
+suitability of your annotation task relative to sort of like the use case for your model
+and the limitations of your data. So my favorite task to pick on, of course, is sentiment analysis.
+So let's say we wanted to know whether a movie review was positive or negative. I've got
+a real life example here from the movie Birdman, which I love. So this is just a paragraph
+from that review. Now, most sentiment models would just classify this text as negative.
+And we can work with this coarse sense of sentiment if it's valuable for our product
+to know generally how much people enjoy a movie. But if we're interested in a more nuanced
+characteristics of the movie, like the quality of the musical score or the cinematography
+or the strength of the weakness of the acting, you know, a broad sense of sentiment isn't
+going to help us answer those questions. So here's an example of a paragraph later on
+in that same review that actually was overall positive talking about the cinematography
+of the movie. So you have to align your raw data, your annotations and your use case and
+make sure all these things sort of line up and that you're solving a suitable task. Another
+point here is that that other people have mentioned is that you should always be assessing
+whether machine learning and supervised learning specifically is the right approach for your
+system. You should be thinking about machine learning as one component of a larger system,
+not your whole system in itself. In the same way, you know, it's not the job of coffee
+tasters to determine the tasting notes that appear on a bag of coffee or the description
+you might see in a coffee shop or how a blend might be successfully marketed. Instead, they're
+focused on trying to describe the coffee as objectively as possible and in a standardized
+way. All right. My last point is this idea of
+full stack collaboration. I apologize if this sounds like a weird management consultant
+buzzword, but it was the best thing I could come up with. So hear me out. So coffee farmers
+don't often taste their own coffees, actually. Typically, they're just trying to achieve
+the highest yield, which just means the lowest number of defects. So generally, there's not
+a lot of interest in positive taste characteristics. So farmers don't know exactly what they're
+selling a lot of times. This is one of the areas that people in the coffee industry are
+actually trying to change so that farmers can better understand what it is they're selling
+and improve their crops. And in the same way, I think machine learning
+projects kind of have some sort of communication and collaboration risk if this whole sort
+of team pipeline isn't working correctly and not everyone understands what the other one
+is doing. So the risk here is having a project that's sort of too heavily focused on one
+team in this diagram. So focusing on the left, I sort of have this thought that a lot of
+when you look at a lot of organizations attempting to do machine learning or some research projects,
+they think the real problem is trying to find a cost effective annotation team and getting
+data labeled for as cheaply as possible. And on the other end of the spectrum, you have
+spaces like Kaggle competitions that are framed in this sort of like, sterile product management
+business problem perspective, like you just get a problem and they want you to bring the
+data science and you can't ask that company to annotate more data or provide additional
+context. And then finally, you know, data scientists
+and machine learning engineers or whatever you are, my green screen is tipping over now
+because I'm stepping on it. Whether you're a machine learning engineer or data scientist,
+we're also just as guilty as this, too. I know numerous times, like, I just want to
+get to coding. I'll just download a pre-trained model, get the data set and just go to town.
+And that is to my own detriment later, I've found numerous times. So, you know, there's
+downsides of focusing too much on one of these groups. If data science doesn't have insight
+into the annotation task, you can waste a lot of time on a task that might make logical
+sense and have good annotation guidelines, but be poorly executed or result in a data
+set that's just not workable with machine learning. The data science team also needs
+to help incorporate model in the loop workflows to perform error analysis and perform error
+analysis on early iterations of the model so the task can be refined. Data science also
+needs to communicate with the product team. It's unlikely that the things that machine
+learning can do out of the box with a pre-trained model or framework is going to be a direct
+solution to your business problem. And it's important to have product involved in the
+annotation task because the things that you annotate are going to be the outputs of the
+system. You need to be sure that those outputs are relevant and meaningful to the product
+that you're developing. I would say it's not out of the question for everyone on any of
+these teams to annotate data at some point in a project life cycle. I think the best
+way to understand the details of the data and the annotations relative to each team's
+goals is to actually do that process. So by neglecting to think about where our coffee
+comes from and sort of this process of coffee tasting, I think we're missing out on, you
+know, delightful coffee experiences and aspects of our coffee that we weren't aware that we
+could enjoy. And in the same way, I think we're missing out on a lot when we ignore
+where our data comes from and fail to implement processes that make it better. It's not enough
+to accept your data as a given of a project and move on. If we care a little bit more
+about where our data comes from and how our data gets annotated, I think we can also have
+more successful and more delightful data science projects. Thank you.

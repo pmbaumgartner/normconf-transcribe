@@ -1,0 +1,2324 @@
+1
+00:00:00,000 --> 00:00:04,160
+So my academic background is physics and astronomy.
+
+2
+00:00:04,160 --> 00:00:08,160
+I moved into data science about eight or nine years ago.
+
+3
+00:00:08,160 --> 00:00:11,160
+I've worked as a data science practitioner.
+
+4
+00:00:11,160 --> 00:00:12,920
+And then as of about three years ago,
+
+5
+00:00:12,920 --> 00:00:15,000
+I transitioned to working as a,
+
+6
+00:00:15,000 --> 00:00:16,600
+like a data science tool builder.
+
+7
+00:00:16,600 --> 00:00:20,280
+So I work now at Posit, formerly RStudio,
+
+8
+00:00:20,280 --> 00:00:23,680
+where I work on open source software
+
+9
+00:00:23,680 --> 00:00:24,960
+for modeling machine learning,
+
+10
+00:00:24,960 --> 00:00:28,080
+and now MLOps for Python and R.
+
+11
+00:00:28,080 --> 00:00:30,760
+And one of the things that I think is a theme
+
+12
+00:00:30,760 --> 00:00:34,880
+through my career, like a kind of connecting idea,
+
+13
+00:00:34,880 --> 00:00:39,800
+is that I'm very interested in people's practical workflows
+
+14
+00:00:39,800 --> 00:00:43,560
+and how people do their real work, what makes it hard.
+
+15
+00:00:43,560 --> 00:00:44,960
+I'm thinking about systems,
+
+16
+00:00:44,960 --> 00:00:48,240
+like how do people use systems to get their work done?
+
+17
+00:00:48,240 --> 00:00:50,240
+And that's been, you know, whether I've been working
+
+18
+00:00:50,240 --> 00:00:53,600
+as a data science practitioner in an organization,
+
+19
+00:00:53,600 --> 00:00:56,600
+working on, you know, text analysis tools,
+
+20
+00:00:56,600 --> 00:00:58,720
+or more recently as I've been focusing
+
+21
+00:00:58,720 --> 00:01:00,320
+on machine learning tools.
+
+22
+00:01:00,320 --> 00:01:03,120
+So given that, when I saw this tweet,
+
+23
+00:01:03,120 --> 00:01:05,320
+which has been in a bunch of talks already,
+
+24
+00:01:06,400 --> 00:01:11,400
+well, when this tweet from Vicky had this phrase in it,
+
+25
+00:01:12,200 --> 00:01:14,520
+how many K-folds is too many?
+
+26
+00:01:14,520 --> 00:01:17,000
+I saw this and my immediate reaction was,
+
+27
+00:01:17,000 --> 00:01:19,760
+oh, but I actually wanna give a talk about that.
+
+28
+00:01:19,760 --> 00:01:22,120
+Like, I actually want to talk to people about that,
+
+29
+00:01:22,120 --> 00:01:27,120
+because one of the tools that I think
+
+30
+00:01:27,280 --> 00:01:29,240
+we don't hear enough about,
+
+31
+00:01:30,880 --> 00:01:33,480
+that can be super helpful in many situations,
+
+32
+00:01:33,480 --> 00:01:36,920
+is the tool to answer this kind of question.
+
+33
+00:01:36,920 --> 00:01:39,040
+And it's in my title, it's not a spoiler,
+
+34
+00:01:39,040 --> 00:01:42,960
+to say like that tool is simulations, building simulations.
+
+35
+00:01:42,960 --> 00:01:45,520
+I feel like in data work, you know,
+
+36
+00:01:45,520 --> 00:01:48,320
+we don't see blog posts about it,
+
+37
+00:01:48,320 --> 00:01:50,120
+you don't hear about it as a tool to use.
+
+38
+00:01:50,120 --> 00:01:53,840
+And honestly, what is more normy,
+
+39
+00:01:53,840 --> 00:01:57,240
+what is more norm-conf than just like doing the same thing
+
+40
+00:01:57,240 --> 00:01:58,720
+thousands of times, and you know,
+
+41
+00:01:58,720 --> 00:02:00,560
+like I just have to do the same thing over and over
+
+42
+00:02:00,560 --> 00:02:02,200
+to figure something out.
+
+43
+00:02:03,040 --> 00:02:05,200
+So I specifically wanna talk about
+
+44
+00:02:05,200 --> 00:02:07,640
+how simulation is a powerful tool.
+
+45
+00:02:07,640 --> 00:02:09,040
+I'll like, why is it powerful?
+
+46
+00:02:09,040 --> 00:02:10,400
+It's powerful because it helps us
+
+47
+00:02:10,400 --> 00:02:13,120
+make our assumptions concrete.
+
+48
+00:02:14,280 --> 00:02:15,800
+Assumptions I have in my brain,
+
+49
+00:02:15,800 --> 00:02:19,040
+assumptions that my collaborators have in their brains,
+
+50
+00:02:19,040 --> 00:02:20,720
+how can we make it concrete?
+
+51
+00:02:20,720 --> 00:02:22,760
+How can we get on the same page
+
+52
+00:02:22,760 --> 00:02:25,280
+with people that we're working with about trade-offs?
+
+53
+00:02:25,280 --> 00:02:26,600
+You know, some of us may be thinking,
+
+54
+00:02:26,600 --> 00:02:28,320
+oh, it will be better if we do it like this,
+
+55
+00:02:28,320 --> 00:02:29,720
+it will be better if we do it like this.
+
+56
+00:02:29,720 --> 00:02:32,400
+Often there are trade-offs between those decisions,
+
+57
+00:02:32,400 --> 00:02:35,560
+and simulations help us understand what they are
+
+58
+00:02:35,560 --> 00:02:37,640
+and get on the same page with each other.
+
+59
+00:02:37,640 --> 00:02:39,960
+And ultimately simulation helps us like,
+
+60
+00:02:39,960 --> 00:02:42,520
+make better decisions by,
+
+61
+00:02:42,520 --> 00:02:44,640
+be through these kinds of various things.
+
+62
+00:02:44,640 --> 00:02:49,120
+So let, so I have,
+
+63
+00:02:49,120 --> 00:02:51,320
+one of the big projects I have been working on
+
+64
+00:02:51,320 --> 00:02:53,960
+in recent years is called Tidy Models.
+
+65
+00:02:53,960 --> 00:02:57,640
+So Tidy Models is a framework in R
+
+66
+00:02:57,640 --> 00:02:59,240
+for modeling and machine learning
+
+67
+00:02:59,240 --> 00:03:00,600
+using tidy verse principles.
+
+68
+00:03:00,600 --> 00:03:01,800
+I'm gonna show you some,
+
+69
+00:03:01,800 --> 00:03:03,600
+there is gonna be like code on the screen here
+
+70
+00:03:03,600 --> 00:03:06,160
+and it's gonna be mostly tidy models code.
+
+71
+00:03:06,160 --> 00:03:07,520
+So I'm excited for you get to see it,
+
+72
+00:03:07,520 --> 00:03:11,120
+but really this is not a talk about tidy models
+
+73
+00:03:11,120 --> 00:03:13,000
+or because what we're talking about more
+
+74
+00:03:13,000 --> 00:03:14,440
+is how to use simulation.
+
+75
+00:03:14,440 --> 00:03:16,840
+And I think the, hopefully the way we talk
+
+76
+00:03:16,840 --> 00:03:18,680
+through some of these ideas,
+
+77
+00:03:18,680 --> 00:03:20,680
+even if you use a different,
+
+78
+00:03:20,680 --> 00:03:23,680
+usually use a different framework for machine learning
+
+79
+00:03:23,680 --> 00:03:26,040
+or your data work or like different,
+
+80
+00:03:26,040 --> 00:03:28,040
+whatever language or framework you like to use,
+
+81
+00:03:28,040 --> 00:03:31,280
+hopefully this will be applicable here.
+
+82
+00:03:31,280 --> 00:03:33,760
+So let's jump in, let's jump into this question.
+
+83
+00:03:33,760 --> 00:03:36,240
+This first question, how many folds is too many?
+
+84
+00:03:36,240 --> 00:03:38,480
+This is a question about predictive modeling,
+
+85
+00:03:38,480 --> 00:03:40,520
+supervised machine learning,
+
+86
+00:03:40,520 --> 00:03:42,360
+kind of the sort of like classical,
+
+87
+00:03:42,360 --> 00:03:44,960
+I have inputs, I wanna predict outputs.
+
+88
+00:03:44,960 --> 00:03:47,440
+And the purpose of folds,
+
+89
+00:03:47,440 --> 00:03:49,080
+of making cross-validation folds
+
+90
+00:03:49,080 --> 00:03:53,840
+is to estimate the performance of a model,
+
+91
+00:03:53,840 --> 00:03:55,920
+to be able to say how well a model
+
+92
+00:03:55,920 --> 00:03:58,840
+or a model configuration or hyper parameter configuration,
+
+93
+00:03:58,840 --> 00:04:01,000
+how well is it performing?
+
+94
+00:04:01,000 --> 00:04:03,400
+So to do this, we need some data.
+
+95
+00:04:03,400 --> 00:04:04,640
+How are you gonna get this data?
+
+96
+00:04:04,640 --> 00:04:06,160
+I'm gonna talk through this talk
+
+97
+00:04:06,160 --> 00:04:08,080
+about a couple of different ways that you can approach this,
+
+98
+00:04:08,080 --> 00:04:10,800
+but one way is to use an existing function
+
+99
+00:04:10,800 --> 00:04:12,760
+that is meant for simulations.
+
+100
+00:04:12,760 --> 00:04:17,160
+These are out there, go looking for them in the frameworks
+
+101
+00:04:17,160 --> 00:04:19,800
+and languages that you're comfortable with.
+
+102
+00:04:19,800 --> 00:04:21,760
+Here's a function that simulates data
+
+103
+00:04:21,760 --> 00:04:23,160
+for our regression model.
+
+104
+00:04:23,160 --> 00:04:26,200
+It's got, down here we can see it's got 20 predictors,
+
+105
+00:04:26,200 --> 00:04:29,000
+one outcome, like the idea is we predict the outcome
+
+106
+00:04:29,000 --> 00:04:29,880
+from these predictors,
+
+107
+00:04:29,880 --> 00:04:33,240
+just like with whatever kind of regression we wanna use.
+
+108
+00:04:33,240 --> 00:04:34,800
+We can look up in the docs,
+
+109
+00:04:34,800 --> 00:04:38,760
+how the outcomes are related to the predictors.
+
+110
+00:04:38,760 --> 00:04:40,840
+And like, this is one way you can get started
+
+111
+00:04:40,840 --> 00:04:44,120
+kind of in a straightforward way with simulations,
+
+112
+00:04:44,120 --> 00:04:47,320
+especially the simulation is kind of about a general
+
+113
+00:04:47,320 --> 00:04:49,480
+kind of modeling problem or machine learning
+
+114
+00:04:49,480 --> 00:04:51,120
+kind of practice you wanna get to,
+
+115
+00:04:51,120 --> 00:04:52,920
+look for one of these functions.
+
+116
+00:04:52,920 --> 00:04:55,560
+So once we have that, we can,
+
+117
+00:04:55,560 --> 00:04:57,120
+since we're interested in how many folds,
+
+118
+00:04:57,120 --> 00:04:58,680
+we can create folds.
+
+119
+00:04:58,680 --> 00:05:03,680
+So as a very brief memory jog or reminder,
+
+120
+00:05:03,680 --> 00:05:08,160
+V-fold cross-validation or also called K-fold cross-validation
+
+121
+00:05:08,160 --> 00:05:09,880
+is where you need to take your data.
+
+122
+00:05:09,880 --> 00:05:12,600
+Remember, we had a thousand because I said,
+
+123
+00:05:12,600 --> 00:05:15,280
+give me a thousand, we have a thousand observations.
+
+124
+00:05:15,280 --> 00:05:18,080
+Let's divide this into K-folds.
+
+125
+00:05:18,080 --> 00:05:21,120
+The default in tidy models is to use 10 folds.
+
+126
+00:05:21,120 --> 00:05:23,320
+So let's divide it into 10 folds.
+
+127
+00:05:23,320 --> 00:05:26,920
+And then let's create a whole set of resamples
+
+128
+00:05:26,920 --> 00:05:29,120
+where we hold out one of those folds,
+
+129
+00:05:29,120 --> 00:05:31,240
+all the rest of them go together.
+
+130
+00:05:31,240 --> 00:05:34,560
+We train on the nine folds and estimate performance
+
+131
+00:05:34,560 --> 00:05:36,560
+from the 10 that's held out or the 100.
+
+132
+00:05:36,560 --> 00:05:41,560
+That's the 100 observations, the one fold that's held out.
+
+133
+00:05:41,920 --> 00:05:43,600
+Then we slide it down.
+
+134
+00:05:43,600 --> 00:05:44,720
+Now this one's held out.
+
+135
+00:05:44,720 --> 00:05:46,880
+We train on these nine folds,
+
+136
+00:05:46,880 --> 00:05:50,000
+estimate performance using this one held out fold.
+
+137
+00:05:50,000 --> 00:05:51,920
+And we slide on down here.
+
+138
+00:05:51,920 --> 00:05:55,160
+So that was a little reminder of what V-fold
+
+139
+00:05:55,160 --> 00:05:57,040
+or K-fold cross-validation is.
+
+140
+00:05:57,040 --> 00:05:59,840
+So how the default is,
+
+141
+00:05:59,840 --> 00:06:02,240
+how the default is 10.
+
+142
+00:06:02,240 --> 00:06:03,840
+You'll see 10 as a default a lot.
+
+143
+00:06:03,840 --> 00:06:05,880
+How do I know that's the right number?
+
+144
+00:06:05,880 --> 00:06:07,360
+So let's go through some steps.
+
+145
+00:06:07,360 --> 00:06:08,960
+So how we can find that.
+
+146
+00:06:08,960 --> 00:06:10,440
+So I've made folds.
+
+147
+00:06:10,440 --> 00:06:12,760
+What I'm gonna do now is I'm gonna fit a model
+
+148
+00:06:12,760 --> 00:06:14,000
+to these folds.
+
+149
+00:06:14,000 --> 00:06:16,920
+So I am going to fit a basic random forest
+
+150
+00:06:16,920 --> 00:06:18,400
+using all those predictors.
+
+151
+00:06:18,400 --> 00:06:19,720
+I'm gonna fit it to the fold
+
+152
+00:06:19,720 --> 00:06:21,680
+and then I'm gonna extract out some metrics.
+
+153
+00:06:21,680 --> 00:06:23,160
+Let's just use some default metrics
+
+154
+00:06:23,160 --> 00:06:26,680
+that are good for regression, RMSE and R-squared here.
+
+155
+00:06:26,680 --> 00:06:31,440
+So this is me fitting one model
+
+156
+00:06:31,440 --> 00:06:33,440
+to each of the folds 10 times
+
+157
+00:06:33,440 --> 00:06:34,600
+and getting results out
+
+158
+00:06:34,600 --> 00:06:37,840
+that tell me the performance of this model
+
+159
+00:06:37,840 --> 00:06:39,640
+with the default of 10.
+
+160
+00:06:39,640 --> 00:06:42,200
+So, but I gotta do this a bunch of times.
+
+161
+00:06:42,200 --> 00:06:43,960
+I'm gonna use simulations to do this.
+
+162
+00:06:43,960 --> 00:06:47,120
+So almost always when I'm writing simulations,
+
+163
+00:06:47,120 --> 00:06:50,600
+I start with like the small problem and then build up.
+
+164
+00:06:50,600 --> 00:06:52,920
+So let's start building up and write a function
+
+165
+00:06:52,920 --> 00:06:55,120
+that will let me do this a whole bunch of times.
+
+166
+00:06:55,120 --> 00:06:57,080
+So what this function does is first
+
+167
+00:06:57,080 --> 00:06:59,920
+it generates a new simulated data set,
+
+168
+00:07:01,200 --> 00:07:03,000
+divides that new simulated data set
+
+169
+00:07:03,000 --> 00:07:04,760
+into cross-validation fold,
+
+170
+00:07:04,760 --> 00:07:07,200
+fits this basic random forest model to it
+
+171
+00:07:07,200 --> 00:07:08,520
+and then collects the metrics.
+
+172
+00:07:08,520 --> 00:07:11,160
+And so here, what you're seeing is that I have said,
+
+173
+00:07:11,160 --> 00:07:14,320
+okay, give me a thousand rows of data.
+
+174
+00:07:14,320 --> 00:07:16,760
+What do I get if I have V equals three?
+
+175
+00:07:16,760 --> 00:07:18,640
+So before I showed you V equals 10,
+
+176
+00:07:18,640 --> 00:07:19,840
+here's V equals three.
+
+177
+00:07:19,840 --> 00:07:22,840
+So what I wanna do now is I wanna now scale this up
+
+178
+00:07:22,840 --> 00:07:25,160
+and I want to be able to test
+
+179
+00:07:25,160 --> 00:07:27,240
+lots of different kinds of values.
+
+180
+00:07:27,240 --> 00:07:28,920
+So here is where I'm gonna do that.
+
+181
+00:07:28,920 --> 00:07:32,240
+I'm gonna set up different values of V.
+
+182
+00:07:32,240 --> 00:07:34,960
+So I'm doing this from four to 24
+
+183
+00:07:34,960 --> 00:07:36,920
+and I'm stepping forward by two.
+
+184
+00:07:36,920 --> 00:07:41,120
+And I'm gonna do my simulation 100 times
+
+185
+00:07:41,120 --> 00:07:42,160
+at each one of these.
+
+186
+00:07:42,160 --> 00:07:44,160
+So at the four level,
+
+187
+00:07:44,160 --> 00:07:47,320
+I'm doing four fold cross-validation 100 times.
+
+188
+00:07:47,320 --> 00:07:52,320
+At the 24th and I'll do 24 fold cross-validation
+
+189
+00:07:52,320 --> 00:07:54,080
+and I'll do that 100 times.
+
+190
+00:07:54,080 --> 00:07:56,920
+And then I'll take these values,
+
+191
+00:07:56,920 --> 00:07:59,840
+I can map across them, applying my function
+
+192
+00:07:59,840 --> 00:08:02,120
+and then get out the metrics that I have.
+
+193
+00:08:02,120 --> 00:08:03,480
+So here is the part,
+
+194
+00:08:03,480 --> 00:08:06,360
+this is the first thing that I'm putting on the screen here
+
+195
+00:08:06,360 --> 00:08:08,800
+that actually ran long enough
+
+196
+00:08:08,800 --> 00:08:11,240
+that I might wanna like get up and do something else,
+
+197
+00:08:11,240 --> 00:08:16,240
+go check whatever social media is doing these days.
+
+198
+00:08:16,400 --> 00:08:18,800
+And so I wanna speak, I put efficient in the title
+
+199
+00:08:18,800 --> 00:08:22,520
+because when you think about simulation,
+
+200
+00:08:22,520 --> 00:08:24,600
+this is not usually something that's gonna be deployed
+
+201
+00:08:24,600 --> 00:08:27,520
+in a production environment and needs really low latency.
+
+202
+00:08:27,520 --> 00:08:29,880
+We don't need to think about efficiency in that way.
+
+203
+00:08:29,880 --> 00:08:31,800
+What you need to think about efficiency
+
+204
+00:08:31,800 --> 00:08:33,280
+when it comes to simulation
+
+205
+00:08:33,280 --> 00:08:35,800
+is how well can you use the tools that you have
+
+206
+00:08:35,800 --> 00:08:38,120
+to get going and is it,
+
+207
+00:08:38,120 --> 00:08:39,600
+like I don't think it's important
+
+208
+00:08:39,600 --> 00:08:41,600
+that a simulation is over optimized,
+
+209
+00:08:41,600 --> 00:08:44,000
+but it is able to finish in a time that is useful to you
+
+210
+00:08:44,000 --> 00:08:45,920
+on your analysis timeframe.
+
+211
+00:08:45,920 --> 00:08:47,320
+All right, so now that we've got this,
+
+212
+00:08:47,320 --> 00:08:49,560
+let's make a little bit of a visualization to see.
+
+213
+00:08:49,560 --> 00:08:51,400
+So I'm gonna focus on RMSE.
+
+214
+00:08:51,400 --> 00:08:53,280
+I could have instead chosen R squared
+
+215
+00:08:53,280 --> 00:08:54,600
+if I prefer to use that.
+
+216
+00:08:54,600 --> 00:08:59,200
+And then I'm computing the variance of the RMSE.
+
+217
+00:08:59,200 --> 00:09:01,000
+So this is the median,
+
+218
+00:09:01,000 --> 00:09:06,000
+what's about to be on the plot is the median RMSE variance
+
+219
+00:09:06,120 --> 00:09:08,440
+of these different values here.
+
+220
+00:09:08,440 --> 00:09:10,520
+And so this is what the plot that this makes.
+
+221
+00:09:10,520 --> 00:09:12,920
+So you can see, we start with high variance,
+
+222
+00:09:12,920 --> 00:09:14,360
+the RMSE that we get,
+
+223
+00:09:14,360 --> 00:09:19,240
+we don't, it has, it's jumping up and down a lot.
+
+224
+00:09:19,240 --> 00:09:22,320
+It goes down very steeply and then it starts tapering off.
+
+225
+00:09:22,320 --> 00:09:24,720
+So if I look at this plot and I kind of say,
+
+226
+00:09:24,720 --> 00:09:27,240
+oh, am I gonna look for an elbow here?
+
+227
+00:09:27,240 --> 00:09:30,440
+I'm gonna say there's an elbow maybe around,
+
+228
+00:09:32,440 --> 00:09:34,400
+maybe around 10, maybe around 12.
+
+229
+00:09:34,400 --> 00:09:37,000
+And so this is where you start to be able to see
+
+230
+00:09:37,000 --> 00:09:38,680
+what kind of trade-offs are involved
+
+231
+00:09:38,680 --> 00:09:40,400
+in any kind of decision that we may make.
+
+232
+00:09:40,400 --> 00:09:42,640
+We can look at this, talk about with our collaborators
+
+233
+00:09:42,640 --> 00:09:45,080
+and decide what kind of trade-off do we wanna make
+
+234
+00:09:45,080 --> 00:09:47,000
+between how long it takes us
+
+235
+00:09:47,000 --> 00:09:49,800
+to estimate the performance of our models
+
+236
+00:09:49,800 --> 00:09:53,280
+and how kind of like how many diminishing returns we get
+
+237
+00:09:53,280 --> 00:09:56,040
+by bumping up and up in V.
+
+238
+00:09:56,040 --> 00:09:59,080
+So we did it, I answered the question, fantastic.
+
+239
+00:09:59,080 --> 00:10:01,000
+What if you have another question?
+
+240
+00:10:01,000 --> 00:10:03,320
+What if you wanna say, so that was variance.
+
+241
+00:10:03,320 --> 00:10:06,720
+What, how does bias change as you change
+
+242
+00:10:06,720 --> 00:10:08,080
+the number of folds?
+
+243
+00:10:08,080 --> 00:10:11,120
+The answer is you should run a simulation.
+
+244
+00:10:11,120 --> 00:10:14,200
+Spoiler alert, 10 is about the right number as well
+
+245
+00:10:14,200 --> 00:10:17,960
+for bias, it gives you kind of a good balance in results.
+
+246
+00:10:17,960 --> 00:10:20,120
+What if you have more or less data?
+
+247
+00:10:20,120 --> 00:10:24,200
+So I showed you examples with a thousand data points.
+
+248
+00:10:24,200 --> 00:10:25,520
+What if you actually are using,
+
+249
+00:10:25,520 --> 00:10:26,880
+working with quite small data
+
+250
+00:10:26,880 --> 00:10:29,720
+or you have something more in the 50,000 or 100,000
+
+251
+00:10:29,720 --> 00:10:31,760
+or very large range?
+
+252
+00:10:31,760 --> 00:10:34,560
+Well, you can run a simulation and see how does it change
+
+253
+00:10:34,560 --> 00:10:36,880
+as you change the size of the dataset.
+
+254
+00:10:36,880 --> 00:10:40,120
+Spoiler alert, it doesn't really change that much.
+
+255
+00:10:40,120 --> 00:10:43,280
+Like that relationship with variance specifically.
+
+256
+00:10:43,280 --> 00:10:44,720
+What if you're gonna use a different model?
+
+257
+00:10:44,720 --> 00:10:46,480
+Like I use random forest here,
+
+258
+00:10:46,480 --> 00:10:48,840
+but there's tons of different options out there
+
+259
+00:10:48,840 --> 00:10:51,680
+that you might use in this sort of classic
+
+260
+00:10:51,680 --> 00:10:54,800
+supervised machine learning kind of environment,
+
+261
+00:10:54,800 --> 00:10:57,640
+or you could use deep learning here as well.
+
+262
+00:10:57,640 --> 00:11:00,160
+Just run a simulation and you can find, does it change?
+
+263
+00:11:00,160 --> 00:11:02,040
+What is the right answer for you?
+
+264
+00:11:02,040 --> 00:11:04,640
+Spoiler alert, this actually doesn't really depend
+
+265
+00:11:04,640 --> 00:11:05,720
+on what kind of model it is.
+
+266
+00:11:05,720 --> 00:11:07,280
+So you don't, you actually will see
+
+267
+00:11:07,280 --> 00:11:09,240
+kind of something kind of flat here.
+
+268
+00:11:09,240 --> 00:11:12,480
+What if you're interested in doing repeated cross validation?
+
+269
+00:11:12,480 --> 00:11:14,240
+This is where I do 10 fold.
+
+270
+00:11:14,240 --> 00:11:16,240
+I had like make 10 folds.
+
+271
+00:11:16,240 --> 00:11:17,440
+I go back to my initial data.
+
+272
+00:11:17,440 --> 00:11:18,760
+I make 10 folds again.
+
+273
+00:11:18,760 --> 00:11:19,600
+I go back to my data.
+
+274
+00:11:19,600 --> 00:11:20,480
+I make 10 folds again.
+
+275
+00:11:20,480 --> 00:11:23,920
+You could maybe do that like five repeats
+
+276
+00:11:23,920 --> 00:11:26,040
+of 10 fold cross validation.
+
+277
+00:11:26,040 --> 00:11:27,920
+That gives you actually 50 folds,
+
+278
+00:11:27,920 --> 00:11:30,560
+but the folds are only shuffled within each time
+
+279
+00:11:30,560 --> 00:11:31,400
+that you do it.
+
+280
+00:11:31,400 --> 00:11:32,520
+And then you repeat it, repeat it.
+
+281
+00:11:32,520 --> 00:11:35,760
+Here actually you can get to a bit of a different place
+
+282
+00:11:35,760 --> 00:11:37,360
+in terms of bias and variance.
+
+283
+00:11:37,360 --> 00:11:38,960
+So when you ran this simulation,
+
+284
+00:11:38,960 --> 00:11:40,520
+you would be able to understand,
+
+285
+00:11:40,520 --> 00:11:45,440
+okay, if I'm willing to invest five more times time,
+
+286
+00:11:45,440 --> 00:11:48,080
+computational time, what can I get out
+
+287
+00:11:48,080 --> 00:11:49,280
+in terms of bias and variance?
+
+288
+00:11:49,280 --> 00:11:51,720
+You can get out some significant improvements.
+
+289
+00:11:51,720 --> 00:11:54,080
+What if say you wanted to use the bootstrap
+
+290
+00:11:54,080 --> 00:11:57,200
+instead of V fold cross validation?
+
+291
+00:11:57,200 --> 00:12:00,120
+You can run a simulation that compares them.
+
+292
+00:12:00,120 --> 00:12:04,000
+And here again, I'll tell you a little bit of the answer.
+
+293
+00:12:04,000 --> 00:12:06,640
+It turns out that you end up with different trade-offs
+
+294
+00:12:06,640 --> 00:12:08,680
+in terms of bias and variance.
+
+295
+00:12:08,680 --> 00:12:12,200
+Bootstrap tends to be low, variance, high bias,
+
+296
+00:12:12,200 --> 00:12:17,200
+cross fold validation tends to be low bias, higher variance.
+
+297
+00:12:17,400 --> 00:12:18,520
+So, but you can find this out.
+
+298
+00:12:18,520 --> 00:12:19,840
+You don't have to take my word for it.
+
+299
+00:12:19,840 --> 00:12:21,840
+You can run a simulation.
+
+300
+00:12:21,840 --> 00:12:26,240
+Okay, so this was sort of the first question
+
+301
+00:12:26,240 --> 00:12:28,440
+and then walking through how you might answer,
+
+302
+00:12:28,440 --> 00:12:31,680
+how you might ask other questions with a similar simulation.
+
+303
+00:12:31,680 --> 00:12:34,040
+Let's walk to a different kind of question
+
+304
+00:12:34,040 --> 00:12:35,880
+away from how many folds is too many.
+
+305
+00:12:35,880 --> 00:12:40,480
+And let's ask the question, how many observations do we need?
+
+306
+00:12:40,480 --> 00:12:44,240
+So let's say you are working on some product
+
+307
+00:12:44,240 --> 00:12:45,880
+that is just newly launched.
+
+308
+00:12:45,880 --> 00:12:48,680
+And it is important to you to understand the relationship
+
+309
+00:12:48,680 --> 00:12:50,800
+with two predictors and an outcome
+
+310
+00:12:50,800 --> 00:12:53,120
+that's important to your business.
+
+311
+00:12:53,120 --> 00:12:56,600
+You though suspect or maybe know
+
+312
+00:12:56,600 --> 00:12:59,600
+that there is an interaction between those two predictors.
+
+313
+00:12:59,600 --> 00:13:04,600
+Like the value of one predictor changes the relationship
+
+314
+00:13:04,600 --> 00:13:06,800
+between the other predictor and the outcome.
+
+315
+00:13:06,800 --> 00:13:09,760
+This is called interaction in statistics.
+
+316
+00:13:09,760 --> 00:13:12,520
+And you don't know what the effect size is.
+
+317
+00:13:12,520 --> 00:13:14,600
+Let's say it comes for this new product
+
+318
+00:13:14,600 --> 00:13:16,040
+that you're like starting to roll out.
+
+319
+00:13:16,040 --> 00:13:17,240
+People are starting to use it.
+
+320
+00:13:17,240 --> 00:13:20,040
+It is important to your business to know
+
+321
+00:13:20,040 --> 00:13:23,160
+what is the effect size of this.
+
+322
+00:13:23,160 --> 00:13:26,000
+And so you are going to run an experiment
+
+323
+00:13:26,000 --> 00:13:27,520
+and you're gonna collect data
+
+324
+00:13:27,520 --> 00:13:30,360
+and build a model and understand this.
+
+325
+00:13:30,360 --> 00:13:31,800
+You know, a lot of you are probably hearing this
+
+326
+00:13:31,800 --> 00:13:34,280
+and you're saying, ah, yes, I AB test.
+
+327
+00:13:34,280 --> 00:13:39,280
+Effect size calculator, this is a power calculation.
+
+328
+00:13:39,400 --> 00:13:40,360
+If I'm asking the question,
+
+329
+00:13:40,360 --> 00:13:42,480
+how many observations do I need
+
+330
+00:13:42,480 --> 00:13:44,640
+in order to be able to do something?
+
+331
+00:13:44,640 --> 00:13:46,920
+Though all those AB test calculators
+
+332
+00:13:46,920 --> 00:13:47,760
+that are out there though,
+
+333
+00:13:47,760 --> 00:13:51,120
+they typically only work for the most straightforward case.
+
+334
+00:13:51,120 --> 00:13:53,520
+Like you're gonna do a T-test at the end.
+
+335
+00:13:53,520 --> 00:13:56,240
+If what you wanna do is some more complex kind of model
+
+336
+00:13:56,240 --> 00:13:59,120
+and you need to know how many things you have to have
+
+337
+00:13:59,120 --> 00:14:02,160
+to start with, then to be able to get the answer that,
+
+338
+00:14:02,160 --> 00:14:04,000
+to be able to find out the answer that you're looking for,
+
+339
+00:14:04,000 --> 00:14:06,560
+what you need to do there is a simulation.
+
+340
+00:14:06,560 --> 00:14:08,640
+You might call it a power simulation.
+
+341
+00:14:08,640 --> 00:14:10,760
+So let's walk through real, I'm just gonna,
+
+342
+00:14:10,760 --> 00:14:12,880
+you know, don't worry too much about the details here.
+
+343
+00:14:12,880 --> 00:14:17,520
+Do notice though that I'm writing a function from scratch now
+
+344
+00:14:17,520 --> 00:14:19,040
+to generate the data.
+
+345
+00:14:19,040 --> 00:14:21,400
+So I'm basically, what I'm doing here
+
+346
+00:14:21,400 --> 00:14:24,160
+is I'm making my assumptions concrete
+
+347
+00:14:24,160 --> 00:14:26,160
+in the way that I did, I said at the beginning,
+
+348
+00:14:26,160 --> 00:14:31,160
+I say, okay, I've got two predictors that are random normal.
+
+349
+00:14:31,160 --> 00:14:35,040
+And then I am gonna make explicit my assumption
+
+350
+00:14:35,040 --> 00:14:37,880
+about the relationships between the predictors
+
+351
+00:14:37,880 --> 00:14:40,880
+that I have in the outcomes and how they are in fact,
+
+352
+00:14:40,880 --> 00:14:42,880
+how they in fact interact with each other.
+
+353
+00:14:42,880 --> 00:14:46,200
+So this gives us, when I call it, say with these,
+
+354
+00:14:46,200 --> 00:14:50,120
+as for a given, you know, a given assumption
+
+355
+00:14:50,120 --> 00:14:53,640
+about the effect size, I can get out some simulated data.
+
+356
+00:14:53,640 --> 00:14:56,440
+So I take this function, I do something similar to what,
+
+357
+00:14:56,440 --> 00:14:59,800
+so I can run it one time, I get a data,
+
+358
+00:14:59,800 --> 00:15:01,760
+I can, you know, do the kind of model
+
+359
+00:15:01,760 --> 00:15:06,600
+that I might actually use to analyze the data here.
+
+360
+00:15:06,600 --> 00:15:09,520
+And notice, and then I can deal with the output.
+
+361
+00:15:09,520 --> 00:15:12,560
+So notice what, that here, the interaction term
+
+362
+00:15:12,560 --> 00:15:16,000
+is the effect size that I estimate from the model
+
+363
+00:15:16,000 --> 00:15:20,200
+is not very big and the P value is kind of large
+
+364
+00:15:20,200 --> 00:15:23,960
+compared to the estimates on the linear coefficients.
+
+365
+00:15:26,360 --> 00:15:28,040
+This is really common with outcome,
+
+366
+00:15:28,040 --> 00:15:29,920
+with interaction terms and why it can be,
+
+367
+00:15:29,920 --> 00:15:31,640
+you know, like it is a little more complicated
+
+368
+00:15:31,640 --> 00:15:35,280
+to be able to detect an interaction between two things.
+
+369
+00:15:36,280 --> 00:15:37,160
+I'm using, you know,
+
+370
+00:15:37,160 --> 00:15:38,880
+as a straightforward linear model here,
+
+371
+00:15:38,880 --> 00:15:40,280
+but you could imagine doing this.
+
+372
+00:15:40,280 --> 00:15:41,440
+If you're gonna take an approach
+
+373
+00:15:41,440 --> 00:15:43,480
+where you're gonna use a more complicated model,
+
+374
+00:15:43,480 --> 00:15:46,000
+like a hierarchical model or mixed level model
+
+375
+00:15:46,000 --> 00:15:47,560
+or a fully Bayesian model or something,
+
+376
+00:15:47,560 --> 00:15:49,680
+you can just put that into here.
+
+377
+00:15:49,680 --> 00:15:51,200
+So let's take these little bits
+
+378
+00:15:51,200 --> 00:15:53,640
+and wrap it up into a function.
+
+379
+00:15:53,640 --> 00:15:55,760
+So in the function, what we do here,
+
+380
+00:15:55,760 --> 00:15:59,600
+we make a dataset, fit the model, get out the output.
+
+381
+00:15:59,600 --> 00:16:04,040
+And then ask, here at the bottom,
+
+382
+00:16:04,040 --> 00:16:06,160
+what this is doing is it is saying,
+
+383
+00:16:07,200 --> 00:16:10,400
+when I say summarize, like the significance,
+
+384
+00:16:10,400 --> 00:16:11,680
+P value less than 0.5,
+
+385
+00:16:11,680 --> 00:16:16,080
+what this is saying is how often do I detect the,
+
+386
+00:16:16,080 --> 00:16:19,560
+how often am I able to detect the interaction term?
+
+387
+00:16:19,560 --> 00:16:20,880
+I'm still able to measure it.
+
+388
+00:16:20,880 --> 00:16:23,800
+And so if I run this a hundred times
+
+389
+00:16:23,800 --> 00:16:26,160
+for an effect size of 0.1,
+
+390
+00:16:26,160 --> 00:16:30,880
+or in a sample size of 100,
+
+391
+00:16:30,880 --> 00:16:33,160
+I detect it 40% of the time.
+
+392
+00:16:33,160 --> 00:16:35,560
+And that actually is exactly what power is.
+
+393
+00:16:35,560 --> 00:16:37,840
+That right there is exactly what power is.
+
+394
+00:16:37,840 --> 00:16:40,680
+So I can do it a bunch of times.
+
+395
+00:16:40,680 --> 00:16:45,680
+So I am going to try different values of effect size.
+
+396
+00:16:45,840 --> 00:16:49,560
+Maybe people have just started using this feature.
+
+397
+00:16:49,560 --> 00:16:53,160
+And so what I want to do is I want to see
+
+398
+00:16:53,160 --> 00:16:54,840
+at what point will I have to,
+
+399
+00:16:54,840 --> 00:16:56,800
+how many people will I have to observe
+
+400
+00:16:56,800 --> 00:16:59,840
+having taken this behavior to be able to detect
+
+401
+00:16:59,840 --> 00:17:01,720
+if this thing that's important to our business
+
+402
+00:17:01,720 --> 00:17:02,920
+has happened or not.
+
+403
+00:17:02,920 --> 00:17:05,320
+And also how big does the,
+
+404
+00:17:05,320 --> 00:17:09,040
+given our assumptions about how big the effect size might be,
+
+405
+00:17:09,040 --> 00:17:12,200
+again, like when will I be able to detect it?
+
+406
+00:17:12,200 --> 00:17:14,200
+So let's run this a bunch of times.
+
+407
+00:17:14,200 --> 00:17:15,840
+Let's run it a thousand times
+
+408
+00:17:15,840 --> 00:17:19,400
+on all these different possible combinations
+
+409
+00:17:19,400 --> 00:17:21,640
+of numbers of samples and effect size.
+
+410
+00:17:21,640 --> 00:17:23,480
+And so then I get results.
+
+411
+00:17:23,480 --> 00:17:26,960
+Results are, I've done a power simulation here.
+
+412
+00:17:26,960 --> 00:17:29,000
+Let's make a quick visualization.
+
+413
+00:17:29,000 --> 00:17:30,800
+And I get a result that looks like this.
+
+414
+00:17:30,800 --> 00:17:33,480
+So this is symmetric, which is good.
+
+415
+00:17:33,480 --> 00:17:34,880
+We would be really surprised
+
+416
+00:17:34,880 --> 00:17:39,880
+if the interaction term going one way,
+
+417
+00:17:40,320 --> 00:17:42,360
+we couldn't expect, we couldn't detect it
+
+418
+00:17:42,360 --> 00:17:43,240
+if it went the other way too.
+
+419
+00:17:43,240 --> 00:17:45,280
+So it's symmetric, which is very good.
+
+420
+00:17:45,280 --> 00:17:47,760
+What's on the X-axis is the effect size.
+
+421
+00:17:47,760 --> 00:17:50,480
+How big of an interaction is there?
+
+422
+00:17:50,480 --> 00:17:52,680
+When, like, how much difference
+
+423
+00:17:52,680 --> 00:17:55,040
+does the value of one predictor make
+
+424
+00:17:55,040 --> 00:17:57,280
+on the relationship between the other predictor
+
+425
+00:17:57,280 --> 00:17:58,480
+and the outcome?
+
+426
+00:17:58,480 --> 00:18:00,280
+So how big is the effect size?
+
+427
+00:18:00,280 --> 00:18:02,440
+On the Y-axis is the power.
+
+428
+00:18:02,440 --> 00:18:05,320
+So a typical statistical cutoff is 80%,
+
+429
+00:18:05,320 --> 00:18:10,320
+meaning 80% of the time I would detect a real effect.
+
+430
+00:18:10,680 --> 00:18:13,960
+And so if we say, okay, is it important to our business
+
+431
+00:18:13,960 --> 00:18:17,000
+if the effect size is less than, say,
+
+432
+00:18:17,000 --> 00:18:18,880
+point, absolute value of 0.05?
+
+433
+00:18:18,880 --> 00:18:21,040
+If the answer is no, then great.
+
+434
+00:18:21,040 --> 00:18:22,600
+You know, we don't have to worry about there.
+
+435
+00:18:22,600 --> 00:18:24,800
+But let's say we decide for our business,
+
+436
+00:18:24,800 --> 00:18:27,560
+actually, if the effect size has an absolute value
+
+437
+00:18:27,560 --> 00:18:31,280
+of greater than 0.05, then we can come to these lines
+
+438
+00:18:31,280 --> 00:18:34,640
+and we can look and say, okay, I'm gonna need, you know,
+
+439
+00:18:34,640 --> 00:18:39,640
+700, 900, 1,000 samples to be able to tell you that.
+
+440
+00:18:40,640 --> 00:18:44,320
+So this is an example of how to answer
+
+441
+00:18:44,320 --> 00:18:46,200
+a question using simulation.
+
+442
+00:18:46,200 --> 00:18:48,840
+We can make our assumptions concrete
+
+443
+00:18:48,840 --> 00:18:51,120
+and then are able to make a better decision
+
+444
+00:18:51,120 --> 00:18:52,680
+than we would otherwise.
+
+445
+00:18:52,680 --> 00:18:54,040
+All right, in my last bit of time,
+
+446
+00:18:54,040 --> 00:18:56,400
+I wanna talk about one other kind of question
+
+447
+00:18:56,400 --> 00:18:59,560
+you can answer with simulation.
+
+448
+00:18:59,560 --> 00:19:02,600
+And that is, so first we had how many folds are too many?
+
+449
+00:19:03,480 --> 00:19:07,200
+We had how many observations do I need?
+
+450
+00:19:07,200 --> 00:19:10,040
+And now how important is this relationship?
+
+451
+00:19:10,040 --> 00:19:13,000
+The code that I've shown you so far
+
+452
+00:19:13,000 --> 00:19:15,800
+is all just like really basic tidy versus tidy models code
+
+453
+00:19:15,800 --> 00:19:17,320
+that you could do in any, you know,
+
+454
+00:19:17,320 --> 00:19:20,120
+in any language that you use, you could write it out.
+
+455
+00:19:20,120 --> 00:19:22,760
+But here, this is a package that's a little bit more special.
+
+456
+00:19:22,760 --> 00:19:25,000
+It's really unique idea.
+
+457
+00:19:25,000 --> 00:19:26,640
+It's called the Nullabor package
+
+458
+00:19:26,640 --> 00:19:29,520
+and it is for graphical inference.
+
+459
+00:19:29,520 --> 00:19:34,120
+So what this means is doing statistical inference visually.
+
+460
+00:19:34,120 --> 00:19:36,680
+So let's simulate one more dataset.
+
+461
+00:19:36,680 --> 00:19:38,680
+So it also, like before,
+
+462
+00:19:38,680 --> 00:19:41,160
+is gonna have two predictors and an outcome.
+
+463
+00:19:41,160 --> 00:19:46,160
+But the relationship now here is the predictor one
+
+464
+00:19:46,160 --> 00:19:50,880
+is linear, it's linearly related to the outcome.
+
+465
+00:19:50,880 --> 00:19:54,120
+Predictor two is related with the log.
+
+466
+00:19:54,120 --> 00:19:56,960
+So it does not, so the rate of it changing
+
+467
+00:19:56,960 --> 00:19:58,560
+is very different, right?
+
+468
+00:19:58,560 --> 00:20:01,440
+I feel like in many situations of interest,
+
+469
+00:20:01,440 --> 00:20:03,280
+you end up with these log,
+
+470
+00:20:03,280 --> 00:20:05,240
+with these power law relationships, right?
+
+471
+00:20:05,240 --> 00:20:08,720
+Like with these, like power laws are everywhere around us
+
+472
+00:20:08,720 --> 00:20:09,800
+all the time, right?
+
+473
+00:20:09,800 --> 00:20:11,920
+And so this is actually a fairly realistic thing
+
+474
+00:20:11,920 --> 00:20:12,760
+that happened.
+
+475
+00:20:12,760 --> 00:20:14,760
+And so often there are these relationships
+
+476
+00:20:14,760 --> 00:20:16,360
+that are power law relationships.
+
+477
+00:20:16,360 --> 00:20:21,280
+And it can sometimes be hard to communicate to stakeholders,
+
+478
+00:20:21,280 --> 00:20:23,840
+especially less technical stakeholders,
+
+479
+00:20:23,840 --> 00:20:26,040
+what it really means when there is a power law
+
+480
+00:20:26,040 --> 00:20:27,840
+in something like, and what does that mean
+
+481
+00:20:27,840 --> 00:20:30,960
+in terms of our leverage of how easy it is to change?
+
+482
+00:20:30,960 --> 00:20:32,960
+So let's just make some quick visualizations.
+
+483
+00:20:32,960 --> 00:20:34,640
+Here's the linear one.
+
+484
+00:20:34,640 --> 00:20:36,640
+Predictor one is on the X-axis.
+
+485
+00:20:36,640 --> 00:20:38,160
+The outcome is on the X-axis.
+
+486
+00:20:38,160 --> 00:20:41,800
+We can see that sort of linear change there.
+
+487
+00:20:41,800 --> 00:20:42,880
+Here's predictor two.
+
+488
+00:20:42,880 --> 00:20:44,560
+It looks quite different, right?
+
+489
+00:20:44,560 --> 00:20:45,840
+There's the absolute value there.
+
+490
+00:20:45,840 --> 00:20:46,680
+So that's what we have.
+
+491
+00:20:46,680 --> 00:20:48,440
+We kind of see it going up in these different ways.
+
+492
+00:20:48,440 --> 00:20:51,400
+But at these values, it's like,
+
+493
+00:20:51,400 --> 00:20:54,360
+well, that one's a little more like a blob, right?
+
+494
+00:20:54,360 --> 00:20:56,120
+A little bit more like a blob.
+
+495
+00:20:56,120 --> 00:20:58,160
+So what the Null Abort Package lets you do
+
+496
+00:20:58,160 --> 00:21:01,280
+is it lets you make what's called a lineup.
+
+497
+00:21:01,280 --> 00:21:03,560
+So this is like, the metaphor here is like,
+
+498
+00:21:03,560 --> 00:21:05,280
+you've been taken to the police station
+
+499
+00:21:05,280 --> 00:21:07,840
+to go look at a lineup of possible criminals.
+
+500
+00:21:07,840 --> 00:21:12,840
+And can you identify the one that you saw before?
+
+501
+00:21:12,840 --> 00:21:14,840
+Like, is it possible for you to identify
+
+502
+00:21:14,840 --> 00:21:15,880
+the one that you saw before?
+
+503
+00:21:15,880 --> 00:21:18,200
+So the kind of lineup that I'm gonna use now
+
+504
+00:21:18,200 --> 00:21:23,200
+is a permutation under the null hypothesis.
+
+505
+00:21:23,240 --> 00:21:25,880
+So basically, what the kind of graphical inference
+
+506
+00:21:25,880 --> 00:21:29,360
+we're doing is, given the null hypothesis,
+
+507
+00:21:29,360 --> 00:21:34,360
+is the, how unlikely is the effect that we're seeing?
+
+508
+00:21:36,560 --> 00:21:38,680
+So yes, I'm talking about p-values.
+
+509
+00:21:38,680 --> 00:21:41,080
+P-values done via visualization.
+
+510
+00:21:41,080 --> 00:21:42,840
+So we're doing this simulation, right?
+
+511
+00:21:42,840 --> 00:21:43,720
+Like we've talked about before,
+
+512
+00:21:43,720 --> 00:21:47,080
+and then we're gonna get a visual p-value.
+
+513
+00:21:47,080 --> 00:21:49,960
+So let's look at this, and everyone look at it,
+
+514
+00:21:49,960 --> 00:21:51,360
+and then I'll drop a question.
+
+515
+00:21:51,360 --> 00:21:52,840
+So if you all, I'm putting this
+
+516
+00:21:52,840 --> 00:21:55,960
+in the Ask the Speakers Slack channel.
+
+517
+00:21:55,960 --> 00:21:58,640
+So if you wanna go in there and maybe thread it
+
+518
+00:21:58,640 --> 00:22:02,160
+or something, which of these do you think
+
+519
+00:22:02,160 --> 00:22:05,760
+is the real relationship?
+
+520
+00:22:05,760 --> 00:22:10,440
+Not the permuted one that was simulated, but the real one.
+
+521
+00:22:10,440 --> 00:22:13,800
+Somebody go in and put in there what they think it is.
+
+522
+00:22:18,960 --> 00:22:21,360
+I'll just wait for at least one person to go in.
+
+523
+00:22:27,440 --> 00:22:30,520
+Yes, okay, I think this one's pretty easy to find.
+
+524
+00:22:30,520 --> 00:22:31,960
+14 is the real one.
+
+525
+00:22:31,960 --> 00:22:34,560
+14 is the one that is the real relationship,
+
+526
+00:22:34,560 --> 00:22:38,120
+and the rest of them have gotten, are random,
+
+527
+00:22:38,120 --> 00:22:39,040
+are just random.
+
+528
+00:22:39,040 --> 00:22:42,840
+So if we did this over and over and over
+
+529
+00:22:42,840 --> 00:22:45,360
+with a lot of people, I actually can compute a p-value
+
+530
+00:22:45,360 --> 00:22:47,400
+with that because there's 20 here,
+
+531
+00:22:47,400 --> 00:22:49,480
+like we can do this kind of thing.
+
+532
+00:22:49,480 --> 00:22:50,760
+Let's now look at the next one.
+
+533
+00:22:50,760 --> 00:22:53,120
+So this is the second predictor.
+
+534
+00:22:53,120 --> 00:22:54,880
+This is the second predictor here.
+
+535
+00:22:54,880 --> 00:22:59,880
+Let's permute it, and let's see whether we can see it or not.
+
+536
+00:23:00,320 --> 00:23:01,800
+So here is the second one.
+
+537
+00:23:01,800 --> 00:23:05,320
+So let me just put this in here.
+
+538
+00:23:05,320 --> 00:23:07,680
+So which one in the lineup here do you think
+
+539
+00:23:07,680 --> 00:23:11,760
+is the real one versus the permuted random one?
+
+540
+00:23:17,400 --> 00:23:19,080
+So take a look.
+
+541
+00:23:19,080 --> 00:23:21,040
+I think this one's harder.
+
+542
+00:23:21,040 --> 00:23:25,440
+I think this one is harder, but still possible.
+
+543
+00:23:25,440 --> 00:23:27,800
+I think this one is harder, but still possible.
+
+544
+00:23:30,320 --> 00:23:32,800
+And if I actually bump the standard deviation
+
+545
+00:23:32,800 --> 00:23:34,400
+up a little bit, you would actually not be able
+
+546
+00:23:34,400 --> 00:23:35,400
+to see it at all.
+
+547
+00:23:35,400 --> 00:23:36,680
+Like literally, there would be no way
+
+548
+00:23:36,680 --> 00:23:38,960
+to be able to tell this.
+
+549
+00:23:38,960 --> 00:23:40,760
+But yes, yes, that's right.
+
+550
+00:23:40,760 --> 00:23:43,240
+So this one is still two, which means it is actually
+
+551
+00:23:43,240 --> 00:23:45,720
+probably still statistically significant,
+
+552
+00:23:45,720 --> 00:23:48,960
+and we can, like that it is different from random,
+
+553
+00:23:48,960 --> 00:23:50,400
+and we are able to see it.
+
+554
+00:23:50,400 --> 00:23:55,400
+So what this, this is an example of a way to use simulation
+
+555
+00:23:55,760 --> 00:23:58,960
+with relationships that you may have in your real data
+
+556
+00:23:58,960 --> 00:24:02,360
+to be able to understand how important they are,
+
+557
+00:24:02,360 --> 00:24:05,720
+be able to, and in a way that is very accessible
+
+558
+00:24:05,720 --> 00:24:10,720
+to people that you may need to communicate with about this.
+
+559
+00:24:10,800 --> 00:24:12,680
+It's a really helpful exercise.
+
+560
+00:24:12,680 --> 00:24:16,320
+So like the rest of them, what that shows us
+
+561
+00:24:16,320 --> 00:24:19,480
+is how simulation can be this really powerful tool
+
+562
+00:24:19,480 --> 00:24:21,080
+to help us do these things.
+
+563
+00:24:21,080 --> 00:24:24,760
+We are able to get out of our heads
+
+564
+00:24:24,760 --> 00:24:27,880
+and our collaborators' heads and into code,
+
+565
+00:24:27,880 --> 00:24:29,680
+you know, the assumptions that we have,
+
+566
+00:24:29,680 --> 00:24:31,880
+we're able to talk about trade-offs,
+
+567
+00:24:31,880 --> 00:24:33,800
+see what the trade-offs really are,
+
+568
+00:24:33,800 --> 00:24:35,840
+and ultimately make better decisions.
+
+569
+00:24:35,840 --> 00:24:38,960
+So we're, I think almost all of us here are like data folks,
+
+570
+00:24:38,960 --> 00:24:42,040
+right, and usually we try to use data to make decisions.
+
+571
+00:24:42,040 --> 00:24:45,680
+So I think, again, I think there's almost more,
+
+572
+00:24:45,680 --> 00:24:49,160
+nothing more like in the norm-conf ethos
+
+573
+00:24:49,160 --> 00:24:51,560
+than to say like, oh, I don't have any data
+
+574
+00:24:51,560 --> 00:24:55,320
+to make this decision, I will just make some up.
+
+575
+00:24:55,320 --> 00:24:56,760
+But I think it's a sign of health
+
+576
+00:24:56,760 --> 00:24:59,920
+and a sign of using a tool that's available to us
+
+577
+00:24:59,920 --> 00:25:03,080
+to be able to do that, to be able to generate data
+
+578
+00:25:03,080 --> 00:25:05,880
+that helps us understand about trade-offs
+
+579
+00:25:05,880 --> 00:25:07,480
+and make things concrete.
+
+580
+00:25:07,480 --> 00:25:11,720
+So with that, I will say thank you very much
+
+581
+00:25:11,720 --> 00:25:36,720
+and see if we have any questions we wanna chat about.
+

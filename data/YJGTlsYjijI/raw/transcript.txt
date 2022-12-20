@@ -1,0 +1,373 @@
+Hello, everybody.
+Hello, NormConf.
+My name is Peter.
+And as was just mentioned, it's all about cost.
+This talk is about how to think about machine learning products specifically from an engineering
+perspective to try and save money.
+So first off, who am I and why am I talking to you today?
+Well, my name is Peter Sobot.
+I'm a staff machine learning engineer.
+By day, I work on audio-based machine learning for all sorts of interesting purposes, trying
+to tell people how happy songs are or how energetic songs are and doing all sorts of
+cool stuff with data and music like that.
+If you've been online on Twitter and you do audio-based machine learning or anything to
+do with audio, you may have seen one of the packages that I work on called Pedalboard
+for doing nice stuff with audio in Python.
+But today, I'm not talking about any of those specifics or what I actually do day to day.
+Today I'm focusing on how I tend to apply engineering principles to the world of data
+science and machine learning so that we can deploy things to millions and millions of
+users without breaking the bank.
+And I really want to focus on this word engineer first, because this is really where I'm coming
+from.
+I don't consider myself a data person or a data science person or anything like that.
+I've been working in machine learning for years now and I have a good grounding in it.
+But what I really come from, my background is really more in what I would call traditional
+engineering.
+I was educated as an engineer, as a software engineer technically, but still at a school
+that really focused on things like engineering for bridges and engineering for roads and
+engineering for all these big structures that humans have been building for hundreds of
+years.
+Now, how does this relate to data science and machine learning?
+Well, engineering is really all about building systems that are scalable, reliable, and come
+within cost and budget and things like that.
+And the reason it's treated as a separate discipline or it's something that people give
+a name to is really that these systems fail over time.
+And over the past couple of hundreds of years, many of these engineering systems have failed
+and we've learned terrible lessons about that.
+The bridge you see on the screen here is not actually just any bridge, but it's a bridge
+called the Quebec Bridge in the Canadian province of Quebec.
+And it fell down twice during construction.
+And we have this bridge to thank, or specifically the negligence of its engineers for what we
+call modern engineering today.
+So if you've ever heard of some engineers having licenses or being professionally regulated
+or being members of professional organizations, specifically outside of tech, this is very
+common.
+And that's because this bridge failure and the corners that were cut during this bridge's
+construction really started the process of having engineering being more regulated and
+being treated like a very serious profession in a way.
+Fun side note, if you're a Canadian engineer like I am, when you graduate, you get a ring
+from this bridge or supposedly made from the iron of this bridge to remind you every time
+that you sign your name to a document, the bridge fell down, make sure you're doing this
+right.
+But I digress.
+This bridge really fell down because corners were cut and constraints for the problem were
+not well observed.
+Engineering fundamentally is about building the best thing that you can, given the constraints
+of the problem itself.
+And many of these constraints are kind of obvious.
+So you've got things like safety and reliability.
+You want anything you build to be safe and reliable.
+And others apply to really any project, not just engineering projects like time and cost,
+right?
+We don't have infinite time to build a system.
+We don't have infinite budget to build a system either.
+So this brings me to the way that I think about engineering in general, and this applies
+to machine learning just as much as it applies to bridges.
+One can build a bridge that stands, but it takes an engineer to build a bridge that barely
+stands.
+And this seems kind of flippant, and it is.
+But what this really means is it takes an engineer to build a bridge that is cheap enough
+so that it barely stands, right?
+It takes an engineer to build a bridge that meets the design criteria in such a way that
+it fulfills all of the things that we need to fulfill, right?
+It's not over budget.
+It doesn't take forever to build.
+And we can do it without bankrupting the town that asked for the bridge or the company that
+asked for the software to be built.
+In this case, think about the fact that the Romans built bridges thousands of years ago
+that still stand today, but they were extremely expensive even by their standards.
+And today we wouldn't do the same thing because we have costs to think about.
+So to finish off this little tangent about engineering and kind of where I'm coming from
+here, I want to compare two different fields of engineering, and that is civil engineering,
+where we're building bridges and software engineering, where we're building, well, software.
+And that includes data systems and ML systems and whatnot.
+In both of these fields, one of the most important choices you get to make when you're starting
+a project is what material to use or what tools with frameworks and so on to use.
+In civil engineering, this might be what you literally build your bridge out of.
+In software engineering, this might be what framework do you choose or what language do
+you use or things like that.
+And these all have different trade-offs and different costs and different amounts of performance
+you can get from them.
+In civil engineering, you might build your bridge out of wood, and that's great.
+It's plentiful.
+It literally grows on trees.
+Everybody knows where to get wood from.
+And in software engineering, the analog might be something like JavaScript.
+It runs everywhere.
+Seemingly, everybody can write JavaScript.
+It's very, very common.
+It's cheap to build, but it might not be as powerful as you want it to be, or it might
+not be able to do certain things that you want your software to do.
+In civil engineering, you might use iron if you want to build a bridge that's a bit more
+sturdy than your wooden bridge there.
+And in software engineering, maybe you would choose Python.
+Again, a little bit more expensive, maybe sometimes harder to build, but gives us more
+performance.
+Continuing down the list, you might use steel to build your bridge if you really want something
+that is very performant or very sturdy.
+And in software engineering, maybe you want to rewrite your code in C++ if you want to
+make it even faster to run or to run in certain scenarios where Python is just too heavy or
+too slow, but it takes a lot longer to write your code, so it's more expensive.
+And then continuing to the very bottom of the cost here, I guess the most expensive
+options.
+In civil engineering, there are new materials that people are using all the time, one of
+which, for example, might be carbon fiber.
+You wouldn't build a whole bridge out of carbon fiber.
+That's quite expensive to do.
+But for certain applications, carbon fiber really gives you a lot of strength and it
+can do things that other materials cannot do.
+And the equivalent here in software engineering, in my opinion, is machine learning.
+It's like the carbon fiber of bridges.
+You don't want to build an entire bridge out of carbon fiber.
+You wouldn't want to build your entire project out of machine learning, but it's got some
+very, very nice properties.
+And if you're willing to pay for it, it can do some things that other materials cannot.
+So if machine learning is the new expensive tool that everybody wants to use, then how
+can we use less of it in order to save money?
+How can we still get the benefits of machine learning, but not have to put it everywhere
+in our product and use it as minimally as possible to still make it economical to deploy?
+That's basically the entire point of my talk today.
+So let's dive into this.
+Congratulations.
+You and I, everybody on this call, we all now work at a new company.
+And this company is called VideoChat Inc.
+It's actually the video conferencing platform that we're using right now to host this conference.
+And it's how you might talk to your coworkers every day.
+This fictional company is the world's most popular video conference platform.
+And we are engineers or data scientists or machine learning people on one of its engineering
+teams.
+And we've been tasked with building interesting new features for VideoChat.
+One such new feature just came on our desks right now.
+And it showed up as this RFC.
+The business people and product people at VideoChat Inc. want us to build a coffee brand
+detector.
+Now what that means is they want us to build a system such that on each video call, VideoChat
+Inc. can automatically detect the brand of coffee that shows up in video calls and then
+automatically put a button on the screen so users can reorder their coffee and stay caffeinated
+without even leaving their seats.
+Sounds like a pretty lofty idea, but it also sounds like something that isn't impossible
+to build.
+So we might as well get started here.
+Now, if you're a machine learning practitioner, as soon as you see something like this, you
+might start to think of ways to implement it.
+You might jump in and say, well, I could use an object detection model.
+I could use PyTorch Vision or ResNets or any things that you've seen online or in the community.
+And that's great.
+But coming from an engineering perspective, that's like someone telling me to build a
+bridge and me saying, well, I'd love to build that bridge out of wood, even though I don't
+know which river it's going to cross or how many people need to be on top of it.
+We don't need to use our tools anywhere near this point in the process.
+We should instead figure out what this project needs and what the requirements are.
+So let's do that.
+Let's say that we've worked with the product team and the business team to figure out the
+actual needs here.
+And we've come up with a list that we can use to start building.
+This does sound kind of waterfally and less agile, maybe.
+But for a big project like this, we need at least some guidelines to work within.
+So we've come up with these requirements and I've split these requirements into two different
+lists.
+Now they're in two different lists because this is a technique that comes from more traditional
+engineering.
+We've got one list called functional requirements and another called non-functional requirements.
+Now the functional requirements are things that we need to make the system work in the
+first place.
+Right?
+So this functional requirements list is how we judge if the system is done, if it's been
+built yet.
+And then non-functional requirements are ways that we can evaluate how well we did or the
+quality of the final system.
+So regardless of if it works, was it cheap enough for us to build or is it fast enough
+if it's a software system, stuff like that.
+So our fictional system here is going to have a couple of functional requirements.
+We need to be able to detect the top 10 most popular coffee brands that show up in people's
+video calls.
+We also want to be able to detect the brand of up to 1000 users of the system per day.
+So that's our load.
+That's kind of our scope here.
+And then also our system must have a precision of at least 99% and a recall of at least 90%.
+So these numbers are kind of just picked out of thin air, but we can try to build a system
+that does have these numbers.
+And then for non-functional requirements, well, we want the system to cost less than
+$100 per day, which is quite tight time bound or sorry, quite a tight cost bound.
+But we definitely want to make sure that we respect that because that's going to determine
+if we can deploy this or not.
+And the system must provide data by the end of each day.
+So it doesn't really matter exactly how quickly or how slowly it works as long as we give
+the results to the business about the end of each day.
+So with those requirements in mind, let's do some engineering.
+So big disclaimer first, the following calculations are incredibly oversimplified to make a friendly
+and digestible point in a 20 minute talk.
+Do not depend on these numbers.
+You might find bugs in them.
+You might find miscalculations.
+But given that, please continue to suspend your disbelief for the rest of my talk here.
+So following from Joel's talk that you just heard from, let's start with the simplest
+thing that might possibly work first.
+Let's have a tip number one at the bottom of the screen here.
+Let's just run machine learning on every single frame of the video we get in real time.
+So we get frames coming in from our customers, just like what you're seeing right now.
+Some of these frames have coffee cups in them and others don't.
+And let's say we pick an object detection model off of GitHub.
+Someone's already pre-trained one for us and it has the required accuracy that we're looking
+for.
+Let's just run that on every single frame of video in real time and take the outputs
+and put them into some sort of aggregation tool for later.
+Now I'm going to do a bunch of back of the envelope calculations here on the left hand
+side and I'm going to fill up with a bunch of numbers, but don't be too scared.
+I'll talk through every single number as we go through.
+We know our daily compute budget is $100.
+So that's what we want to be underneath here.
+And we know we get in 30 frames per second of video from each user.
+We also know that this PyTorch model we have here, well, let's say we've measured it and
+we found that there's a certain number of floating point operations we need to do in
+that model to process each frame.
+From our measurements, that turns out to be about 40 billion floating point operations,
+which sounds like a lot and kind of is a lot, but multiplying these numbers out tells us
+that we need about 1.2 teraflops per second of computing power to process these videos
+in real time and give us results.
+That's actually kind of doable on modern GPUs.
+This is not too out of the ordinary.
+Then we also know we have a maximum daily load of 1 million users.
+We know that we have about four hours of daily usage per user.
+People are on this app all the time because they talk to their coworkers and they spend
+half their days in meetings, or at least I do.
+And then that multiplied out means that our daily hours of video is 4 million hours per
+day we need to process.
+So that's quite a bit of video.
+Then multiplying that by the number of teraflops per stream, well, that means we need 17.3
+zeta flops or zeta flops.
+I don't know how to pronounce this number, but it's a lot.
+And we're going to have to use that to estimate our cost here.
+So let's say we have GPUs available in our cloud of choice and we're using the cloud
+here.
+The number of GPUs available per GPU turns out to be 8.7 teraflops and dividing those
+two numbers, we need 551,724 GPU hours per day to make this work.
+That sounds like a lot, but let's suspend our disbelief here and say that we can get
+that amount of GPU capacity and we just have to pay for it.
+Looking at our price sheet here, let's say our cost per GPU hour is 45 cents.
+And that means our total daily compute cost is only $248,275 per day.
+That's a quarter million dollars per day.
+I don't know about you, but that's not viable for any environment I've ever worked in.
+And if I presented that to the folks who asked for a product like this, they would probably
+laugh me out of the room and find a engineer who can build a system that actually works.
+So let's see which numbers that we can change here.
+What can we look at to make this system cheaper without sacrificing our functional requirements
+like our accuracy and our load and such like that?
+Well, to start with, we have the number of frames per second that we're processing here.
+We're processing every single frame of video right now.
+So attempt number two might be something as simple as just run the ML on fewer frames,
+right?
+Just run ML on some of the frames.
+Don't even change the model just yet.
+Let's just sub-sample the stream.
+And I know this is a big if.
+We don't actually know if this is going to work, but I'm going to guess that if you're
+drinking coffee, you can't raise the coffee cup to your mouth and take a drink in less
+than 1 30th of a second.
+It's going to take longer than that for you to actually take a sip of coffee.
+So this assumption might have to be tested offline, but let's say let's run with it.
+This reduces our frames per second to one frame per second.
+And then our per stream compute is now 30 times lower.
+So only 40 gigaflops across our entire user base.
+The number of daily flops required is a much more pronounceable 576 exaflops.
+And that means the number of GPU hours required is actually within the realm of possibility.
+We only need 18,400 GPU hours, which could be done with a large GPU cluster maybe.
+And at the cost of 45 cents per GPU hour, this only costs $8,280 now.
+So we're down from a quarter million dollars a day to just less than 10,000, which is still
+quite a lot and almost 10 times our budget, but it's gone from being completely unenviable
+to maybe we could kind of do this, but let's keep going.
+What else can we do to make this cheaper and find a solution that optimizes for all of
+our constraints?
+Well, let's take a look at the number of floating point operations per frame that we're running
+here.
+We've got this PyTorch model that we pulled off the internet.
+It works, but can we make it faster?
+Can we make it smaller?
+And this is where I'm going to, I know this is Norm Kant, we're not talking about papers,
+but I'm going to show a paper on the screen.
+I'm so sorry.
+One second here.
+It'll be only up for a second.
+Don't worry.
+So this is a paper from Google from 2017.
+It's called MobileNet and it presents a class of efficient models called MobileNets for
+mobile and embedded vision applications.
+Now, what these researchers have found is they can change the model architecture they
+use for object detection and spend one 10th of the computing power for only a small drop
+in accuracy of a couple percentage points.
+If we use this architecture or any similar cheap architecture to run our model, we can
+potentially get huge gains in cost or huge savings in cost without significantly affecting
+our performance.
+So let's do that.
+Let's say that we've retrained our model.
+We still have video coming in here, but let's retrain this model with a more efficient architecture.
+Now let's deploy this with something a little more optimized for cost.
+Let's maybe use TensorFlow Lite and let's deploy this as a MobileNet on our back ends
+here.
+And each frame of video is still giving us the same outputs, but we only need to spend
+4 billion flops per frame instead of 40 billion.
+That reduces our per stream compute to 4 gigaflops per second, which is much more manageable.
+Again, now by a factor of 10, our daily flops required is 57.6 exaflops, much better.
+GPU hours is now only 1,840, and that means our total daily cost is $828, which again,
+still a lot, still almost 10 times our cost budget, but we're getting really close here.
+Our viability is, you know, within a stone's throw from what we've got now.
+But what can we do next?
+What's the next thing we can turn to?
+Well, I see one number in this list that's a little bit suspect, and that's the number
+of floating point operations that a single GPU can do.
+This number seems low to me because GPUs get more powerful every single year.
+And if we were to simply upgrade to more expensive, more modern GPUs, we might be able to get
+much more performance per dollar here.
+So let's try that.
+For attempt number four, let's use more cost effective GPUs.
+And if I pick the most advanced GPU on the shelf right now, I can get 312 teraflops per
+second instead of 8.7 per GPU.
+And that means we only need 52 hours of GPU time per day instead of those thousands we
+had before.
+Even though these GPUs are more expensive at $2.93 each rather than what they were before.
+And this reduces our cost even more.
+This means our total daily compute cost for all this GPU time is only $152.
+Which is great.
+This is amazing.
+This is only 52% over budget, which for many engineering projects would be a slam dunk,
+a huge success.
+But we can go even cheaper.
+What do we do to get down from $152 to almost $0?
+Well, I have a proposal here.
+What if we take this model we have here and we were to make an even cheaper model, even
+faster model that is way, way, way less accurate.
+I know we have accuracy bounds.
+We want a certain amount of precision and recall here.
+What if we retrain this model, use some transfer learning and build our own copy of it?
+That is wrong a lot of the time.
+We can get our per stream compute numbers down here by a huge factor if we just pre-filter
+some of our data and only deploy our more expensive model on frames that were reasonably
+certain already contained coffee cups.
+So let's do that.
+For attempt number five here, let's use a two-stage model architecture.
+So let's take our original model.
+Let's retrain it so that it gives us a huge amount of recall.
+It catches almost all the coffee cups that do show up in frame, but it's not very precise.
+Sometimes it'll think that a cell phone is a coffee cup rather than an actual coffee
+cup or a cell phone.
+But this model here is much cheaper.
+It only requires 100 megaflops per second, and it could even run on CPUs, which is great.
+So we're almost done here.
+Let's take this and drop this into temporary storage.
+So the outputs of this model go in there, and then we run a batch pipeline and then
+drop the results into mobile net.
+And then there we have our full precision output.
+If I race through all these numbers here, because I know I'm almost out of time, this
+reduces our cost all the way down.
+We only need to run our heavy model on 0.0001 frames per second.
+Our offline computing power is in the kiloflops instead of the teraflops.
+And multiplying all the numbers out, we get to $0.01 or one cent.
+Of course, I'm ignoring a bunch of overhead here, but we're pretty much good to go.
+And that's all I've got.
+We talked about five things, how to do the simplest approach first, how to process less
+data, how to make our model smaller, how to use more efficient hardware, and then finally,
+how to split up our model and use cheap ML to pre-filter our data before applying the
+heavy ML.
+And thanks so much for listening.
+I'll stick around for questions, but that's my talk.
+Thanks, NarmConf.

@@ -1,0 +1,163 @@
+My name is Helena Seren. I live in New Jersey. I'm a ceramic artist and I live with my rescue
+dog, Cumin, my three GPUs, and my husband. And today I'll be talking about game of construction.
+Construction is a metaphor for art making by Pollock and he famously said, it is all
+a game of construction. Some with a brush, some with a shovel, some chose a pen, and
+some of us choose neural networks to do our art. But the first question, what makes me
+a ceramic artist now qualified for talking at a male conference? I will say that recently,
+not recently, a couple of years ago, I discovered this magical word, Kugei. And it means craft
+in Japanese, but literally it means engineered art. And since then I'm calling myself engineering
+artist. And as a Kugei practitioner, it was my whole life when I was coding the low level
+protocols in telecom, when I kind of expanded into machine learning seven years ago, and
+when I'm now a practicing artist making art for a living for the last almost four years.
+So Kugei is our word here. So, and I'll be talking about creating art, making art in
+the intersection of art and technology. So technology is our tool for us engineering
+artists. And it's not only with AI, it's basically for the last maybe century, it's even accelerated
+where technical invention brought the new art form. So we can pinpoint this in like
+history of art is like prints, then photography, cinema, computer arts, and now AI kind of
+like burst into the scene big time. So I work with generative adversarial networks. I mean,
+up until prompt-based AI came into the picture, I would say like AI interchangeably with GANs.
+Now I need to qualify that I work with GANs mostly. So the base recipe, I work, first
+of all, I work with my own data sets. I collect them. I make photography or I use my digitized
+sketches. So here is like my famous vegan model, which I took like salad leaves at the
+beginning of COVID basically sitting at home in lockdown. So I took, like I made two salad
+leaves, 2000 pictures of lettuce in like on my force for two days, making pictures in
+the light box of few boxes of whole food, organic, clean lettuce leaves. And I trained
+the network StyleGAN and it started after like few days of training, it started generating
+this, creating this generative produce, what I started calling after that, like Entusys.
+So this talk, I'm quoting a lot of, is a culture trash and I'm like always into quoting. And
+I think this quote by Carpate is really kind of like relevant for artist engineers who
+like team caring. So basically training your network is you sitting through the like days
+and nights watching your model kind of making stuff, saving checkpoints. And the difference
+may be with like researchers or scientists who work with neural networks. My loss functions
+are more kind of like wandering functions. I mean, I don't kind of care for particular
+loss. I care more about visuals and that's why I'm glued to the screen because I need
+to see like particular checkpoints where I kind of discover some gem. And I used to call
+training networks is my meditative regime, breathing in and out with the loss function.
+So but basically it's like a game of curation. I mean, a lot of this and for practitioners
+being them engineers or artists is just like you curating your results. And that's why
+I have this famous Burrows quote because you need, I mean, in any art form, you kind of
+like do sketches, you do a lot of curation. It's not kind of like particular to making
+art with the eye. But also I think it's like a great tool of honing your visual perception.
+I mean, I kind of like some of my early work is a cringe, but some of them is sort of like
+you know, looking at the world like a child and spoiled and in awe of what you see. And
+this is one of my basically one of my first publicly shared pieces, which I'm still very
+proud about. So game of subversion. I keep saying that, like, in a sense, us working
+with the same networks that researchers work, it's a little bit kind of like subverting
+what the model do. Because if researchers, their goal at large, getting to some digital
+correctness, in my case, is more like seeing interesting and novel and exciting stuff.
+So that's why maybe nobody cares about like first cycles of training. But for me, and
+this is a picture on the left, the fleeting beauty of early iterations. But also like
+when you get to like beyond the expiration date, I mean, I have some models on the right
+you see the example of model drop, of mode drop, where I trained basically the network
+for almost like two years on and off. Yeah, and this is the network that was trained on
+my sketches. But also one of the technique I used a lot after I kind of like passed this
+excitement of like something in something out, I started building the pipelines. So
+kind of like one of the example of like poor woman super resolution where I sort of like
+trained the next network or the result of the previous one, just getting to the resolution
+which I wanted or needed because like the initial result was like 256 by 256. So I love
+this quote by Carpati, who said, it is not a single model, it's a beautiful composition
+of many sub models. That's how my pipelines look because I have like about 100 models
+that I use practically all the time. Another thing that happens is like you make art in
+on the limitations of your medium. So early on, like again, to overcome this problem of
+low resolution, I started working with the grid. And for me, it became like a neural
+aesthetics in a sense. So I could have like interesting images and augment them or kind
+of like make them bigger by employing the grid approach. And then I was surprised where
+like famous artist Jack Whitten called this the grid is a DNA of visual perception. It's
+an amazing quote. I didn't think in this terms, but that's what it is. Another thing like
+again, like playing this subversion game, people who worked with neural networks early
+on remember this like problem of checkerboard. So kind of I jokingly started calling this
+checkerboard amplification series. So it's kind of like post-genism. I started writing
+a lot of like Python scripts, just doing like this computational grids playing with a few
+kind of like digital collaging and stuff. So that's how this series of non-pintilism
+and checkerboard amplification series were born. Another thing like for a couple of years,
+I worked with my sketches and it's resulted in this, what I call carvings of Latinsco,
+riffing on the Lascaux caves where like caveman's like our predecessors in a sense drew on the
+cave. So I think like we early AI practitioners drew our part on this Latinsco caves. But
+also I like this quote by Linda Berry who said like take advantage of basic human inclination
+to find meaning in random information. So basically the semi abstract output of the
+early models invited this kind of like planning and gameplay. And I worked with it a lot.
+I mean, I kind of like, it's sort of like honing your verbal perception or your kind
+of like pun mechanism. This is kind of like controversial, but for me it's very important.
+I kind of like burnt a lot on this. So when like almost everybody, I started with AWS
+of course, but then when I like five, six years ago started training on my own art,
+I decided I need my own setup. Not only because I didn't want to move like my data all the
+time back and forth and forgetting to disconnect the volumes. I decided I basically want my
+own rig. And I started with the GTX, GeForce like 1060, I think. And then kind of people
+of Nvidia gifted me with this quadro. And like I say, GPU is a girl best friend, of
+course. So now I have like this small stable of GPUs. And like, since I sort of like make
+this phrase in the different applied arts, I last year I kind of got my own kiln and
+I have like other kinds of stuff. And it's not about bragging. I mean, it's like printing.
+I used to print a lot and like outsourcing, it's a pain and you pay dear because first
+of all, in quality, because you can't control this. And another kind of like you pay money
+for food to people which you can kind of like not pay and make your art more affordable
+in a sense. So this was my star slide in every talks for the last like three years. And it
+sort of became obsolete with like prompt models and I'll explain why. So in a nutshell, what
+I was talking about here and it was relevant when like for training on your own data. So
+the more you own and the more you curate your data, the more original you are. So like in
+the origin of this chart, you have the less original art. So it's like art breather and
+first kind of like public trained applications. But then like prompt text to image applications
+came into for this year and we all basically gathered around this push the button thing.
+And this is like I thought I looked at this slide and thought like maybe it's not relevant
+anymore. And then I think this Z-axis with ideas and I think like since when you can
+find them, they join them. So we are all in the realms of this prompt models. I mean,
+it's inevitable and this is something the reality that we can't deny. So I think it's
+still kind of like relevant graph, but with more access, how ideas become more and more
+important. So that's probably again, I mean, something that take away from here. So to
+finish this part is just how I see this AI artist or basically any artist who works with
+like technology. So you're basically curiosity driven. I mean, it's like the world of what
+ifs you try this. I mean, what if I kind of like make this data set or this data set?
+You improvise on the spot. You see your model behave this way. You kind of like encourage
+it to do it or kind of like do something else. You are very attentive and good listener because
+I think like patience is a very important trait for working with technology. You need
+to be attuned to what you do, but you also need to like tinkering. It's a lot of tinkering
+when you write your code, whatever like AI or any other thing. So creative coder goes
+without saying. You make your own tools. I mean, the less applications you use, the more
+interesting you are. It's not guaranteed, but still kind of like a precursor. So collector
+process oriented, we already talked about this meditative qualities of AI training.
+Collector, I mean, I basically save everything. I mean, you never know. I mean, whatever,
+checkpoints, like outputs, you never know what you can use. I used to kind of like pre-curate
+them. Then I stopped doing it because something that looked like a junk two years ago, all
+of a sudden becomes trash right now. So you never know your perception changes, the tools
+you're working with changes. So a lot of like dynamics. Also easily excited and easily bored.
+I mean, because we work with novelty tools, you move around a lot. So you get excited,
+you try it. I mean, you maybe need to stay with certain kind of like stuff for a while
+to see. So you're not jumping from thing to thing like without giving it a chance to express
+itself. And also I think it's very important not to be precious about your work. And of
+course, having a good sense of humor helps. I mean, because it kind of like helps with
+the frustration, but also kind of like because AI is still kind of goofy often. So in the
+next like five minutes that left, I'll talk about projects that I worked at. And I mean,
+neural bricolage manifest, like I keep asking, getting this question, what bricolage means.
+And neural is kind of like comes from neural networks, but bricolage is basically making
+useful and beautiful out of heap of latent space. I mean, this is how I kind of like
+riff on the definition. And my art is for people. So again, like artists, some artists
+say, oh, I will create because it's like I create for myself. There is a part of this,
+but they make stuff for people. Without people, I would be just curl in the armchair and just
+reading stuff. So a little bit of like, this is like mandatory milestone line. And how
+I call myself like taking this expression from my friend. So I basically awkwardly stuck
+between digital and analog. In fact, I was very surprised when somebody like three years
+ago called me a digital artist. I never consider myself being it. Digital was always means
+to an end and then being like projects I discuss right now. So I mean, I try to kind of like
+do interesting stuff, different stuff with the output. So I went through the period of
+printmaking, silkscreen, cyanotype. Then I started making the artist books because it's
+so kind of like I love books and I think it's like everybody needs to make at least like
+one book in their lives. So the first book was like a religious trope on like this Genesis
+play. And it was like small, all my books are self-published. So this was like my first
+books with the latent doodles. Then I think it's very important to have like collaborations
+with like artists. I'm very independent, but still I believe like when you find the great
+collaborator is just like amazing. So in this case, Dmitry Chernyak, a generative artist
+created for me the training data sets with 3GS. And then I trained like 17 models total
+and so like from scratch. And that's like on the right, the results that we are publishing
+the book is coming up soon. So another kind of collaboration is the book of vegan was
+just published with the amazing food writer, Kate Ray, who wrote recipes for this book.
+I'm very proud. I designed this book from scratch. It's like I went overboard. It's
+150 pages thick, but still this is what it is. And like we discussed, I'm in the pottery
+for this year. And my first foray with generative pottery was like a couple of years ago. And
+I liked this like riff on pottery baron, which became pottery again. And yeah, I mean, then
+I kind of like stumble on a learning curve because it's a slow process. I'm kind of like
+all over the place person. So ceramics was not that, I mean, it was tough. But again,
+COVID and stuff sort of slowed me down. And I think like this time I'm ready. And basically
+I have my first fruits of my kiln coming out. And again, in a nutshell, it's something that
+I use again outputs to kind of like go through the convoluted process of printing 3D, you
+know, molds, then pressing or slip casting. So it's like very involved process. And maybe
+it's such a difference from like fast paced TIR that I really kind of like getting very
+used to it. And I love this. But to finish it is all a game of construction. Thank you.

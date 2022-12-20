@@ -1,0 +1,1072 @@
+1
+00:00:00,000 --> 00:00:05,920
+I'm James Kirk. I was one of your MCs this morning, if any of you are still awake after
+
+2
+00:00:05,920 --> 00:00:10,480
+the early start today. But I'm back and I wanted to tell you a bit about a subject that
+
+3
+00:00:10,480 --> 00:00:15,240
+I really, really love. And I've gotten to work on a bunch, which is recommender systems,
+
+4
+00:00:15,240 --> 00:00:20,440
+and particularly a lot of the ways that building recommender systems can get really thorny
+
+5
+00:00:20,440 --> 00:00:27,160
+and challenging and also a lot of fun. And my favorite way to rationalize recommender
+
+6
+00:00:27,160 --> 00:00:33,920
+systems is as a desire path. If you're familiar with these, the desire path is what happens
+
+7
+00:00:33,920 --> 00:00:38,400
+when a whole bunch of people all decide to walk through a field in the same way to get
+
+8
+00:00:38,400 --> 00:00:43,520
+from point A to point B. And eventually the grass dies and you get a bit of a trail. And
+
+9
+00:00:43,520 --> 00:00:47,180
+sometimes people will come along after and say, all right, well, if people always wanted
+
+10
+00:00:47,180 --> 00:00:51,100
+to get from point A to point B there, then maybe we should pave it, pave it. Maybe that's
+
+11
+00:00:51,100 --> 00:00:54,920
+where the path should always have been. I think this is kind of a neat metaphor for
+
+12
+00:00:54,920 --> 00:00:58,440
+recommenders themselves for kind of an obvious reason, right? Like people like to get from
+
+13
+00:00:58,440 --> 00:01:04,080
+A to B, it's your job, the recommender systems job to get them from A to B. But I also think
+
+14
+00:01:04,080 --> 00:01:08,880
+when you go a little one level, a little more abstract when you're building systems like
+
+15
+00:01:08,880 --> 00:01:13,560
+recommender systems or ML systems in general, this is kind of how you should think about
+
+16
+00:01:13,560 --> 00:01:18,600
+your process of building them from scratch, developing them, iterating on them, getting
+
+17
+00:01:18,600 --> 00:01:23,520
+them out into production and making something that you actually can leave behind to continue
+
+18
+00:01:23,520 --> 00:01:31,720
+to iterate on for your peers going forward. So a bit about me. My name is James Kirk.
+
+19
+00:01:31,720 --> 00:01:35,400
+That's what I looked like when I had longer hair and was therefore a bit cooler. I'm the
+
+20
+00:01:35,400 --> 00:01:40,160
+co-founder of Meru. We're building some new ways to recommend with humans, particularly
+
+21
+00:01:40,160 --> 00:01:45,560
+content creators in the loop to make recommendations to people who follow them. Previously, I worked
+
+22
+00:01:45,560 --> 00:01:50,280
+at Spotify, bulk of my career at Spotify, working on recommenders there and also at
+
+23
+00:01:50,280 --> 00:01:57,480
+a couple of other companies around Boston and also a stint at Amazon. But today, you're
+
+24
+00:01:57,480 --> 00:02:01,680
+not really here to learn about me. I want to tell you a story about you. This might
+
+25
+00:02:01,680 --> 00:02:06,200
+be a bit familiar to some of you if you've built recommender systems before, because
+
+26
+00:02:06,200 --> 00:02:10,760
+you're an engineer, you're a data scientist at your company. You've been there a while.
+
+27
+00:02:10,760 --> 00:02:14,040
+You've been working on a couple of different projects. You've gotten familiar with the
+
+28
+00:02:14,040 --> 00:02:20,720
+tech stack, the data. You've put some ML models in prod. And then one day this word comes
+
+29
+00:02:20,720 --> 00:02:26,960
+from above and somebody opened up TikTok and discovered something really cool and wanted
+
+30
+00:02:26,960 --> 00:02:31,360
+to know why they can't build that or can we build that or why haven't we already built
+
+31
+00:02:31,360 --> 00:02:36,240
+that and how do we get there? How do we get recommendations like some of these products,
+
+32
+00:02:36,240 --> 00:02:41,400
+especially consumer products that tons and tons of people are engaging with? This can
+
+33
+00:02:41,400 --> 00:02:44,760
+probably make the hair on the back of your neck stand up the first time you hear it.
+
+34
+00:02:44,760 --> 00:02:49,920
+But I think it's also a really great opportunity because this can be a really fun space to
+
+35
+00:02:49,920 --> 00:02:54,400
+dig into if you've never built recommender systems before, as long as you know some of
+
+36
+00:02:54,400 --> 00:02:59,800
+the pitfalls that you're going to want to avoid. The first and most salient one is probably
+
+37
+00:02:59,800 --> 00:03:05,840
+very simply from the origin here that most recommender projects from the get go are poorly
+
+38
+00:03:05,840 --> 00:03:11,160
+framed. By poorly framed, I mean that the idea hasn't really been fleshed out to a
+
+39
+00:03:11,160 --> 00:03:15,720
+degree that gives you, the engineer or data scientist, enough clarity to develop something
+
+40
+00:03:15,720 --> 00:03:20,280
+that will be healthy either in the short or the long term. Now, when this comes from above,
+
+41
+00:03:20,280 --> 00:03:23,800
+this isn't necessarily leadership's fault because they might absolutely have the right
+
+42
+00:03:23,800 --> 00:03:28,660
+idea that the business has data that could be used in such a way to really delight your
+
+43
+00:03:28,660 --> 00:03:34,120
+users and it's strategically valuable to build recommender systems and improve your product
+
+44
+00:03:34,120 --> 00:03:38,640
+with them. But maybe there's a lot of really loose concepts or inspirations flying around
+
+45
+00:03:38,640 --> 00:03:42,720
+about how that recommender might really work. And when that's really amorphous, it can be
+
+46
+00:03:42,720 --> 00:03:47,220
+really challenging to actually build those systems and get them out into the real world.
+
+47
+00:03:47,220 --> 00:03:51,880
+Just as often, these poor framings come from the bottom up. Sometimes somebody reads the
+
+48
+00:03:51,880 --> 00:03:55,600
+new paper from the Rexis conference and it's super cool and flashy and they want to stick
+
+49
+00:03:55,600 --> 00:03:59,100
+the transformers into the loop of their data somewhere. And then what does that look like?
+
+50
+00:03:59,100 --> 00:04:03,000
+Maybe it's recommenders, et cetera, et cetera. It becomes technology or a solution in search
+
+51
+00:04:03,000 --> 00:04:07,440
+of a problem. That's just as thorny and it's also your job if you're working around them
+
+52
+00:04:07,440 --> 00:04:11,920
+to figure out how to take that idea, which might be perfectly aligned in the long term
+
+53
+00:04:11,920 --> 00:04:15,640
+to something really wonderful and valuable and form it into a project that will actually
+
+54
+00:04:15,640 --> 00:04:21,140
+be healthy. So you're in the jungle now. Pitfalls abound.
+
+55
+00:04:21,140 --> 00:04:26,280
+You have just crossed the first one because you, or at least you see the first one coming,
+
+56
+00:04:26,280 --> 00:04:30,280
+which is around the problem framing. And if your company has never built recommenders
+
+57
+00:04:30,280 --> 00:04:36,360
+before, there probably really are no desire paths for you here. There's not an organizational
+
+58
+00:04:36,360 --> 00:04:40,640
+necessarily competency around what these projects look like, how to develop them, how to iterate
+
+59
+00:04:40,640 --> 00:04:45,560
+on them, how to maintain them long-term. And it's your job on this team to just get it
+
+60
+00:04:45,560 --> 00:04:50,880
+right the first time. Get it right the first time, not perfectly, not a perfectly well-paved
+
+61
+00:04:50,880 --> 00:04:54,960
+highway for the team to be sending a thousand models and experiments down or anything, but
+
+62
+00:04:54,960 --> 00:04:58,880
+start to carve that path in a way that other people would actually be able to follow in
+
+63
+00:04:58,880 --> 00:05:03,000
+the future. When you're framing this and you want to make
+
+64
+00:05:03,000 --> 00:05:06,840
+sure it's a healthy project, I think there are really four things that you got to look
+
+65
+00:05:06,840 --> 00:05:11,360
+for. And these are often missing when the idea to build recommender systems first come
+
+66
+00:05:11,360 --> 00:05:16,040
+up. The first and most salient in my mind is a clearly defined user. Does this matter
+
+67
+00:05:16,040 --> 00:05:20,840
+to your customer, to the user, to the person who's going to be receiving recommendations?
+
+68
+00:05:20,840 --> 00:05:25,120
+And on top of that, do you have any specificity about what their needs really are? Is this
+
+69
+00:05:25,120 --> 00:05:30,360
+somebody who will actually respond to recommendations, wants recommendations in their product and
+
+70
+00:05:30,360 --> 00:05:37,160
+will get value out of them? A big misalignment that often happens is that there will be a
+
+71
+00:05:37,160 --> 00:05:43,440
+different group of users that maybe one party like leadership sees as the recipient of recommenders
+
+72
+00:05:43,440 --> 00:05:47,720
+versus maybe product management might see things differently. Maybe executives, they're
+
+73
+00:05:47,720 --> 00:05:50,680
+looking at the strategy and they're saying, all right, it's got to be for 1824s in the
+
+74
+00:05:50,680 --> 00:05:55,000
+US that are casual users and we want to make sure they're experienced perfect. And then
+
+75
+00:05:55,000 --> 00:05:58,720
+product is saying, oh, it's going to be perfect for everybody. Our algorithms need to understand
+
+76
+00:05:58,720 --> 00:06:03,620
+every single user, cold starts need to be perfect, et cetera. You need to help get people
+
+77
+00:06:03,620 --> 00:06:07,720
+aligned on who exactly this clearly defined user is going to be. Otherwise the waters
+
+78
+00:06:07,720 --> 00:06:13,920
+are already choppy. Next up is a measurable definition of success. When you build this
+
+79
+00:06:13,920 --> 00:06:18,760
+system, this product, and you put it in users' hands, how will you know if it's any good?
+
+80
+00:06:18,760 --> 00:06:21,680
+In plain English, how will you know if it's any good? How will you know that people's
+
+81
+00:06:21,680 --> 00:06:26,800
+experience is delightful? And also quantitatively, do you have metrics that will tell you that
+
+82
+00:06:26,800 --> 00:06:32,960
+users are responding well to recommendations? And if not, how can you develop those metrics?
+
+83
+00:06:32,960 --> 00:06:38,400
+The burden is often on you as engineering or data science to help define this metric
+
+84
+00:06:38,400 --> 00:06:43,400
+of success, both in plain language, as well as quantitatively. And you need to make sure
+
+85
+00:06:43,400 --> 00:06:48,160
+that all these stakeholders are also aligned about what that definition is. Next up is
+
+86
+00:06:48,160 --> 00:06:53,400
+that you need somebody to be able to tell you in clear language, why that matters. Why
+
+87
+00:06:53,400 --> 00:06:58,880
+does it matter to your business, to your organization, that that recommendation is successful? There
+
+88
+00:06:58,880 --> 00:07:02,360
+are a lot of projects that create really great recommendations. They're really delightful
+
+89
+00:07:02,360 --> 00:07:07,040
+for people, but are unable to actually drive value for the business, and they languish.
+
+90
+00:07:07,040 --> 00:07:11,120
+And sometimes this is how these passion projects die. They never get in front of enough people
+
+91
+00:07:11,120 --> 00:07:15,520
+that they could have if they also had a clear relationship to what makes the business successful.
+
+92
+00:07:15,520 --> 00:07:19,640
+So seek that out and make sure that especially leadership of a recommender project understand
+
+93
+00:07:19,640 --> 00:07:24,960
+that relationship. Last, and this is squarely your domain as data and engineering, is make
+
+94
+00:07:24,960 --> 00:07:28,000
+sure that the data and tech stack that the company have are ready to build some kind
+
+95
+00:07:28,000 --> 00:07:31,840
+of recommendation systems. Nobody wants to get into a project where you have to tell
+
+96
+00:07:31,840 --> 00:07:36,840
+them, okay, well, we need six months of explicit feedback data collection to even dream of
+
+97
+00:07:36,840 --> 00:07:41,480
+starting a recommender here. Make sure that what these concepts look like, look like something
+
+98
+00:07:41,480 --> 00:07:47,080
+you can deliver with the data and tech stack your company has. So this, I consider kind
+
+99
+00:07:47,080 --> 00:07:50,560
+of the first shortcut is just crisping up the requirements, which doesn't really feel
+
+100
+00:07:50,560 --> 00:07:54,240
+like a shortcut. It feels like more work, right? But the reason it's a shortcut is because
+
+101
+00:07:54,240 --> 00:07:58,200
+it keeps you from going in circles here. There are projects that can go on and on and on
+
+102
+00:07:58,200 --> 00:08:03,080
+just trying to crisp up what the actual real world definition of success is, or they can
+
+103
+00:08:03,080 --> 00:08:07,320
+go on and on and on trying to eventually get to the right data to implement recommendations.
+
+104
+00:08:07,320 --> 00:08:11,040
+And if you make sure that everybody's crisp and aligned on what those last four points
+
+105
+00:08:11,040 --> 00:08:15,840
+were before you start the engineering, you're in a much better situation to just drive through
+
+106
+00:08:15,840 --> 00:08:22,160
+and start building things that will drive value for local users.
+
+107
+00:08:22,160 --> 00:08:25,520
+As you're crisping up these requirements, you're going to also start to figure out that
+
+108
+00:08:25,520 --> 00:08:30,440
+there's a lot of different flavors of recommendation and ways that it could work. One of them is
+
+109
+00:08:30,440 --> 00:08:36,560
+your classic flat recommendation. This is not personalization or anything fancy like
+
+110
+00:08:36,560 --> 00:08:40,840
+infinite fees. This is just you are here, you're looking at, if you're me, you're looking
+
+111
+00:08:40,840 --> 00:08:45,020
+at my monthly batch of beard butter, and you're getting recommendations of things that I might
+
+112
+00:08:45,020 --> 00:08:49,720
+also want to buy. To be able to make these recommendations, Amazon doesn't need any information
+
+113
+00:08:49,720 --> 00:08:53,760
+about me. There's no database table saying James has a beard or anything about James,
+
+114
+00:08:53,760 --> 00:08:58,520
+but just the context, just by being on this page, they know something about me that then
+
+115
+00:08:58,520 --> 00:09:02,680
+is useful for making these recommendations. So knowing that you don't need to know much
+
+116
+00:09:02,680 --> 00:09:05,880
+about these or to make these recommendations tells you a lot about what you need to build
+
+117
+00:09:05,880 --> 00:09:07,920
+to satisfy them.
+
+118
+00:09:07,920 --> 00:09:12,380
+The next layer deep is when you start to go into real personalization. These tend to be
+
+119
+00:09:12,380 --> 00:09:16,700
+products that they're reflecting the user based off of the interactions that they've
+
+120
+00:09:16,700 --> 00:09:21,080
+had in the past. This means that we need to engineer for the interaction data and for
+
+121
+00:09:21,080 --> 00:09:26,120
+user data to be accounted for in the recommender system. One of the ways that you kind of know
+
+122
+00:09:26,120 --> 00:09:30,600
+personalization systems are what's on the horizon for you is when it's not just about
+
+123
+00:09:30,600 --> 00:09:34,960
+the algorithms, but it's about the copy. What are you saying about the recommendations?
+
+124
+00:09:34,960 --> 00:09:39,080
+Are you saying it's for you? Is Spotify with the Discover Weekly, they're saying it's your
+
+125
+00:09:39,080 --> 00:09:44,680
+weekly mixtape. The UUU is telling you a lot about what the user expectations will be.
+
+126
+00:09:44,680 --> 00:09:49,660
+And so if design, copy, product are all telling you that top picks for James and your weekly
+
+127
+00:09:49,660 --> 00:09:53,520
+mixtape are critical components, you know, you're talking personalization, which means
+
+128
+00:09:53,520 --> 00:09:56,200
+you know, you're talking user data and interaction data.
+
+129
+00:09:56,200 --> 00:10:02,560
+And another flavor of this is called omakase recommendation. Omakase is a Japanese word
+
+130
+00:10:02,560 --> 00:10:08,040
+meaning I think chefs or you choose something like that. And often used in sushi. It's,
+
+131
+00:10:08,040 --> 00:10:12,360
+you know, chef's choice. You take it away. You see this a lot in these infinite feed
+
+132
+00:10:12,360 --> 00:10:17,320
+style recommendations where there's not really like a framing or copy or anything. You just
+
+133
+00:10:17,320 --> 00:10:22,680
+dive in and you get some content and it just keeps flowing. It just keeps going. You also
+
+134
+00:10:22,680 --> 00:10:26,040
+see this a lot when you're working with voice assistants. When you see something like, hey,
+
+135
+00:10:26,040 --> 00:10:28,640
+I'm not going to say it because otherwise I'll probably trigger a couple hundred of
+
+136
+00:10:28,640 --> 00:10:34,940
+them. Hey, blank play music. That kind of thing is very, you know, it's a very loosely
+
+137
+00:10:34,940 --> 00:10:40,160
+formed request for recommendations, but the system underneath it needs to be able to satisfy
+
+138
+00:10:40,160 --> 00:10:45,040
+that satisfy usually a very long session of that at consistent quality. And that's a very
+
+139
+00:10:45,040 --> 00:10:49,240
+high bar for the recommender systems and data underneath.
+
+140
+00:10:49,240 --> 00:10:54,760
+So get crisp about which one of these you're actually building. Make sure that you in engineering,
+
+141
+00:10:54,760 --> 00:10:59,280
+make sure that product user research, design leadership are all aligned about which one
+
+142
+00:10:59,280 --> 00:11:02,920
+of these you're building. Make sure that you have a really strong hypothesis that this
+
+143
+00:11:02,920 --> 00:11:06,440
+is what the customer really wants, especially when you're starting from scratch. Has user
+
+144
+00:11:06,440 --> 00:11:10,400
+research indicated this is something that would delight them? Have prototypes or mockups
+
+145
+00:11:10,400 --> 00:11:16,040
+been shown to users that give you some feedback about how it will be received? And most importantly,
+
+146
+00:11:16,040 --> 00:11:20,040
+when you've launched this, how will you actually know that you've succeeded? How will you know
+
+147
+00:11:20,040 --> 00:11:24,360
+that this is delightful for the users that are receiving it?
+
+148
+00:11:24,360 --> 00:11:29,040
+So now that it's starting to solidify, you might start feeling like this, this recommender
+
+149
+00:11:29,040 --> 00:11:34,220
+system that's crystallizing in front of you, starting to feel a lot like search. Search
+
+150
+00:11:34,220 --> 00:11:40,480
+is a very, very similar field to recommender systems. There are a lot of things that overlap
+
+151
+00:11:40,480 --> 00:11:45,560
+between the two, but a very, very important thing to keep in mind here, especially for
+
+152
+00:11:45,560 --> 00:11:50,680
+somebody who has experience in search, just that they're not quite the same. And those
+
+153
+00:11:50,680 --> 00:11:56,400
+not quite bits are where all the lift really is going to come from. When you're able to
+
+154
+00:11:56,400 --> 00:12:01,160
+take things that come off the shelf from search and apply them, knowing the ways that recommender
+
+155
+00:12:01,160 --> 00:12:04,360
+problems and products are different, that can be really, really powerful.
+
+156
+00:12:04,360 --> 00:12:09,880
+But keep in mind that they're not quite the same. There's good news though. I mean, they
+
+157
+00:12:09,880 --> 00:12:14,720
+are pretty close and that's a really great shortcut because search is quite mature. Lots
+
+158
+00:12:14,720 --> 00:12:20,180
+of organizations do have a competency in search. They have search technology. There's off the
+
+159
+00:12:20,180 --> 00:12:25,120
+shelf search tools that you can apply to recommender problems if you know how to apply them and
+
+160
+00:12:25,120 --> 00:12:29,400
+put them together in a way that builds a healthy recommender system.
+
+161
+00:12:29,400 --> 00:12:33,360
+The most similar thing between search and recommendations is generally that you're retrieving
+
+162
+00:12:33,360 --> 00:12:38,520
+from a large set of candidates. Search is looking through millions of documents. Recommendations
+
+163
+00:12:38,520 --> 00:12:41,160
+are searching through millions of items and you're trying to come up with a couple of
+
+164
+00:12:41,160 --> 00:12:45,720
+the right things to show to somebody. But often that's about as deep as the similarities
+
+165
+00:12:45,720 --> 00:12:50,560
+go. That's where they start to diverge a bit. On the search side, users are generating a
+
+166
+00:12:50,560 --> 00:12:54,800
+query. They're telling you something that they want and it's your job to satisfy that.
+
+167
+00:12:54,800 --> 00:12:59,600
+On the recommendation side, it's a little fuzzier. The user, the context they're in,
+
+168
+00:12:59,600 --> 00:13:03,800
+their history, all kinds of things kind of become the query, but you kind of have to
+
+169
+00:13:03,800 --> 00:13:08,640
+squint to look at it to call it a query. You end up constructing things that look a lot
+
+170
+00:13:08,640 --> 00:13:13,800
+like queries and can then run through search style systems like queries. But keep in mind
+
+171
+00:13:13,800 --> 00:13:18,160
+again, this isn't explicit somebody asking for something and that can often lead you
+
+172
+00:13:18,160 --> 00:13:23,400
+into trouble if these queries are poorly constructed.
+
+173
+00:13:23,400 --> 00:13:27,400
+And search, you tend to be optimizing for the first couple of things that you're retrieving
+
+174
+00:13:27,400 --> 00:13:31,040
+for the user. You want to get those first few results right because the person came
+
+175
+00:13:31,040 --> 00:13:36,200
+in looking for something and you need to get it for them. Recommendations, that applies.
+
+176
+00:13:36,200 --> 00:13:39,800
+You still want the first couple of recommendations to be good pretty much all the time. You get
+
+177
+00:13:39,800 --> 00:13:45,000
+a lot of other factors that start to really impact recommendations. You get slate diversity.
+
+178
+00:13:45,000 --> 00:13:49,920
+How broad are my recommendations that I'm seeing on this shelf? You get novelty. Am
+
+179
+00:13:49,920 --> 00:13:54,200
+I seeing the same things every time I interact with these recommendations? You get interactivity.
+
+180
+00:13:54,200 --> 00:13:57,200
+If somebody is giving you a thumbs up or a thumbs down on something that they liked or
+
+181
+00:13:57,200 --> 00:14:01,120
+didn't like, are you responding to that in a way that makes sense to the user? These
+
+182
+00:14:01,120 --> 00:14:05,280
+things that you're optimizing for are where recommendations in search tend to really,
+
+183
+00:14:05,280 --> 00:14:11,000
+really diverge. So if you're somebody who is experienced building search systems, you
+
+184
+00:14:11,000 --> 00:14:15,480
+probably are starting to feel like, oh, okay, I kind of recognize how recommender systems
+
+185
+00:14:15,480 --> 00:14:20,240
+work. All I have to do is take what I know, break it down into its constituent bits, and
+
+186
+00:14:20,240 --> 00:14:25,080
+put them all back together again to make something new. This means that you're pretty well positioned
+
+187
+00:14:25,080 --> 00:14:30,000
+to be effective at building recommender systems. You have a lot of these bits of knowledge
+
+188
+00:14:30,000 --> 00:14:35,920
+and competencies. The biggest risk is kind of staying in your own way at keeping RECs
+
+189
+00:14:35,920 --> 00:14:40,280
+thinking about them just as search problems. I would recommend that you just consistently
+
+190
+00:14:40,280 --> 00:14:45,080
+re-anchor yourself. Remember that recommendations are a different kind of user experience. Think
+
+191
+00:14:45,080 --> 00:14:49,080
+about how your user is receiving them and why that's not quite search. And then I think
+
+192
+00:14:49,080 --> 00:14:52,360
+you are going to blow people away with the things that you're able to apply from the
+
+193
+00:14:52,360 --> 00:14:57,760
+search domain to recommendations. Use these Legos, but make sure you remember that you're
+
+194
+00:14:57,760 --> 00:15:02,440
+putting together something totally different than what you've done before. A colleague
+
+195
+00:15:02,440 --> 00:15:08,560
+of mine named Carl said this recently. He tutored it over on Mastodon, that Rexis, it
+
+196
+00:15:08,560 --> 00:15:13,680
+is quite similar to search, to information retrieval, except there's a lot of nuance
+
+197
+00:15:13,680 --> 00:15:18,840
+that goes into building that quote-unquote query about the user. This is a lot of the,
+
+198
+00:15:18,840 --> 00:15:22,680
+for lack of a better word, artistry of building recommender systems, and it's where a lot
+
+199
+00:15:22,680 --> 00:15:27,960
+of people get lost when they're coming from search over to recommendations. The second
+
+200
+00:15:27,960 --> 00:15:33,060
+place that people sometimes get really tangled up in recommendations is simply that the offline
+
+201
+00:15:33,060 --> 00:15:38,600
+metrics for recommender systems tend to just be kind of bad. They're a little misleading.
+
+202
+00:15:38,600 --> 00:15:42,000
+They don't tell us really what we think they're telling us, and a lot of them are borrowed
+
+203
+00:15:42,000 --> 00:15:46,440
+from adjacent fields like search or other areas of information retrieval, but they don't
+
+204
+00:15:46,440 --> 00:15:52,200
+quite apply squarely to recommenders. If you've worked in search or recommenders, you might
+
+205
+00:15:52,200 --> 00:15:56,320
+be familiar with NDCG. By the way, I promise this is the one equation the whole slide is
+
+206
+00:15:56,320 --> 00:16:01,320
+showing. NDCG is a very commonly used metric. It's effectively saying how good are the top
+
+207
+00:16:01,320 --> 00:16:05,360
+few recommendations and how high have we packed the really good stuff in that recommendation
+
+208
+00:16:05,360 --> 00:16:10,360
+set. It works really nicely in a lot of problems. You know it's fancy because it's got Greek
+
+209
+00:16:10,360 --> 00:16:13,200
+letters in it. I know that sigma is not one of the fancy, fancy Greek letters, but we'll
+
+210
+00:16:13,200 --> 00:16:17,920
+still give it some credit. It's often applied to recommender systems because it's very commonly
+
+211
+00:16:17,920 --> 00:16:23,400
+used in the search systems, and there are a lot of tools available for it. You've probably
+
+212
+00:16:23,400 --> 00:16:27,560
+trained up a recommender system offline. You have a bunch of data about historical user
+
+213
+00:16:27,560 --> 00:16:30,980
+reactions. You can calculate NDCG, and it gives you a number that tells you something
+
+214
+00:16:30,980 --> 00:16:35,800
+that looks like my algorithm is good or my algorithm is bad. Then you're going to start
+
+215
+00:16:35,800 --> 00:16:40,000
+to run some of these algorithms online. You're going to start to collect online feedback
+
+216
+00:16:40,000 --> 00:16:44,480
+data about which of these algorithms are good and bad. What I am advocating for you to do
+
+217
+00:16:44,480 --> 00:16:50,040
+is to plot it. Just plot it. Just take the offline scores that these metrics, especially
+
+218
+00:16:50,040 --> 00:16:55,800
+the borrowed ones, are telling you, and for every algorithm, plot on the scatter where
+
+219
+00:16:55,800 --> 00:17:01,120
+that offline metric told you that that algorithm performed and where an online metric, something
+
+220
+00:17:01,120 --> 00:17:05,680
+that really is about user satisfaction with the recommender system, what that tells you
+
+221
+00:17:05,680 --> 00:17:10,120
+about how good those recommendations were. You probably expect it to look something like
+
+222
+00:17:10,120 --> 00:17:16,040
+this. Your algorithm is, you start with something truly random, that pink dot. It's not very
+
+223
+00:17:16,040 --> 00:17:19,920
+good for offline metrics, and it's not very good online because it's just a bunch of random
+
+224
+00:17:19,920 --> 00:17:24,960
+ranked stuff, but your better offline metrics, they start to get better and better online.
+
+225
+00:17:24,960 --> 00:17:29,760
+Maybe there's some diminishing returns there, but generally, you have some responsiveness.
+
+226
+00:17:29,760 --> 00:17:33,800
+More often than not, when you first start a project, you will find that your offline
+
+227
+00:17:33,800 --> 00:17:38,880
+metric gives you no response whatsoever in your online metric. There are big, big changes
+
+228
+00:17:38,880 --> 00:17:43,040
+in the offline performance that might not have any appreciable impact in the online
+
+229
+00:17:43,040 --> 00:17:46,800
+performance of your recommender, and there are dozens of causes. It could be the product
+
+230
+00:17:46,800 --> 00:17:50,880
+itself. It might not be sensitive to these changes. It might just be that users aren't
+
+231
+00:17:50,880 --> 00:17:54,880
+really responding to these changes. Maybe the product just is poorly framing the recommendations,
+
+232
+00:17:54,880 --> 00:17:58,720
+so how good the algorithm is doesn't matter, but don't be surprised if you see a chart
+
+233
+00:17:58,720 --> 00:18:03,040
+like this. Also, don't be surprised if you see a chart like this. Sometimes what you'll
+
+234
+00:18:03,040 --> 00:18:07,000
+find is your random treatment, when you're truly just picking random stuff, it's not
+
+235
+00:18:07,000 --> 00:18:12,200
+good, but all of your recommenders are much better online, but the sensitivity within
+
+236
+00:18:12,200 --> 00:18:17,080
+that is very, very poor. What that's kind of telling you is that there's not much headroom
+
+237
+00:18:17,080 --> 00:18:22,680
+to be gained online from just squeezing more and more and more NDCG out of your algorithms
+
+238
+00:18:22,680 --> 00:18:26,720
+offline. This probably tells you that NDCG is the wrong metric for your problem, and
+
+239
+00:18:26,720 --> 00:18:30,560
+you're going to want to find some new way offline to measure how good your recommendations
+
+240
+00:18:30,560 --> 00:18:35,200
+are, and you should experiment to find those right metrics. So there's another shortcut
+
+241
+00:18:35,200 --> 00:18:40,040
+for you. Just design those first experiments, not for the best algorithm to go out online,
+
+242
+00:18:40,040 --> 00:18:44,760
+although you'll maybe have some serendipity there, but design them to validate your experimental
+
+243
+00:18:44,760 --> 00:18:48,760
+methodology itself. Make sure that your metrics matter, and make sure that you're going to
+
+244
+00:18:48,760 --> 00:18:52,400
+be able to actually cut through this hedge maze, or you could get lost in it forever,
+
+245
+00:18:52,400 --> 00:18:56,400
+squeezing more NDCG out in a way that just truly never matters.
+
+246
+00:18:56,400 --> 00:19:03,160
+Just real quick one for you is just does it scale, and does it need to? In a lot of cases,
+
+247
+00:19:03,160 --> 00:19:07,080
+especially when you're prototyping recommender systems, you actually don't have the kinds
+
+248
+00:19:07,080 --> 00:19:11,320
+of scale problems that you would expect if you were going to production or full scale,
+
+249
+00:19:11,320 --> 00:19:15,320
+and often a lot of very simple solutions will give you everything you need to experiment.
+
+250
+00:19:15,320 --> 00:19:20,840
+A little story here, we built Spotify's first podcast recommender. This was like five years
+
+251
+00:19:20,840 --> 00:19:27,200
+ago. This model's long dead. And when I built it, there were only 10 million podcast listeners
+
+252
+00:19:27,200 --> 00:19:33,560
+on all of Spotify, and only 10,000 podcasts. Spotify had very mature systems for running
+
+253
+00:19:33,560 --> 00:19:39,000
+recommenders, but we just kept it simple. We ran one Python script on one big box, dumped
+
+254
+00:19:39,000 --> 00:19:43,200
+10 recommendations per user to Bigtable, and serve them on the homepage. And this scaled
+
+255
+00:19:43,200 --> 00:19:49,640
+for about half a year as both of those numbers doubled. So just keep in mind that often scale
+
+256
+00:19:49,640 --> 00:19:53,640
+can lead you to thinking that you need to go with a lot of technologies that aren't
+
+257
+00:19:53,640 --> 00:19:57,240
+really improving your speed of iteration, and the simple stuff lets you iterate very
+
+258
+00:19:57,240 --> 00:20:03,080
+quickly. So just keep serving the simple stuff for as long as you can.
+
+259
+00:20:03,080 --> 00:20:07,600
+So those are my four shortcuts for you, and my one last thought to leave you with is simply
+
+260
+00:20:07,600 --> 00:20:12,040
+to remember, and check a couple of this off your norm conf bingo, that recommender systems
+
+261
+00:20:12,040 --> 00:20:16,160
+are about people. They're about their behavior, what they want, what they need, what they
+
+262
+00:20:16,160 --> 00:20:20,400
+care. They're by people, you and the things that you think about content, about your users,
+
+263
+00:20:20,400 --> 00:20:24,800
+are all getting baked into your system, and that can be good or bad, but they're for people.
+
+264
+00:20:24,800 --> 00:20:29,080
+You want to make people happy with the recommendations you're giving them. You want it to be delightful,
+
+265
+00:20:29,080 --> 00:20:34,480
+and that is what matters most. So thank you so much. If you disagree with anything, we
+
+266
+00:20:34,480 --> 00:20:37,800
+live in a beautiful age where you can yell at me on more platforms than ever. You can
+
+267
+00:20:37,800 --> 00:20:42,800
+find me at any of those, and I'd love to hear from you. And yeah, let me know if you have
+
+268
+00:20:42,800 --> 00:20:53,800
+any questions.
+

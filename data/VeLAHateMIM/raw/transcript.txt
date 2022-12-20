@@ -1,0 +1,581 @@
+So my academic background is physics and astronomy.
+I moved into data science about eight or nine years ago.
+I've worked as a data science practitioner.
+And then as of about three years ago,
+I transitioned to working as a,
+like a data science tool builder.
+So I work now at Posit, formerly RStudio,
+where I work on open source software
+for modeling machine learning,
+and now MLOps for Python and R.
+And one of the things that I think is a theme
+through my career, like a kind of connecting idea,
+is that I'm very interested in people's practical workflows
+and how people do their real work, what makes it hard.
+I'm thinking about systems,
+like how do people use systems to get their work done?
+And that's been, you know, whether I've been working
+as a data science practitioner in an organization,
+working on, you know, text analysis tools,
+or more recently as I've been focusing
+on machine learning tools.
+So given that, when I saw this tweet,
+which has been in a bunch of talks already,
+well, when this tweet from Vicky had this phrase in it,
+how many K-folds is too many?
+I saw this and my immediate reaction was,
+oh, but I actually wanna give a talk about that.
+Like, I actually want to talk to people about that,
+because one of the tools that I think
+we don't hear enough about,
+that can be super helpful in many situations,
+is the tool to answer this kind of question.
+And it's in my title, it's not a spoiler,
+to say like that tool is simulations, building simulations.
+I feel like in data work, you know,
+we don't see blog posts about it,
+you don't hear about it as a tool to use.
+And honestly, what is more normy,
+what is more norm-conf than just like doing the same thing
+thousands of times, and you know,
+like I just have to do the same thing over and over
+to figure something out.
+So I specifically wanna talk about
+how simulation is a powerful tool.
+I'll like, why is it powerful?
+It's powerful because it helps us
+make our assumptions concrete.
+Assumptions I have in my brain,
+assumptions that my collaborators have in their brains,
+how can we make it concrete?
+How can we get on the same page
+with people that we're working with about trade-offs?
+You know, some of us may be thinking,
+oh, it will be better if we do it like this,
+it will be better if we do it like this.
+Often there are trade-offs between those decisions,
+and simulations help us understand what they are
+and get on the same page with each other.
+And ultimately simulation helps us like,
+make better decisions by,
+be through these kinds of various things.
+So let, so I have,
+one of the big projects I have been working on
+in recent years is called Tidy Models.
+So Tidy Models is a framework in R
+for modeling and machine learning
+using tidy verse principles.
+I'm gonna show you some,
+there is gonna be like code on the screen here
+and it's gonna be mostly tidy models code.
+So I'm excited for you get to see it,
+but really this is not a talk about tidy models
+or because what we're talking about more
+is how to use simulation.
+And I think the, hopefully the way we talk
+through some of these ideas,
+even if you use a different,
+usually use a different framework for machine learning
+or your data work or like different,
+whatever language or framework you like to use,
+hopefully this will be applicable here.
+So let's jump in, let's jump into this question.
+This first question, how many folds is too many?
+This is a question about predictive modeling,
+supervised machine learning,
+kind of the sort of like classical,
+I have inputs, I wanna predict outputs.
+And the purpose of folds,
+of making cross-validation folds
+is to estimate the performance of a model,
+to be able to say how well a model
+or a model configuration or hyper parameter configuration,
+how well is it performing?
+So to do this, we need some data.
+How are you gonna get this data?
+I'm gonna talk through this talk
+about a couple of different ways that you can approach this,
+but one way is to use an existing function
+that is meant for simulations.
+These are out there, go looking for them in the frameworks
+and languages that you're comfortable with.
+Here's a function that simulates data
+for our regression model.
+It's got, down here we can see it's got 20 predictors,
+one outcome, like the idea is we predict the outcome
+from these predictors,
+just like with whatever kind of regression we wanna use.
+We can look up in the docs,
+how the outcomes are related to the predictors.
+And like, this is one way you can get started
+kind of in a straightforward way with simulations,
+especially the simulation is kind of about a general
+kind of modeling problem or machine learning
+kind of practice you wanna get to,
+look for one of these functions.
+So once we have that, we can,
+since we're interested in how many folds,
+we can create folds.
+So as a very brief memory jog or reminder,
+V-fold cross-validation or also called K-fold cross-validation
+is where you need to take your data.
+Remember, we had a thousand because I said,
+give me a thousand, we have a thousand observations.
+Let's divide this into K-folds.
+The default in tidy models is to use 10 folds.
+So let's divide it into 10 folds.
+And then let's create a whole set of resamples
+where we hold out one of those folds,
+all the rest of them go together.
+We train on the nine folds and estimate performance
+from the 10 that's held out or the 100.
+That's the 100 observations, the one fold that's held out.
+Then we slide it down.
+Now this one's held out.
+We train on these nine folds,
+estimate performance using this one held out fold.
+And we slide on down here.
+So that was a little reminder of what V-fold
+or K-fold cross-validation is.
+So how the default is,
+how the default is 10.
+You'll see 10 as a default a lot.
+How do I know that's the right number?
+So let's go through some steps.
+So how we can find that.
+So I've made folds.
+What I'm gonna do now is I'm gonna fit a model
+to these folds.
+So I am going to fit a basic random forest
+using all those predictors.
+I'm gonna fit it to the fold
+and then I'm gonna extract out some metrics.
+Let's just use some default metrics
+that are good for regression, RMSE and R-squared here.
+So this is me fitting one model
+to each of the folds 10 times
+and getting results out
+that tell me the performance of this model
+with the default of 10.
+So, but I gotta do this a bunch of times.
+I'm gonna use simulations to do this.
+So almost always when I'm writing simulations,
+I start with like the small problem and then build up.
+So let's start building up and write a function
+that will let me do this a whole bunch of times.
+So what this function does is first
+it generates a new simulated data set,
+divides that new simulated data set
+into cross-validation fold,
+fits this basic random forest model to it
+and then collects the metrics.
+And so here, what you're seeing is that I have said,
+okay, give me a thousand rows of data.
+What do I get if I have V equals three?
+So before I showed you V equals 10,
+here's V equals three.
+So what I wanna do now is I wanna now scale this up
+and I want to be able to test
+lots of different kinds of values.
+So here is where I'm gonna do that.
+I'm gonna set up different values of V.
+So I'm doing this from four to 24
+and I'm stepping forward by two.
+And I'm gonna do my simulation 100 times
+at each one of these.
+So at the four level,
+I'm doing four fold cross-validation 100 times.
+At the 24th and I'll do 24 fold cross-validation
+and I'll do that 100 times.
+And then I'll take these values,
+I can map across them, applying my function
+and then get out the metrics that I have.
+So here is the part,
+this is the first thing that I'm putting on the screen here
+that actually ran long enough
+that I might wanna like get up and do something else,
+go check whatever social media is doing these days.
+And so I wanna speak, I put efficient in the title
+because when you think about simulation,
+this is not usually something that's gonna be deployed
+in a production environment and needs really low latency.
+We don't need to think about efficiency in that way.
+What you need to think about efficiency
+when it comes to simulation
+is how well can you use the tools that you have
+to get going and is it,
+like I don't think it's important
+that a simulation is over optimized,
+but it is able to finish in a time that is useful to you
+on your analysis timeframe.
+All right, so now that we've got this,
+let's make a little bit of a visualization to see.
+So I'm gonna focus on RMSE.
+I could have instead chosen R squared
+if I prefer to use that.
+And then I'm computing the variance of the RMSE.
+So this is the median,
+what's about to be on the plot is the median RMSE variance
+of these different values here.
+And so this is what the plot that this makes.
+So you can see, we start with high variance,
+the RMSE that we get,
+we don't, it has, it's jumping up and down a lot.
+It goes down very steeply and then it starts tapering off.
+So if I look at this plot and I kind of say,
+oh, am I gonna look for an elbow here?
+I'm gonna say there's an elbow maybe around,
+maybe around 10, maybe around 12.
+And so this is where you start to be able to see
+what kind of trade-offs are involved
+in any kind of decision that we may make.
+We can look at this, talk about with our collaborators
+and decide what kind of trade-off do we wanna make
+between how long it takes us
+to estimate the performance of our models
+and how kind of like how many diminishing returns we get
+by bumping up and up in V.
+So we did it, I answered the question, fantastic.
+What if you have another question?
+What if you wanna say, so that was variance.
+What, how does bias change as you change
+the number of folds?
+The answer is you should run a simulation.
+Spoiler alert, 10 is about the right number as well
+for bias, it gives you kind of a good balance in results.
+What if you have more or less data?
+So I showed you examples with a thousand data points.
+What if you actually are using,
+working with quite small data
+or you have something more in the 50,000 or 100,000
+or very large range?
+Well, you can run a simulation and see how does it change
+as you change the size of the dataset.
+Spoiler alert, it doesn't really change that much.
+Like that relationship with variance specifically.
+What if you're gonna use a different model?
+Like I use random forest here,
+but there's tons of different options out there
+that you might use in this sort of classic
+supervised machine learning kind of environment,
+or you could use deep learning here as well.
+Just run a simulation and you can find, does it change?
+What is the right answer for you?
+Spoiler alert, this actually doesn't really depend
+on what kind of model it is.
+So you don't, you actually will see
+kind of something kind of flat here.
+What if you're interested in doing repeated cross validation?
+This is where I do 10 fold.
+I had like make 10 folds.
+I go back to my initial data.
+I make 10 folds again.
+I go back to my data.
+I make 10 folds again.
+You could maybe do that like five repeats
+of 10 fold cross validation.
+That gives you actually 50 folds,
+but the folds are only shuffled within each time
+that you do it.
+And then you repeat it, repeat it.
+Here actually you can get to a bit of a different place
+in terms of bias and variance.
+So when you ran this simulation,
+you would be able to understand,
+okay, if I'm willing to invest five more times time,
+computational time, what can I get out
+in terms of bias and variance?
+You can get out some significant improvements.
+What if say you wanted to use the bootstrap
+instead of V fold cross validation?
+You can run a simulation that compares them.
+And here again, I'll tell you a little bit of the answer.
+It turns out that you end up with different trade-offs
+in terms of bias and variance.
+Bootstrap tends to be low, variance, high bias,
+cross fold validation tends to be low bias, higher variance.
+So, but you can find this out.
+You don't have to take my word for it.
+You can run a simulation.
+Okay, so this was sort of the first question
+and then walking through how you might answer,
+how you might ask other questions with a similar simulation.
+Let's walk to a different kind of question
+away from how many folds is too many.
+And let's ask the question, how many observations do we need?
+So let's say you are working on some product
+that is just newly launched.
+And it is important to you to understand the relationship
+with two predictors and an outcome
+that's important to your business.
+You though suspect or maybe know
+that there is an interaction between those two predictors.
+Like the value of one predictor changes the relationship
+between the other predictor and the outcome.
+This is called interaction in statistics.
+And you don't know what the effect size is.
+Let's say it comes for this new product
+that you're like starting to roll out.
+People are starting to use it.
+It is important to your business to know
+what is the effect size of this.
+And so you are going to run an experiment
+and you're gonna collect data
+and build a model and understand this.
+You know, a lot of you are probably hearing this
+and you're saying, ah, yes, I AB test.
+Effect size calculator, this is a power calculation.
+If I'm asking the question,
+how many observations do I need
+in order to be able to do something?
+Though all those AB test calculators
+that are out there though,
+they typically only work for the most straightforward case.
+Like you're gonna do a T-test at the end.
+If what you wanna do is some more complex kind of model
+and you need to know how many things you have to have
+to start with, then to be able to get the answer that,
+to be able to find out the answer that you're looking for,
+what you need to do there is a simulation.
+You might call it a power simulation.
+So let's walk through real, I'm just gonna,
+you know, don't worry too much about the details here.
+Do notice though that I'm writing a function from scratch now
+to generate the data.
+So I'm basically, what I'm doing here
+is I'm making my assumptions concrete
+in the way that I did, I said at the beginning,
+I say, okay, I've got two predictors that are random normal.
+And then I am gonna make explicit my assumption
+about the relationships between the predictors
+that I have in the outcomes and how they are in fact,
+how they in fact interact with each other.
+So this gives us, when I call it, say with these,
+as for a given, you know, a given assumption
+about the effect size, I can get out some simulated data.
+So I take this function, I do something similar to what,
+so I can run it one time, I get a data,
+I can, you know, do the kind of model
+that I might actually use to analyze the data here.
+And notice, and then I can deal with the output.
+So notice what, that here, the interaction term
+is the effect size that I estimate from the model
+is not very big and the P value is kind of large
+compared to the estimates on the linear coefficients.
+This is really common with outcome,
+with interaction terms and why it can be,
+you know, like it is a little more complicated
+to be able to detect an interaction between two things.
+I'm using, you know,
+as a straightforward linear model here,
+but you could imagine doing this.
+If you're gonna take an approach
+where you're gonna use a more complicated model,
+like a hierarchical model or mixed level model
+or a fully Bayesian model or something,
+you can just put that into here.
+So let's take these little bits
+and wrap it up into a function.
+So in the function, what we do here,
+we make a dataset, fit the model, get out the output.
+And then ask, here at the bottom,
+what this is doing is it is saying,
+when I say summarize, like the significance,
+P value less than 0.5,
+what this is saying is how often do I detect the,
+how often am I able to detect the interaction term?
+I'm still able to measure it.
+And so if I run this a hundred times
+for an effect size of 0.1,
+or in a sample size of 100,
+I detect it 40% of the time.
+And that actually is exactly what power is.
+That right there is exactly what power is.
+So I can do it a bunch of times.
+So I am going to try different values of effect size.
+Maybe people have just started using this feature.
+And so what I want to do is I want to see
+at what point will I have to,
+how many people will I have to observe
+having taken this behavior to be able to detect
+if this thing that's important to our business
+has happened or not.
+And also how big does the,
+given our assumptions about how big the effect size might be,
+again, like when will I be able to detect it?
+So let's run this a bunch of times.
+Let's run it a thousand times
+on all these different possible combinations
+of numbers of samples and effect size.
+And so then I get results.
+Results are, I've done a power simulation here.
+Let's make a quick visualization.
+And I get a result that looks like this.
+So this is symmetric, which is good.
+We would be really surprised
+if the interaction term going one way,
+we couldn't expect, we couldn't detect it
+if it went the other way too.
+So it's symmetric, which is very good.
+What's on the X-axis is the effect size.
+How big of an interaction is there?
+When, like, how much difference
+does the value of one predictor make
+on the relationship between the other predictor
+and the outcome?
+So how big is the effect size?
+On the Y-axis is the power.
+So a typical statistical cutoff is 80%,
+meaning 80% of the time I would detect a real effect.
+And so if we say, okay, is it important to our business
+if the effect size is less than, say,
+point, absolute value of 0.05?
+If the answer is no, then great.
+You know, we don't have to worry about there.
+But let's say we decide for our business,
+actually, if the effect size has an absolute value
+of greater than 0.05, then we can come to these lines
+and we can look and say, okay, I'm gonna need, you know,
+700, 900, 1,000 samples to be able to tell you that.
+So this is an example of how to answer
+a question using simulation.
+We can make our assumptions concrete
+and then are able to make a better decision
+than we would otherwise.
+All right, in my last bit of time,
+I wanna talk about one other kind of question
+you can answer with simulation.
+And that is, so first we had how many folds are too many?
+We had how many observations do I need?
+And now how important is this relationship?
+The code that I've shown you so far
+is all just like really basic tidy versus tidy models code
+that you could do in any, you know,
+in any language that you use, you could write it out.
+But here, this is a package that's a little bit more special.
+It's really unique idea.
+It's called the Nullabor package
+and it is for graphical inference.
+So what this means is doing statistical inference visually.
+So let's simulate one more dataset.
+So it also, like before,
+is gonna have two predictors and an outcome.
+But the relationship now here is the predictor one
+is linear, it's linearly related to the outcome.
+Predictor two is related with the log.
+So it does not, so the rate of it changing
+is very different, right?
+I feel like in many situations of interest,
+you end up with these log,
+with these power law relationships, right?
+Like with these, like power laws are everywhere around us
+all the time, right?
+And so this is actually a fairly realistic thing
+that happened.
+And so often there are these relationships
+that are power law relationships.
+And it can sometimes be hard to communicate to stakeholders,
+especially less technical stakeholders,
+what it really means when there is a power law
+in something like, and what does that mean
+in terms of our leverage of how easy it is to change?
+So let's just make some quick visualizations.
+Here's the linear one.
+Predictor one is on the X-axis.
+The outcome is on the X-axis.
+We can see that sort of linear change there.
+Here's predictor two.
+It looks quite different, right?
+There's the absolute value there.
+So that's what we have.
+We kind of see it going up in these different ways.
+But at these values, it's like,
+well, that one's a little more like a blob, right?
+A little bit more like a blob.
+So what the Null Abort Package lets you do
+is it lets you make what's called a lineup.
+So this is like, the metaphor here is like,
+you've been taken to the police station
+to go look at a lineup of possible criminals.
+And can you identify the one that you saw before?
+Like, is it possible for you to identify
+the one that you saw before?
+So the kind of lineup that I'm gonna use now
+is a permutation under the null hypothesis.
+So basically, what the kind of graphical inference
+we're doing is, given the null hypothesis,
+is the, how unlikely is the effect that we're seeing?
+So yes, I'm talking about p-values.
+P-values done via visualization.
+So we're doing this simulation, right?
+Like we've talked about before,
+and then we're gonna get a visual p-value.
+So let's look at this, and everyone look at it,
+and then I'll drop a question.
+So if you all, I'm putting this
+in the Ask the Speakers Slack channel.
+So if you wanna go in there and maybe thread it
+or something, which of these do you think
+is the real relationship?
+Not the permuted one that was simulated, but the real one.
+Somebody go in and put in there what they think it is.
+I'll just wait for at least one person to go in.
+Yes, okay, I think this one's pretty easy to find.
+14 is the real one.
+14 is the one that is the real relationship,
+and the rest of them have gotten, are random,
+are just random.
+So if we did this over and over and over
+with a lot of people, I actually can compute a p-value
+with that because there's 20 here,
+like we can do this kind of thing.
+Let's now look at the next one.
+So this is the second predictor.
+This is the second predictor here.
+Let's permute it, and let's see whether we can see it or not.
+So here is the second one.
+So let me just put this in here.
+So which one in the lineup here do you think
+is the real one versus the permuted random one?
+So take a look.
+I think this one's harder.
+I think this one is harder, but still possible.
+I think this one is harder, but still possible.
+And if I actually bump the standard deviation
+up a little bit, you would actually not be able
+to see it at all.
+Like literally, there would be no way
+to be able to tell this.
+But yes, yes, that's right.
+So this one is still two, which means it is actually
+probably still statistically significant,
+and we can, like that it is different from random,
+and we are able to see it.
+So what this, this is an example of a way to use simulation
+with relationships that you may have in your real data
+to be able to understand how important they are,
+be able to, and in a way that is very accessible
+to people that you may need to communicate with about this.
+It's a really helpful exercise.
+So like the rest of them, what that shows us
+is how simulation can be this really powerful tool
+to help us do these things.
+We are able to get out of our heads
+and our collaborators' heads and into code,
+you know, the assumptions that we have,
+we're able to talk about trade-offs,
+see what the trade-offs really are,
+and ultimately make better decisions.
+So we're, I think almost all of us here are like data folks,
+right, and usually we try to use data to make decisions.
+So I think, again, I think there's almost more,
+nothing more like in the norm-conf ethos
+than to say like, oh, I don't have any data
+to make this decision, I will just make some up.
+But I think it's a sign of health
+and a sign of using a tool that's available to us
+to be able to do that, to be able to generate data
+that helps us understand about trade-offs
+and make things concrete.
+So with that, I will say thank you very much
+and see if we have any questions we wanna chat about.

@@ -1,0 +1,904 @@
+1
+00:00:00,000 --> 00:00:08,600
+Hi, everybody. My name is Ethan Rosenthal. I manage a small team of AI engineers at Square.
+
+2
+00:00:08,600 --> 00:00:14,320
+I'm not going to talk about any of that fun stuff today. We do things with large language
+
+3
+00:00:14,320 --> 00:00:20,940
+models and all sorts of hot stuff. Like with much of this job, I think the majority of
+
+4
+00:00:20,940 --> 00:00:26,040
+my job is not doing that stuff and it's instead dealing with the norm-confy things. Today,
+
+5
+00:00:26,040 --> 00:00:31,300
+I'm going to talk about the absolute terrible time that I had trying to get my team's code
+
+6
+00:00:31,300 --> 00:00:39,280
+base to build on an Apple M1 laptop. And so this is largely going to be a cathartic rant,
+
+7
+00:00:39,280 --> 00:00:44,440
+but I hope that it's also, you know, helpful and maybe you all will learn something too
+
+8
+00:00:44,440 --> 00:00:51,120
+along the way. So why am I talking about this today? I would be surprised if you could forget,
+
+9
+00:00:51,120 --> 00:00:56,240
+but if you all remember our, you know, intrepid norm-conf leader, Vicky, sent out that tweet
+
+10
+00:00:56,240 --> 00:01:01,120
+that was heard around the world back in July about creating this conference. And I was
+
+11
+00:01:01,120 --> 00:01:07,600
+like nose deep into trying to get my team's code base to build on this M1. And I, you
+
+12
+00:01:07,600 --> 00:01:13,280
+know, kind of snarkily made a reply to that tweet. And here I am now actually talking
+
+13
+00:01:13,280 --> 00:01:18,480
+about that. So kind of fun to bring things full circle. So what is the M1? For those
+
+14
+00:01:18,480 --> 00:01:24,080
+of you who don't know, back in 2020, Apple released a new line of laptops that use their
+
+15
+00:01:24,080 --> 00:01:29,400
+M1 chip, which is kind of like the first time that Apple had created their own CPUs, like
+
+16
+00:01:29,400 --> 00:01:34,360
+specifically for their laptops. And so they followed up like a year later with the M1
+
+17
+00:01:34,360 --> 00:01:38,880
+Pro and the M1 Max, and it had all these nice charts showing that, you know, you get more
+
+18
+00:01:38,880 --> 00:01:42,960
+performance for lower power. And so, you know, a lot of people are excited about that, you
+
+19
+00:01:42,960 --> 00:01:46,720
+know, who doesn't want their code to run faster and who doesn't want to burn their thighs
+
+20
+00:01:46,720 --> 00:01:52,040
+with their laptop when it's using too much power. And so this all seemed cool, but I
+
+21
+00:01:52,040 --> 00:01:57,560
+was not very interested in any of this because, you know, I know the first rule of programming,
+
+22
+00:01:57,560 --> 00:02:02,480
+which is that you should never change anything. Like if it ain't broke, don't fix it. And
+
+23
+00:02:02,480 --> 00:02:10,840
+my team's code base was working. And so I don't want to mess with like success. Unfortunately,
+
+24
+00:02:10,840 --> 00:02:14,920
+you know, time is like the one thing that changes that, you know, none of us can stop
+
+25
+00:02:14,920 --> 00:02:21,040
+that even if we wanted to. And so what happened at work was that in January 2022, there was,
+
+26
+00:02:21,040 --> 00:02:25,500
+it was announced that M1s were now available to new hires at the company, as well as people
+
+27
+00:02:25,500 --> 00:02:29,000
+that were eligible to upgrade their laptop if, you know, their current laptop was kind
+
+28
+00:02:29,000 --> 00:02:34,040
+of old. And so they made that announcement. And one of the people on my team was kind
+
+29
+00:02:34,040 --> 00:02:40,600
+of excited by these new laptops. And so they requested an upgrade, they got an M1 and they
+
+30
+00:02:40,600 --> 00:02:45,080
+failed to get the code base to build. You know, they spent about a week with this and
+
+31
+00:02:45,080 --> 00:02:53,040
+no luck. And then a couple months later, another teammate tries to get a new M1, spends a week
+
+32
+00:02:53,040 --> 00:02:58,000
+trying to build the code base and they fail. And then in August, we knew that there would
+
+33
+00:02:58,000 --> 00:03:05,460
+be two new members starting on the team and they were going to be issued M1s. And I stupidly
+
+34
+00:03:05,460 --> 00:03:09,680
+decided to start managing the team a couple of weeks before. And so this meant that this
+
+35
+00:03:09,680 --> 00:03:16,200
+was now my problem and I was going to be the one that had to figure this out. And so like
+
+36
+00:03:16,200 --> 00:03:20,880
+any good engineer, I completely underestimated how much work or time this could possibly
+
+37
+00:03:20,880 --> 00:03:29,560
+take. But, you know, I tried to be reasonably smart about this. And so anytime you embark
+
+38
+00:03:29,560 --> 00:03:33,860
+on something new at a company, I think it's a good idea to, you know, check the wisdom
+
+39
+00:03:33,860 --> 00:03:37,680
+of the masses. And, you know, Square is the biggest company I've worked at. I used to
+
+40
+00:03:37,680 --> 00:03:42,880
+work at some startups before this and I never really appreciated how helpful it is to have
+
+41
+00:03:42,880 --> 00:03:46,780
+a big company Slack. It's kind of like your own personal Reddit where you can get recommendations
+
+42
+00:03:46,780 --> 00:03:52,160
+for like local accountants or holiday gift ideas and everything else. And so I decided
+
+43
+00:03:52,160 --> 00:03:57,600
+to delve into Slack to try to see if anybody else had already run into this problem before.
+
+44
+00:03:57,600 --> 00:04:01,320
+And so, you know, I'm reading through Slack search and other sorts of things. And I find
+
+45
+00:04:01,320 --> 00:04:08,240
+these esoteric Google Docs and Notion Docs where other people had attempted to solve
+
+46
+00:04:08,240 --> 00:04:12,920
+this problem. And if you search through these docs, you stumble upon these like incantations,
+
+47
+00:04:12,920 --> 00:04:18,320
+right? These cryptic brew libraries that you have to install before you do anything and
+
+48
+00:04:18,320 --> 00:04:21,880
+these other cryptic environment variables that you have to set. And, you know, you don't
+
+49
+00:04:21,880 --> 00:04:25,400
+understand what any of this means, but you're just going to like copy and paste it and run
+
+50
+00:04:25,400 --> 00:04:30,120
+it like everything else that you do with Stack Overflow. So I did that and I thought, all
+
+51
+00:04:30,120 --> 00:04:33,640
+right, like I'm good to go. Other people have run into this. I'll be good to go. And so
+
+52
+00:04:33,640 --> 00:04:37,320
+the first step is, you know, now that I've done my Roo installing and set my environment
+
+53
+00:04:37,320 --> 00:04:42,200
+variables, now I just need to install Python. Like my team's code base is built in Python.
+
+54
+00:04:42,200 --> 00:04:48,440
+That's the first step. And immediately I failed because my team's code base was based on Python
+
+55
+00:04:48,440 --> 00:04:57,160
+3.7, which it turns out is not supported on Apple M1 laptops. And so now I find out that
+
+56
+00:04:57,160 --> 00:05:00,200
+we can't use our version of Python. We're going to have to change the version of Python.
+
+57
+00:05:00,200 --> 00:05:03,520
+Thankfully, it's not like going from two to three, but you know, I'm guessing most of
+
+58
+00:05:03,520 --> 00:05:09,880
+you out there probably don't like to change your version of Python too often. And so setting
+
+59
+00:05:09,880 --> 00:05:15,720
+this version, this Python version, this was kind of like the first node in this like tangled
+
+60
+00:05:15,720 --> 00:05:23,760
+web of shit that I had to wade through. And so one recommendation I have is if you want
+
+61
+00:05:23,760 --> 00:05:28,680
+to deal with different versions of Python, Pyenv is a great little package that allows
+
+62
+00:05:28,680 --> 00:05:33,360
+you to install different versions of Python on your laptop. And so then anytime you are,
+
+63
+00:05:33,360 --> 00:05:37,600
+you know, starting a new project, starting a new virtual environment, you can choose
+
+64
+00:05:37,600 --> 00:05:43,720
+which version of Python you're going to use via that. And then, you know, I had to decide
+
+65
+00:05:43,720 --> 00:05:47,720
+which version of Python to use. And I think, you know, my rule of thumb is to like to go
+
+66
+00:05:47,720 --> 00:05:53,760
+with Goldilocks. So don't go with the latest and greatest 3.10 because, you know, this
+
+67
+00:05:53,760 --> 00:05:57,960
+is like on the bleeding edge. Don't go with the oldest 3.8 because it's, you know, it
+
+68
+00:05:57,960 --> 00:06:01,960
+was kind of like almost out of support by that point. And so just, you know, go with
+
+69
+00:06:01,960 --> 00:06:06,080
+something in the middle that's only a couple of years old. So we chose 3.9. So this was
+
+70
+00:06:06,080 --> 00:06:12,720
+like a two minor version upgrade that we went from 3.7 to 3.9.
+
+71
+00:06:12,720 --> 00:06:16,560
+So now that I've changed my version of Python, this means that I'm going to have to change
+
+72
+00:06:16,560 --> 00:06:21,840
+some of my Python dependencies because certain dependencies only work with like certain versions
+
+73
+00:06:21,840 --> 00:06:26,000
+of your dependencies only work with certain versions of Python. So what I mean by a Python
+
+74
+00:06:26,000 --> 00:06:30,840
+dependency is like a library that you are pip installing like NumPy or Matplotlib or
+
+75
+00:06:30,840 --> 00:06:37,180
+something like that. And so now I'm going to have to change the versions of these dependencies,
+
+76
+00:06:37,180 --> 00:06:41,520
+but it's not just that I have to change them because they are now incompatible with my
+
+77
+00:06:41,520 --> 00:06:47,560
+new version of Python. The other issue is that I have this brand new flashy sports car
+
+78
+00:06:47,560 --> 00:06:56,120
+of a laptop and there are no wheels. So Python wheels, for those of you who don't know, are
+
+79
+00:06:56,120 --> 00:07:00,240
+like zip files where other people have kind of like prebuilt your code so that it will
+
+80
+00:07:00,240 --> 00:07:05,120
+run wherever you run your code. And so for a lot of these libraries, you need prebuilt
+
+81
+00:07:05,120 --> 00:07:11,800
+wheels in order to run this code on like your laptop or in the cloud or something like that.
+
+82
+00:07:11,800 --> 00:07:16,600
+And it turned out that even if I had certain Python dependencies whose versions worked
+
+83
+00:07:16,600 --> 00:07:22,320
+with my new version of Python, these versions of these dependencies did not work on Apple
+
+84
+00:07:22,320 --> 00:07:27,700
+M1s. And so now I need to go and find what version actually introduced wheels that are
+
+85
+00:07:27,700 --> 00:07:30,000
+compatible with the M1.
+
+86
+00:07:30,000 --> 00:07:36,520
+OK, so we've changed our version of Python. We've changed a whole bunch of Python dependencies.
+
+87
+00:07:36,520 --> 00:07:41,320
+And then ideally, you are not managing these dependencies yourself. I think if you're spending
+
+88
+00:07:41,320 --> 00:07:45,680
+all day kind of hard coding all of your dependencies into a requirements.txt file, then you're
+
+89
+00:07:45,680 --> 00:07:50,280
+not going to have a good time. But if you use a dependency manager, which is a tool
+
+90
+00:07:50,280 --> 00:07:54,680
+where you can kind of declare, you know, these are the high level dependencies that I need
+
+91
+00:07:54,680 --> 00:08:00,000
+for my package, then this manager will go out and find those dependencies, dependencies,
+
+92
+00:08:00,000 --> 00:08:04,200
+those dependencies, dependencies, dependencies, and this entire like nested graph. And it
+
+93
+00:08:04,200 --> 00:08:09,000
+will make sure that it finds, you know, the exact versions of all of the sub-dependencies
+
+94
+00:08:09,000 --> 00:08:14,280
+such that everything will work and kind of, you know, be reproducible every time you install
+
+95
+00:08:14,280 --> 00:08:16,080
+your package.
+
+96
+00:08:16,080 --> 00:08:19,840
+And be aware, a little bit of self-promotion, but I have an entire blog post about this
+
+97
+00:08:19,840 --> 00:08:25,640
+where my actual entire process around how I do data science is that every time I start
+
+98
+00:08:25,640 --> 00:08:30,760
+a new project or analysis, I create an entire Python package and I manage all the dependencies
+
+99
+00:08:30,760 --> 00:08:34,760
+with a dependency manager. And the nice thing here is that this means that, you know, six
+
+100
+00:08:34,760 --> 00:08:39,240
+months later when I come back to the analysis, because, you know, some stakeholder had a
+
+101
+00:08:39,240 --> 00:08:43,840
+question in a Google doc from an analysis that I ran six months ago, I can, you know,
+
+102
+00:08:43,840 --> 00:08:51,360
+reinstall my package and rerun my analysis and have everything work.
+
+103
+00:08:51,360 --> 00:08:56,340
+The other thing that I learned in this process is, you know, it's kind of difficult sometimes
+
+104
+00:08:56,340 --> 00:09:01,160
+to make sure that all of your different versions of your Python package actually all work together.
+
+105
+00:09:01,160 --> 00:09:05,180
+And so what you end up finding is that, you know, you run your dependency manager, try
+
+106
+00:09:05,180 --> 00:09:08,760
+to get all your versions to work together, and the dependency manager spits out some,
+
+107
+00:09:08,760 --> 00:09:13,680
+you know, weird error saying, you know, these two packages conflict with each other. There
+
+108
+00:09:13,680 --> 00:09:18,880
+is no way that you can install all of these. So I kept running into this and a very stupid
+
+109
+00:09:18,880 --> 00:09:23,580
+skill that I now have is that I learned how to debug this pretty well. And my debugging
+
+110
+00:09:23,580 --> 00:09:28,560
+strategy is that I create a minimum viable Python package. And so what that means is
+
+111
+00:09:28,560 --> 00:09:33,240
+that instead of starting with my huge code base that has all these dependencies that
+
+112
+00:09:33,240 --> 00:09:37,800
+takes, you know, it takes a really long time to add a new dependency because you have to,
+
+113
+00:09:37,800 --> 00:09:43,280
+like, traverse this giant graph, I create a tiny little new Python package and I first
+
+114
+00:09:43,280 --> 00:09:48,160
+install that offending dependency that seems to conflict with other ones. And then one
+
+115
+00:09:48,160 --> 00:09:53,840
+by one, I start to add some new dependencies until the conflict appears. And then I know
+
+116
+00:09:53,840 --> 00:09:58,800
+which exact dependencies are conflicting with each other. Hopefully, like, you know, chat
+
+117
+00:09:58,800 --> 00:10:02,680
+GPT solves one day and you can just ask it, you know, feed it your lock file and ask it
+
+118
+00:10:02,680 --> 00:10:10,440
+what the issue is. But until then, you now have this very painful process that you get
+
+119
+00:10:10,440 --> 00:10:15,600
+to go through, too. Along the way, you know, we were using pipenv
+
+120
+00:10:15,600 --> 00:10:20,800
+as our dependency manager. I never really liked it. I always wanted to change the poetry,
+
+121
+00:10:20,800 --> 00:10:25,520
+but I, you know, don't like to change things at the same time because everything was working.
+
+122
+00:10:25,520 --> 00:10:28,480
+But, you know, never let a good crisis go to waste. And so we ended up switching our
+
+123
+00:10:28,480 --> 00:10:32,800
+dependency manager in the process. We also had to do this because for the life of me,
+
+124
+00:10:32,800 --> 00:10:37,680
+I could not get SciPy to install with pipenv. I think there was a bug somewhere. And so
+
+125
+00:10:37,680 --> 00:10:42,120
+this ended up being actually like a necessary requirement of this refactor.
+
+126
+00:10:42,120 --> 00:10:45,520
+So now we've changed our version of Python. We've changed a whole bunch of dependencies.
+
+127
+00:10:45,520 --> 00:10:50,800
+And we've changed the way that we actually install and manage those dependencies. And
+
+128
+00:10:50,800 --> 00:10:55,640
+so, of course, we don't do all of this manually because we are engineers and we like to abstract
+
+129
+00:10:55,640 --> 00:11:01,920
+stuff and, you know, build declarative systems. And so everybody's favorite declarative system,
+
+130
+00:11:01,920 --> 00:11:07,240
+the make file, and we have, you know, a couple hundred line make file in our code base. This
+
+131
+00:11:07,240 --> 00:11:12,400
+now needed to be updated to work with the new dependency manager.
+
+132
+00:11:12,400 --> 00:11:16,840
+But thankfully by this point, I actually got everything to build. So, you know, I was able
+
+133
+00:11:16,840 --> 00:11:20,160
+to build my code. I was able to run tests. I was able to, you know, train some small
+
+134
+00:11:20,160 --> 00:11:26,280
+models on my laptop. So I should be done, right? I fixed it for the new laptop. But
+
+135
+00:11:26,280 --> 00:11:32,440
+unfortunately code doesn't just run on our laptops. Code runs in the cloud. And the way
+
+136
+00:11:32,440 --> 00:11:37,800
+that we run our code in the cloud is we build Docker images, at least on my team. So we
+
+137
+00:11:37,800 --> 00:11:41,440
+use a Docker file to build a Docker image. And then we ship our code up to the cloud
+
+138
+00:11:41,440 --> 00:11:47,520
+and run the code up there. And that Docker file is building the code that we are writing
+
+139
+00:11:47,520 --> 00:11:51,600
+locally. And so there is kind of a natural coupling between the Docker file and our code
+
+140
+00:11:51,600 --> 00:11:55,640
+base. And one of the things that the Docker file has to do is it has to install Python.
+
+141
+00:11:55,640 --> 00:11:59,240
+It has to install Python dependencies and other sorts of things like that. And so this
+
+142
+00:11:59,240 --> 00:12:04,360
+meant that I needed to update all of our Docker files so that they now worked with this new
+
+143
+00:12:04,360 --> 00:12:10,240
+setup. But we don't just run regular code in the cloud. We run code on GPUs because
+
+144
+00:12:10,240 --> 00:12:14,480
+we're training fun things like language models and everything else. And that code that runs
+
+145
+00:12:14,480 --> 00:12:20,280
+on GPUs, you know, we need to install CUDA, which is like the NVIDIA library. We need
+
+146
+00:12:20,280 --> 00:12:26,120
+to install that in both the Docker container as well as the EC2 instances that the container
+
+147
+00:12:26,120 --> 00:12:33,640
+is running on. And so now we have this other piece of our cobweb. If you go to NVIDIA's
+
+148
+00:12:33,640 --> 00:12:37,640
+website, they have this diagram there where I think they're trying to argue that it's
+
+149
+00:12:37,640 --> 00:12:43,880
+simple to do stuff on GPUs. And maybe it's a lot simpler than it used to be. But what
+
+150
+00:12:43,880 --> 00:12:47,880
+you actually are not really, you know, what's not entirely clear until you look closer at
+
+151
+00:12:47,880 --> 00:12:53,920
+this is that there's this tight coupling that exists in GPUs between all sorts of layers
+
+152
+00:12:53,920 --> 00:12:58,120
+of the stack. So you have to make sure that you have like the right versions of drivers
+
+153
+00:12:58,120 --> 00:13:02,960
+and CUDA that are running on the actual instance that's running in the cloud. That is coupled
+
+154
+00:13:02,960 --> 00:13:07,000
+to the version of these libraries that is running in the Docker container. And all of
+
+155
+00:13:07,000 --> 00:13:11,560
+this gets coupled with the application that is actually doing the programming, which in
+
+156
+00:13:11,560 --> 00:13:17,480
+our cases is PyTorch code. And it turns out that all of this coupling is terrible. And
+
+157
+00:13:17,480 --> 00:13:22,120
+it's like a lot of work and it's a total pain. And I wanted to try to find the words, but
+
+158
+00:13:22,120 --> 00:13:26,320
+I couldn't find the words to convey this to you. And so instead I decided to burden some
+
+159
+00:13:26,320 --> 00:13:31,160
+GPU hours and ask Stable Diffusion to paint me a Renaissance painting of a GPU burning
+
+160
+00:13:31,160 --> 00:13:37,440
+in hell. And ironically, the hallmark of the GPU here is really the heatsink fans, which
+
+161
+00:13:37,440 --> 00:13:46,920
+seem to be trying to dissipate the heat of hell. And so, yeah. So if you go to PyTorch's
+
+162
+00:13:46,920 --> 00:13:52,560
+website, which is the deep learning library that we use, they have this wonderful little
+
+163
+00:13:52,560 --> 00:13:57,880
+widget where you can pick, you know, are you on Linux or Mac? Do you install your Python
+
+164
+00:13:57,880 --> 00:14:03,080
+packages with pip? Which version of CUDA are you on? You pick all of these pieces and then
+
+165
+00:14:03,080 --> 00:14:06,920
+they give you this wonderful command that if you just run it, works most of the time
+
+166
+00:14:06,920 --> 00:14:11,580
+in order to install these libraries. And all of this is great if you're on like the latest
+
+167
+00:14:11,580 --> 00:14:17,840
+and greatest version of PyTorch. But for various reasons, my team was not. And so if you try
+
+168
+00:14:17,840 --> 00:14:22,240
+to go back to earlier versions of PyTorch, this is the recommendation. So depending on
+
+169
+00:14:22,240 --> 00:14:28,080
+which version of CUDA you're running or if you need GPU support or not, and which platform
+
+170
+00:14:28,080 --> 00:14:33,760
+you're on, you have all of these different pip commands with like pip indices and other
+
+171
+00:14:33,760 --> 00:14:38,200
+sorts of things that you have to worry about. And so, you know, I needed this to work with
+
+172
+00:14:38,200 --> 00:14:43,720
+our dependency manager. And so I was having some trouble. So I decided to search on Google
+
+173
+00:14:43,720 --> 00:14:49,800
+for how to, you know, work with PyTorch and poetry and stumbled upon, you know, 36 common
+
+174
+00:14:49,800 --> 00:14:54,400
+GitHub issues that was prematurely closed because the problem was definitely not resolved.
+
+175
+00:14:54,400 --> 00:14:59,020
+And so then a new issue was opened. And that issue is definitely still open because this
+
+176
+00:14:59,020 --> 00:15:05,640
+is entirely unresolved right now. And so I ended up doing something terrible. You know,
+
+177
+00:15:05,640 --> 00:15:10,800
+I had this beautiful dependency manager that allowed me to, you know, declare my dependencies
+
+178
+00:15:10,800 --> 00:15:15,040
+and it would figure everything out for me. And instead I ended up kind of just having
+
+179
+00:15:15,040 --> 00:15:21,120
+to hack and ruin it. So what I ended up deciding to do was that, you know, in our code base
+
+180
+00:15:21,120 --> 00:15:24,960
+in the dependency manager, we would just install the version of PyTorch that does not have
+
+181
+00:15:24,960 --> 00:15:31,320
+any GPU support because I don't have any GPUs locally. And then in our Docker file, we're
+
+182
+00:15:31,320 --> 00:15:38,000
+going to first export a requirements.txt file from our dependency manager. So we will generate
+
+183
+00:15:38,000 --> 00:15:42,080
+kind of like running pit freeze. We're going to generate all of our requirements. And then
+
+184
+00:15:42,080 --> 00:15:48,160
+I have this terrible sed command, which just substitutes the line of PyTorch with a hardcoded
+
+185
+00:15:48,160 --> 00:15:54,280
+URL to a wheel of my exact version of PyTorch. And so it feels bad, but it works. And I haven't
+
+186
+00:15:54,280 --> 00:15:58,160
+touched it since I made this change. And so maybe that's a sign that it's working. And
+
+187
+00:15:58,160 --> 00:16:04,080
+if you're struggling with PyTorch and poetry, this hack, like it actually does work. So
+
+188
+00:16:04,080 --> 00:16:09,000
+sorry if you end up having to implement it too. So fine, we've figured out how to build
+
+189
+00:16:09,000 --> 00:16:12,400
+our code locally. We've figured out how to make sure that that code also works in the
+
+190
+00:16:12,400 --> 00:16:19,280
+cloud. We're good to go, right? Unfortunately, there's actually a third place that my team
+
+191
+00:16:19,280 --> 00:16:23,560
+runs code and that's in continuous integration. So anytime we want to merge our code into
+
+192
+00:16:23,560 --> 00:16:28,480
+our main branch of our repo, we run various tests and things like that in our own build
+
+193
+00:16:28,480 --> 00:16:33,840
+system, kind of like GitHub actions. And so we need to do everything within continuous
+
+194
+00:16:33,840 --> 00:16:42,680
+integration as well. And it was at this point that I realized that kind of like, I've been
+
+195
+00:16:42,680 --> 00:16:47,520
+possibly blaming a lot of other systems out there, right? I've been complaining a bit
+
+196
+00:16:47,520 --> 00:16:53,440
+about GPUs and poetry and all sorts of other things. But part of this is my team's fault
+
+197
+00:16:53,440 --> 00:16:57,840
+as well. And so one of our issues that I realized is that we had three entirely separate different
+
+198
+00:16:57,840 --> 00:17:03,600
+processes for where our code runs. So when we're local on our laptop, we have one way
+
+199
+00:17:03,600 --> 00:17:07,400
+of installing Python. You have to install a dependency manager, install those dependencies
+
+200
+00:17:07,400 --> 00:17:11,720
+and then run your tests or run your code. And so there is a very set process for doing
+
+201
+00:17:11,720 --> 00:17:16,880
+that on your laptop. But then when you're in CEI, there's an entirely separate process
+
+202
+00:17:16,880 --> 00:17:21,360
+for installing Python, an entire separate process for installing those dependencies.
+
+203
+00:17:21,360 --> 00:17:24,760
+And there's a little bit of coupling between the two. We kind of use a make file for a
+
+204
+00:17:24,760 --> 00:17:29,000
+little bit of this coupling, but not fully. And then within Docker, there's an entirely
+
+205
+00:17:29,000 --> 00:17:34,440
+separate process for all of these. And so what this meant was that any time I had to
+
+206
+00:17:34,440 --> 00:17:38,920
+change one of these blocks, I had to change it in three different places. And so this
+
+207
+00:17:38,920 --> 00:17:44,520
+is maybe a sign that we have not architected our setup in quite the right way. And so I
+
+208
+00:17:44,520 --> 00:17:48,360
+realized actually after this that at previous companies that I'd worked at, we had been
+
+209
+00:17:48,360 --> 00:17:53,600
+a bit smarter about this. And so one option is that you do all of your CEI within the
+
+210
+00:17:53,600 --> 00:17:58,800
+same Docker container that you're going to use when you run your code in the cloud. And
+
+211
+00:17:58,800 --> 00:18:03,280
+this actually kind of makes sense because the whole point of CEI is to test your code
+
+212
+00:18:03,280 --> 00:18:07,240
+in an environment that's fairly similar to the production environment, kind of like the
+
+213
+00:18:07,240 --> 00:18:11,500
+same way that you create a test set with your machine learning model, because you want that
+
+214
+00:18:11,500 --> 00:18:15,600
+test to be representative of what's going to actually happen when your model is running
+
+215
+00:18:15,600 --> 00:18:21,200
+in the real world. And so one option is to use that exact same Docker container within
+
+216
+00:18:21,200 --> 00:18:25,700
+CEI so that you only have like, you know, within that container, you have your method
+
+217
+00:18:25,700 --> 00:18:29,800
+of installing Python and the dependencies and everything else. And then this way, we
+
+218
+00:18:29,800 --> 00:18:34,560
+actually at least only have two ways of doing this. You can start to collapse this more,
+
+219
+00:18:34,560 --> 00:18:39,960
+but I don't know, programming with Docker locally is not great. So what ended up actually
+
+220
+00:18:39,960 --> 00:18:45,080
+happening? If you notice, it was August 2022 was when I needed to finish this by. If we
+
+221
+00:18:45,080 --> 00:18:51,120
+go back and look at some of our timestamps, you can see that it was July 26, that I sent
+
+222
+00:18:51,120 --> 00:18:58,800
+that tweet at Vicki. Next day, I submitted a PR. And my goal was to get that PR reviewed
+
+223
+00:18:58,800 --> 00:19:05,000
+by August 3, for the very important reason that I was going to be on vacation, and I
+
+224
+00:19:05,000 --> 00:19:10,120
+didn't want to have to worry about this after going on vacation. And sure enough, August
+
+225
+00:19:10,120 --> 00:19:17,600
+4, it got merged. I went on vacation and somehow nothing broke. So that's the story of that.
+
+226
+00:19:17,600 --> 00:19:40,320
+And you can find me elsewhere on the internet and thank you all.
+
