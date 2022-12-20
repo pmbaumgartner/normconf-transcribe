@@ -1,6 +1,5 @@
 pydub==0.25.1
-pandas==1.5.0
 pytube==12.1.0
 rich==12.6.0
-typer==0.4.2
+srt==3.5.2
 git+https://github.com/openai/whisper.git 
